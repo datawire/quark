@@ -45,14 +45,14 @@ def test_local(args, package, path, name):
 
 def test_package():
     p1 = Package(Function(Name("p1:n.fun"),
-                          Ref("p1:n.int"),
-                          Param("a", "p1:n.int"),
-                          Param("b", "p1:n.int"),
+                          Int(),
+                          Param("a", Int()),
+                          Param("b", Int()),
                           Return(Invoke(Ref("q:n.add"), Var("a"), Var("b")))),
                  Function(Name("p1:n.f2"),
-                          Ref("q:n.int"),
-                          Param("a", "q:n.int"),
-                          Param("b", "q:n.int"),
+                          Int(),
+                          Param("a", Int()),
+                          Param("b", Int()),
                           Return(Invoke(Ref("q:n.mul"), Var("a"), Var("b")))))
     print p1
     p = Python()
@@ -91,19 +91,58 @@ def test_emit():
 
     stmt = Function(Name("a:b.c"),Void(),While(Invoke(Ref("pkg:n.asdf"), Send(Var("x"), "y", ())), stmt))
     backlink(stmt)
-    print code(stmt, Java())
-    print header(stmt, Python())
-    print code(stmt, Python())
-    print footer(stmt, Python())
+    p = Python()
+    p.define(stmt)
+    crosslink(stmt, p)
+    print code(stmt, p)
+    j = Java()
+    j.define(stmt)
+    crosslink(stmt, j)
+    print code(stmt, j)
 
 
 from .sample_ir import *
 
-
-@pytest.mark.parametrize("sample", [fibonacci_ir, minimal_ir])
+samples = [fibonacci_ir, minimal_ir]
+@pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
 @pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
 def test_emit_sample(sample, target):
     t = target()
     emit(sample(), t)
-    import pprint
-    pprint.pprint(t.files)
+    pretty_definitions(sample.func_name, t)
+    for name, content in t.files.items():
+        print("")
+        print(">>>>>> begin " + name)
+        print(content)
+        print("<<<<<<<< end " + name)
+
+
+from quarkc.c2.match import match, many
+from quarkc.c2.emit_target import TargetDefinition, TargetNamespace
+
+@match(basestring, Target)
+def pretty_definitions(name, target):
+    f = tr.File("pretty_definitions")
+    f.add(tr.Comment("======="))
+    f.add(tr.Compound(
+        "{target} pretty_definitions for {name}".format(target=target.__class__.__name__, name=name),
+        tr.Block(*[pretty_definitions(k, v, target) for k, v in sorted(target.definitions.items(),
+                                                                       key=lambda (k,v):isinstance(k,tuple))])))
+    f.add(tr.Comment("======="))
+    print format(f, target)
+
+@match(Name, TargetDefinition, Target)
+def pretty_definitions(name, tgtdef, target):
+    return tr.Simple("{name} => {dfn}".format(name=name, dfn=tgtdef))
+
+@match((many(basestring),), TargetNamespace, Target)
+def pretty_definitions(name, tgtns, target):
+    return tr.Compound("{name} => namespace".format(name=name), tr.Block(
+        tr.Compound("imports", tr.Block(
+            *[tr.Simple(s) for s in tgtns.imports]
+            )),
+        tr.Compound("names", tr.Block(
+            *[tr.Simple("{name} => {target_name}".format(name=n, target_name=v))
+                      for n,v in tgtns.names.items()]
+            )),
+    ))

@@ -67,7 +67,7 @@
               Method("register", Void(),
                      Param("plugin", InterfaceType(Ref("minimal:mdk.api.Plugin"))),
                      Block(
-                         Evaluate(Set(This(), "plugin", Var("plugin"))),
+                         Set(This(), "plugin", Var("plugin")),
                          Evaluate(Send(Var("plugin"), "init", (This(), )))
                      )
               )
@@ -81,8 +81,8 @@
                           Param("id", String()),
                           Block(
                               # user code
-                              Evaluate(Set(This(), "mdk", Var("mdk"))),
-                              Evaluate(Set(This(), "id", Var("id"))),
+                              Set(This(), "mdk", Var("mdk")),
+                              Set(This(), "id", Var("id")),
                           )),
               Method("log", Void(), Param("msg", String()),
                      Block(Invoke(Ref("q:q.print"), Var("msg")))),
