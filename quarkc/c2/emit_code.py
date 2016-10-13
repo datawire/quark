@@ -31,6 +31,7 @@ def opt_expr(glue, nd, target, default=""):
 
 
 ## Function
+
 @match(Function, Python)
 def code(fun, target):
     return tr.Compound(
@@ -272,10 +273,19 @@ def code(clazz, target):
 @match(Class, Java)
 def code(clazz, target):
     return tr.Compound(
-        "public class {name}".format(
-            name = target.nameof(clazz.name)),
+        "public class {name}{implements}".format(
+            name = target.nameof(clazz.name),
+            implements = implements("implements", clazz, target)),
         tr.Block(tuple([code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods]))
         )
+
+@match(basestring, choice(Class, Interface), Java)
+def implements(keyword, clazz, target):
+    if not clazz.implements:
+        return ""
+    return " {keyword} {interfaces}".format(
+        keyword = keyword,
+        interfaces = ", ".join(expr(i, target) for i in clazz.implements))
 
 @match(Class, Go)
 def code(clazz, target):

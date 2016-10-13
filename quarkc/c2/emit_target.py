@@ -15,7 +15,7 @@
 from collections import OrderedDict
 from pprint import pformat
 from .match import match, many, choice
-from .ir import Definition, Name, Ref, Invoke, Class, Interface, Function, Check, Invoke, Void, Block
+from .ir import IR, Definition, Name, Ref, Invoke, Class, Interface, Function, Check, Void, Block
 from .ir import dfn_of
 from . import tr
 
@@ -228,15 +228,17 @@ class Java(Target):
 
     @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
     def reference(self, module, dfn, tgtdfn, ref, tgtref):
-        tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name)
+        # referenced name depends on target type, which can be inferred from Ref use
+        self.reference(module, dfn, tgtdfn, ref.parent, ref, tgtref)
         # Java fully qualifies all references, imports are not necessary
-        pass
 
-    @match(tr.File, Function, TargetDefinition, Ref, TargetDefinition)
-    def reference(self, module, dfn, tgtdfn, ref, tgtref):
-        tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name + (tgtref.target_name, ))
-        # Java fully qualifies all references, imports are not necessary
-        pass
+    @match(tr.File, Definition, TargetDefinition, IR, Ref, TargetDefinition)
+    def reference(self, module, dfn, tgtdfn, use, ref, tgtref):
+        tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name)
+
+    @match(tr.File, Definition, TargetDefinition, Invoke, Ref, TargetDefinition)
+    def reference(self, module, dfn, tgtdfn, use, ref, tgtref):
+        tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name + (tgtref.target_name,))
 
 class Python(Target):
 

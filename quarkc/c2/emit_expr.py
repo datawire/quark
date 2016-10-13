@@ -25,7 +25,7 @@ from .emit_target import Target, Python, Java, Go, Ruby
 
 @match(Type, Java)
 def expr(type, target):
-    return ".".join(type.name.path)
+    return target.nameof(type.name)
 
 @match(ClassType, Go)
 def expr(type, target):

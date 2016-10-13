@@ -142,7 +142,7 @@ def crosslink_done(dfn, target):
     if module.outer_block is not module.inner_block:
         return
     inner_block = tr.Block()
-    module.push(tr.Compound("class Functions", inner_block), inner_block)
+    module.push(tr.Compound("public class Functions", inner_block), inner_block)
 
 @match(Check, Java)
 def crosslink_done(dfn, target):
@@ -153,7 +153,7 @@ def crosslink_done(dfn, target):
     module.add(tr.Simple("import static org.junit.Assert.assertEquals"))
     module.add(tr.Simple("import org.junit.Test"))
     inner_block = tr.Block()
-    module.push(tr.Compound("class Tests", inner_block), inner_block)
+    module.push(tr.Compound("public class Tests", inner_block), inner_block)
 
 @match(Package, Target)
 def transform(pkg, target):

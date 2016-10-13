@@ -103,8 +103,8 @@ def test_emit():
 
 from .sample_ir import *
 
-
-@pytest.mark.parametrize("sample", [fibonacci_ir, minimal_ir])
+samples = [fibonacci_ir, minimal_ir]
+@pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
 @pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
 def test_emit_sample(sample, target):
     t = target()
@@ -126,7 +126,8 @@ def pretty_definitions(name, target):
     f.add(tr.Comment("======="))
     f.add(tr.Compound(
         "{target} pretty_definitions for {name}".format(target=target.__class__.__name__, name=name),
-        tr.Block(*[pretty_definitions(k, v, target) for k, v in target.definitions.items()])))
+        tr.Block(*[pretty_definitions(k, v, target) for k, v in sorted(target.definitions.items(),
+                                                                       key=lambda (k,v):isinstance(k,tuple))])))
     f.add(tr.Comment("======="))
     print format(f, target)
 
