@@ -265,6 +265,7 @@ class Python(Target):
         ref_module = ".".join(tgtref.namespace.target_name)
         ref_module_name = "_".join(tgtref.namespace.target_name)
 
+        # XXX: inside package we should do relative imports
         tgtdfn.namespace.names[ref] = ".".join((ref_module_name, tgtref.target_name))
 
         module.add(tr.Simple("import {ref_module} as {ref_module_name}".format(
@@ -282,6 +283,11 @@ class Ruby(Target):
     @match(TargetNamespace, Definition)
     def define(self, namespace, dfn):
         target_name = self.define_name(namespace, self.upcase(dfn.name.path[-1]))
+        return TargetDefinition(target_name, namespace)
+
+    @match(TargetNamespace, Function)
+    def define(self, namespace, dfn):
+        target_name = self.define_name(namespace, dfn.name.path[-1])
         return TargetDefinition(target_name, namespace)
 
     @match(Definition)
@@ -306,17 +312,44 @@ class Ruby(Target):
 
     @match(Definition, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join(("lib", dfn.name.package) + tgtdfn.namespace.target_name) + ".rb"
+        prefix = "lib"
+        ffi_module = dfn.name.package
+        module_name = "/".join([ffi_module] + map(str.lower, tgtdfn.namespace.target_name))
+        self.ffi_require("/".join((prefix, ffi_module) ) + ".rb", module_name)
+        return "/".join((prefix, module_name)) + ".rb"
 
     @match(Check, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join(("test", dfn.name.package) + tgtdfn.namespace.target_name) + ".rb"
+        prefix = "test"
+        ffi_module = dfn.name.package
+        module_name = "/".join([ffi_module] + map(str.lower, tgtdfn.namespace.target_name))
+        self.ffi_require("/".join((prefix, "ts_" + ffi_module) ) + ".rb", module_name)
+        return "/".join((prefix, module_name)) + ".rb"
+
+    def ffi_require(self, filename, module_name):
+        # XXX: this is not super clean
+        require = "require_relative '{module_name}'\n".format(module_name = module_name)
+        text = self.files.get(filename, "")
+        if require not in text:
+            self.files[filename] = text + require
 
     @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
     def reference(self, module, dfn, tgtdfn, ref, tgtref):
         """ generate the import statement and store import name in the target namespace """
-        tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name + (tgtref.target_name, ))
-        module.add(tr.Simple("# TODO: add import logic for %s" % self.__class__.__name__))
+        tgtdfn.namespace.names[ref] = "::".join(tgtref.namespace.target_name + (tgtref.target_name, ))
+        d_ns = tgtdfn.namespace
+        r_ns = tgtref.namespace
+        dfn_module_path = dfn.name.package
+        ref_module_path = ref.package
+        if dfn_module_path == ref_module_path and not isinstance(dfn, Check):
+            module.add(tr.Comment("Must not import " + ref_module_path))
+        else:
+            if ref_module_path not in d_ns.imports:
+                d_ns.imports.add(ref_module_path)
+                module.add(tr.Simple("require '{ref_module_path}'".format(
+                    ref_module_path = ref_module_path)))
+            else:
+                module.add(tr.Comment("Already imported " + ref_module_path + " to " + str((tgtdfn, tgtref))))
 
 class Go(Target):
 
