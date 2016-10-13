@@ -72,19 +72,28 @@ def format(block, target, indent):
 @match(Block, Ruby, Indent)
 def format(block, target, indent):
     return "\n".join([""] +
-        [format(s, target, indent.more) for s in block.children] +
-        [indent("end")])
+                     [format(s, target, indent.more) for s in block.children] + [""])
 
 
 ## Compound
 
 @match(Compound, Target, Indent)
 def format(stmt, target, indent):
-    return indent("") + "".join([
+    return "".join([indent("")] + [
         "{stmt}{block}".format(
             stmt = s,
             block = format(b, target, indent))
         for s, b in zip(stmt.comps[0::2], stmt.comps[1::2])])
+
+@match(Compound, Ruby, Indent)
+def format(stmt, target, indent):
+    return "".join([
+        "{stmt}{block}".format(
+            stmt = indent(s),
+            block = format(b, target, indent))
+        for s, b in zip(stmt.comps[0::2], stmt.comps[1::2])] +
+                   [indent("end")]
+    )
 
 
 ## Comment
