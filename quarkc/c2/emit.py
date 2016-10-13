@@ -31,8 +31,9 @@ Options:
 """
 
 from .match import match
-from .ir import IR, Package, Definition, Ref
+from .ir import IR, Package, Definition, Check, Ref
 from .ir import backlink, walk_dfs
+from . import tr
 
 from .emit_target import Target, Go, Ruby, Java, Python
 from .emit_code import code
@@ -97,6 +98,34 @@ def crosslink(pkg, target):
 def crosslink(dfn, target):
     for node in walk_dfs(dfn):
         crosslink(dfn, node, target)
+    crosslink_done(dfn, target)
+
+@match(Definition, Target)
+def crosslink_done(dfn, target):
+    pass
+
+@match(Definition, Ruby)
+def crosslink_done(dfn, target):
+    module = target.module(dfn)
+    tgtdfn = target.definitions[dfn.name]
+    for name in tgtdfn.namespace.target_name:
+        inner_block = tr.Block()
+        module.push(tr.Compound("module {name}".format(name=name), inner_block), inner_block)
+
+@match(Check, Ruby)
+def crosslink_done(dfn, target):
+    module = target.module(dfn)
+    # XXX: there are several Checks per module, short-circuit by cheating a bit here
+    if module.outer_block is not module.inner_block:
+        return
+    module.add(tr.Simple("require 'test/unit'"))
+    tgtdfn = target.definitions[dfn.name]
+    for name in tgtdfn.namespace.target_name:
+        inner_block = tr.Block()
+        module.push(tr.Compound("module {name}".format(name=name), inner_block), inner_block)
+    inner_block = tr.Block()
+    module.push(tr.Compound("class Test{name} < Test::Unit::TestCase".format(
+        name=tgtdfn.namespace.target_name[-1]), inner_block), inner_block) 
 
 @match(Definition, Ref, Target)
 def crosslink(dfn, ref, target):
