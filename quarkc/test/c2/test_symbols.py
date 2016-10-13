@@ -148,6 +148,8 @@ class SymbolTree(object):
 
     def symbols_r(self, path):
         yield ".".join(path), (Package if self.type == File else self.type, path[-1])
+        if self.type == Class:
+            yield ".".join(path + (path[-1],)), (Method, path[-1])
         for name, trees in self.children.items():
             for tree in trees:
                 if self.type == File and tree.type == Package:

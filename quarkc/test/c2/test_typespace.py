@@ -1,44 +1,6 @@
 import pytest
 from quarkc.c2.typespace import *
 
-# TODO: negative tests?
-
-GET = [
-    (Object(Field('a', Ref('X'))), 'a', Ref('X'))
-]
-
-@pytest.mark.parametrize("t,attr,result", GET)
-def xtest_get(t, attr, result):
-    assert t.get(attr) == result
-
-BIND = [
-    (Callable(Ref('T'), Ref('T')),
-     (Ref('L'),),
-     Callable(Ref('L'), Ref('L'))),
-    (Object(Field('get', Callable(Ref('T'))),
-            Field('set', Callable(Ref('void'), Ref('T')))),
-     (Ref('int'),),
-     Object(Field('get', Callable(Ref('int'))),
-            Field('set', Callable(Ref('void'), Ref('int')))))
-]
-
-# XXX: hmm, should parameter names be part of the signature of a
-# callable? that requires parameter names to match, which might be
-# reasonable for keyword args scenarios, but not for positional
-
-MATCH = [
-    (Callable(Ref('T'), Ref('T')),
-     Callable(Ref('int'), Ref('int')),
-     {'T': Ref('int')}),
-#    (Callable(Ref('T'), Ref('T')),
-#     Callable(Ref('int'), Ref('float')),
-#     {'T': Union(Ref('int'), Ref('float'))})
-]
-
-@pytest.mark.parametrize("a,b,result", MATCH)
-def xtest_match(a,b,result):
-    assert a.match(b) == result
-
 def typespace():
     space = Typespace()
 
@@ -87,11 +49,11 @@ def test_template():
 def test_templated_method_cycle():
     space = typespace()
 
-    space["meth"] = Template(Param("T"), Callable(Ref("T"), Ref("String")))
-    space["Node"] = Template(Param("T"),
-                             Object(Final("parent", Ref("Node", Ref("T"))),
-                                    Field("value", Ref("T")),
-                                    Final("method", Ref("meth", Ref("T")))))
+    space["meth"] = Template(Param("meth.T"), Callable(Ref("meth.T"), Ref("String")))
+    space["Node"] = Template(Param("Node.T"),
+                             Object(Final("parent", Ref("Node", Ref("Node.T"))),
+                                    Field("value", Ref("Node.T")),
+                                    Final("method", Ref("meth", Ref("Node.T")))))
 
     n1 = space.resolve(Ref("Node", Ref("int")))
     assert space.get(Ref("Node", Ref("int")), "parent") is n1
@@ -199,8 +161,67 @@ def test_higher_order_function():
     assert result == space.resolve(Ref("int"))
 
     bindings = space.infer(space["smug"].type.arguments[0], space["sum"])
-    print bindings
+    assert bindings == {'T': Ref('int'), 'A': Ref('int'), 'B': Ref('float'), 'C': Ref('String')}
 
-#    bindings = zipmatch(smug.arguments, (sum, Ref('int'), Ref('float'), Ref('String')))
-#    assert bindings == {'T': Ref('int'), 'A': Ref('int'), 'B': Ref('float'), 'C': Ref('String')}
-#    assert smug.bind(bindings).call(sum, Ref('int'), Ref('float'), Ref('String')) == Ref('int')
+def test_nested_templates():
+    space = typespace()
+
+    space["Map"] = Template(Param('K'), Param('V'), Object(Field('key', Ref('K')), Field('value', Ref('V'))))
+    space["Box"] = Template(Param('T'), Object(Field('contents', Ref('Map', Ref('String'), Ref('T')))))
+
+    contents =  space.get(space.resolve(Ref("Box", Ref("int"))), "contents")
+    map = Ref("Map", Ref("String"), Ref("int"))
+    assert space.assignable(contents, map)
+    assert space.assignable(map, contents)
+
+def test_template_comparison():
+    space = typespace()
+
+    space["Pair"] = Template(Param('Pair.K'), Param('Pair.V'), Object(Field('key', Ref('Pair.K')),
+                                                                      Field('value', Ref('Pair.V'))))
+    space["Pair2"] = Template(Param('Pair2.K'), Param('Pair2.V'), Object(Field('key', Ref('Pair2.K')),
+                                                                         Field('value', Ref('Pair2.V'))))
+    space["Entry"] = Template(Param('A'), Param('B'), Object(Field('key', Ref('A')), Field('value', Ref('B'))))
+    space["Coord"] = Template(Param('X'), Param('Y'), Object(Field('x', Ref('X')), Field('y', Ref('Y'))))
+
+    assert space.assignable(Ref("Pair"), Ref("Pair2"))
+    assert space.assignable(Ref("Pair2"), Ref("Pair"))
+    assert space.assignable(Ref("Entry"), Ref("Pair"))
+    assert not space.assignable(Ref("Pair"), Ref("Coord"))
+    assert not space.assignable(Ref("Coord"), Ref("Pair"))
+
+def test_mutable_comparison():
+    space = typespace()
+    space["A"] = Object(Field("f", Ref("int")))
+    space["B"] = Object(Final("f", Ref("int")))
+
+    assert not space.assignable(Ref("A"), Ref("B"))
+    assert space.assignable(Ref("B"), Ref("A"))
+
+def test_template_bounds():
+    space = typespace()
+    space["Box"] = Template(Param('Box.T'), Object(Final('contents', Ref('Box.T'))))
+    space["Box1"] = Template(Param('Box1.T', Ref("Object")), Object(Final('contents', Ref('Box1.T'))))
+    space["Box2"] = Template(Param('Box2.T', Ref("String")), Object(Final('contents', Ref('Box2.T'))))
+    space["Box3"] = Template(Param('Box3.T', Ref("Object")), Object(Field('contents', Ref('Box3.T'))))
+
+    # not having a bound is the same as Object() right now
+    assert space.assignable(Ref("Box"), Ref("Box1"))
+    assert space.assignable(Ref("Box1"), Ref("Box"))
+
+    # if the parameters do have bounds, then the bounds are compared
+    assert space.assignable(Ref("Box1"), Ref("Box2"))
+    assert not space.assignable(Ref("Box2"), Ref("Box1"))
+
+    assert not space.assignable(Ref("Box3"), Ref("Box1"))
+    assert space.assignable(Ref("Box1"), Ref("Box3"))
+
+    assert not space.assignable(Ref("Box3"), Ref("Box2"))
+    assert not space.assignable(Ref("Box2"), Ref("Box3"))
+
+def test_template_resolution():
+    space = typespace()
+
+    space["Box"] = Template(Param('T'), Object(Field('contents', Ref('T'))))
+    assert isinstance(space.resolve(Ref("Box", Ref("int"))), Object)
+    assert isinstance(space.resolve(Ref("Box", Ref("nonexistent"))), Unresolved)

@@ -43,26 +43,29 @@ def postorder_traversal(pkgs):
 
 @match(File)
 def wire(file):
-    path = []
+    return wire(file, None, file)
+
+@match(AST, AST)
+def wire(parent, child):
+    return wire(parent.file, parent, child)
+
+@match(File, choice(AST, None), AST)
+def wire(file, parent, child):
+    path = [parent]
 
     def visit(n):
         n.file = file
-        if path:
-            n.parent = path[-1]
-        else:
-            n.parent = None
-
+        n.parent = path[-1]
         if not hasattr(n, "_marked"):
             n._marked = True
             n.line, n.column = n.parent.line, n.parent.column
-
         path.append(n)
 
     def leave(n):
         path.pop()
 
-    traverse(file, visit, leave)
-    return file
+    traverse(child, visit, leave)
+    return child
 
 @match(basestring, basestring)
 def parse(name, text):

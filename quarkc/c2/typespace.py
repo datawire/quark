@@ -173,7 +173,16 @@ class Ref(Base):
         else:
             return self.name
 
-class Param(Base):
+class Type(Base):
+
+    """Base class for Types. A type is represented as a node in a
+    graph. Templates reperesent a set of similarly structured nodes.
+
+    """
+
+    pass
+
+class Param(Type):
 
     """A parameter for a template."""
 
@@ -183,17 +192,10 @@ class Param(Base):
         self.bound = bound
 
     def __repr__(self):
-        return self.repr(self.name)
-
-
-class Type(Base):
-
-    """Base class for Types. A type is represented as a node in a
-    graph. Templates reperesent a set of similarly structured nodes.
-
-    """
-
-    pass
+        if self.bound:
+            return self.repr(self.name, self.bound)
+        else:
+            return self.repr(self.name)
 
 class Unresolved(Type):
 
@@ -228,6 +230,15 @@ class Typespace(object):
         assert name not in self.types
         self.types[name] = type
 
+    @match(basestring, lazy("Template"))
+    def __setitem__(self, name, template):
+        assert name not in self.types
+        self.types[name] = template
+        for p in template.params:
+            if isinstance(p, Param):
+                assert p.name not in self.types
+                self.types[p.name] = p
+
     @match(Ref)
     def unresolve(self, ref):
         return ref
@@ -254,6 +265,9 @@ class Typespace(object):
         if ref.params:
             assert isinstance(type, Template)
             assert len(ref.params) == len(type.params)
+            for r in ref.params:
+                if isinstance(self.resolve(r), Unresolved):
+                    return Unresolved(ref)
             bindings = {}
             for p, v in zip(type.params, ref.params):
                 bindings[p.name] = v
@@ -283,6 +297,10 @@ class Typespace(object):
         """
         return self.resolve(object.byname[name].type)
 
+    @match(lazy("Template"), basestring)
+    def get(self, template, name):
+        return self.get(template.type, name)
+
     @match(Ref, many(choice(Ref, Type)))
     def call(self, ref, *args):
         return self.call(self.resolve(ref), *args)
@@ -297,7 +315,7 @@ class Typespace(object):
         return self.resolve(callable.result)
 
     @match(Type, Type, opt(bool))
-    def cotraverse(self, a, b, bidi=False):
+    def cotraverse(self, a, b, bidi=False, use_bounds=True):
         """This traversal yields a sequence of node pairs that must be
         compatible in order for node 'a' to have a subtype
         relationship with node 'b'.
@@ -327,35 +345,30 @@ class Typespace(object):
                 continue
             done.add(key)
             yield node, companion
-            for n, c in self.cotransitions(node, companion):
+            for n, c in self.cotransitions(node, companion, use_bounds):
                 todo.append((n, c))
 
-    @match(lazy("Object"), lazy("Object"))
-    def cotransitions(self, obj, companion):
+    @match(lazy("Object"), lazy("Object"), bool)
+    def cotransitions(self, obj, companion, use_bounds):
         for f in obj.fields:
             cofield = companion.byname.get(f.name)
             if cofield:
                 yield self.resolve(f.type), self.resolve(cofield.type)
                 if f.writable:
-                    # invariant
-                    yield self.resolve(cofield.type), self.resolve(f.type)
+                    if cofield.writable:
+                        # invariant
+                        yield self.resolve(cofield.type), self.resolve(f.type)
+                    else:
+                        yield self.resolve(f.type), None
             else:
                 yield self.resolve(f.type), None
 
-    @match(lazy("Object"), None)
-    def cotransitions(self, obj, companion):
+    @match(lazy("Object"), None, bool)
+    def cotransitions(self, obj, companion, use_bounds):
         if False: yield
 
-    @match(lazy("Object"), Unresolved)
-    def cotransitions(self, obj, companion):
-        if False: yield
-
-    @match(Unresolved, lazy("Object"))
-    def cotransitions(self, obj, companion):
-        if False: yield
-
-    @match(lazy("Callable"), lazy("Callable"))
-    def cotransitions(self, callable, companion):
+    @match(lazy("Callable"), lazy("Callable"), bool)
+    def cotransitions(self, callable, companion, use_bounds):
         # covariant
         yield self.resolve(callable.result), self.resolve(companion.result)
         minargs = min(len(callable.arguments), len(companion.arguments))
@@ -371,6 +384,39 @@ class Typespace(object):
             else:
                 yield self.resolve(companion.arguments[idx]), None
             idx += 1
+
+    @match(lazy("Template"), lazy("Template"), bool)
+    def cotransitions(self, template, companion, use_bounds):
+        for a, b in self.cotransitions(template.type, companion.type, use_bounds):
+            yield a, b
+
+    @match(lazy("Object"), lazy("Param"), bool)
+    def cotransitions(self, object, companion, use_bounds):
+        if use_bounds:
+            bound = self.resolve(companion.bound) if companion.bound else Object()
+            for a, b in self.cotransitions(object, bound, use_bounds):
+                yield a, b
+        else:
+            yield object, companion
+
+    @match(lazy("Param"), lazy("Object"), bool)
+    def cotransitions(self, param, companion, use_bounds):
+        if use_bounds:
+            bound = self.resolve(param.bound) if param.bound else Object()
+            for a, b in self.cotransitions(bound, companion, use_bounds):
+                yield a, b
+        else:
+            yield param, companion
+
+    @match(lazy("Param"), lazy("Param"), bool)
+    def cotransitions(self, param, companion, use_bounds):
+        if use_bounds:
+            left = self.resolve(param.bound) if param.bound else Object()
+            right = self.resolve(companion.bound) if companion.bound else Object()
+            for a, b in self.cotransitions(left, right, use_bounds):
+                yield a, b
+        else:
+            yield param, companion
 
     @match(Ref, Ref)
     def assignable(self, a, b):
@@ -423,22 +469,38 @@ class Typespace(object):
     def compatible(self, a, b):
         return len(a.arguments) == len(b.arguments)
 
+    @match(lazy("Template"), lazy("Template"))
+    def compatible(self, a, b):
+        return len(a.params) == len(b.params)
+
+    @match(lazy("Param"), lazy("Param"))
+    def compatible(self, a, b):
+        return True
+
+    @match(lazy("Param"), None)
+    def compatible(self, a, b):
+        return False
+
+    @match(lazy("Unresolved"), lazy("Unresolved"))
+    def compatible(self, a, b):
+        assert False, (a, b)
+
     @match(Type, Type)
     def infer(self, a, b):
         bindings = {}
-        for n, m in self.cotraverse(a, b):
+        for n, m in self.cotraverse(a, b, use_bounds=False):
             self.add_inference(bindings, n, m)
         return bindings
 
-    @match(dict, Type, Unresolved)
-    def add_inference(self, bindings, type, un):
-        assert un.ref not in bindings
-        bindings[un.ref] = self.unresolve(type)
+    @match(dict, Type, Param)
+    def add_inference(self, bindings, type, p):
+        assert p.name not in bindings
+        bindings[p.name] = self.unresolve(type)
 
-    @match(dict, Unresolved, Type)
-    def add_inference(self, bindings, un, type):
-        assert un.ref not in bindings
-        bindings[un.ref] = self.unresolve(type)
+    @match(dict, Param, Type)
+    def add_inference(self, bindings, p, type):
+        assert p.name not in bindings
+        bindings[p.name] = self.unresolve(type)
 
     @match(dict, Type, Type)
     def add_inference(self, bindings, a, b):
@@ -503,10 +565,13 @@ class Callable(Type):
 
 class Template(Type):
 
-    @match(Param, many(Param), choice(Object, Callable))
+    @match(many(choice(Param, Ref), min=1), choice(Object, Callable))
     def __init__(self, *args):
         self.params = args[:-1]
         self.type = args[-1]
+        for p in self.params:
+            if isinstance(p, Ref):
+                assert not p.params
 
     @match(dict)
     def bind(self, bindings):

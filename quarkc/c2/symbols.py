@@ -138,15 +138,31 @@ class Symbols(object):
     def qualify(self, name):
         return self.qualify(name, name.text)
 
+    @match(basestring)
+    def exists(self, name):
+        return self.exists(self.definitions.get(name, None))
+
+    @match(None)
+    def exists(self, _):
+        return False
+
+    @match(Method)
+    def exists(self, m):
+        return True if m.type else False
+
+    @match(choice(AST, [many(Package)]))
+    def exists(self, _):
+        return True
+
     @match(AST, basestring)
     def qualify(self, node, text):
         for s in scopes(node):
             candidate = ".".join([name(s), text])
-            if candidate in self.definitions:
+            if self.exists(candidate):
                 return candidate
         candidates = [text, ".".join(["quark", text])]
         for candidate in candidates:
-            if candidate in self.definitions:
+            if self.exists(candidate):
                 return candidate
         raise KeyError("%s: no such symbol %s" % (lineinfo(node), text))
 

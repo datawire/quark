@@ -51,7 +51,7 @@ class Types(object):
         mtype = self.callable(meth)
         cls = meth.parent
         if cls.parameters:
-            mtype = types.Template(*[types.Param(name(p)) for p in cls.parameters] + [mtype])
+            mtype = types.Template(*[types.Ref(name(p)) for p in cls.parameters] + [mtype])
         self.types[name(meth)] = mtype
 
     @match([many(Package, min=1)])
@@ -61,7 +61,10 @@ class Types(object):
 
     @match(Callable)
     def callable(self, c):
-        result = types.Ref(self.symbols.qualify(c.type))
+        if c.type:
+            result = types.Ref(self.symbols.qualify(c.type))
+        else:
+            result = types.Ref(name(c.parent), *[types.Ref(name(p)) for p in c.parent.parameters])
         args = [types.Ref(self.symbols.qualify(p.type)) for p in c.params]
         return types.Callable(result, *args)
 
@@ -83,17 +86,12 @@ class Types(object):
     def has_type(self, _):
         return False
 
-    @match(Method)
-    def has_type(self, meth):
-        return self.has_type(meth.parent)
-
     @match(Import)
     def has_type(self, imp):
         return True if imp.alias else False
 
     @match(choice(Class, Function, Method, Declaration, Package, Expression, Type, Local, Return, Assign, Import,
                   ExprStmt))
-
     def resolve(self, node):
         if node in self.resolved:
             return self.resolved[node]
@@ -165,10 +163,20 @@ class Types(object):
 
     @match(Type)
     def do_resolve(self, type):
+        return self.do_resolve(type, type.parent)
+
+    @match(Type, Call)
+    def do_resolve(self, type, _):
+        tobj = self.do_resolve(type, None)
+        cls = self.symbols[type]
+        return self.types.get(tobj, cls.name.text)
+
+    @match(Type, choice(AST, None))
+    def do_resolve(self, type, _):
         if type.parameters:
-            return types.Ref(self.symbols.qualify(type), *[self.resolve(p) for p in type.parameters])
+            return self.types.resolve(types.Ref(self.symbols.qualify(type), *[self.resolve(p) for p in type.parameters]))
         else:
-            return types.Ref(self.symbols.qualify(type))
+            return self.types.resolve(types.Ref(self.symbols.qualify(type)))
 
     @match(choice(Method, Function))
     def do_resolve(self, meth):
@@ -193,3 +201,33 @@ class Types(object):
     @match(basestring)
     def __getitem__(self, sym):
         return self[self.symbols[sym]]
+
+    @match(types.Ref)
+    def node(self, ref):
+        return self.types.resolve(ref)
+
+    @match(choice(AST, basestring))
+    def node(self, nd):
+        return self.node(self[nd])
+
+    @match(AST)
+    def instantiations(self, nd):
+        return self.instantiations(self[nd])
+
+    @match(types.Ref)
+    def instantiations(self, ref):
+        return self.instantiations(ref, self.node(ref))
+
+    @match(types.Ref, types.Template)
+    def instantiations(self, ref, t):
+        refs = [r for r in self.types.resolved if r.name == ref.name and r.params]
+        for ref in refs:
+            bindings = {}
+            assert len(ref.params) == len(t.params)
+            for r, p in zip(ref.params, t.params):
+                bindings[p.name] = r
+            yield ref, bindings
+
+    @match(types.Ref, types.Type)
+    def instantiations(self, ref, _):
+        yield ref, {}

@@ -11,7 +11,13 @@ class Code(object):
     def __init__(self, symbols, types):
         self.symbols = symbols
         self.types = types
-        self.definitions = OrderedDict()
+
+        # Generic types are implemented as templates. This means we
+        # run code generation for every unique instantiation of a
+        # generic type, and these variables hold the unique reference
+        # and associated type bindings for the current iteration.
+        self.ref = None
+        self.bindings = None
 
     @match(choice(Interface, Class))
     def is_top(self, dfn):
@@ -27,11 +33,16 @@ class Code(object):
 
     @match()
     def compile(self):
+        definitions = []
         for sym, nd in self.symbols.definitions.items():
-            if self.is_top(nd):
-                self.definitions[sym] = self.compile(nd)
+            if not self.is_top(nd): continue
+
+            for ref, bindings in self.types.instantiations(nd):
+                self.ref = ref
+                self.bindings = bindings
+                definitions.append(self.compile(nd))
         # XXX
-        return ir.Package(*self.definitions.values())
+        return ir.Package(*definitions)
 
     @match(Function)
     def compile(self, fun):
@@ -39,6 +50,38 @@ class Code(object):
         t = self.types[fun.type]
         args = [self.compile_def(sym), self.compile(t)] + self.compile(fun.params) + [self.compile(fun.body)]
         return ir.Function(*args)
+
+    @match(Class)
+    def compile(self, cls):
+        return ir.Class(self.compile_def(self.mangle(self.ref)), *[self.compile(d) for d in cls.definitions])
+
+    @match(Field)
+    def compile(self, field):
+        return ir.Field(field.name.text, self.compile(self.types[field]))
+
+    @match(Method)
+    def compile(self, meth):
+        if meth.type:
+            con = ir.Method
+            name = meth.name.text
+            ret = self.types[meth.type]
+        else:
+            con = ir.Constructor
+            name = self.mangle(types.Ref(meth.parent.name.text, *self.ref.params))
+            ret = self.types[meth.parent]
+        return con(name, self.compile(ret), *(self.compile(meth.params) + [self.compile(meth.body)]))
+
+    @match(types.Ref)
+    def compile_ref(self, ref):
+        return self.compile_ref(self.mangle(ref.bind(self.bindings)))
+
+    @match(types.Ref)
+    def compile_ref_bound(self, ref):
+        return self.compile_ref(self.mangle(ref))
+
+    @match(types.Ref)
+    def mangle(self, ref):
+        return "_".join([ref.name] + [self.mangle(p).replace(".", "_") for p in ref.params])
 
     @match(basestring)
     def compile_ref(self, name):
@@ -50,18 +93,23 @@ class Code(object):
 
     @match(types.Ref)
     def compile(self, ref):
-        return ir.Type(self.compile_ref(ref.name))
+        bound = ref.bind(self.bindings)
+        return self.compile_bound(bound)
+
+    @match(types.Ref)
+    def compile_bound(self, ref):
+        return ir.Type(self.compile_ref_bound(ref))
 
     @match(types.Ref("quark.int"))
-    def compile(self, ref):
+    def compile_bound(self, ref):
         return ir.Int()
 
     @match(types.Ref("quark.bool"))
-    def compile(self, ref):
+    def compile_bound(self, ref):
         return ir.Bool()
 
     @match(types.Ref("quark.String"))
-    def compile(self, ref):
+    def compile_bound(self, ref):
         return ir.String()
 
     @match(types.Ref("quark.void"))
@@ -123,9 +171,10 @@ class Code(object):
     def compile_call(self, ref, dfn, var, args):
         return ir.Invoke(self.compile_ref(name(dfn)), *[self.compile(a) for a in args])
 
-    @match(types.Ref, Class, Type, [many(Expression)])
-    def compile_call(self, ref, dfn, var, args):
-        return ir.Construct(self.compile_ref(ref), tuple([self.compile(a) for a in args]))
+    @match(types.Ref, Method, Type, [many(Expression)])
+    def compile_call(self, ref, cons, type, args):
+        callable = self.types.node(ref)
+        return ir.Construct(self.compile_ref(callable.result), tuple([self.compile(a) for a in args]))
 
     @match(Attr)
     def compile(self, attr):

@@ -143,7 +143,7 @@ class State:
         else:
             return "State(S%s)" % self.id
 
-    def apply(self, *args):
+    def apply(self, *args, **kwargs):
         states = {self: ()}
         remaining = list(args)
         for value in flatten(args):
@@ -179,7 +179,7 @@ class State:
         assert len(nearest) == 1, nearest
         state = nearest.popitem()[1]
         assert state.action, (state, remaining)
-        return state.action(*args)
+        return state.action(*args, **kwargs)
 
 def deduplicate(items):
     deduped = []

@@ -24,9 +24,26 @@ class Compiler(object):
         except ParseError, e:
             self.errors.add(e)
             return
+
+        for node in traversal(file):
+            self.desugar(node)
+
         for node in traversal(file):
             if self.symbols.is_symbol(node):
                 self.symbols.define(node)
+
+    @match(Class)
+    def desugar(self, cls):
+        cons = [d for d in cls.definitions if isinstance(d, Method) and not d.type]
+        if not cons:
+            default = Method(None, Name(cls.name.text), (), Block([]))
+            cls.definitions.append(default)
+            wire(cls, default)
+
+    # XXX: should Primitives have constructors?
+    @match(choice(Interface, AST))
+    def desugar(self, _):
+        pass
 
     @match()
     def check_symbols(self):
