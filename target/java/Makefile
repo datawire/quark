@@ -22,7 +22,7 @@ test: emit run_test
 space := $(null) #
 
 run_test: build/tests.jar build/rt.jar $(JUNIT_JAR) $(HAMCREST_JAR)
-	java -cp $(subst $(space),:,$^) org.junit.runner.JUnitCore
+	java -cp $(subst $(space),:,$^) org.junit.runner.JUnitCore `jar tf build/tests.jar | grep /Tests.class | cut -d. -f1 | tr / .`
 
 emit:
 	quark-ir emit -v -o emit --java ../../quarkc/test/c2/ffi_ir/*.ir
