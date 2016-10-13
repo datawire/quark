@@ -254,6 +254,10 @@ class Python(Target):
 
     @match(Definition, TargetDefinition)
     def filename(self, dfn, tgtdfn):
+        # XXX: find a better home for generating implementation package __init__.py files.
+        # XXX: need to build out FFI-grade namespace
+        for i in range(1, len(tgtdfn.namespace.target_name)):
+            self.files["/".join(tgtdfn.namespace.target_name[:i] + ("__init__.py",))] = ""
         return "/".join(tgtdfn.namespace.target_name) + ".py"
 
     @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
