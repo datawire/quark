@@ -3,7 +3,7 @@
 Quark compiler.
 
 Usage:
-  quark [ -o DIR ] [ (--java | --python | --python3 | --javascript | --ruby | --go)... | --all ] [<file>]...
+  quark [ -o DIR ] [ (--java | --python | --python3 | --javascript | --ruby | --go | --ir)... | --all ] [<file>]...
   quark -h | --help
   quark --version
 
@@ -23,6 +23,7 @@ Options:
   --python3             Emit Python 3 code (if you're just emitting --python will work too.)
   --javascript          Emit JavaScript code.
   --go                  Emit go code.
+  --ir                  Emit IR
 """
 
 import os
@@ -37,8 +38,9 @@ def main(args):
     python3 = args["--python3"]
     javascript = args["--javascript"]
     go = args["--go"]
+    ir = args["--ir"]
 
-    all = args["--all"] or not (java or python or javascript or ruby or python3 or go)
+    all = args["--all"] or not (java or python or javascript or ruby or python3 or go or ir)
 
     output = args["--output"]
 
@@ -60,11 +62,19 @@ def main(args):
         emit(pkg, tgt)
         for file in tgt.files.values():
             fname = os.path.join(output, file.name)
-            dir = os.path.dirname(fname)
-            if not os.path.exists(dir):
-                os.makedirs(dir)
+            ensure_dir(fname)
             with open(fname, "write") as f:
                 f.write("%s\n" % str(file))
+    if ir:
+        fname = os.path.join(output, os.path.basename(args["<file>"][0]) + ".ir")
+        ensure_dir(fname)
+        with open(fname, "write") as f:
+            f.write("%s\n" % repr(pkg))
+
+def ensure_dir(fname):
+    dir = os.path.dirname(fname)
+    if not os.path.exists(dir):
+        os.makedirs(dir)
 
 def call_main():
     exit(main(docopt(__doc__, version="Quark %s" % 2.0)))
