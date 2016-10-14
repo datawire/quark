@@ -202,6 +202,18 @@ class ClassType(Type):
 class InterfaceType(Type):
     pass
 
+# A no-type type
+class Void(AbstractType):
+    def __init__(self):
+        pass
+
+    @property
+    def children(self):
+        if False: yield
+
+    def __repr__(self):
+        return self.repr()
+
 # a type that maps to a native type in target language, probably the quark primitive
 class NativeType(AbstractType):
 
@@ -214,9 +226,6 @@ class NativeType(AbstractType):
 
     def __repr__(self):
         return self.repr()
-
-class Void(NativeType):
-    pass
 
 class Int(NativeType):
     pass
