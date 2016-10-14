@@ -60,8 +60,8 @@ def main(args):
     pkg = c.compile()
     for tgt in targets:
         emit(pkg, tgt)
-        for file in tgt.files.values():
-            fname = os.path.join(output, file.name)
+        for name, file in tgt.files.items():
+            fname = os.path.join(output, name)
             ensure_dir(fname)
             with open(fname, "write") as f:
                 f.write("%s\n" % str(file))
