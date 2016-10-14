@@ -239,9 +239,27 @@ class String(NativeType):
 class Bool(NativeType):
     pass
 
+# a native type that can represent any object in the target
+class Any(NativeType):
+    pass
+
 # a native type for a function accepting an InterfaceType and returning an InterfaceType
 class Callable(NativeType):
     pass
+
+class Map(NativeType):
+    @match(choice(String,Int), NativeType)
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+
+    @property
+    def children(self):
+        yield self.key
+        yield self.value
+
+    def __repr__(self):
+        return self.repr(self.key, self.value)
 
 class Declaration(IR):
 
