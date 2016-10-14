@@ -20,11 +20,6 @@ namespace quark {
     }
 
     primitive void {}
-
-    primitive Map<K,V> {
-        V __get__(K key);
-        void __set__(K key, V value);
-    }
 }
 
 namespace math {
@@ -95,5 +90,12 @@ namespace other {
         void set(String key, T value) {
             contents[key] = value;
         }
+    }
+
+    class Map<K,V> {
+        K key;
+        V value;
+        V __get__(K key) { return value; }
+        void __set__(K key, V value) {}
     }
 }

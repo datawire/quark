@@ -2,6 +2,7 @@ from .match import *
 from .exceptions import *
 from .traits import *
 from .ast import *
+from .timer import Timer
 from .symbols import Symbols, name, traversal
 from collections import namedtuple, OrderedDict
 
@@ -10,12 +11,14 @@ from typespace import Typespace, Ref
 
 class Types(object):
 
-    @match(Symbols)
-    def __init__(self, symbols):
+    @match(Timer, Symbols)
+    def __init__(self, timer, symbols):
+        self.timer = timer
         self.symbols = symbols
         self.types = Typespace()
         self.resolved = {}
         self._violations = OrderedDict()
+        self.refset = None
 
     @match(AST, Ref, Ref)
     def violation(self, node, target, value):
@@ -220,13 +223,38 @@ class Types(object):
 
     @match(types.Ref, types.Template)
     def instantiations(self, ref, t):
-        refs = [r for r in self.types.resolved if r.name == ref.name and r.params]
+        if self.refset is None:
+            self.refset = set([r for r in self.types.resolved if r.params])
+            while True:
+                prev = len(self.refset)
+                bindingses = []
+                for r in self.refset:
+                    tp = self.types[r.name]
+                    bindings = {}
+                    for p, v in zip(tp.params, r.params):
+                        bindings[p.name] = v
+                    bindingses.append(bindings)
+                additions = []
+                for r in self.refset:
+                    for b in bindingses:
+                        bound = r.bind(b)
+                        if bound != r:
+                            additions.append(bound)
+                self.refset.update(additions)
+                if len(self.refset) == prev:
+                    break
+
+        refs = [r for r in self.refset if r.name == ref.name and r.params]
         for ref in refs:
             bindings = {}
             assert len(ref.params) == len(t.params)
+            concrete = True
             for r, p in zip(ref.params, t.params):
                 bindings[p.name] = r
-            yield ref, bindings
+                if isinstance(self.node(r), types.Param):
+                    concrete = False
+            if concrete:
+                yield ref, bindings
 
     @match(types.Ref, types.Type)
     def instantiations(self, ref, _):

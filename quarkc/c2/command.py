@@ -58,13 +58,13 @@ def main(args):
     pkg = c.compile()
     for tgt in targets:
         emit(pkg, tgt)
-        for file in tgt.files.values():
-            fname = os.path.join(output, file.name)
+        for name, content in tgt.files.items():
+            fname = os.path.join(output, name)
             dir = os.path.dirname(fname)
             if not os.path.exists(dir):
                 os.makedirs(dir)
             with open(fname, "write") as f:
-                f.write("%s\n" % str(file))
+                f.write(content)
 
 def call_main():
     exit(main(docopt(__doc__, version="Quark %s" % 2.0)))

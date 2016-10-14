@@ -14,7 +14,7 @@
 
 from .match import match, opt, choice, many
 from .ir import (IR, Function, Interface, Class, Check, If,
-                 While, Block, Evaluate, Local, Return, Set,
+                 While, Block, Evaluate, Local, Assign, Return, Set,
                  Message, Field, Method, Constructor, AssertEqual)
 from . import tr
 
@@ -162,6 +162,14 @@ def code(local, target):
         name=local.name,
         type=expr(local.type, target),
         initializer=opt_expr(" = ", local.expr, target)))
+
+## Assign
+
+@match(Assign, Target)
+def code(ass, target):
+    return tr.Simple("{name} = {value}".format(
+        name=ass.lhs.name,
+        value=expr(ass.rhs, target)))
 
 ## Set
 
