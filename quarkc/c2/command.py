@@ -29,6 +29,7 @@ Options:
 import os
 from docopt import docopt
 from .compiler import Compiler
+from .exceptions import QuarkError
 from .emit import emit, Java, Python, Ruby, Go
 
 def ensure_dir(fname):
@@ -61,7 +62,12 @@ def main(args):
     for fname in args["<file>"]:
         with open(fname) as f:
             c.parse(fname, f.read())
-    c.check()
+
+    try:
+        c.check()
+    except QuarkError, e:
+        return e
+
     pkg = c.compile()
     for tgt in targets:
         emit(pkg, tgt)
