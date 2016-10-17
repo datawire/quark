@@ -205,7 +205,7 @@ def ppargs(args, dedup=False):
         elif isinstance(a, tuple):
             result.append("(%s)" % ppargs(a, True))
         else:
-            result.append(str(a.__class__.__name__))
+            result.append("%s.%s" % (a.__class__.__module__, a.__class__.__name__))
 
     if dedup:
         result = deduplicate(result)

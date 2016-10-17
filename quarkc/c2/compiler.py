@@ -6,16 +6,18 @@ from .symbols import *
 from .types import Types
 from .code import Code
 from .traits import *
+from .timer import Timer
 
 class Compiler(object):
 
     MATCH_TRAITS = COMPILER
 
     def __init__(self):
+        self.timer = Timer()
         self.errors = Errors()
-        self.symbols = Symbols()
-        self.types = Types(self.symbols)
-        self.code = Code(self.symbols, self.types)
+        self.symbols = Symbols(self.timer)
+        self.types = Types(self.timer, self.symbols)
+        self.code = Code(self.timer, self.symbols, self.types)
 
     @match(basestring, basestring)
     def parse(self, name, content):
@@ -47,11 +49,13 @@ class Compiler(object):
 
     @match()
     def check_symbols(self):
+        self.timer.mark("parse: {elapsed}")
         for sym, nodes in self.symbols.duplicates.items():
             prev = depackage(self.symbols.definitions[sym])
             for n in nodes:
                 self.errors.add(DuplicateSymbol(sym, n, prev))
         self.errors.check()
+        self.timer.mark("check_symbols: {elapsed}")
 
     @match()
     def check_types(self):
@@ -59,6 +63,7 @@ class Compiler(object):
         for k, v in self.symbols.definitions.items():
             if self.types.is_type(v):
                 self.types.define(v)
+        self.timer.mark("define_types: {elapsed}")
         for k, v in self.symbols.definitions.items():
             for node in traversal(v):
                 if self.types.has_type(node):
@@ -66,6 +71,7 @@ class Compiler(object):
         for v in self.types.violations:
             self.errors.add(v)
         self.errors.check()
+        self.timer.mark("resolve_types: {elapsed}")
 
     @match()
     def check(self):
@@ -73,4 +79,7 @@ class Compiler(object):
 
     @match()
     def compile(self):
-        return self.code.compile()
+        pkg = self.code.compile()
+        self.timer.mark("compile: {elapsed}")
+        self.timer.mark("total: {total}")
+        return pkg

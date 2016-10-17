@@ -2,6 +2,7 @@ from .ast import *
 from .match import *
 from .parse import traversal
 from .helpers import lineinfo
+from .timer import Timer
 from collections import OrderedDict
 
 @match(choice(Package, Function, Class, Interface, Method, Declaration, TypeParam))
@@ -68,7 +69,9 @@ def depackage(pkgs):
 
 class Symbols(object):
 
-    def __init__(self):
+    @match(Timer)
+    def __init__(self, timer):
+        self.timer = timer
         self.definitions = OrderedDict()
         self.duplicates = OrderedDict()
 

@@ -31,6 +31,11 @@ from docopt import docopt
 from .compiler import Compiler
 from .emit import emit, Java, Python, Ruby, Go
 
+def ensure_dir(fname):
+    dir = os.path.dirname(fname)
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
 def main(args):
     java = args["--java"]
     ruby = args["--ruby"]
@@ -60,21 +65,17 @@ def main(args):
     pkg = c.compile()
     for tgt in targets:
         emit(pkg, tgt)
-        for name, file in tgt.files.items():
+        for name, content in tgt.files.items():
             fname = os.path.join(output, name)
             ensure_dir(fname)
             with open(fname, "write") as f:
-                f.write("%s\n" % str(file))
+                f.write(content)
+
     if ir:
         fname = os.path.join(output, os.path.basename(args["<file>"][0]) + ".ir")
         ensure_dir(fname)
         with open(fname, "write") as f:
             f.write("%s\n" % repr(pkg))
-
-def ensure_dir(fname):
-    dir = os.path.dirname(fname)
-    if not os.path.exists(dir):
-        os.makedirs(dir)
 
 def call_main():
     exit(main(docopt(__doc__, version="Quark %s" % 2.0)))

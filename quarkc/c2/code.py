@@ -1,14 +1,16 @@
 from .match import *
 from .traits import *
 from .ast import *
+from .timer import Timer
 from .symbols import *
 
 import ir, types
 
 class Code(object):
 
-    @match(Symbols, types.Types)
-    def __init__(self, symbols, types):
+    @match(Timer, Symbols, types.Types)
+    def __init__(self, timer, symbols, types):
+        self.timer = timer
         self.symbols = symbols
         self.types = types
 
@@ -62,14 +64,14 @@ class Code(object):
     @match(Method)
     def compile(self, meth):
         if meth.type:
-            con = ir.Method
+            klass = ir.Method
             name = meth.name.text
             ret = self.types[meth.type]
         else:
-            con = ir.Constructor
-            name = self.mangle(types.Ref(meth.parent.name.text, *self.ref.params))
-            ret = self.types[meth.parent]
-        return con(name, self.compile(ret), *(self.compile(meth.params) + [self.compile(meth.body)]))
+            klass = ir.Constructor
+            name = self.mangle(types.Ref(meth.name.text, *self.ref.params))
+            ret = self.types.node(meth).result
+        return klass(name, self.compile(ret), *(self.compile(meth.params) + [self.compile(meth.body)]))
 
     @match(types.Ref)
     def compile_ref(self, ref):

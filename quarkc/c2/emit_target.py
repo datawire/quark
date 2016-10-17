@@ -15,7 +15,7 @@
 from collections import OrderedDict
 from pprint import pformat
 from .match import match, many, choice
-from .ir import IR, Definition, Name, Ref, Invoke, Class, Interface, Function, Check, Void, Block
+from .ir import IR, Definition, Name, Ref, Invoke, Construct, Class, Interface, Function, Check, Void, Block
 from .ir import dfn_of
 from . import tr
 
@@ -113,7 +113,7 @@ class Target(object):
     def reference(self, dfn, ref):
         assert dfn.name in self.definitions
         if ref not in self.definitions:
-            self.define_ffi(ref.parent)
+            self.define_ffi(ref.parent, ref)
         assert ref in self.definitions
         tgtdfn = self.definitions[dfn.name]
         tgtref = self.definitions[ref]
@@ -127,9 +127,13 @@ class Target(object):
         """ generate the import statement and store import name in the tgtdfn namespace """
         assert False, "TODO: add import logic for %s" % self.__class__.__name__
 
-    @match(Invoke)
-    def define_ffi(self, invoke):
+    @match(Invoke, Ref)
+    def define_ffi(self, invoke, ref):
         self.define(Function(Name(invoke.name.package, *invoke.name.path), Void(), Block()))
+
+    @match(Construct, Ref)
+    def define_ffi(self, _, ref):
+        assert False, "no such reference: %s" % ref
 
     @match(Name)
     def nameof(self, name):
