@@ -14,7 +14,7 @@
 
 from .match import match, choice
 from .ir import (
-    Type, ClassType, Name, Ref,
+    Type, ClassType, Name, Ref, AbstractType,
     Param, Var, This, Call, Invoke, Send, Construct, Get,
     Void, Null,
     Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit,
@@ -108,8 +108,16 @@ def expr(mapt, target):
 @match(Map, Java)
 def expr(mapt, target):
     return "java.util.Map<{key},{value}>".format(
-        key=expr(mapt.key, target),
-        value=expr(mapt.value, target))
+        key=expr(mapt, mapt.key, target),
+        value=expr(mapt, mapt.value, target))
+
+@match(Map, AbstractType, Java)
+def expr(mapt, type, target):
+    return expr(type, target)
+
+@match(Map, Int, Java)
+def expr(mapt, type, target):
+    return "Integer"
 
 @match(Map, Go)
 def expr(mapt, target):

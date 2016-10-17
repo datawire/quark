@@ -48,19 +48,19 @@ class TestTreeEqual(object):
 
     def test_type_equality(self):
         with pytest.raises(AssertionError):
-            check_tree_equal(Int(), Null())
+            check_tree_equal(Int(), This())
 
     def test_missing_child(self):
         with pytest.raises(AssertionError):
-            check_tree_equal(Block(Return(Null())), Block())
+            check_tree_equal(Block(Return(This())), Block())
 
     def test_extra_child(self):
         with pytest.raises(AssertionError):
-            check_tree_equal(Block(), Block(Return(Null())))
+            check_tree_equal(Block(), Block(Return(This())))
 
     def test_mismatched_child(self):
         with pytest.raises(AssertionError):
-            check_tree_equal(Block(Return(This())), Block(Return(Null())))
+            check_tree_equal(Block(Return(This())), Block(Return(Null(Int()))))
 
     @pytest.mark.parametrize("ir_f", [
         lambda name: Name("a:b", name),
@@ -71,7 +71,7 @@ class TestTreeEqual(object):
         lambda name: Constructor(name, ClassType(Name("a.b.c")), Block()),
         lambda name: Var(name),
         lambda name: Get(This(), name),
-        lambda name: Set(This(), name, Null()),
+        lambda name: Set(This(), name, Null(Int())),
         ])
     def test_name(self, ir_f):
         with pytest.raises(AssertionError):
@@ -105,7 +105,8 @@ class TestTreeEqual(object):
           Constructor('c', ClassType('a:b.c'), Block())),
     Class(Name('a:b.c'), InterfaceType('b:c.d'), InterfaceType('b:c.e'),
           Constructor('c', ClassType('a:b.c'), Block())),
-    This(), Null(), Var("a"), Get(This(), "a"), Set(This(), "a", Null()),
+    This(), Null(Int()),
+    Var("a"), Get(This(), "a"), Set(This(), "a", Null(Bool())),
     Invoke(Ref("a:b.c")), Invoke(Ref("a:b.c"), This()),
     Invoke(Ref("a:b.c"), This(), Invoke(Ref("a:b.c"))),
     Send(This(), "a", (Send(This(), "a", (This(), )), Send(This(), "a", ()), )),
@@ -115,9 +116,11 @@ class TestTreeEqual(object):
     FloatLit(0.0), FloatLit(1.0), FloatLit(1.1), FloatLit(4.2),
     StringLit(""), StringLit("a"), StringLit(u"\xfc"),
     Local("a",Int()), Local("a", Int(), IntLit(3)),
-    Evaluate(Null()),
-    Return(Null()),
-    If(BoolLit(True), Return(Null()), Return(This())),
+    Evaluate(Null(String())),
+    Return(Null(Float())),
+    If(BoolLit(True),
+       Return(Null(InterfaceType(Ref("a:b.c")))),
+       Return(This())),
     While(BoolLit(True), Block(Break(), Continue())),
     ])
 def test_simple_ir(tree):

@@ -55,7 +55,7 @@
                          Local("s", InterfaceType(Ref("minimal:mdk.api.Session")),
                                Construct(Ref("minimal:mdk.impl.Session"),
                                          (This(), Var("id")))),
-                         If(Invoke(Ref("q:q.object__ne__"), Get(This(), "plugin"), Null()),
+                         If(Invoke(Ref("q:q.object__ne__"), Get(This(), "plugin"), Null(InterfaceType(Ref("minimal:mdk.api.Plugin")))),
                             Block(
                                 Send(Get(This(), "plugin"), "onSession", (Var("s"), ))
                             ),

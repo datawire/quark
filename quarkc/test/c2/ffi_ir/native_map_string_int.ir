@@ -1,0 +1,36 @@
+    Package(
+        Check(
+            Name("native_map_string_int:native_map.string_int.make"),
+            Block(
+                Local("map_", Map(String(), Int()), Invoke(Ref("q:q.map_string_int__init__"))),
+                Evaluate(Invoke(Ref("q:q.map_string_int__set__"), Var("map_"), StringLit("abra"), IntLit(42))),
+                AssertEqual(IntLit(42), Invoke(Ref("q:q.map_string_int__get__"), Var("map_"), StringLit("abra")))
+            )
+        ),
+        Check(
+            Name("native_map_string_int:native_map.string_int.no_key_null"),
+            Block(
+                Local("map_", Map(String(), Int()), Invoke(Ref("q:q.map_string_int__init__"))),
+                AssertEqual(Null(Int()), Invoke(Ref("q:q.map_string_int__get__"), Var("map_"), StringLit("abra")))
+            )
+        ),
+        Check(
+            Name("native_map_string_int:native_map.string_int.size_empty"),
+            Block(
+                Local("map_", Map(String(), Int()), Invoke(Ref("q:q.map_string_int__init__"))),
+                AssertEqual(IntLit(0), Invoke(Ref("q:q.map_string_int__len__"), Var("map_")))
+            )
+        ),
+        Check(
+            Name("native_map_string_int:native_map.string_int.size_five"),
+            Block(
+                Local("map_", Map(String(), Int()), Invoke(Ref("q:q.map_string_int__init__"))),
+                Evaluate(Invoke(Ref("q:q.map_string_int__set__"), Var("map_"), StringLit("one"),   IntLit(1))),
+                Evaluate(Invoke(Ref("q:q.map_string_int__set__"), Var("map_"), StringLit("two"),   IntLit(2))),
+                Evaluate(Invoke(Ref("q:q.map_string_int__set__"), Var("map_"), StringLit("three"), IntLit(3))),
+                Evaluate(Invoke(Ref("q:q.map_string_int__set__"), Var("map_"), StringLit("four"),  IntLit(4))),
+                Evaluate(Invoke(Ref("q:q.map_string_int__set__"), Var("map_"), StringLit("five"),  IntLit(5))),
+                AssertEqual(IntLit(5), Invoke(Ref("q:q.map_string_int__len__"), Var("map_")))
+            )
+        ),
+    )

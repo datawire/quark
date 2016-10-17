@@ -383,7 +383,7 @@ class Field(IR):
     def __init__(self, name, type, initializer=None):
         self.type = type
         self.name = name
-        self.initializer = initializer or Null()
+        self.initializer = initializer or Null(type.copy())
 
     # XXX: poor-man private constructor :)
     @match("private", basestring, NativeType, lazy('Literal'))
@@ -392,17 +392,21 @@ class Field(IR):
         self.name = name
         self.initializer = initializer
 
+    @match(basestring, Bool, opt(lazy('BoolLit')))
+    def __init__(self, name, type, initializer=None):
+        self.__init__("private", name, type, Null(type))
+
     @match(basestring, Int, opt(lazy('IntLit')))
     def __init__(self, name, type, initializer=None):
-        self.__init__("private", name, type, initializer or IntLit(0))
+        self.__init__("private", name, type, Null(type))
 
     @match(basestring, String, opt(lazy('StringLit')))
     def __init__(self, name, type, initializer=None):
-        self.__init__("private", name, type, initializer or StringLit(""))
+        self.__init__("private", name, type, Null(type))
 
     @match(basestring, Float, opt(lazy('FloatLit')))
     def __init__(self, name, type, initializer=None):
-        self.__init__("private", name, type, initializer or FloatLit(0))
+        self.__init__("private", name, type, Null(type))
 
     @property
     def children(self):
@@ -539,7 +543,38 @@ class This(SimpleExpression):
 
 # null value
 class Null(SimpleExpression):
-    pass
+    def __new__(cls, type):
+        return makeNull(type)
+
+    def __init__(self, type):
+        self.type = type
+
+    @property
+    def children(self):
+        yield self.type
+
+    def __repr__(self):
+        return self.repr(self.type)
+
+@match(Bool)
+def makeNull(_):
+    return BoolLit(False)
+
+@match(Int)
+def makeNull(_):
+    return IntLit(0)
+
+@match(String)
+def makeNull(_):
+    return StringLit("")
+
+@match(Float)
+def makeNull(_):
+    return FloatLit(0.0)
+
+@match(choice(Type, Any, Callable))
+def makeNull(type):
+    return SimpleExpression.__new__(Null, type)
 
 # access a Local or a Param
 class Var(SimpleExpression):
