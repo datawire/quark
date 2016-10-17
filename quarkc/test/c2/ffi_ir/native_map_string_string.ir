@@ -1,0 +1,10 @@
+    Package(
+        Check(
+            Name("native_string:native_map.string_string.make"),
+            Block(
+                Local("map_", Map(String(), String()), Invoke(Ref("q:q.map_string_string__init__"))),
+                Evaluate(Invoke(Ref("q:q.map_string_string__set__"), Var("map_"), StringLit("abra"), StringLit("cadabra"))),
+                AssertEqual(StringLit("cadabra"), Invoke(Ref("q:q.map_string_string__get__"), Var("map_"), StringLit("abra")))
+            )
+        ),
+    )
