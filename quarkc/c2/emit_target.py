@@ -284,6 +284,11 @@ class Python(Target):
             self.files["/".join(tgtdfn.namespace.target_name[:i] + ("__init__.py",))] = ""
         return "/".join(tgtdfn.namespace.target_name) + ".py"
 
+    @match(Check, TargetDefinition)
+    def filename(self, dfn, tgtdfn):
+        # XXX: need to build out FFI-grade namespace
+        return "/".join(tgtdfn.namespace.target_name) + ".py"
+
     @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
     def reference(self, module, dfn, tgtdfn, ref, tgtref):
         ref_module = ".".join(tgtref.namespace.target_name)

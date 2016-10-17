@@ -1,0 +1,130 @@
+Package(
+  Function(
+    Name('pkg', 'math', 'fib'),
+    Int(),
+    Param('n', Int()),
+    Block(
+      If(
+        Invoke(Ref('pkg', 'quark', 'int___lt__'), Var('n'), IntLit(2)),
+        Block(Return(Var('n'))),
+        Block(
+          Return(
+            Invoke(
+              Ref('pkg', 'quark', 'int___add__'),
+              Invoke(
+                Ref('pkg', 'math', 'fib'),
+                Invoke(Ref('pkg', 'quark', 'int___sub__'), Var('n'), IntLit(1))),
+              Invoke(
+                Ref('pkg', 'math', 'fib'),
+                Invoke(Ref('pkg', 'quark', 'int___sub__'), Var('n'), IntLit(2))))))))),
+  Function(
+    Name('pkg', 'other', 'fib2'),
+    Int(),
+    Param('n', Int()),
+    Block(
+      Return(
+        Invoke(
+          Ref('pkg', 'quark', 'int___mul__'),
+          IntLit(2),
+          Invoke(Ref('pkg', 'math', 'fib'), Var('n')))))),
+  Class(
+    Name('pkg', 'other', 'Foo'),
+    Field('asdf', String(), StringLit(u'')),
+    Constructor('Foo', Type(Ref('pkg', 'other', 'Foo')), Block()),
+    Method(
+      'foo',
+      Int(),
+      Block(
+        Set(This(), 'asdf', StringLit(u'"fdsa"')),
+        Return(Invoke(Ref('pkg', 'other', 'fib2'), IntLit(3))))),
+    Method(
+      'bar',
+      String(),
+      Block(
+        Local('count', Int(), IntLit(0)),
+        While(
+          Invoke(Ref('pkg', 'quark', 'int___lt__'), Var('count'), IntLit(3)),
+          Block(
+            Assign(
+              Var('count'),
+              Invoke(Ref('pkg', 'quark', 'int___add__'), Var('count'), IntLit(1))))),
+        Local(
+          'box',
+          Type(Ref('pkg', 'other', 'Box_quark_String')),
+          Construct(Ref('pkg', 'other', 'Box_quark_String'), ())),
+        Local(
+          'ibox',
+          Type(Ref('pkg', 'other', 'Box_quark_int')),
+          Construct(Ref('pkg', 'other', 'Box_quark_int'), ())),
+        Evaluate(Send(Var('ibox'), 'set', (IntLit(3),))),
+        Evaluate(Send(Var('box'), 'set', (StringLit(u'"three"'),))),
+        Local(
+          'f',
+          Type(Ref('pkg', 'other', 'Foo')),
+          Construct(Ref('pkg', 'other', 'Foo'), ())),
+        Local(
+          'm',
+          Type(Ref('pkg', 'quark', 'Map_quark_int_quark_String')),
+          Construct(Ref('pkg', 'quark', 'Map_quark_int_quark_String'), ())),
+        Local(
+          'mbi',
+          Type(Ref('pkg', 'other', 'MultiBox_quark_int')),
+          Construct(Ref('pkg', 'other', 'MultiBox_quark_int'), ())),
+        Return(
+          Invoke(Ref('pkg', 'quark', 'int_toString'), Send(This(), 'foo', ())))))),
+  Class(
+    Name('pkg', 'other', 'Box_quark_String'),
+    Field('contents', String(), StringLit(u'')),
+    Constructor('Box_quark_String', Type(Ref('pkg', 'other', 'Box')), Block()),
+    Method('get', String(), Block(Return(Get(This(), 'contents')))),
+    Method(
+      'set',
+      Void(),
+      Param('value', String()),
+      Block(Set(This(), 'contents', Var('value'))))),
+  Class(
+    Name('pkg', 'other', 'Box_quark_int'),
+    Field('contents', Int(), IntLit(0)),
+    Constructor('Box_quark_int', Type(Ref('pkg', 'other', 'Box')), Block()),
+    Method('get', Int(), Block(Return(Get(This(), 'contents')))),
+    Method(
+      'set',
+      Void(),
+      Param('value', Int()),
+      Block(Set(This(), 'contents', Var('value'))))),
+  Class(
+    Name('pkg', 'other', 'MultiBox_quark_int'),
+    Field(
+      'contents',
+      Type(Ref('pkg', 'quark', 'Map_quark_String_quark_int')),
+      Null()),
+    Constructor(
+      'MultiBox_quark_int',
+      Type(Ref('pkg', 'other', 'MultiBox')),
+      Block(
+        Set(
+          This(),
+          'contents',
+          Construct(Ref('pkg', 'quark', 'Map_quark_String_quark_int'), ())))),
+    Method(
+      'get',
+      Int(),
+      Param('key', String()),
+      Block(
+        Return(
+          Invoke(
+            Ref('pkg', 'quark', 'Map___get__'),
+            Get(This(), 'contents'),
+            Var('key'))))),
+    Method(
+      'set',
+      Void(),
+      Param('key', String()),
+      Param('value', Int()),
+      Block(
+        Evaluate(
+          Invoke(
+            Ref('pkg', 'quark', 'Map___set__'),
+            Get(This(), 'contents'),
+            Var('key'),
+            Var('value')))))))

@@ -17,7 +17,8 @@ from .ir import (
     Type, ClassType, Name, Ref,
     Param, Var, This, Call, Invoke, Send, Construct, Get,
     Void, Null,
-    Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit
+    Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit,
+    Map
 )
 
 from .emit_target import Target, Python, Java, Go, Ruby
@@ -87,16 +88,34 @@ def expr(floatt, target):
 ## String
 
 @match(String, Target)
-def expr(floatt, target):
+def expr(stringt, target):
     return ""
 
 @match(String, Java)
-def expr(floatt, target):
+def expr(stringt, target):
     return "String"
 
 @match(String, Go)
-def expr(floatt, target):
+def expr(stringt, target):
     return "string"
+
+## Map
+
+@match(Map, Target)
+def expr(mapt, target):
+    return ""
+
+@match(Map, Java)
+def expr(mapt, target):
+    return "java.util.Map<{key},{value}>".format(
+        key=expr(mapt.key, target),
+        value=expr(mapt.value, target))
+
+@match(Map, Go)
+def expr(mapt, target):
+    return "map[{key}] {value}".format(
+        key=expr(mapt.key, target),
+        value=expr(mapt.value, target))
 
 ## Param
 
