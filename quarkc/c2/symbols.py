@@ -1,4 +1,5 @@
 from .ast import *
+from .exceptions import MissingSymbol
 from .match import *
 from .parse import traversal
 from .helpers import lineinfo
@@ -83,15 +84,15 @@ class Symbols(object):
             self.duplicates[name] = [node]
 
     @match(choice(definitions(), Package))
-    def is_symbol(self, _):
+    def is_definition(self, _):
         return True
 
     @match(Import)
-    def is_symbol(self, imp):
+    def is_definition(self, imp):
         return True if imp.alias else False
 
     @match(AST)
-    def is_symbol(self, _):
+    def is_definition(self, _):
         return False
 
     @match(choice(definitions(), Package))
@@ -128,6 +129,14 @@ class Symbols(object):
     @match(basestring, Package, [many(Package)])
     def define(self, name, pkg, pkgs):
         pkgs.append(pkg)
+
+    @match(choice(Type, Var))
+    def is_name(self, _):
+        return True
+
+    @match(AST)
+    def is_name(self, _):
+           return False
 
     @match(Type)
     def qualify(self, type):
@@ -167,7 +176,7 @@ class Symbols(object):
         for candidate in candidates:
             if self.exists(candidate):
                 return candidate
-        raise KeyError("%s: no such symbol %s" % (lineinfo(node), text))
+        raise MissingSymbol(node, text)
 
     @match(Var)
     def __getitem__(self, var):

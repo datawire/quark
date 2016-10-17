@@ -16,6 +16,12 @@ class DuplicateSymbol(SemanticError):
         self.__init__(node, "duplicate definition of %s, first occurance on %s" %
                       (name, lineinfo(previous)))
 
+class MissingSymbol(SemanticError):
+
+    @match(AST, basestring)
+    def __init__(self, node, name):
+        SemanticError.__init__(self, node, "no such symbol %s" % name)
+
 class UnassignableError(SemanticError):
 
     @match(AST, object, object)

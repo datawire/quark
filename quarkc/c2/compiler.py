@@ -12,12 +12,13 @@ class Compiler(object):
 
     MATCH_TRAITS = COMPILER
 
-    def __init__(self):
-        self.timer = Timer()
+    def __init__(self, verbose=0):
+        self.timer = Timer(verbose)
         self.errors = Errors()
         self.symbols = Symbols(self.timer)
         self.types = Types(self.timer, self.symbols)
         self.code = Code(self.timer, self.symbols, self.types)
+        self.files = []
 
     @match(basestring, basestring)
     def parse(self, name, content):
@@ -31,8 +32,10 @@ class Compiler(object):
             self.desugar(node)
 
         for node in traversal(file):
-            if self.symbols.is_symbol(node):
+            if self.symbols.is_definition(node):
                 self.symbols.define(node)
+
+        self.files.append(file)
 
     @match(Class)
     def desugar(self, cls):
@@ -54,6 +57,13 @@ class Compiler(object):
             prev = depackage(self.symbols.definitions[sym])
             for n in nodes:
                 self.errors.add(DuplicateSymbol(sym, n, prev))
+        for f in self.files:
+            for n in traversal(f):
+                if self.symbols.is_name(n):
+                    try:
+                        self.symbols.qualify(n)
+                    except MissingSymbol, e:
+                        self.errors.add(e)
         self.errors.check()
         self.timer.mark("check_symbols: {elapsed}")
 
