@@ -255,7 +255,7 @@ class Python(Target):
 
     @match(Definition)
     def define_namespace(self, dfn):
-        return self.define_namespace(dfn.name.path)
+        return self.define_namespace(dfn.name.path[:-1])
 
     @match(Check)
     def define_namespace(self, dfn):
@@ -297,8 +297,21 @@ class Python(Target):
         # XXX: inside package we should do relative imports
         tgtdfn.namespace.names[ref] = ".".join((ref_module_name, tgtref.target_name))
 
-        module.add(tr.Simple("import {ref_module} as {ref_module_name}".format(
-            ref_module = ref_module, ref_module_name = ref_module_name)))
+
+        d_ns = tgtdfn.namespace
+        r_ns = tgtref.namespace
+        dfn_module_path = ".".join(d_ns.target_name)
+        ref_module_path = ".".join(r_ns.target_name)
+        if dfn_module_path == ref_module_path and not isinstance(dfn, Check):
+            module.add(tr.Comment("Must not import " + ref_module_path))
+        else:
+            if ref_module_path not in d_ns.imports:
+                d_ns.imports.add(ref_module_path)
+                module.add(tr.Simple("import {ref_module} as {ref_module_name}".format(
+                    ref_module = ref_module, ref_module_name = "_".join(r_ns.target_name))))
+            else:
+                module.add(tr.Comment("Already imported " + ref_module_path + " to " + str((tgtdfn, tgtref))))
+
 
 class Ruby(Target):
 

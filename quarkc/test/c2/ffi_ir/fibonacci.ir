@@ -24,6 +24,13 @@
                 )
             )
         ),
+        Function(
+            Name("pf:pf.fib2"), Int(),
+            Param("i", Int()),
+            Block(
+                Return(Invoke(Ref("pf:pf.fib"), Var("i")))
+            )
+        ),
         Check(
             Name("pf:pf.zero"),
             Block(
