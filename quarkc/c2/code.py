@@ -21,6 +21,8 @@ class Code(object):
         self.ref = None
         self.bindings = None
 
+        self.asserts = 0
+
     @match(choice(Interface, Class))
     def is_top(self, dfn):
         return True
@@ -48,10 +50,14 @@ class Code(object):
 
     @match(Function)
     def compile(self, fun):
+        self.asserts = 0
         sym = name(fun)
         t = self.types[fun.type]
         args = [self.compile_def(sym), self.compile(t)] + self.compile(fun.params) + [self.compile(fun.body)]
-        return ir.Function(*args)
+        if self.asserts:
+            return ir.Check(args[0], *args[2:])
+        else:
+            return ir.Function(*args)
 
     @match(Class)
     def compile(self, cls):
@@ -87,7 +93,10 @@ class Code(object):
 
     @match(basestring)
     def compile_ref(self, name):
-        return ir.Ref("pkg", name)
+        if name.startswith("quark."):
+            return ir.Ref("q", "q" + name[5:])
+        else:
+            return ir.Ref("pkg", name)
 
     @match(basestring)
     def compile_def(self, name):
@@ -166,12 +175,21 @@ class Code(object):
 
     @match(types.Ref, Primitive, Method, ir.Expression, [many(Expression)])
     def compile_call_method(self, ref, objdfn, methdfn, expr, args):
-        n = self.compile_ref("%s_%s" % (name(objdfn), methdfn.name.text))
+        n = self.compile_ref("%s%s" % (name(objdfn), methdfn.name.text))
         return ir.Invoke(n, expr, *[self.compile(a) for a in args])
 
     @match(types.Ref, Function, Var, [many(Expression)])
     def compile_call(self, ref, dfn, var, args):
+        return self.compile_call(ref, dfn, var.name.text, args)
+
+    @match(types.Ref, Function, basestring, [many(Expression)])
+    def compile_call(self, ref, dfn, fun, args):
         return ir.Invoke(self.compile_ref(name(dfn)), *[self.compile(a) for a in args])
+
+    @match(types.Ref, Function, "assertEqual", [many(Expression)])
+    def compile_call(self, ref, dfn, fun, args):
+        self.asserts += 1
+        return ir.AssertEqual(*[self.compile(a) for a in args])
 
     @match(types.Ref, Method, Type, [many(Expression)])
     def compile_call(self, ref, cons, type, args):
@@ -224,4 +242,12 @@ class Code(object):
 
     @match(ExprStmt)
     def compile(self, exprs):
-        return ir.Evaluate(self.compile(exprs.expr))
+        return self.to_stmt(self.compile(exprs.expr))
+
+    @match(ir.Statement)
+    def to_stmt(self, stmt):
+        return stmt
+
+    @match(ir.Expression)
+    def to_stmt(self, expr):
+        return ir.Evaluate(expr)
