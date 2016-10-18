@@ -3,7 +3,7 @@
 Quark compiler.
 
 Usage:
-  quark [ -o DIR ] [ (--java | --python | --python3 | --javascript | --ruby | --go | --ir)... | --all ] [<file>]...
+  quark [options] [ (--java | --python | --python3 | --javascript | --ruby | --go | --ir)... | --all ] [<file>]...
   quark -h | --help
   quark --version
 
@@ -38,6 +38,10 @@ def ensure_dir(fname):
         os.makedirs(dir)
 
 def main(args):
+    verbose = 0
+    if args["--verbose"]:
+        verbose = 1
+
     java = args["--java"]
     ruby = args["--ruby"]
     python = args["--python"]
@@ -58,7 +62,7 @@ def main(args):
     if ruby or all: targets.append(Ruby())
     if go or all: targets.append(Go())
 
-    c = Compiler()
+    c = Compiler(verbose=verbose)
     for fname in args["<file>"]:
         with open(fname) as f:
             c.parse(fname, f.read())
