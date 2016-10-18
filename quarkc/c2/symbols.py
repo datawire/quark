@@ -68,6 +68,9 @@ def depackage(dfn):
 def depackage(pkgs):
     return pkgs[0]
 
+def usages():
+    return choice(Type, Var, String, Number)
+
 class Symbols(object):
 
     @match(Timer)
@@ -75,6 +78,7 @@ class Symbols(object):
         self.timer = timer
         self.definitions = OrderedDict()
         self.duplicates = OrderedDict()
+        self.missing = OrderedDict()
 
     @match(basestring, choice(definitions(), Package, Import))
     def duplicate(self, name, node):
@@ -130,13 +134,35 @@ class Symbols(object):
     def define(self, name, pkg, pkgs):
         pkgs.append(pkg)
 
-    @match(choice(Type, Var))
+    @match(usages())
     def is_name(self, _):
         return True
 
     @match(AST)
     def is_name(self, _):
            return False
+
+    @match(usages())
+    def resolve(self, nd):
+        try:
+            self.do_resolve(nd)
+        except MissingSymbol, e:
+            self.missing[nd] = e.name
+
+    @match(choice(Type, Var))
+    def do_resolve(self, nd):
+        self.qualify(nd)
+
+    @match(choice(String))
+    def do_resolve(self, st):
+        self.qualify(st, "String")
+
+    @match(choice(Number))
+    def do_resolve(self, n):
+        if "." in n.text:
+            self.qualify(n, "float")
+        else:
+            self.qualify(n, "int")
 
     @match(Type)
     def qualify(self, type):

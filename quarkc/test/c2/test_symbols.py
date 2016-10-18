@@ -32,10 +32,12 @@ def dfn_sig(pkgs):
     else:
         return pkg.__class__, result
 
-def check(name, content, expected=None, duplicates=()):
+def check(name, content, expected=None, duplicates=(), missing=()):
     c = Compiler()
     c.parse(name, content)
+    c.check_symbols()
     assert set(duplicates) == set(c.symbols.duplicates)
+    assert set(missing) == set(c.symbols.missing.values())
     if expected is not None:
         elided = {}
         for k, v in c.symbols.definitions.items():
@@ -198,7 +200,7 @@ def test_implicit_foobar():
         "asdf.foo": (Function, "foo"),
         "asdf.bar": (Function, "bar"),
         "asdf": (Package, "asdf")
-    })
+    }, missing=["void"])
 
 def test_implicit_foofoo():
     check("asdf", """
@@ -206,7 +208,8 @@ def test_implicit_foofoo():
     void foo() {}
     void foo() {}
     """,
-    duplicates=["asdf.foo"])
+    duplicates=["asdf.foo"],
+    missing=["void"])
 
 
 def test_explicit_foobar():
@@ -222,7 +225,8 @@ def test_explicit_foobar():
         "ns.foo": (Function, "foo"),
         "ns.bar": (Function, "bar"),
         "ns": (Package, "ns")
-    })
+    },
+    missing=['void'])
 
 def test_explicit_foofoo():
     check("asdf", """
@@ -233,7 +237,8 @@ def test_explicit_foofoo():
         void foo() {}
     }
     """,
-    duplicates=["ns.foo"])
+    duplicates=["ns.foo"],
+    missing=["void"])
 
 def symerr(filename, topname, code, tree):
     expected = {}
@@ -255,7 +260,7 @@ def test_permutations():
         tree = symtree(t, Namer("n"), 5)
         expected, dups = symerr(fname, topname, code, tree)
         assert not dups
-        check(fname, tree.code(topname), expected)
+        check(fname, tree.code(topname), expected, missing=['T'])
 
 def test_collisions():
     fname = "fname"
@@ -268,6 +273,105 @@ def test_collisions():
                 nd.add(name, *[SymbolTree(c) for c in CHILDREN[nd.type]])
         code = tree.code(topname)
         expected, dups = symerr(fname, topname, code, tree)
-        check(fname, code, duplicates=dups)
+        check(fname, code, duplicates=dups, missing=['T'])
+
+def test_missing_type1():
+    check("missing_type", """
+    void foo() {}
+    """, missing=["void"])
+
+def test_missing_type2():
+    check("missing_type", """
+    primitive void {}
+    void foo() {
+        Foo x;
+    }
+    """, missing=["Foo"])
+
+def test_missing_type2():
+    check("missing_type", """
+    primitive void {}
+    void foo(Foo y) {
+    }
+    """, missing=["Foo"])
+
+def test_missing_type3():
+    check("missing_type", """
+    class Foo {
+        Bar field;
+    }
+    """, missing=["Bar"])
+
+def test_missing_var1():
+    check("missing_var", """
+    primitive void {}
+    void foo() {
+        bar;
+    }
+    """, missing=["bar"])
+
+def test_missing_var2():
+    check("missing_var", """
+    primitive void {}
+    void foo() {
+        bar();
+    }
+    """, missing=["bar"])
+
+def test_missing_var3():
+    check("missing_var", """
+    primitive void {}
+    void foo() {
+        foo(bar);
+    }
+    """, missing=["bar"])
+
+def test_missing_string1():
+    check("missing_string", """
+    primitive void {}
+    void foo() {
+        "asdf";
+    }
+    """, missing=["String"])
+
+def test_missing_string2():
+    check("missing_string", """
+    primitive void {}
+    void foo() {
+        foo("asdf");
+    }
+    """, missing=["String"])
+
+def test_missing_int1():
+    check("missing_int", """
+    primitive void {}
+    void foo() {
+        1;
+    }
+    """, missing=["int"])
+
+def test_missing_int2():
+    check("missing_int", """
+    primitive void {}
+    void foo() {
+        foo(1);
+    }
+    """, missing=["int"])
+
+def test_missing_float1():
+    check("missing_int", """
+    primitive void {}
+    void foo() {
+        1.0;
+    }
+    """, missing=["float"])
+
+def test_missing_float2():
+    check("missing_int", """
+    primitive void {}
+    void foo() {
+        foo(1.0);
+    }
+    """, missing=["float"])
 
 ###############################################################################

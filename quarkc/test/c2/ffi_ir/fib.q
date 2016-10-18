@@ -28,14 +28,6 @@ int fib(int n) {
     }
 }
 
-/*int fib2(int n) {
-    return 2+fib(n);
-    }*/
-
-/*void usefib2() {
-    assertEqual(2, fib2(0));
-    }*/
-
 void usefib() {
     assertEqual(0, fib(0));
     assertEqual(1, fib(1));
@@ -50,6 +42,7 @@ void usefib() {
     assertEqual(55, fib(10));
 }
 
-/*void strcat() {
-    //assertEqual("ab", "a" + "b");
+/*
+void strcat() {
+    assertEqual("ab", "a" + "b");
     }*/

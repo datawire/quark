@@ -21,6 +21,7 @@ class MissingSymbol(SemanticError):
     @match(AST, basestring)
     def __init__(self, node, name):
         SemanticError.__init__(self, node, "no such symbol %s" % name)
+        self.name = name
 
 class UnassignableError(SemanticError):
 

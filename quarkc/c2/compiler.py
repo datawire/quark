@@ -31,10 +31,6 @@ class Compiler(object):
         for node in traversal(file):
             self.desugar(node)
 
-        for node in traversal(file):
-            if self.symbols.is_definition(node):
-                self.symbols.define(node)
-
         self.files.append(file)
 
     @match(Class)
@@ -53,39 +49,56 @@ class Compiler(object):
     @match()
     def check_symbols(self):
         self.timer.mark("parse: {elapsed}")
+
+        self.errors.check()
+
+        # define symbols
+        for file in self.files:
+            for node in traversal(file):
+                if self.symbols.is_definition(node):
+                    self.symbols.define(node)
+
+        # resolve symbols
+        for file in self.files:
+            for n in traversal(file):
+                if self.symbols.is_name(n):
+                    self.symbols.resolve(n)
+
         for sym, nodes in self.symbols.duplicates.items():
             prev = depackage(self.symbols.definitions[sym])
             for n in nodes:
                 self.errors.add(DuplicateSymbol(sym, n, prev))
-        for f in self.files:
-            for n in traversal(f):
-                if self.symbols.is_name(n):
-                    try:
-                        self.symbols.qualify(n)
-                    except MissingSymbol, e:
-                        self.errors.add(e)
-        self.errors.check()
+
+        for nd, name in self.symbols.missing.items():
+            self.errors.add(MissingSymbol(nd, name))
+
         self.timer.mark("check_symbols: {elapsed}")
 
     @match()
     def check_types(self):
-        self.check_symbols()
+        self.errors.check()
+
+        # define types
         for k, v in self.symbols.definitions.items():
             if self.types.is_type(v):
                 self.types.define(v)
         self.timer.mark("define_types: {elapsed}")
+
+        # resolve types
         for k, v in self.symbols.definitions.items():
             for node in traversal(v):
                 if self.types.has_type(node):
                     self.types.resolve(node)
+
         for v in self.types.violations:
             self.errors.add(v)
-        self.errors.check()
         self.timer.mark("resolve_types: {elapsed}")
 
     @match()
     def check(self):
+        self.check_symbols()
         self.check_types()
+        self.errors.check()
 
     @match()
     def compile(self):
