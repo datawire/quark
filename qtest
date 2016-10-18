@@ -1,0 +1,270 @@
+#!/usr/bin/env python
+
+"""
+Quark test runner.
+
+Usage:
+  qtest [options] run [ -x ]
+  qtest [options] clean
+  qtest -h | --help
+  qtest --version
+
+Commans:
+  clean
+  run
+
+Options:
+  -h --help             Show this screen.
+  --version             Show version.
+  -v --verbose          Show more output.
+  -x, --exit            Exit on first error.
+"""
+
+import os, subprocess, shutil, fnmatch, zipfile
+from docopt import docopt
+
+def call(*cmd, **kwargs):
+    return subprocess.check_output(cmd)
+
+DIR = os.path.abspath(os.path.dirname(__file__))
+CWD = os.getcwd()
+HEIGHT, WIDTH = [int(s) for s in call("stty", "size").split()]
+VERBOSE = 0
+
+def glob(dir, pattern):
+    result = []
+    for root, dirs, files in os.walk(dir):
+        for fname in files:
+            path = os.path.join(root, fname)
+            if fnmatch.fnmatch(path[len(dir)+1:], pattern):
+                if path not in result:
+                    result.append(path)
+    return result
+
+class RunError(Exception): pass
+
+def run(*cmd, **kwargs):
+    cwd = kwargs.get("cwd", CWD)
+    if cwd != CWD:
+        common = os.path.commonprefix((cwd, CWD))
+        pfx = "CWD=...%s " % cwd[len(common):]
+    else:
+        pfx = ""
+    env = kwargs.get("env", {})
+    env["PATH"] = os.environ["PATH"]
+    kwargs["env"] = env
+    if VERBOSE:
+        print "%s%s" % (pfx, " ".join(cmd))
+    code = subprocess.call(cmd, **kwargs)
+    if code != 0:
+        raise RunError()
+
+def run_in(cwd, *cmd, **kwargs):
+    run(*cmd, cwd=cwd, **kwargs)
+
+def ensure_dir(d):
+    if not os.path.exists(d):
+        os.makedirs(d)
+
+def clean_dir(d):
+    if VERBOSE:
+        print "Cleaning %s" % d
+    if os.path.exists(d):
+        shutil.rmtree(d)
+
+def ensure_clean(d):
+    clean_dir(d)
+    ensure_dir(d)
+
+
+def ensure_fetch(local, remote):
+    if not os.path.exists(local):
+        run("curl", "-o", local, remote)
+
+def path(base, *elements):
+    return ":".join([os.path.join(base, e) for e in elements])
+
+
+class Target(object):
+
+    @property
+    def target(self):
+        return os.path.join(DIR, "target/%s" % self.lang)
+
+    @property
+    def abs_src(self):
+        return os.path.join(self.target, self.src)
+
+    def path(self, *elements):
+        return path(self.target, *elements)
+
+    def gen(self):
+        ensure_clean(self.abs_src)
+        run("quark-ir", "emit", "-o", self.abs_src, "--%s" % self.lang, *glob(DIR, "quarkc/test/c2/ffi_ir/*.ir"))
+        qfiles = glob(DIR, "quarkc/test/c2/ffi_ir/*.q")
+        if qfiles:
+            run("quark2", "-o", self.abs_src, "--%s" % self.lang, *qfiles)
+
+    def clean(self):
+        clean_dir(self.abs_src)
+
+class Go(Target):
+
+    lang = "go"
+    src = "emit/src"
+
+    def run(self):
+        self.gen()
+        return run_in(self.target, "go", "test", "./...", env={"GOPATH": self.path("emit", "rt")})
+
+class Ruby(Target):
+
+    lang = "ruby"
+    src = "emit"
+
+    def run(self):
+        self.gen()
+        with open(os.path.join(self.target, "emit/test/ts.rb"), "write") as f:
+            for ts in glob(self.target, 'emit/test/ts_*.rb'):
+                f.write("require_relative '%s'\n" % ts)
+        return run_in(self.target, "ruby", "-I", self.path("rt/lib", "emit/lib", "emit/test"), "emit/test/ts.rb")
+
+class Python(Target):
+
+    lang = "python"
+    src = "emit"
+
+    def run(self):
+        self.gen()
+        return run_in(self.target, "py.test", env={"PYTHONPATH": self.path("emit", "rt")})
+
+class Java(Target):
+
+    lang = "java"
+    src = "emit"
+
+    @property
+    def junit(self):
+        return os.path.join(self.target, "deps/junit.jar")
+
+    @property
+    def hamcrest(self):
+        return os.path.join(self.target, "deps/hamcrest.jar")
+
+    @property
+    def build(self):
+        return os.path.join(self.target, "build")
+
+    def clean(self):
+        Target.clean(self)
+        clean_dir(self.build)
+
+    def jbuild(self, sources, jar, *deps):
+        base, ext = os.path.splitext(jar)
+        classes = os.path.join(base, "classes")
+        ensure_clean(classes)
+        args = glob(sources, "*.java")
+        if deps:
+            args.append("-cp")
+            args.append(":".join(deps))
+        run("javac", "-g", "-sourcepath", sources, "-d", classes, *args)
+        run_in(classes, "jar", "cf", jar, ".")
+
+    def jtests(self, jar):
+        zf = zipfile.PyZipFile(jar)
+        for name in zf.namelist():
+            if name.endswith("/Tests.class"):
+                yield name[:-len(".class")].replace('/', '.')
+
+    def run(self):
+        self.gen()
+        ensure_fetch(self.junit, "http://central.maven.org/maven2/junit/junit/4.12/junit-4.12.jar")
+        ensure_fetch(self.hamcrest, "http://central.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar")
+
+        rtsources = os.path.join(self.target, "rt/src/main/java")
+        rtjar = os.path.join(self.build, "rt.jar")
+        self.jbuild(rtsources, rtjar)
+
+        testsources = os.path.join(self.target, "emit/src")
+        testjar = os.path.join(self.build, "tests.jar")
+        self.jbuild(testsources, testjar, rtjar, self.junit)
+
+        return run("java", "-cp", ":".join((testjar, rtjar, self.junit, self.hamcrest)), "org.junit.runner.JUnitCore",
+                   *self.jtests(testjar))
+
+RED = "31"
+GREEN = "32"
+WHITE = "37"
+BLUE = "34"
+
+ESC = "\x1B"
+
+def color(val, st):
+    return "%s[1;%sm%s\x1B[0m" % (ESC, val, st)
+
+def width(st):
+    count = 0
+    counting = True
+    for c in st:
+        if c == ESC:
+            counting = False
+        if counting:
+            count += 1
+        elif c == "m":
+            counting = True
+    return count
+
+def banner(c, msg):
+    padding = WIDTH - 4 - width(msg)
+    pfx = padding/2
+    sfx = padding - pfx
+
+    line = color(c, "%s> " % ("="*pfx))
+    if ESC in msg:
+        line += msg
+    else:
+        line += color(c, msg)
+    line += color(c, " <%s" % ("="*sfx))
+
+    print line
+
+def main(args):
+    global VERBOSE
+    if args["--verbose"]:
+        VERBOSE = 1
+
+    targets = (Go(), Ruby(), Python(), Java())
+
+    if args["clean"]:
+        for tgt in targets:
+            tgt.clean()
+
+    passing = []
+    failing = []
+
+    if args["run"]:
+        for tgt in targets:
+            name = tgt.__class__.__name__
+            banner(BLUE, color(WHITE, name))
+            try:
+                tgt.run()
+                passing.append(name)
+            except RunError, e:
+                failing.append(name)
+                if args["--exit"]:
+                    break
+        msg = ""
+        if passing:
+            msg += color(GREEN, "PASS: %s" % ", ".join(passing))
+        if failing:
+            if msg: msg += color(BLUE, ", ")
+            msg += color(RED, "FAIL: %s" % ", ".join(failing))
+        banner(BLUE, msg)
+
+    return 1 if failing else 0
+
+def call_main():
+    exit(main(docopt(__doc__, version="Quark %s" % 2.0)))
+
+if __name__ == "__main__":
+    call_main()
