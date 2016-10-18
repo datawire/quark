@@ -55,7 +55,7 @@
                          Local("s", InterfaceType(Ref("minimal:mdk.api.Session")),
                                Construct(Ref("minimal:mdk.impl.Session"),
                                          (This(), Var("id")))),
-                         If(Invoke(Ref("q:q.object__ne__"), Get(This(), "plugin"), Null(InterfaceType(Ref("minimal:mdk.api.Plugin")))),
+                         If(Invoke(Ref("quark:quark.object___ne__"), Get(This(), "plugin"), Null(InterfaceType(Ref("minimal:mdk.api.Plugin")))),
                             Block(
                                 Send(Get(This(), "plugin"), "onSession", (Var("s"), ))
                             ),
@@ -85,7 +85,7 @@
                               Set(This(), "id", Var("id")),
                           )),
               Method("log", Void(), Param("msg", String()),
-                     Block(Invoke(Ref("q:q.print"), Var("msg")))),
+                     Block(Invoke(Ref("quark:quark.print"), Var("msg")))),
               Method("externalize", String(),
                      Block(Return(StringLit("id"))))
               ),

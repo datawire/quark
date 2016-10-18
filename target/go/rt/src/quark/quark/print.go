@@ -1,4 +1,4 @@
-package q
+package quark
 
 import "fmt"
 

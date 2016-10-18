@@ -94,7 +94,7 @@ class Code(object):
     @match(basestring)
     def compile_ref(self, name):
         if name.startswith("quark."):
-            return ir.Ref("q", "q" + name[5:])
+            return ir.Ref("quark", name)
         else:
             return ir.Ref("pkg", name)
 
@@ -175,7 +175,7 @@ class Code(object):
 
     @match(types.Ref, Primitive, Method, ir.Expression, [many(Expression)])
     def compile_call_method(self, ref, objdfn, methdfn, expr, args):
-        n = self.compile_ref("%s%s" % (name(objdfn), methdfn.name.text))
+        n = self.compile_ref("%s_%s" % (name(objdfn), methdfn.name.text))
         return ir.Invoke(n, expr, *[self.compile(a) for a in args])
 
     @match(types.Ref, Function, Var, [many(Expression)])

@@ -3,20 +3,20 @@
             Name("pf:pf.fib"), Int(),
             Param("i", Int()),
             Block(
-                If(Invoke(Ref("q:q.int__eq__"), Var("i"), IntLit(0)),
+                If(Invoke(Ref("quark:quark.int___eq__"), Var("i"), IntLit(0)),
                    Block(
                        Return(IntLit(0))),
                    Block(
-                       If(Invoke(Ref("q:q.int__eq__"), Var("i"), IntLit(1)),
+                       If(Invoke(Ref("quark:quark.int___eq__"), Var("i"), IntLit(1)),
                           Block(
                               Return(IntLit(1))),
                           Block(
                               Return(Invoke(
-                                  Ref("q:q.int__add__"),
+                                  Ref("quark:quark.int___add__"),
                                   Invoke(Ref("pf:pf.fib"),
-                                         Invoke(Ref("q:q.int__sub__"), Var("i"), IntLit(1))),
+                                         Invoke(Ref("quark:quark.int___sub__"), Var("i"), IntLit(1))),
                                   Invoke(Ref("pf:pf.fib"),
-                                         Invoke(Ref("q:q.int__sub__"), Var("i"), IntLit(2)))
+                                         Invoke(Ref("quark:quark.int___sub__"), Var("i"), IntLit(2)))
                               ))
                           )
                        )
