@@ -356,7 +356,7 @@ class Ruby(Target):
     def filename(self, dfn, tgtdfn):
         prefix = "lib"
         ffi_module = dfn.name.package
-        module_name = "/".join([ffi_module] + map(str.lower, tgtdfn.namespace.target_name))
+        module_name = "/".join([ffi_module] + map(str.lower, (tgtdfn.namespace.target_name + (tgtdfn.target_name, ))))
         self.ffi_require("/".join((prefix, ffi_module) ) + ".rb", module_name)
         return "/".join((prefix, module_name)) + ".rb"
 
