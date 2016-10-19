@@ -1,6 +1,6 @@
 ##
 from match import match, many, lazy, choice
-from .ir import _Tree
+from .tree import _Tree
 
 class TR(_Tree):
     @match()

@@ -30,49 +30,30 @@ Options:
 
 """
 
-from .match import match
-from .ir import IR, Package, Definition, Check, Function, Ref
-from .ir import backlink, walk_dfs
+from itertools import chain
+from collections import deque
+from .match import match, many
+from .ir import IR, Package, Definition, Check, Function, Ref, Name
+from .tree import walk_dfs
 from . import tr
-
 from .emit_target import Target, Go, Ruby, Java, Python
 from .emit_code import code
 from .emit_format import format
 
-
-class Duplicate(set):
-    __slots__=()
-    def __call__(self, item):
-        if item in self:
-            return False
-        else:
-            self.add(item)
-            return True
-
-def dedupe(seq):
-    return filter(Duplicate(), flatten_to_strings(seq))
-
-class File:
-
-    def __init__(self, name):
-        self.name = name
-        self.header = []
-        self.code = ""
-        self.footer = []
-
-    def __repr__(self):
-        return "\n".join([s for s in ("".join(dedupe(self.header)), self.code, "".join(dedupe(self.footer))) if s]) + ""
-
-def flatten_to_strings(gen_or_str):
-    if isinstance(gen_or_str, basestring):
-        if gen_or_str:
-            yield gen_or_str
-    else:
-        for item in gen_or_str:
-            if item:
-                yield item
-
 ## Package
+
+@match(IR)
+def backlink(tree):
+    pending = deque([tree])
+    while pending:
+        node = pending.popleft()
+        for c in node.children:
+            assert isinstance(c, IR), repr(c)
+            parent = getattr(c, "parent", node)
+            assert parent is node, "%s is not a tree: %s has parent %s but expected %s" % (tree.__class__.__name__, c, parent, node)
+            c.parent = node
+            pending.append(c)
+
 
 @match(Package, Target)
 def emit(pkg, target):

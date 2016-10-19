@@ -27,78 +27,14 @@
 #     inheritence. Hypothetically it could even be an alternative
 #     frontend.
 from contextlib import contextmanager
+from functools import total_ordering
 from collections import deque
+from itertools import groupby
 
 from .match import match, lazy, ntuple, many, opt, choice
+from . import tree
 
-
-class _Indent(object):
-    def __init__(self):
-        self.indent = 0
-
-    @contextmanager
-    def __call__(self):
-        self.indent += 1
-        yield self.indent
-        self.indent -= 1
-
-# should pull in stuff from types base class here... would enable
-# comparisons and stuff for testing, should possibly use pyrsistent or
-# something like that for this stuff, although I want to see how
-# pattern matching would work
-
-class _Tree(object):
-
-    def __init__(self):
-        assert False, "%s is abstract base class" % self.__class__
-
-    @property
-    def children(self):
-        assert False, "%s must implement children" % self.__class__
-
-    __INDENT = _Indent()
-
-    def repr(self, *args, **kwargs):
-        with self.__INDENT() as i:
-            sargs = [repr(a) for a in args]
-            sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
-            if sum(map(len, sargs)) > 60:
-                indent = " " * i * 2
-                first = "\n" + indent
-                sep = ",\n" + indent
-            else:
-                first = ""
-                sep = ", "
-            return "%s(%s%s)" % (self.__class__.__name__, first, sep.join(sargs))
-
-@match(_Tree)
-def backlink(tree):
-    pending = deque([tree])
-    while pending:
-        node = pending.popleft()
-        for c in node.children:
-            assert isinstance(c, IR), repr(c)
-            parent = getattr(c, "parent", node)
-            assert parent is node, "%s is not a tree: %s has parent %s but expected %s" % (tree.__class__.__name__, c, parent, node)
-            c.parent = node
-            pending.append(c)
-
-def walk_dfs(tree):
-    pending = deque([tree])
-    while pending:
-        node = pending.popleft()
-        yield node
-        pending.extendleft(node.children)
-
-def walk_bfs(tree):
-    pending = deque([tree])
-    while pending:
-        node = pending.popleft()
-        yield node
-        pending.extend(node.children)
-
-
-class IR(_Tree):
+class IR(tree._Tree):
 
     @staticmethod
     def load_path(path):
@@ -127,6 +63,7 @@ def namesplit(name):
 
 # A fully qualified name.
 
+@total_ordering
 class _Name(IR):
 
     @match(basestring, many(basestring))
@@ -136,21 +73,67 @@ class _Name(IR):
         self.path = pfx
         for n in path:
             self.path += tuple(n.split('.'))
-        assert len(self.path) > 1, "Expected at least one namespace-thing %s %s" % (package, path)
+        self._validate()
+
+    def _validate(self):
+        assert self.package, "Package must be non-empty"
+        assert len(self.path) > 1, "Expected at least one namespace-thing %s %s" % (self.package, self.path)
 
     @property
     def children(self):
         if False: yield
 
+    @match(lazy("_Name"))
     def __eq__(self, other):
         """ Name and Ref compare equal """
-        return isinstance(other, _Name) and self.package == other.package and self.path == other.path
+        return self.package == other.package and self.path == other.path
+
+    @match(lazy("_Name"))
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    @match(lazy("_Name"))
+    def __lt__(self, other):
+        return (self.package, self.path) < (other.package, other.path)
+
+    @match(lazy("_Name"))
+    def __gt__(self, other):
+        return (self.package, self.path) > (other.package, other.path)
 
     def __hash__(self):
         return hash((self.package, self.path))
 
     def __repr__(self):
-        return self.repr(self.package, *self.path)
+        return self.repr(":".join((self.package, ".".join(self.path))))
+
+    @property
+    def namespace(self):
+        return NamespaceName(self.package, *self.path[:-1])
+
+# The name of a Namespace.
+
+class NamespaceName(_Name):
+    def _validate(self):
+        assert self.package, "Package must be non-empty"
+        assert len(self.path), "Expected at least one namespace-thing %s %s" % (self.package, self.path)
+
+    @property
+    def namespace(self):
+        if len(self.path) == 1:
+            return PackageName(self.package, ())
+
+# The name of a Package
+class PackageName(_Name):
+    def _validate(self):
+        assert self.package, "Package must be non-empty"
+        assert len(self.path) == 0, "Expected no namespace-things %s %s" % (self.package, self.path)
+
+    @property
+    def namespace(self):
+        return self
+
+    def __repr__(self):
+        return self.repr(self.package)
 
 # The name of a Definition.
 class Name(_Name):
@@ -161,6 +144,8 @@ class Name(_Name):
 # packages and from other namespaces within the same package. Does
 # this need to know what type it is importing, e.g. might
 # functions/interfaces/classes be imported differently?
+# A: yes, ruby has different rules for FFI naming of functions and Interfaces
+# The type can be inferred from usage context though
 
 class Ref(_Name):
     pass
@@ -293,20 +278,83 @@ class Declaration(IR):
 class Definition(IR):
     pass
 
-# Contains definitions. Renders to a buildable distribution unit.
-class Package(IR):
+class External(Definition):
+    @match(Name)
+    def __init__(self, name):
+        self.name = name
 
-    @match(many(Definition))
-    def __init__(self, *definitions):
+    @property
+    def children(self):
+        yield self.name
+
+    def __repr__(self):
+        return self.repr(self.name)
+
+class ExternalFunction(External):
+    pass
+
+class ExternalInterface(External):
+    pass
+
+class Namespace(IR):
+    @match(NamespaceName, many(choice(Definition,lazy("Namespace"))))
+    def __init__(self, name, *definitions):
+        self.name = name
         self.definitions = definitions
 
     @property
     def children(self):
+        yield self.name
         for d in self.definitions:
             yield d
 
     def __repr__(self):
-        return self.repr(*self.definitions)
+        return self.repr(self.name, *self.definitions)
+
+# Contains definitions. Renders to a buildable distribution unit.
+class Package(IR):
+
+    # XXX: this is transitional. Goal is for package to contain only namespaces
+    @match()
+    def __init__(self):
+        self.__init__(PackageName("noname"))
+
+    @match(many(Definition, min=1))
+    def __init__(self, *definitions):
+        self.name = PackageName(definitions[0].name.package)
+        self.definitions = definitions
+
+    @match(PackageName, many(Namespace))
+    def __init__(self, name, *definitions):
+        self.name = name
+        self.definitions = definitions
+
+    @property
+    def children(self):
+        yield self.name
+        for d in self.definitions:
+            yield d
+
+    def __repr__(self):
+        if self.definitions and isinstance(self.definitions[0], Namespace):
+            return self.repr(self.name, *self.definitions)
+        else:
+            return self.repr(*self.definitions)
+
+class Root(IR):
+    @match(many(Package))
+    def __init__(self, *packages):
+        self.packages = packages
+
+    @property
+    def children(self):
+        for p in self.packages:
+            yield p
+
+    def __repr__(self):
+        return self.repr(*self.packages)
+
+# keeps same-named definitions together
 
 # knows how to render inside a dfn, this has to account for imports
 # needed by rendered code
