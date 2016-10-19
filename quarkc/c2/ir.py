@@ -996,6 +996,65 @@ def dfn_of(ir):
     raise Exception("Calling dfn_of without an ancestor Definition, forgot to backlink()?")
     return None
 
+@match(choice(Package, Namespace))
+def restructure(pkg):
+    """ Introduce Namespaces into a flat package """
+    prefix = pkg.name.path
+    children = []
+    def keyfunc(dfn):
+        assert pkg.name.package == dfn.name.package
+        assert prefix == dfn.name.path[:len(prefix)]
+        return dfn.name.path[:len(prefix)+1]
+    for k, g in groupby(sorted(pkg.definitions, key=keyfunc), keyfunc):
+        nested = []
+        for dfn in g:
+            if dfn.name.path == k:
+                children.append(dfn)
+            else:
+                nested.append(dfn)
+        if nested:
+            children.append(restructure(Namespace(
+                NamespaceName(pkg.name.package, *k),
+                *nested)))
+    return pkg.__class__(pkg.name.copy(), *children)
 
+@match(Package)
+def model_externals(pkg):
+    """ Introduce external definitions to IR """
+    q = tree.Query(pkg)
+    names = filter(tree.isa(Name), tree.walk_dfs(pkg))
+    refs = filter(tree.isa(Ref), tree.walk_dfs(pkg))
+    def bytype(t): t[0]
+    refs = dict(
+        (k, dict(
+            (kk, [t[1] for t in gg])
+            for kk, gg in groupby(sorted((
+                    (type(q.parent(r)), r)
+                    for r in g), key=bytype), bytype)))
+        for k, g in groupby(sorted(refs)))
+    unresolved = set(refs) - set(names)
+    def keyfunc(ref):
+        return ref.package
+    def external(ref):
+        assert len(refs[ref]) == 1, "Incosistent use of %s" % refs[ref]
+        return external_kind(q.parent(ref))(Name(ref.package, *ref.path))
+    @match(Invoke)
+    def external_kind(use):
+        return ExternalFunction
+    @match(InterfaceType)
+    def external_kind(use):
+        return ExternalInterface
+    @match(IR)
+    def external_kind(use):
+        assert False, "Broken FFI contract with external use: %r" % use
+    externals = map(restructure, (
+        Package(*map(external, g))
+        for k, g in groupby(sorted(unresolved, key=keyfunc), keyfunc)))
+    return tuple(externals)
+
+@match(Package)
+def reconstruct(pkg):
+    """ tie together a restructured package and all referenced externals """
+    return Root(restructure(pkg), *model_externals(pkg))
 
 __all__ = [n for n,v in globals().items() if IR in getattr(v, "__mro__", [])]

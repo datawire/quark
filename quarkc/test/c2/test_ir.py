@@ -103,7 +103,7 @@ def test_emit():
 
 from .sample_ir import *
 
-samples = [fibonacci_ir, minimal_ir]
+samples = [fibonacci_ir, minimal_ir, native_int, native_map_string_string, native_map_string_int]
 @pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
 @pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
 def test_emit_sample(sample, target):
@@ -116,6 +116,28 @@ def test_emit_sample(sample, target):
         print(content)
         print("<<<<<<<< end " + name)
 
+from quarkc.c2.ir import restructure, model_externals, reconstruct
+
+@pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
+def test_restructure(sample):
+    s = sample()
+    r = restructure(s)
+    assert len(repr(r)) >= len(repr(s))
+    assert repr(r) == repr(restructure(r))
+    print r
+
+@pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
+def test_model_externals(sample):
+    s = sample()
+    e = model_externals(s)
+    print e
+
+@pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
+def test_reconstruct(sample):
+    s = sample()
+    r = reconstruct(s)
+    assert len(repr(r)) >= len(repr(s))
+    print r
 
 from quarkc.c2.match import match, many
 from quarkc.c2.emit_target import TargetDefinition, TargetNamespace
