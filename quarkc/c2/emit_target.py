@@ -160,6 +160,16 @@ class Snowflake(str):
         return hash(str(self))
 
 class Java(Target):
+    """
+    Mapping rules:
+    Package -> jar
+    Namespace -> package
+    Class -> class in own file inside src/main/java/$package
+    Interface -> interface in own file inside src/main/java/$package
+    Function -> static method in shared file src/main/java/$package/Functions.java
+    Check -> @Test method in shared file src/test/java/$package/Tests.java
+    Ref -> fully qualified name
+    """
 
     UNKEYWORDS = dict((k, k+"_") for k in
                       """
@@ -245,6 +255,21 @@ class Java(Target):
         tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name + (tgtref.target_name,))
 
 class Python(Target):
+    """
+    Mapping rules:
+    Package -> wheel
+    Toplevel Namespace -> $package/__init___.py with relative imports of all implementation modules/__namespace__.py
+    Namespace -> file $package/__init__.py, empty and
+                 file $package/__quark_namespace__.py with relative imports of all definitions and sub-namespaces
+    Class -> class in own file in $package
+    Interface -> interface in own file src/main/java/$package
+    Function -> static method in shared file src/main/java/$package/Functions.java
+    Check -> @Test method in shared file src/test/java/$package/Tests.java
+    Ref -> same namespace: no import
+           inside package: relative import of implementation file
+           across packages: absolute import of FFI name
+           within Check: absolute import of FFI name
+    """
 
     UNKEYWORDS = dict((k, k+"_") for k in """self map list None True False""".split())
 
@@ -314,6 +339,20 @@ class Python(Target):
 
 
 class Ruby(Target):
+    """
+    Mapping rules:
+    Package -> gem
+    Toplevel Namespace -> lib/$package.rb with relative imports of all implementation files
+    Class -> class nested inside all ancestor namespaces as module statements in own file in lib/$package
+    Interface -> interface ... in own file lib/$package
+    Function -> module self. method ... in shared file lib/$package.rb
+    Check -> method with "test_" prefix of Tests class ... in shared file test/$package/tc_$innermostPackage.rb
+    Toplevel Namespace with Check -> test/ts_$package with relative import of all tc_*.rb files
+    Ref -> same namespace: no require
+           inside package: relative require of implementation file
+           across packages: absolute require of FFI name
+           within Check: absolute import of FFI name
+    """
 
     UNKEYWORDS = dict((k, k+"_") for k in
     """ BEGIN END __ENCODING__ __END__ __FILE__ __LINE__ alias and begin
@@ -394,6 +433,22 @@ class Ruby(Target):
                 module.add(tr.Comment("Already imported " + ref_module_path + " to " + str((tgtdfn, tgtref))))
 
 class Go(Target):
+    """
+    Mapping rules:
+    Package -> go package
+    Toplevel Namespace -> name of the package clause, toplevel directory src/$package/$namespace
+    Nested Namespace -> "_" separated prefix for all Definitions
+    Class -> struct + constructor + methods in own file in src/$package/$namespace
+    Interface -> interface in own file in src/$package/$namespace
+    Function -> function in own file in src/$package/$namespace
+    Check ->  "TestQ" prefixed function in shared file src/$package/$namespace
+              with filename postfix "_test" 
+              with package postfix "_test"
+    Ref -> same namespace: no require
+           inside package: no require
+           across packages: import of other package
+           within Check: absolute import of FFI name
+    """
 
     """Toplevel quark namespace maps to go package, the nested quark
        namespaces are flattened as part of identifier names to work
