@@ -6,7 +6,7 @@ from .helpers import lineinfo
 from .timer import Timer
 from collections import OrderedDict
 
-@match(choice(Package, Function, Class, Interface, Method, Declaration, TypeParam))
+@match(choice(Package, Callable, Class, Declaration, TypeParam))
 def path(n):
     return path(n.parent) + (n.name,)
 
@@ -14,11 +14,11 @@ def path(n):
 def path(f):
     return ()
 
-@match(choice(Local, Block))
+@match(choice(Statement, Block))
 def path(n):
     return path(n.parent)
 
-@match(choice(Package, Function, Class, Interface, Method, Declaration, TypeParam))
+@match(choice(Package, Callable, Class, Declaration, TypeParam))
 def name(n):
     return ".".join([n.text for n in path(n)])
 

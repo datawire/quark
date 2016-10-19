@@ -374,4 +374,30 @@ def test_missing_float2():
     }
     """, missing=["float"])
 
+def test_nesting():
+    check("nesting", """
+    primitive int {}
+    int foo() {
+        int a;
+        if (a) {
+           int b = c;
+           int d = 1;
+           int d = 2;
+        }
+
+        while(a) {
+           int e = a;
+        }
+    }
+    """,
+    expected={"nesting": (Package, "nesting"),
+              "nesting.foo": (Function, "foo"),
+              "nesting.foo.a": (Local, "a"),
+              "nesting.foo.b": (Local, "b"),
+              "nesting.foo.d": (Local, "d"),
+              "nesting.foo.e": (Local, "e"),
+              "nesting.int": (Primitive, "int"),
+              "nesting.int.int": (Method, "int")},
+    duplicates=["nesting.foo.d"], missing=["c"])
+
 ###############################################################################
