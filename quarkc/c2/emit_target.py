@@ -256,15 +256,15 @@ class Java(Target):
 
 class Python(Target):
     """
-    Mapping rules:
+    Mapping rules: Some are TODO
     Package -> wheel
     Toplevel Namespace -> $package/__init___.py with relative imports of all implementation modules/__namespace__.py
     Namespace -> file $package/__init__.py, empty and
                  file $package/__quark_namespace__.py with relative imports of all definitions and sub-namespaces
     Class -> class in own file in $package
-    Interface -> interface in own file src/main/java/$package
-    Function -> static method in shared file src/main/java/$package/Functions.java
-    Check -> @Test method in shared file src/test/java/$package/Tests.java
+    Interface -> interface in own file in $package
+    Function -> function in own file in $package
+    Check -> "test_" prefixed function in shared file tests/$package/test_$innermostPackage.py
     Ref -> same namespace: no import
            inside package: relative import of implementation file
            across packages: absolute import of FFI name
@@ -284,7 +284,7 @@ class Python(Target):
 
     @match(Check)
     def define_namespace(self, dfn):
-        return self.define_namespace(dfn.name.path[:-1] + ("test_" + dfn.name.path[-2],))
+        return self.define_namespace(("tests", ) + dfn.name.path[:-1] + ("test_" + dfn.name.path[-2],))
 
     @match((many(basestring, min=1),))
     def define_namespace(self, path):
