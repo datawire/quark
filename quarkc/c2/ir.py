@@ -110,6 +110,11 @@ class _Name(IR):
     def namespace(self):
         return NamespaceName(self.package, *self.path[:-1])
 
+    @classmethod
+    @match(type, lazy("_Name"), many(basestring))
+    def join(cls, name, *elem):
+        return cls(name.package, *(name.path + elem))
+
 # The name of a Namespace.
 
 class NamespaceName(_Name):
@@ -483,11 +488,28 @@ class Message(Declaration):
     def __repr__(self):
         return self.repr(self.name, self.type, *self.params)
 
+class Annotation(IR):
+    @match(basestring)
+    def __init__(self, annotation):
+        self.annotation = annotation
+
+    @property
+    def children(self):
+        if False: yield
+
+    def __repr__(self):
+        return self.repr(self.annotation)
+
 class Method(IR):
 
     @match(basestring, AbstractType, many(Param), Block)
     def __init__(self, name, type, *args):
+        self.__init__(name, (), type, *args)
+
+    @match(basestring, (many(Annotation),), AbstractType, many(Param), Block)
+    def __init__(self, name, annotations, type, *args):
         self.name = name
+        self.annotations = annotations
         self.type = type
         self.params = args[:-1]
         self.body = args[-1]
@@ -495,17 +517,20 @@ class Method(IR):
     @property
     def children(self):
         yield self.type
+        for a in self.annotations:
+            yield a
         for p in self.params:
             yield p
         yield self.body
 
     def __repr__(self):
-        return self.repr(self.name, self.type, *(self.params + (self.body,)))
+        return self.repr(self.name, self.annotations, self.type, *(self.params + (self.body,)))
 
 class Constructor(Method):
     @match(basestring, ClassType, many(Param), Block)
     def __init__(self, name, type, *args):
         self.name = name
+        self.annotations = ()
         self.type = type
         self.params = args[:-1]
         self.body = args[-1]
@@ -527,12 +552,13 @@ class Class(Definition):
         self.constructors = [a for a in args if isinstance(a, Constructor)]
         self.methods = [a for a in args if isinstance(a, Method) and not isinstance(a,Constructor)]
         assert len(self.implements) + len(self.fields) + len(self.constructors) + len(self.methods) == len(args)
-        assert len(self.constructors) == 1
+        assert len(self.constructors) <= 1
 
-        constructor_body = self.constructors[0].body
+        if self.constructors:
+            constructor_body = self.constructors[0].body
 
-        initializers = tuple(FieldInitialize(This(), f.name, f.initializer.copy()) for f in self.fields)
-        constructor_body.statements = initializers + constructor_body.statements
+            initializers = tuple(FieldInitialize(This(), f.name, f.initializer.copy()) for f in self.fields)
+            constructor_body.statements = initializers + constructor_body.statements
 
     @property
     def children(self):
@@ -946,6 +972,7 @@ class Continue(SimpleStatement):
 
 
 class Check(Definition):
+    """ Check is a parameter-less void function that should get picked up by the target unit-test framework """
 
     @match(basestring, many(Statement))
     def __init__(self, name, *body):
@@ -1024,33 +1051,38 @@ def model_externals(pkg):
     q = tree.Query(pkg)
     names = filter(tree.isa(Name), tree.walk_dfs(pkg))
     refs = filter(tree.isa(Ref), tree.walk_dfs(pkg))
-    def bytype(t): t[0]
-    refs = dict(
+    # group refs by usage
+    def first(t):
+        t[0]
+    def second(t):
+        t[1]
+    uses = dict(
         (k, dict(
-            (kk, [t[1] for t in gg])
-            for kk, gg in groupby(sorted((
-                    (type(q.parent(r)), r)
-                    for r in g), key=bytype), bytype)))
+            (first(kk), map(second, gg))
+            for kk, gg in groupby(sorted(
+                    ((type(q.parent(ref)), ref)
+                     for ref in g)))))
         for k, g in groupby(sorted(refs)))
-    unresolved = set(refs) - set(names)
+    unresolved = set(uses) - set(names)
     def keyfunc(ref):
         return ref.package
     def external(ref):
-        assert len(refs[ref]) == 1, "Incosistent use of %s" % refs[ref]
+        assert len(uses[ref]) == 1, "Incosistent use of %s" % uses[ref]
         return external_kind(q.parent(ref))(Name(ref.package, *ref.path))
-    @match(Invoke)
-    def external_kind(use):
-        return ExternalFunction
-    @match(InterfaceType)
-    def external_kind(use):
-        return ExternalInterface
-    @match(IR)
-    def external_kind(use):
-        assert False, "Broken FFI contract with external use: %r" % use
     externals = map(restructure, (
         Package(*map(external, g))
         for k, g in groupby(sorted(unresolved, key=keyfunc), keyfunc)))
     return tuple(externals)
+
+@match(Invoke)
+def external_kind(use):
+    return ExternalFunction
+@match(InterfaceType)
+def external_kind(use):
+    return ExternalInterface
+@match(IR)
+def external_kind(use):
+    assert False, "Broken FFI contract with external use: %r" % use
 
 @match(Package)
 def reconstruct(pkg):

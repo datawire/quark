@@ -18,6 +18,14 @@ from .match import match, many, choice
 from .ir import IR, Definition, Name, Ref, Invoke, Construct, Class, Interface, Function, Check, Void, Block
 from .ir import dfn_of
 from . import tr
+from .emit_ir import Snowflake
+
+
+
+
+
+
+
 
 class TargetNamespace(object):
     """ Name of an importable namespace/package in the target """
@@ -151,13 +159,6 @@ class Target(object):
     @match(basestring)
     def upcase(self, s):
         return s[0:1].capitalize() + s[1:]
-
-class Snowflake(str):
-    def __eq__(self, other):
-        return type(self) is type(other) and str(self) == str(other)
-
-    def __hash__(self):
-        return hash(str(self))
 
 class Java(Target):
     """

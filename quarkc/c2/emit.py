@@ -37,6 +37,7 @@ from .ir import IR, Package, Definition, Check, Function, Ref, Name
 from .tree import walk_dfs
 from . import tr
 from .emit_target import Target, Go, Ruby, Java, Python
+from .emit_transform import transmogrify
 from .emit_code import code
 from .emit_format import format
 

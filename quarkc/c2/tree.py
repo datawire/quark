@@ -54,7 +54,28 @@ class _Tree(object):
 
 @match(many(type))
 def isa(types):
+    """ Generate a predicate for the specifed types """
     return lambda x: isinstance(x, types)
+
+
+def split(coll, *pred):
+    """split coll into tuples that match pred[0] to pred[-1] and one extra
+       for all the rest.unless the last predicate is None
+    """
+    assert pred, "Need at least one predicate"
+    if pred[-1] is not None:
+        pred = pred + (lambda x: True,)
+    else:
+        pred = pred[:-1]
+    ret = tuple([] for p in pred)
+    for el in coll:
+        for i,p in enumerate(pred):
+            if p(el):
+                ret[i].append(el)
+                break
+        else:
+            assert False, "element does not match any of the predicates and wildcard not allowed"
+    return tuple(map(tuple,ret))
 
 class Query(object):
     @match(_Tree)
