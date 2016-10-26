@@ -533,3 +533,41 @@ class Go(Target):
                     ref_module_path = ref_module_path)))
             else:
                 module.add(tr.Comment("Already imported " + ref_module_path + " to " + str((tgtdfn, tgtref))))
+
+
+class Javascript(Target):
+
+    """
+    Mapping rules: Some are TODO
+    Package -> a minimal package.json if one doesn't exist?
+    Toplevel Namespace -> lib/$package.js with relative imports of direct definitions and namespaces
+    Namespace -> file $package/__quark_namespace__.py with relative imports of all definitions and sub-namespaces
+    Class -> class in own file in $package using module.exports
+    Interface -> interface in own file in $package using module.exports
+    Function -> function in own file in $package using module.exports
+    Check -> mocha style nested describe("$package", it("$check" functions in shared file test/$package.js
+    Ref -> same namespace: no import
+           inside package: relative import of implementation file
+           across packages: absolute import of FFI name
+           within Check: absolute import of FFI name
+    """
+
+    UNKEYWORDS = dict((k, k+"_") for k in
+                      """
+                      break       do          in          typeof
+                      case        else        instanceof  var
+                      catch       export      new         void
+                      class       extends     return      while
+                      const       finally     super       with
+                      continue    for         switch      yield
+                      debugger    function    this
+                      default     if          throw
+                      delete      import      try
+
+                      let         static      enum        await
+
+                      implements  package     protected
+                      interface   private     public
+
+                      null        true        false       undefined
+                      """.split())
