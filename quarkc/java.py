@@ -217,6 +217,7 @@ def native_include(path, du_name):
 ## Documentation
 
 def doc(lines):
+    lines = [line.replace("<", "&lt;").replace(">", "&gt;") for line in lines]
     return doc_helper(lines, "/**", " * ", " */")
 
 ## Comments
