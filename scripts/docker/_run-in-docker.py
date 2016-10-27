@@ -25,5 +25,8 @@ for argument in arguments:
     if argument == "--python3": prepend_path("/tmp/run3/bin")
     if argument == "--": break
 
-subprocess.check_call(["/tmp/quark-run/bin/quark", "install"] + arguments)
+subprocess.check_call(["/tmp/quark-run/bin/quark", "install", "--online"] + arguments)
+print("Installation complete ======\n")
+sys.stdout.flush()
+sys.stderr.flush()
 subprocess.check_call(["/tmp/quark-run/bin/quark", "run"] + arguments)
