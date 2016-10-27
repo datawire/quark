@@ -328,7 +328,7 @@ def local(type, name, value):
     return '{} = {}'.format(name, value or null())
 
 def expr_stmt(e):
-    assert e
+    assert e, repr(e)
     return e
 
 def assign(lhs, rhs):

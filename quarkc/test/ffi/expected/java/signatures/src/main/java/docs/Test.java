@@ -3,6 +3,9 @@ package docs;
 /**
  * hey, here are some docs
  * here are some more docs
+ * one that &lt;breaks&gt; javadoc
+ * even if C# &lt; Java and
+ * Python &gt;&gt; bash
  * a bunch of docs in fact
  */
 public class Test implements io.datawire.quark.runtime.QObject {

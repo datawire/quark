@@ -19,12 +19,8 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def main():
-    # Figure out UID of files in Docker; on Linux this will be
-    # currently running user, on Mac it will be the UID of user in VM
-    # which can be different.
-    uid = subprocess.check_output([
-            "docker", "run", "--rm", "-v", "{}:/path".format(ROOT_DIR),
-            "busybox", "stat", "-c", "%u", "/path"]).strip()
+    # Figure out UID of files in Docker; have the container run as that UID
+    uid = os.stat(ROOT_DIR).st_uid
     subprocess.check_call(["docker", "build",
                            # Tag for resulting image:
                            "-t", "quark-base",
@@ -39,6 +35,11 @@ def main():
                            # Dockerfile to use:
                            "-f",  "Dockerfile.dev", "."],
                           cwd=ROOT_DIR)
+    # Hack around https://github.com/docker/docker/issues/20740
+    if sys.platform == "darwin":
+        tmpfs = []
+    else:
+        tmpfs = ["--tmpfs", "{}/node_modules:rw,uid={}".format(ROOT_DIR, uid)]
     subprocess.call(["docker", "run",
                      # Interactive:
                      "-i", "-t",
@@ -47,7 +48,9 @@ def main():
                      # Map root directory in as volume:
                      "-v", "{}:{}".format(ROOT_DIR, ROOT_DIR),
                      # Hide node_modules from root directory:
-                     "--tmpfs", "{}/node_modules:rw,uid={}".format(ROOT_DIR, uid),
+                     ] + tmpfs + [
+                     # Run as the owning user
+                     "--user={}".format(uid),
                      # Run in root directory:
                      "-w", ROOT_DIR,
                      # Image to use:
