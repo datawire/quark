@@ -62,12 +62,14 @@ def transmogrify(ns, defs, target):
 
 @match(Namespace, (choice(many(Function, min=1),many(ExternalFunction, min=1)),), Java)
 def transmogrify(ns, funs, target):
+    """ Inject a special snowflake namespace for java functions """
     return tuple((
         Namespace(NamespaceName.join(ns.name, Snowflake("Functions")), *funs),))
 
 
 @match(Namespace, (many(Check, min=1),), Java)
 def transmogrify(ns, checks, target):
+    """ Java uses an annotated class for unit tests """
     return tuple((
         TestClass(Name.join(ns.name, Snowflake("Tests")),
               *[TestMethod(fn.name.path[-1], Void(), fn.body)
@@ -75,6 +77,7 @@ def transmogrify(ns, checks, target):
 
 @match(Namespace, (many(Check, min=1),), choice(Ruby, Python))
 def transmogrify(ns, checks, target):
+    """ Python and Ruby use an annotated class for unit tests """
     return tuple((
         TestClass(Name.join(ns.name, ns.name.path[-1]),
               *[TestMethod(fn.name.path[-1], Void(), fn.body)
