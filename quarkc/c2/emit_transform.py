@@ -23,52 +23,52 @@ from .emit_target import Target, Python, Ruby, Java, Go, Snowflake
 from .emit_ir import TestMethod, StaticMethod, TestClass
 
 @match(IR, Target)
-def transmogrify(node, target):
+def transform(node, target):
     """ Rewrite top of IR tree into target-specific structure """
     return node
 
 @match(Root, Target)
-def transmogrify(root, target):
-    return Root(*[transmogrify(pkg, target) for pkg in root.children])
+def transform(root, target):
+    return Root(*[transform(pkg, target) for pkg in root.children])
 
 @match(Package, Target)
-def transmogrify(pkg, target):
-    return pkg.__class__(*[transmogrify(ns, target) for ns in pkg.children])
+def transform(pkg, target):
+    return pkg.__class__(*[transform(ns, target) for ns in pkg.children])
 
 @match(Namespace, Target)
-def transmogrify(ns, target):
+def transform(ns, target):
     funs, checks, nss, rest = split(ns.definitions, isa(Function, ExternalFunction), isa(Check), isa(Namespace))
-    funs = transmogrify(ns, funs, target)
-    checks = transmogrify(ns, checks, target)
-    nss = transmogrify(ns, nss, target)
-    rest = transmogrify(ns, rest, target)
-    return Namespace(transmogrify(ns.name, target), *tuple(chain(nss, funs, checks, rest)))
+    funs = transform(ns, funs, target)
+    checks = transform(ns, checks, target)
+    nss = transform(ns, nss, target)
+    rest = transform(ns, rest, target)
+    return Namespace(transform(ns.name, target), *tuple(chain(nss, funs, checks, rest)))
 
 
 @match(Namespace, Go)
-def transmogrify(ns, target):
+def transform(ns, target):
     """ Flatten the go namespace to toplevel for all Definitions, and test namespace for all Checks """
     checks, defs, _ = split(walk_dfs(ns), isa(Check), isa(Definition))
-    checks = transmogrify(ns, checks, target)
-    defs = transmogrify(ns, defs, target)
+    checks = transform(ns, checks, target)
+    defs = transform(ns, defs, target)
     if checks:
         checks = (Namespace(NamespaceName.join(ns.name, Snowflake("test")), *checks),)
-    return Namespace(transmogrify(ns.name, target), *(defs + checks))
+    return Namespace(transform(ns.name, target), *(defs + checks))
 
 
 @match(Namespace, (choice(many(Definition), many(Namespace)),), Target)
-def transmogrify(ns, defs, target):
-    return tuple(transmogrify(dfn, target) for dfn in defs)
+def transform(ns, defs, target):
+    return tuple(transform(dfn, target) for dfn in defs)
 
 @match(Namespace, (choice(many(Function, min=1),many(ExternalFunction, min=1)),), Java)
-def transmogrify(ns, funs, target):
+def transform(ns, funs, target):
     """ Inject a special snowflake namespace for java functions """
     return tuple((
         Namespace(NamespaceName.join(ns.name, Snowflake("Functions")), *funs),))
 
 
 @match(Namespace, (many(Check, min=1),), Java)
-def transmogrify(ns, checks, target):
+def transform(ns, checks, target):
     """ Java uses an annotated class for unit tests """
     return tuple((
         TestClass(Name.join(ns.name, Snowflake("Tests")),
@@ -76,7 +76,7 @@ def transmogrify(ns, checks, target):
                 for fn in checks]), ))
 
 @match(Namespace, (many(Check, min=1),), choice(Ruby, Python))
-def transmogrify(ns, checks, target):
+def transform(ns, checks, target):
     """ Python and Ruby use an annotated class for unit tests """
     return tuple((
         TestClass(Name.join(ns.name, ns.name.path[-1]),
