@@ -15,7 +15,7 @@
 import pytest
 
 
-from quarkc.c2.emit import transmogrify, emit
+from quarkc.c2.emit import transform, emit
 from quarkc.c2.ir import reconstruct
 from quarkc.c2.emit_target import Go, Python, Java, Ruby
 
@@ -25,10 +25,10 @@ samples = [fibonacci_ir, minimal_ir, native_int, native_map_string_string, nativ
 
 @pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
 @pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
-def test_transmogrify(sample, target):
+def test_transform(sample, target):
     s = sample()
     r = reconstruct(s)
-    t = transmogrify(r, target())
+    t = transform(r, target())
     print t
 
 

@@ -35,7 +35,7 @@ from .ir import (IR, Root, Package,
                  )
 from .ir import reconstruct
 from .emit_target import Target, Go, Ruby, Java, Python
-from .emit_transform import transmogrify
+from .emit_transform import transform
 from .emit_format import format
 from .emit_naming import rename
 from .emit_generate import generate
@@ -50,7 +50,7 @@ def emit(pkg, target):
 @match(Root, Target)
 def emit(pkg, target):
     """ return a sequence of tuples (filename, content) """
-    pkg = transmogrify(pkg, target)
+    pkg = transform(pkg, target)
     target = target.with_root(pkg)
     rename(pkg, target)
     return tuple((module.filename, format(module, target))
