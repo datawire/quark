@@ -53,7 +53,7 @@ class _Tree(object):
 
 
 @match(many(type))
-def isa(types):
+def isa(*types):
     """ Generate a predicate for the specifed types """
     return lambda x: isinstance(x, types)
 
@@ -107,10 +107,25 @@ class Query(object):
             parent = self._parent(parent)
 
     @match(_Tree, (many(type, min=1),))
+    def ancestors(self, node, types, ):
+        parent = self.parent(node)
+        while parent is not None:
+            if isinstance(parent, types):
+                yield parent
+            parent = self._parent(parent)
+
+    @match(_Tree, (many(type, min=1),))
+    def ancestors_or_self(self, node, types):
+        parent = node
+        while parent is not None:
+            if isinstance(parent, types):
+                yield parent
+            parent = self._parent(parent)
+
+    @match(_Tree, (many(type, min=1),))
     def ancestor(self, node, types):
-        for ancestor in self.ancestors(node):
-            if isinstance(ancestor, types):
-                return ancestor
+        for ancestor in self.ancestors(node, types):
+            return ancestor
         assert False, "No ancestor of type (%s) for node %r" % (", ".join(t.__name__ for t in types), node)
 
 def walk_dfs(tree):

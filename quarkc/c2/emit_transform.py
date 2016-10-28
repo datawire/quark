@@ -13,60 +13,69 @@
 # limitations under the License.
 
 from itertools import chain
-from .match import match, many
-from .tree import Query, isa, split
-from .ir import (IR, Root, Package, Namespace,
+from .match import match, many, choice
+from .tree import isa, split, walk_dfs
+from .ir import (IR, Root, Package, Namespace, NamespaceName,
                  Name, Definition,
                  Check, Function, Class, Check, Void)
 
 from .emit_target import Target, Python, Ruby, Java, Go, Snowflake
 from .emit_ir import TestMethod, StaticMethod, TestClass
 
-@match(Root, Target)
-def transmogrify(root, target):
-    """ Convert the generic IR into target specific IR """
-    return transmogrify(root, target, Query(root))
-
-@match(IR, Target, Query)
-def transmogrify(node, target, q):
+@match(IR, Target)
+def transmogrify(node, target):
+    """ Rewrite top of IR tree into target-specific structure """
     return node
 
-@match(Root, Target, Query)
-def transmogrify(root, target, q):
-    return Root(*[transmogrify(pkg, target, q) for pkg in root.children])
+@match(Root, Target)
+def transmogrify(root, target):
+    return Root(*[transmogrify(pkg, target) for pkg in root.children])
 
-@match(Package, Target, Query)
-def transmogrify(pkg, target, q):
-    return Package(*[transmogrify(ns, target, q) for ns in pkg.children])
+@match(Package, Target)
+def transmogrify(pkg, target):
+    return pkg.__class__(*[transmogrify(ns, target) for ns in pkg.children])
 
-@match(Namespace, Target, Query)
-def transmogrify(ns, target, q):
-    return Namespace(*[transmogrify(nss, target, q) for nss in ns.children])
-
-@match(Namespace, Java, Query)
-def transmogrify(ns, target, q):
-    funs, checks, rest = split(ns.definitions, isa(Function), isa(Check))
-    funs = transmogrify(ns, funs, target, q)
-    checks = transmogrify(ns, checks, target, q)
-    return Namespace(ns.name, *[
-        transmogrify(ch, target, q) for ch in chain(funs, checks, rest)])
+@match(Namespace, Target)
+def transmogrify(ns, target):
+    funs, checks, nss, rest = split(ns.definitions, isa(Function), isa(Check), isa(Namespace))
+    funs = transmogrify(ns, funs, target)
+    checks = transmogrify(ns, checks, target)
+    nss = transmogrify(ns, nss, target)
+    rest = transmogrify(ns, rest, target)
+    return Namespace(transmogrify(ns.name, target), *tuple(chain(nss, funs, checks, rest)))
 
 
-@match(Namespace, (many(Definition),), Target, Query)
-def transmogrify(ns, defs, target, q):
-    return defs
+@match(Namespace, Go)
+def transmogrify(ns, target):
+    """ Flatten the go namespace to toplevel for all Definitions, and test namespace for all Checks """
+    checks, defs, _ = split(walk_dfs(ns), isa(Check), isa(Definition))
+    checks = transmogrify(ns, checks, target)
+    defs = transmogrify(ns, defs, target)
+    if checks:
+        checks = (Namespace(NamespaceName.join(ns.name, Snowflake("test")), *checks),)
+    return Namespace(transmogrify(ns.name, target), *(defs + checks))
 
-@match(Namespace, (many(Function, min=1),), Java, Query)
-def transmogrify(ns, funs, target, q):
+
+@match(Namespace, (choice(many(Definition), many(Namespace)),), Target)
+def transmogrify(ns, defs, target):
+    return tuple(transmogrify(dfn, target) for dfn in defs)
+
+@match(Namespace, (many(Function, min=1),), Java)
+def transmogrify(ns, funs, target):
     return tuple((
-        Class(Name.join(ns.name, Snowflake("Functions")),
-              *[StaticMethod(fn.name.path[-1], fn.type, *(fn.params + (fn.body, )))
-                for fn in funs]), ))
+        Namespace(NamespaceName.join(ns.name, Snowflake("Functions")), *funs),))
 
 
-@match(Namespace, (many(Check, min=1),), Java, Query)
-def transmogrify(ns, checks, target, q):
+@match(Namespace, (many(Check, min=1),), Java)
+def transmogrify(ns, checks, target):
     return tuple((
         TestClass(Name.join(ns.name, Snowflake("Tests")),
+              *[TestMethod(fn.name.path[-1], Void(), fn.body)
+                for fn in checks]), ))
+
+@match(Namespace, (many(Check, min=1),), choice(Ruby, Python))
+def transmogrify(ns, checks, target):
+    return tuple((
+        TestClass(Name.join(ns.name, ns.name.path[-1]),
               *[TestMethod(fn.name.path[-1], Void(), fn.body)
                 for fn in checks]), ))

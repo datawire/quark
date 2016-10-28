@@ -90,32 +90,15 @@ def test_emit():
     print "======"
 
     stmt = Function(Name("a:b.c"),Void(),While(Invoke(Ref("pkg:n.asdf"), Send(Var("x"), "y", ())), stmt))
-    backlink(stmt)
     p = Python()
-    p.define(stmt)
-    crosslink(stmt, p)
     print code(stmt, p)
     j = Java()
-    j.define(stmt)
-    crosslink(stmt, j)
     print code(stmt, j)
 
 
 from .sample_ir import *
 
 samples = [fibonacci_ir, minimal_ir, native_int, native_map_string_string, native_map_string_int]
-@pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
-@pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
-def test_emit_sample(sample, target):
-    t = target()
-    emit(sample(), t)
-    pretty_definitions(sample.func_name, t)
-    for name, content in t.files.items():
-        print("")
-        print(">>>>>> begin " + name)
-        print(content)
-        print("<<<<<<<< end " + name)
-
 from quarkc.c2.ir import restructure, model_externals, reconstruct
 
 @pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])

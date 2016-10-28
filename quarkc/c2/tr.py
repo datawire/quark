@@ -42,11 +42,12 @@ class Block(TR):
         return self.repr(*self.stmts)
 
 class File(TR):
-    @match(basestring)
-    def __init__(self, filename):
+    @match(basestring, many_tuple(Statement))
+    def __init__(self, filename, *stmts):
         self.filename = filename
         self.outer_block = Block()
         self.inner_block = self.outer_block
+        self.add(*stmts)
 
     @match(many_tuple(Statement))
     def add(self, *stmts):
