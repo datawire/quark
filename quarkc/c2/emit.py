@@ -141,6 +141,14 @@ def transform(parent, ns, target):
     yield tr.File(filename(ns, target), header(ns, target),
                   *tuple(code(dfn, target) for dfn in ns.definitions))
 
+@match(Namespace, Namespace, Java)
+def transform(parent, ns, target):
+    "Convert special snowflake namespace for functions to a java class"
+    if ns.name.path[-1] == Snowflake("Functions"):
+        yield tr.File(filename(ns, target), header(ns, target),
+                      tr.Compound("public class Functions", tr.Block(
+                          *tuple(code(dfn, target) for dfn in ns.definitions))))
+
 @match(Package, Namespace, Python)
 def transform(parent, ns, target):
     yield tr.File("/".join((target.nameof(ns), "__init__.py",)),
@@ -171,17 +179,18 @@ def ffi_namespace(ns, target):
             name = dfn_name
             ))
 
-@match(Definition, Go)
-def transform(dfn, target):
-    yield tr.File(filename(dfn, target), header(dfn, target), code(dfn, target))
-
-@match(Definition, Python)
+@match(Definition, choice(Go, Target, Java, Ruby))
 def transform(dfn, target):
     yield tr.File(filename(dfn, target), header(dfn, target), code(dfn, target))
 
 @match(Check, Go)
 def transform(dfn, target):
     """ supress checks, they are transformed in a batch in their namespace """
+    if False: yield
+
+@match(Function, Java)
+def transform(dfn, target):
+    """ supress functions they are tranformed in a batch in their namespace """
     if False: yield
 
 @match(choice(Namespace,Definition), Go)
@@ -198,22 +207,26 @@ def filename(dfn, target):
                     module_ffi_path(target.q.parent(dfn), target) +
                     ("test_{module}".format(module=target.nameof(dfn)),)) + ".py"
 
+@match(choice(Namespace,Definition), Java)
+def filename(dfn, target):
+    return filename(dfn, ("src","main","java"), target)
+
+@match(TestClass, Java)
+def filename(dfn, target):
+    return filename(dfn, ("src","test","java"), target)
+
 @match(choice(Namespace,Definition), (many(basestring),), Python)
 def filename(ns, module, target):
     return "/".join(module_path(ns, target) + module) + ".py"
+
+@match(choice(Namespace,Definition), (many(basestring),), Java)
+def filename(dfn, prefix, target):
+    return "/".join(prefix + module_path(dfn, target)) + ".java"
 
 @match(Definition, Go)
 def header(dfn, target):
     return tuple((
         tr.Simple("package {name}".format(
-            name = target.nameof(target.q.parent(dfn))
-            )),)
-    ) + tuple(imports(dfn, target))
-
-@match(Definition, Python)
-def header(dfn, target):
-    return tuple((
-        tr.Comment("module {name}".format(
             name = target.nameof(target.q.parent(dfn))
             )),)
     ) + tuple(imports(dfn, target))
@@ -227,12 +240,36 @@ def header(dfn, target):
         tr.Simple("import \"testing\"")
     )) + tuple(imports(dfn, target))
 
+@match(Definition, Python)
+def header(dfn, target):
+    return tuple((
+        tr.Comment("module {name}".format(
+            name = target.nameof(target.q.parent(dfn))
+            )),)
+    ) + tuple(imports(dfn, target))
+
+@match(choice(Namespace,Definition), Java)
+def header(dfn, target):
+    return tuple((
+        tr.Simple("package {name}".format(
+            name = ".".join(module_path(target.q.parent(dfn), target))
+            )),)
+    ) + tuple(imports(dfn, target))
+
 
 @match(Definition, Go)
 def imports(dfn, target):
     """ emit needed import statements """
     imports = OrderedDict()
     define_imports(dfn, target, imports)
+    for key, value in imports.items():
+        yield tr.Simple("import \"{module}\"".format(**value))
+
+@match(Namespace, Go)
+def imports(ns, target):
+    imports = OrderedDict()
+    for dfn in ns.definitions:
+        define_imports(dfn, target, imports)
     for key, value in imports.items():
         yield tr.Simple("import \"{module}\"".format(**value))
 
@@ -244,13 +281,24 @@ def imports(dfn, target):
     for key, value in imports.items():
         yield tr.Simple("import {module}".format(**value))
 
-@match(Namespace, Go)
-def imports(ns, target):
+@match(choice(Namespace,Definition), Java)
+def imports(dfn, target):
+    """ emit needed import statements """
     imports = OrderedDict()
-    for dfn in ns.definitions:
-        define_imports(dfn, target, imports)
-    for key, value in imports.items():
-        yield tr.Simple("import \"{module}\"".format(**value))
+    define_imports(dfn, target, imports)
+    assert not imports
+    # java fully qualify uses
+    if False: yield
+
+@match(TestClass, Java)
+def imports(dfn, target):
+    """ emit needed import statements """
+    imports = OrderedDict()
+    define_imports(dfn, target, imports)
+    assert not imports
+    # java fully qualify uses
+    yield tr.Simple("import static org.junit.Assert.assertEquals")
+    yield tr.Simple("import org.junit.Test")
 
 @match(Definition, Go, dict)
 def define_imports(dfn, target, imports):
@@ -301,6 +349,32 @@ def define_imports(dfn, target, imports):
             ref_target_name = ref_dfn_target_name
         target.define_import(dfn, ref, ref_target_name)
 
+@match(Definition, Java, dict)
+def define_imports(dfn, target, imports):
+    """For all refs inside definition, calculate required import
+    statements and remember actual names that refs should resolve to
+
+    """
+    dfn_module_path = module_path(dfn, target)
+    for ref in filter(isa(Ref), walk_dfs(dfn)):
+        ref_dfn = target.q.definition(ref)
+        ref_module_path = module_path(ref_dfn, target)
+        if dfn_module_path[:-1] == ref_module_path[:-1]:
+            ref_target_name = ref_module_path[-1]
+        else:
+            ref_target_name = ".".join(ref_module_path)
+        target.define_import(dfn, ref, ref_target_name)
+
+@match(Namespace, Java, dict)
+def define_imports(ns, target, imports):
+    """For all refs inside definition inside namespace, calculate required import
+    statements and remember actual names that refs should resolve to
+
+    """
+    assert ns.name.path[-1] == Snowflake("Functions")
+    for dfn in ns.definitions:
+        define_imports(dfn, target, imports)
+
 @match(choice(Namespace, Definition), Go)
 def module_path(dfn, target):
     return tuple((dfn.name.package, target.nameof(target.q.parent(dfn))))
@@ -319,6 +393,15 @@ def module_ffi_path(dfn, target):
         target.nameof(ns)
         for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,))))
         )
+
+@match(choice(Namespace, Definition), Java)
+def module_path(dfn, target):
+    path = tuple(
+        target.nameof(ns)
+        for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,Definition))))
+        )
+    return path
+
 
 import py.path
 

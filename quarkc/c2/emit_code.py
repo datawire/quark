@@ -75,6 +75,14 @@ def code(fun, target):
         code(fun.body, target)
     )
 
+@match(TestMethod, Java)
+def code(fun, target):
+    return tr.Compound(
+        "@Test\npublic void test_{name}()".format(
+            name=fun.name),
+        code(fun.body, target)
+    )
+
 @match(Function, Ruby)
 def code(fun, target):
     return tr.Compound(
@@ -301,6 +309,14 @@ def code(clazz, target):
         "public class {name}{implements}".format(
             name = target.nameof(clazz.name),
             implements = implements("implements", clazz, target)),
+        tr.Block(tuple([code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods]))
+        )
+
+@match(TestClass, Java)
+def code(clazz, target):
+    return tr.Compound(
+        "public class Tests".format(
+            name = target.nameof(clazz.name)),
         tr.Block(tuple([code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods]))
         )
 
