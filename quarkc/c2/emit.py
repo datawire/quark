@@ -42,6 +42,7 @@ from .emit_target import Target, Go, Ruby, Java, Python
 from .emit_transform import transmogrify
 from .emit_code import code
 from .emit_format import format
+from .emit_naming import rename
 from .emit_ir import Snowflake, TestClass
 
 ## Package
@@ -54,41 +55,6 @@ def emit(pkg, target):
     rename(pkg, target)
     return tuple((module.filename, format(module, target))
                  for module in transform(pkg, target))
-
-
-@match(Root, Target)
-def rename(root, target):
-    assert target.q is not None, "Need a target with root() called"
-    for pkg in root.children:
-        for node in walk_dfs(pkg):
-            rename(node, target)
-
-@match(IR, Target)
-def rename(node, target):
-    pass
-
-@match(choice(Namespace, Definition), Target)
-def rename(ns, target):
-    rename(ns, ns.name.path[-1], target)
-
-@match(choice(Namespace,Definition), basestring, Target)
-def rename(ns, name, target):
-    target.define_name(ns.name, name)
-
-@match(IR, Snowflake, Target)
-def rename(named, name, target):
-    assert False, "Unhandled special case %r" % named.name
-
-@match(Definition, Go)
-def rename(dfn, target):
-    target.define_name(dfn.name, target.upcase("_".join(dfn.name.path[1:])))
-
-@match(Namespace, Snowflake("test"), Go)
-def rename(ns, name, target):
-    target.define_name(ns.name, "{pkg}_test".format(
-        pkg = target.nameof(target.q.parent(ns))))
-
-
 
 
 
@@ -179,7 +145,7 @@ def ffi_namespace(ns, target):
             name = dfn_name
             ))
 
-@match(Definition, choice(Go, Target, Java, Ruby))
+@match(Definition, choice(Go, Python, Java, Ruby))
 def transform(dfn, target):
     yield tr.File(filename(dfn, target), header(dfn, target), code(dfn, target))
 
