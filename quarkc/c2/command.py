@@ -74,8 +74,8 @@ def main(args):
 
     pkg = c.compile()
     for tgt in targets:
-        emit(pkg, tgt)
-        for name, content in tgt.files.items():
+        files = emit(pkg, tgt)
+        for name, content in files:
             fname = os.path.join(output, name)
             ensure_dir(fname)
             with open(fname, "write") as f:

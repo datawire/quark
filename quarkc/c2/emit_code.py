@@ -20,6 +20,7 @@ from . import tr
 
 from .emit_target import Target, Python, Ruby, Java, Go
 from .emit_expr import expr
+from .emit_ir import TestClass, TestMethod
 
 @match(basestring, IR, Target, opt(basestring))
 def opt_expr(glue, nd, target, default=""):
@@ -45,6 +46,14 @@ def code(fun, target):
     return tr.Compound(
         "def test_{name}()".format(
             name=target.nameof(fun.name)),
+        code(fun.body, target)
+    )
+
+@match(TestMethod, Python)
+def code(fun, target):
+    return tr.Compound(
+        "def test_{name}(self)".format(
+            name=fun.name),
         code(fun.body, target)
     )
 
@@ -266,6 +275,14 @@ def code(clazz, target):
     # XXX: do we want to support isinstance for implemented interfaces?
     return tr.Compound(
         "class {name}(object)".format(
+            name = target.nameof(clazz.name)),
+        tr.Block(*[code(m, target) for m in clazz.constructors + clazz.methods])
+        )
+
+@match(TestClass, Python)
+def code(clazz, target):
+    return tr.Compound(
+        "class TestQ{name}(object)".format(
             name = target.nameof(clazz.name)),
         tr.Block(*[code(m, target) for m in clazz.constructors + clazz.methods])
         )

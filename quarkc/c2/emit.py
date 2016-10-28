@@ -144,18 +144,16 @@ def transform(parent, ns, target):
 @match(Package, Namespace, Python)
 def transform(parent, ns, target):
     yield tr.File("/".join((target.nameof(ns), "__init__.py",)),
-                  tr.Simple("from .__quark_impl__.__quark_namespace__ import *")
-    )
+                  tr.Simple("from .__quark_impl__.__quark_namespace__ import *"))
+    yield tr.File("/".join((target.nameof(ns), "__quark_impl__", "__init__.py",)))
     yield tr.File(filename(ns, ("__quark_namespace__",), target),
-                  tuple(ffi_namespace(ns, target))
-    )
+                  tuple(ffi_namespace(ns, target)))
 
 @match(Namespace, Namespace, Python)
 def transform(parent, ns, target):
     yield tr.File(filename(ns, ("__init__",), target))
     yield tr.File(filename(ns, ("__quark_namespace__",), target),
-                  tuple(ffi_namespace(ns, target))
-    )
+                  tuple(ffi_namespace(ns, target)))
 
 @match(Namespace, Python)
 def ffi_namespace(ns, target):
@@ -326,7 +324,7 @@ import py.path
 
 def writeout(files, output, verbose):
     o = py.path.local(output)
-    for name, content in files.items():
+    for name, content in files:
         f = o.join(name)
         f.write(content, ensure=True)
         if verbose:
@@ -346,8 +344,8 @@ def main(args):
             if not args.get(opt, False):
                 continue
             b = backend()
-            emit(ir, b)
-            writeout(b.files, output=args["--output"], verbose=args["--verbose"])
+            files = emit(ir, b)
+            writeout(files, output=args["--output"], verbose=args["--verbose"])
  
 
 def call_main():
