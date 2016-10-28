@@ -19,6 +19,9 @@ from .ir import IR, Method, Class
 
 class Snowflake(str):
     """ Avoid dictionary lookup of reserved identifiers """
+    def split(self, sep):
+        return (self,)
+
     def __eq__(self, other):
         return type(self) is type(other) and str(self) == str(other)
 
@@ -27,6 +30,9 @@ class Snowflake(str):
 
     def __hash__(self):
         return hash(str(self))
+
+    def __repr__(self):
+        return "%s(%s)" % (self.__class__.__name__, repr(str(self)))
 
 
 class TargetNamespace(IR):

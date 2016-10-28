@@ -361,7 +361,7 @@ def code(method, target):
 def code(method, target):
     return tr.Compound(
         "func (this *{clazz}) {name}({params}) {type}".format(
-            clazz=target.nameof(method.parent.name),
+            clazz=target.nameof(target.q.parent(method)),
             type=expr(method.type, target),
             name=target.upcase(method.name),
             params=", ".join(expr(p, target) for p in method.params)),
@@ -399,7 +399,7 @@ def code(constructor, target):
 
 @match(Constructor, Go)
 def code(constructor, target):
-    clazz=target.nameof(constructor.parent.name)
+    clazz=target.nameof(target.q.parent(constructor))
     return tr.Compound(
         "func {name}__Construct({params}) *{clazz}".format(
             clazz=clazz,

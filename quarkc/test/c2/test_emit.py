@@ -15,7 +15,7 @@
 import pytest
 
 
-from quarkc.c2.emit import transmogrify
+from quarkc.c2.emit import transmogrify, emit
 from quarkc.c2.ir import reconstruct
 from quarkc.c2.emit_target import Go, Python, Java, Ruby
 
@@ -30,3 +30,18 @@ def test_transmogrify(sample, target):
     r = reconstruct(s)
     t = transmogrify(r, target())
     print t
+
+
+@pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
+@pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
+def test_emit_sample(sample, target):
+    t = target()
+    for name, content in emit(sample(), t):
+        print("")
+        print(">>>>>> begin " + name)
+        print(content)
+        print("<<<<<<<< end " + name)
+
+    import pprint
+    pprint.pprint(dict(t.names))
+    pprint.pprint(dict(t.imports))

@@ -31,125 +31,296 @@ Options:
 """
 
 from itertools import chain
-from collections import deque
-from .match import match, many
-from .ir import IR, Package, Definition, Check, Function, Ref, Name
-from .tree import walk_dfs
+from collections import deque, OrderedDict
+from .match import match, many, choice
+from .ir import (IR, Root, Package, Namespace, Definition,
+                 Check, Function, Ref, Name, ExternalPackage)
+from .ir import reconstruct
+from .tree import walk_dfs, Query, isa, split
 from . import tr
 from .emit_target import Target, Go, Ruby, Java, Python
 from .emit_transform import transmogrify
 from .emit_code import code
 from .emit_format import format
+from .emit_ir import Snowflake, TestClass
 
 ## Package
 
-@match(IR)
-def backlink(tree):
-    pending = deque([tree])
-    while pending:
-        node = pending.popleft()
-        for c in node.children:
-            assert isinstance(c, IR), repr(c)
-            parent = getattr(c, "parent", node)
-            assert parent is node, "%s is not a tree: %s has parent %s but expected %s" % (tree.__class__.__name__, c, parent, node)
-            c.parent = node
-            pending.append(c)
-
-
 @match(Package, Target)
 def emit(pkg, target):
-    backlink(pkg)
-    chop(pkg, target)
-    crosslink(pkg, target)
-    transform(pkg, target)
-    format(pkg, target)
+    pkg = reconstruct(pkg)
+    pkg = transmogrify(pkg, target)
+    target = target.with_root(pkg)
+    rename(pkg, target)
+    return tuple((module.filename, format(module, target))
+                 for module in transform(pkg, target))
 
-@match(Package, Target)
-def chop(pkg, target):
-    """Decide target module and name of each definition"""
-    for d in pkg.definitions:
-        target.define(d)
 
-@match(Package, Target)
-def crosslink(pkg, target):
-    """Compute all inter-module references"""
-    for d in pkg.definitions:
-        crosslink(d, target)
+@match(Root, Target)
+def rename(root, target):
+    assert target.q is not None, "Need a target with root() called"
+    for pkg in root.children:
+        for node in walk_dfs(pkg):
+            rename(node, target)
 
-@match(Definition, Target)
-def crosslink(dfn, target):
-    for node in walk_dfs(dfn):
-        crosslink(dfn, node, target)
-    crosslink_done(dfn, target)
-
-@match(Definition, Ref, Target)
-def crosslink(dfn, ref, target):
-    target.reference(dfn, ref)
-
-@match(Definition, IR, Target)
-def crosslink(dfn, node, target):
+@match(IR, Target)
+def rename(node, target):
     pass
 
-@match(Definition, Target)
-def crosslink_done(dfn, target):
-    pass
+@match(choice(Namespace, Definition), Target)
+def rename(ns, target):
+    rename(ns, ns.name.path[-1], target)
 
-@match(Definition, Ruby)
-def crosslink_done(dfn, target):
-    module = target.module(dfn)
-    tgtdfn = target.definitions[dfn.name]
-    for name in tgtdfn.namespace.target_name:
-        inner_block = tr.Block()
-        module.push(tr.Compound("module {name}".format(name=name), inner_block), inner_block)
+@match(choice(Namespace,Definition), basestring, Target)
+def rename(ns, name, target):
+    target.define_name(ns.name, name)
 
-@match(Check, Ruby)
-def crosslink_done(dfn, target):
-    module = target.module(dfn)
-    # XXX: there are several Checks per module, short-circuit by cheating a bit here
-    if module.outer_block is not module.inner_block:
-        return
-    module.add(tr.Simple("require 'test/unit'"))
-    tgtdfn = target.definitions[dfn.name]
-    for name in tgtdfn.namespace.target_name:
-        inner_block = tr.Block()
-        module.push(tr.Compound("module {name}".format(name=name), inner_block), inner_block)
-    inner_block = tr.Block()
-    module.push(tr.Compound("class Test{name} < Test::Unit::TestCase".format(
-        name=tgtdfn.namespace.target_name[-1]), inner_block), inner_block)
+@match(IR, Snowflake, Target)
+def rename(named, name, target):
+    assert False, "Unhandled special case %r" % named.name
 
-@match(Function, Java)
-def crosslink_done(dfn, target):
-    module = target.module(dfn)
-    # XXX: there are several Functions per module, short-circuit by cheating a bit here
-    if module.outer_block is not module.inner_block:
-        return
-    inner_block = tr.Block()
-    module.push(tr.Compound("public class Functions", inner_block), inner_block)
+@match(Definition, Go)
+def rename(dfn, target):
+    target.define_name(dfn.name, target.upcase("_".join(dfn.name.path[1:])))
 
-@match(Check, Java)
-def crosslink_done(dfn, target):
-    module = target.module(dfn)
-    # XXX: there are several Checks per module, short-circuit by cheating a bit here
-    if module.outer_block is not module.inner_block:
-        return
-    module.add(tr.Simple("import static org.junit.Assert.assertEquals"))
-    module.add(tr.Simple("import org.junit.Test"))
-    inner_block = tr.Block()
-    module.push(tr.Compound("public class Tests", inner_block), inner_block)
+@match(Namespace, Snowflake("test"), Go)
+def rename(ns, name, target):
+    target.define_name(ns.name, "{pkg}_test".format(
+        pkg = target.nameof(target.q.parent(ns))))
 
-@match(Package, Target)
+
+
+
+
+
+
+@match(Root, Target)
+def transform(root, target):
+    """ Generate a stream of tr.Files """
+    for p in root.packages:
+        for m in transform(p, target):
+            yield m
+
+@match(ExternalPackage, Target)
 def transform(pkg, target):
-    """Generate tr.Statement-s for the IR"""
+    # no output for ExternalPackage
+    if False: yield
+
+@match(choice(Package, Namespace), Target)
+def transform(pkg, target):
+    # generic tree traverse
     for d in pkg.definitions:
-        module = target.module(d)
-        module.add(code(d, target))
+        for m in transform(pkg, d, target):
+            yield m
+        for m in transform(d, target):
+            yield m
 
-@match(Package, Target)
-def format(pkg, target):
-    """Generate set of files with formatted content"""
-    for m in target.modules.values():
-        target.file(m, format(m, target))
+@match(Package, Namespace, Target)
+def transform(pkg, ns, target):
+    # default toplevel namespace handler
+    if False: yield
 
+@match(Namespace, Namespace, Target)
+def transform(parent, ns, target):
+    # default nested namespace handler
+    if False: yield
+
+@match(Namespace, Definition, Target)
+def transform(ns, dfn, Target):
+    # Definitions are supposed to be handled by a two-parameter version
+    if False: yield
+
+@match(Definition, Target)
+def transform(dfn, target):
+    assert False, "No transform for %s %s %s" % (dfn.__class__.__name__, dfn.name, target.__class__.__name__)
+
+@match(Namespace, Namespace, Go)
+def transform(parent, ns, target):
+    "There should be no nested namespaces in go, except the special case for go checks"
+    assert ns.name.path[-1] == Snowflake("test")
+    yield tr.File(filename(ns, target), header(ns, target),
+                  *tuple(code(dfn, target) for dfn in ns.definitions))
+
+@match(Package, Namespace, Python)
+def transform(parent, ns, target):
+    yield tr.File("/".join((target.nameof(ns), "__init__.py",)),
+                  tr.Simple("from .__quark_impl__.__quark_namespace__ import *")
+    )
+    yield tr.File(filename(ns, ("__quark_namespace__",), target),
+                  tuple(ffi_namespace(ns, target))
+    )
+
+@match(Namespace, Namespace, Python)
+def transform(parent, ns, target):
+    yield tr.File(filename(ns, ("__init__",), target))
+    yield tr.File(filename(ns, ("__quark_namespace__",), target),
+                  tuple(ffi_namespace(ns, target))
+    )
+
+@match(Namespace, Python)
+def ffi_namespace(ns, target):
+    _, dfns, nss, _ = split(ns.children, isa(Check,TestClass), isa(Definition), isa(Namespace))
+    for nns in nss:
+        ns_name = target.nameof(nns)
+        yield tr.Simple("from .{module} import __quark_namespace__ as {name}".format(
+            module = ns_name,
+            name = ns_name
+            ))
+    for dfn in dfns:
+        dfn_name = target.nameof(dfn)
+        yield tr.Simple("from .{module} import {name}".format(
+            module = dfn_name,
+            name = dfn_name
+            ))
+
+@match(Definition, Go)
+def transform(dfn, target):
+    yield tr.File(filename(dfn, target), header(dfn, target), code(dfn, target))
+
+@match(Definition, Python)
+def transform(dfn, target):
+    yield tr.File(filename(dfn, target), header(dfn, target), code(dfn, target))
+
+@match(Check, Go)
+def transform(dfn, target):
+    """ supress checks, they are transformed in a batch in their namespace """
+    if False: yield
+
+@match(choice(Namespace,Definition), Go)
+def filename(dfn, target):
+    return "/".join(module_path(dfn, target) + (target.nameof(dfn).lower(),))  + ".go"
+
+@match(Definition, Python)
+def filename(dfn, target):
+    return filename(dfn, (), target)
+
+@match(TestClass, Python)
+def filename(dfn, target):
+    return "/".join(("tests",) +
+                    module_ffi_path(target.q.parent(dfn), target) +
+                    ("test_{module}".format(module=target.nameof(dfn)),)) + ".py"
+
+@match(choice(Namespace,Definition), (many(basestring),), Python)
+def filename(ns, module, target):
+    return "/".join(module_path(ns, target) + module) + ".py"
+
+@match(Definition, Go)
+def header(dfn, target):
+    return tuple((
+        tr.Simple("package {name}".format(
+            name = target.nameof(target.q.parent(dfn))
+            )),)
+    ) + tuple(imports(dfn, target))
+
+@match(Definition, Python)
+def header(dfn, target):
+    return tuple((
+        tr.Comment("module {name}".format(
+            name = target.nameof(target.q.parent(dfn))
+            )),)
+    ) + tuple(imports(dfn, target))
+
+@match(Namespace, Go)
+def header(dfn, target):
+    return tuple((
+        tr.Simple("package {name}".format(
+            name = target.nameof(dfn)
+            )),
+        tr.Simple("import \"testing\"")
+    )) + tuple(imports(dfn, target))
+
+
+@match(Definition, Go)
+def imports(dfn, target):
+    """ emit needed import statements """
+    imports = OrderedDict()
+    define_imports(dfn, target, imports)
+    for key, value in imports.items():
+        yield tr.Simple("import \"{module}\"".format(**value))
+
+@match(Definition, Python)
+def imports(dfn, target):
+    """ emit needed import statements """
+    imports = OrderedDict()
+    define_imports(dfn, target, imports)
+    for key, value in imports.items():
+        yield tr.Simple("import {module}".format(**value))
+
+@match(Namespace, Go)
+def imports(ns, target):
+    imports = OrderedDict()
+    for dfn in ns.definitions:
+        define_imports(dfn, target, imports)
+    for key, value in imports.items():
+        yield tr.Simple("import \"{module}\"".format(**value))
+
+@match(Definition, Go, dict)
+def define_imports(dfn, target, imports):
+    """For all refs inside definition, calculate required import
+    statements and remember actual names that refs should resolve to
+
+    """
+    dfn_module_path = module_path(dfn, target)
+    dfn_target_name = target.nameof(dfn.name)
+    for ref in filter(isa(Ref), walk_dfs(dfn)):
+        ref_dfn = target.q.definition(ref)
+        ref_dfn_target_name = target.nameof(ref_dfn)
+        ref_module_path = module_path(ref_dfn, target)
+        if dfn_module_path != ref_module_path:
+            ref_module_alias = ref_module_path[-1]
+            imports[ref_module_path] = dict(module = "/".join(ref_module_path),
+                                            alias = ref_module_alias)
+            ref_target_name = ".".join((ref_module_alias, ref_dfn_target_name))
+        else:
+            ref_target_name = ref_dfn_target_name
+        target.define_import(dfn, ref, ref_target_name)
+
+
+@match(Definition, Python, dict)
+def define_imports(dfn, target, imports):
+    """For all refs inside definition, calculate required import
+    statements and remember actual names that refs should resolve to
+
+    """
+    dfn_module_path = module_path(dfn, target)
+    for ref in filter(isa(Ref), walk_dfs(dfn)):
+        ref_dfn = target.q.definition(ref)
+        ref_dfn_target_name = target.nameof(ref_dfn)
+        if dfn.name.package != ref.package or isinstance(dfn, (TestClass, Check)):
+            # import from FFI namespace
+            ref_module_path = module_ffi_path(ref_dfn, target)
+            ref_dfn_alias = ".".join(ref_module_path + (ref_dfn_target_name,))
+            imports[ref_module_path[0]] = dict(module = ref_module_path[0])
+            ref_target_name = ref_dfn_alias
+        elif dfn.name != ref_dfn.name:
+            # import from impl
+            ref_module_path = module_path(ref_dfn, target)
+            ref_dfn_alias = ".".join(ref_module_path + (ref_dfn_target_name,))
+            imports[ref_module_path] = dict(module = ".".join(ref_module_path))
+            ref_target_name = ref_dfn_alias
+        else:
+            # no need to import at all
+            ref_target_name = ref_dfn_target_name
+        target.define_import(dfn, ref, ref_target_name)
+
+@match(choice(Namespace, Definition), Go)
+def module_path(dfn, target):
+    return tuple((dfn.name.package, target.nameof(target.q.parent(dfn))))
+
+@match(choice(Namespace, Definition), Python)
+def module_path(dfn, target):
+    path = tuple(
+        target.nameof(ns)
+        for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,Definition))))
+        )
+    return path[:1] + ("__quark_impl__", ) + path[1:]
+
+@match(choice(Namespace,Definition), Python)
+def module_ffi_path(dfn, target):
+    return tuple(
+        target.nameof(ns)
+        for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,))))
+        )
 
 import py.path
 

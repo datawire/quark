@@ -104,7 +104,7 @@ class _Name(IR):
         return hash((self.package, self.path))
 
     def __repr__(self):
-        return self.repr(":".join((self.package, ".".join(self.path))))
+        return self.repr(self.package, *self.path)
 
     @property
     def namespace(self):
@@ -345,6 +345,9 @@ class Package(IR):
             return self.repr(self.name, *self.definitions)
         else:
             return self.repr(*self.definitions)
+
+class ExternalPackage(Package):
+    pass
 
 class Root(IR):
     @match(many(Package))
@@ -1070,7 +1073,7 @@ def model_externals(pkg):
         assert len(uses[ref]) == 1, "Incosistent use of %s" % uses[ref]
         return external_kind(q.parent(ref))(Name(ref.package, *ref.path))
     externals = map(restructure, (
-        Package(*map(external, g))
+        ExternalPackage(*map(external, g))
         for k, g in groupby(sorted(unresolved, key=keyfunc), keyfunc)))
     return tuple(externals)
 
