@@ -16,7 +16,7 @@ from itertools import chain
 from .match import match, many, choice
 from .tree import isa, split, walk_dfs
 from .ir import (IR, Root, Package, Namespace, NamespaceName,
-                 Name, Definition,
+                 Name, Definition, ExternalFunction,
                  Check, Function, Class, Check, Void)
 
 from .emit_target import Target, Python, Ruby, Java, Go, Snowflake
@@ -37,7 +37,7 @@ def transmogrify(pkg, target):
 
 @match(Namespace, Target)
 def transmogrify(ns, target):
-    funs, checks, nss, rest = split(ns.definitions, isa(Function), isa(Check), isa(Namespace))
+    funs, checks, nss, rest = split(ns.definitions, isa(Function, ExternalFunction), isa(Check), isa(Namespace))
     funs = transmogrify(ns, funs, target)
     checks = transmogrify(ns, checks, target)
     nss = transmogrify(ns, nss, target)
@@ -60,7 +60,7 @@ def transmogrify(ns, target):
 def transmogrify(ns, defs, target):
     return tuple(transmogrify(dfn, target) for dfn in defs)
 
-@match(Namespace, (many(Function, min=1),), Java)
+@match(Namespace, (choice(many(Function, min=1),many(ExternalFunction, min=1)),), Java)
 def transmogrify(ns, funs, target):
     return tuple((
         Namespace(NamespaceName.join(ns.name, Snowflake("Functions")), *funs),))
