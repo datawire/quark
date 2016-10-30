@@ -108,9 +108,23 @@ def ffi_namespace(ns, target):
             name = dfn_name
             ))
 
-@match(Definition, choice(Go, Python, Java, Ruby))
+@match(Definition, choice(Go, Python, Java))
 def generate(dfn, target):
     yield tr.File(filename(dfn, target), header(dfn, target), code(dfn, target))
+
+@match(Definition, Ruby)
+def generate(dfn, target):
+    yield tr.File(filename(dfn, target), header(dfn, target),
+                  generate(dfn, module_ffi_path(dfn, target), target)
+    )
+
+@match(Definition, (many(basestring),), Ruby)
+def generate(dfn, nesting, target):
+    if not nesting:
+        return code(dfn, target)
+    else:
+        return tr.Compound("module {ns}".format(ns=nesting[0]),
+                           tr.Block(generate(dfn, nesting[1:], target)))
 
 @match(Check, Go)
 def generate(dfn, target):
@@ -136,6 +150,10 @@ def filename(dfn, target):
                     module_ffi_path(target.q.parent(dfn), target) +
                     ("test_{module}".format(module=target.nameof(dfn)),)) + ".py"
 
+@match(choice(Namespace,Definition), (many(basestring),), Python)
+def filename(ns, module, target):
+    return "/".join(module_path(ns, target) + module) + ".py"
+
 @match(choice(Namespace,Definition), Java)
 def filename(dfn, target):
     return filename(dfn, ("src","main","java"), target)
@@ -144,13 +162,21 @@ def filename(dfn, target):
 def filename(dfn, target):
     return filename(dfn, ("src","test","java"), target)
 
-@match(choice(Namespace,Definition), (many(basestring),), Python)
-def filename(ns, module, target):
-    return "/".join(module_path(ns, target) + module) + ".py"
-
 @match(choice(Namespace,Definition), (many(basestring),), Java)
 def filename(dfn, prefix, target):
     return "/".join(prefix + module_path(dfn, target)) + ".java"
+
+@match(Definition, Ruby)
+def filename(dfn, target):
+    return filename(dfn, (), target)
+
+@match(TestClass, Ruby)
+def filename(dfn, target):
+    return filename(dfn, ("test",), target)
+
+@match(choice(Namespace,Definition), (many(basestring),), Ruby)
+def filename(dfn, prefix, target):
+    return "/".join(prefix + module_path(dfn, target)) + ".rb"
 
 @match(Definition, Go)
 def header(dfn, target):
@@ -185,6 +211,9 @@ def header(dfn, target):
             )),)
     ) + tuple(imports(dfn, target))
 
+@match(choice(Namespace,Definition), Ruby)
+def header(dfn, target):
+    return tuple(imports(dfn, target))
 
 @match(Definition, Go)
 def imports(dfn, target):
@@ -219,6 +248,14 @@ def imports(dfn, target):
     # java fully qualify uses
     if False: yield
 
+@match(Definition, Ruby)
+def imports(dfn, target):
+    """ emit needed import statements """
+    imports = OrderedDict()
+    define_imports(dfn, target, imports)
+    for key, value in imports.items():
+        yield tr.Simple("{require} \"{module}\"".format(**value))
+
 @match(TestClass, Java)
 def imports(dfn, target):
     """ emit needed import statements """
@@ -236,7 +273,6 @@ def define_imports(dfn, target, imports):
 
     """
     dfn_module_path = module_path(dfn, target)
-    dfn_target_name = target.nameof(dfn.name)
     for ref in filter(isa(Ref), walk_dfs(dfn)):
         ref_dfn = target.q.definition(ref)
         ref_dfn_target_name = target.nameof(ref_dfn)
@@ -257,7 +293,6 @@ def define_imports(dfn, target, imports):
     statements and remember actual names that refs should resolve to
 
     """
-    dfn_module_path = module_path(dfn, target)
     for ref in filter(isa(Ref), walk_dfs(dfn)):
         ref_dfn = target.q.definition(ref)
         ref_dfn_target_name = target.nameof(ref_dfn)
@@ -268,7 +303,8 @@ def define_imports(dfn, target, imports):
             imports[ref_module_path[0]] = dict(module = ref_module_path[0])
             ref_target_name = ref_dfn_alias
         elif dfn.name != ref_dfn.name:
-            # import from impl
+            # import from impl but using absolute module path.
+            # This provides the smallest implementation file namespace pollution
             ref_module_path = module_path(ref_dfn, target)
             ref_dfn_alias = ".".join(ref_module_path + (ref_dfn_target_name,))
             imports[ref_module_path] = dict(module = ".".join(ref_module_path))
@@ -304,6 +340,35 @@ def define_imports(ns, target, imports):
     for dfn in ns.definitions:
         define_imports(dfn, target, imports)
 
+@match(Definition, Ruby, dict)
+def define_imports(dfn, target, imports):
+    """For all refs inside definition, calculate required import
+    statements and remember actual names that refs should resolve to
+
+    """
+    for ref in filter(isa(Ref), walk_dfs(dfn)):
+        ref_dfn = target.q.definition(ref)
+        ref_dfn_target_name = target.nameof(ref_dfn)
+        if dfn.name.package != ref.package or isinstance(dfn, (TestClass, Check)):
+            # import from FFI namespace
+            ref_module_path = module_ffi_path(ref_dfn, target)
+            ref_dfn_alias = ".".join(ref_module_path + (ref_dfn_target_name,))
+            imports[ref.package] = dict(require = "require",
+                                        module = ref.package)
+            ref_target_name = ref_dfn_alias
+        elif dfn.name != ref_dfn.name:
+            # import from impl, address via FFI
+            require_module_path = module_path(dfn, ref_dfn, target)
+            imports[require_module_path] = dict(require = "require_relative",
+                                                module = "/".join(require_module_path))
+            ref_module_path = module_ffi_path(ref_dfn, target)
+            ref_dfn_alias = ".".join(ref_module_path + (ref_dfn_target_name,))
+            ref_target_name = ref_dfn_alias
+        else:
+            # no need to import at all
+            ref_target_name = ref_dfn_target_name
+        target.define_import(dfn, ref, ref_target_name)
+
 @match(choice(Namespace, Definition), Go)
 def module_path(dfn, target):
     return tuple((dfn.name.package, target.nameof(target.q.parent(dfn))))
@@ -330,3 +395,30 @@ def module_path(dfn, target):
         for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,Definition))))
         )
     return path
+
+@match(choice(Namespace, Definition), Ruby)
+def module_path(dfn, target):
+    path = tuple(
+        target.nameof(ns)
+        for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,Definition))))
+        )
+    return path
+
+@match(Definition, Definition, Ruby)
+def module_path(dfn, ref_dfn, target):
+    """ calculate relative module path """
+    dfn_path = module_path(dfn, target)
+    ref_path =  module_path(ref_dfn, target)
+    assert dfn_path != ref_path
+    for common,(d,r) in enumerate(map(None, dfn_path, ref_path)):
+        if d != r:
+            break
+    path = ("..",) * len(dfn_path[common:-1]) + ref_path[common:]
+    return path
+
+@match(choice(Namespace,Definition), Ruby)
+def module_ffi_path(dfn, target):
+    return tuple(
+        target.upcase(target.nameof(ns))
+        for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,))))
+        )
