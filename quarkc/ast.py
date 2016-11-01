@@ -68,6 +68,10 @@ class AST(object):
             column = len(text) or 1
         return line, column
 
+    @property
+    def location(self):
+        return "%s:%s:%s" % (self.filename, self.line, self.column)
+
     def lookup(self, target, prefix=None, default=None):
         if hasattr(target, "lookup_cache"):
             cache = target.lookup_cache
