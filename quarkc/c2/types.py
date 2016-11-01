@@ -2,7 +2,6 @@ from .match import *
 from .errors import *
 from .traits import *
 from .ast import *
-from .timer import Timer
 from .symbols import Symbols, name, traversal
 from collections import namedtuple, OrderedDict
 
@@ -20,9 +19,8 @@ def get_definition(dfn):
 
 class Types(object):
 
-    @match(Timer, Symbols)
-    def __init__(self, timer, symbols):
-        self.timer = timer
+    @match(Symbols)
+    def __init__(self, symbols):
         self.symbols = symbols
         self.types = Typespace()
         self.resolved = OrderedDict()

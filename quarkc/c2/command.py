@@ -26,11 +26,13 @@ Options:
   --ir                  Emit IR
 """
 
-import os
+import os, sys
 from docopt import docopt
 from .compiler import Compiler
 from .exceptions import QuarkError
 from .emit import emit, Java, Python, Ruby, Go
+
+import stats
 
 def ensure_dir(fname):
     dir = os.path.dirname(fname)
@@ -88,7 +90,12 @@ def main(args):
             f.write("%s\n" % repr(pkg))
 
 def call_main():
-    exit(main(docopt(__doc__, version="Quark %s" % 2.0)))
+    args = docopt(__doc__, version="Quark %s" % 2.0)
+    try:
+        exit(main(args))
+    finally:
+        if args["--verbose"]:
+            stats.dump(sys.stderr)
 
 if __name__ == "__main__":
     call_main()

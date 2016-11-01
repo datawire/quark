@@ -3,8 +3,9 @@ from .errors import *
 from .match import *
 from .parse import traversal
 from .helpers import lineinfo
-from .timer import Timer
 from collections import OrderedDict
+
+import stats
 
 class UnresolvedSymbol(Exception):
 
@@ -36,32 +37,6 @@ def name(imp):
     assert imp.alias
     return ".".join([n.text for n in path(imp.parent)] + [imp.alias.text])
 
-@match(AST)
-def scope(n):
-    return scope(n.parent)
-
-@match(choice(Package, Function, Class, Interface, Method))
-def scope(s):
-    return s
-
-@match(AST)
-def scopes(n):
-    while n.parent:
-        yield scope(n)
-        n = n.parent
-    for d in n.definitions:
-        for s in imported_scopes(d):
-            yield s
-
-@match(AST)
-def imported_scopes(n):
-    if False: yield
-
-@match(Import)
-def imported_scopes(imp):
-    if not imp.alias:
-        yield imp.path
-
 def definitions():
     return choice(Function, Class, Interface, Method, Declaration, TypeParam)
 
@@ -78,9 +53,8 @@ def usages():
 
 class Symbols(object):
 
-    @match(Timer)
-    def __init__(self, timer):
-        self.timer = timer
+    @match()
+    def __init__(self):
         self.definitions = OrderedDict()
         self.duplicates = OrderedDict()
         self.missing = OrderedDict()
@@ -203,15 +177,16 @@ class Symbols(object):
 
     @match(AST, basestring)
     def qualify(self, node, text):
-        for s in scopes(node):
-            candidate = ".".join([name(s), text])
-            if self.exists(candidate):
-                return candidate
-        candidates = [text, ".".join(["quark", text])]
-        for candidate in candidates:
-            if self.exists(candidate):
-                return candidate
-        raise UnresolvedSymbol(text)
+        with stats.charge("qualify"):
+            for s in node.scopes:
+                candidate = ".".join([name(s), text])
+                if self.exists(candidate):
+                    return candidate
+            candidates = [text, ".".join(["quark", text])]
+            for candidate in candidates:
+                if self.exists(candidate):
+                    return candidate
+            raise UnresolvedSymbol(text)
 
     @match(Var)
     def __getitem__(self, var):

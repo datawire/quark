@@ -1,16 +1,14 @@
 from .match import *
 from .traits import *
 from .ast import *
-from .timer import Timer
 from .symbols import *
 
 import ir, types
 
 class Code(object):
 
-    @match(Timer, Symbols, types.Types)
-    def __init__(self, timer, symbols, types):
-        self.timer = timer
+    @match(Symbols, types.Types)
+    def __init__(self, symbols, types):
         self.symbols = symbols
         self.types = types
 
