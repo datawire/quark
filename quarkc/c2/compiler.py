@@ -1,6 +1,5 @@
 from .match import *
 from .errors import *
-from .exceptions import *
 from .parse import *
 from .symbols import *
 from .types import Types
@@ -67,7 +66,7 @@ class Compiler(object):
         for sym, nodes in self.symbols.duplicates.items():
             prev = depackage(self.symbols.definitions[sym])
             for n in nodes:
-                self.errors.add(DuplicateSymbol(sym, n, prev))
+                self.errors.add(DuplicateSymbol(n, sym, prev))
 
         for nd, name in self.symbols.missing.items():
             self.errors.add(MissingSymbol(nd, name))
@@ -90,8 +89,11 @@ class Compiler(object):
                 if self.types.has_type(node):
                     self.types.resolve(node)
 
-        for v in self.types.violations:
-            self.errors.add(v)
+        for n, errs in self.types.violations.items():
+            for e in errs:
+                self.errors.add(e)
+        for err in self.types.unresolved:
+            self.errors.add(err)
         self.timer.mark("resolve_types: {elapsed}")
 
     @match()

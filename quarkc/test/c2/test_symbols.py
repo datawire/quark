@@ -374,9 +374,42 @@ def test_missing_float2():
     }
     """, missing=["float"])
 
+def test_missing_bool1():
+    check("missing_bool", """
+    primitive void {}
+    void foo() {
+        true;
+    }
+    """, missing=["bool"])
+
+def test_missing_bool2():
+    check("missing_bool", """
+    primitive void {}
+    void foo() {
+        false;
+    }
+    """, missing=["bool"])
+
+def test_missing_bool3():
+    check("missing_bool", """
+    primitive void {}
+    void foo() {
+        if (foo()) {}
+    }
+    """, missing=["bool"])
+
+def test_missing_bool4():
+    check("missing_bool", """
+    primitive void {}
+    void foo() {
+        while (foo()) {}
+    }
+    """, missing=["bool"])
+
 def test_nesting():
     check("nesting", """
     primitive int {}
+    primitive bool {}
     int foo() {
         int a;
         if (a) {
@@ -397,7 +430,9 @@ def test_nesting():
               "nesting.foo.d": (Local, "d"),
               "nesting.foo.e": (Local, "e"),
               "nesting.int": (Primitive, "int"),
-              "nesting.int.int": (Method, "int")},
+              "nesting.int.int": (Method, "int"),
+              "nesting.bool": (Primitive, "bool"),
+              "nesting.bool.bool": (Method, "bool")},
     duplicates=["nesting.foo.d"], missing=["c"])
 
 ###############################################################################

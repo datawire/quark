@@ -1,10 +1,15 @@
 from .ast import *
-from .exceptions import MissingSymbol
+from .errors import *
 from .match import *
 from .parse import traversal
 from .helpers import lineinfo
 from .timer import Timer
 from collections import OrderedDict
+
+class UnresolvedSymbol(Exception):
+
+    def __init__(self, name):
+        self.name = name
 
 @match(choice(Package, Callable, Class, Declaration, TypeParam))
 def path(n):
@@ -69,7 +74,7 @@ def depackage(pkgs):
     return pkgs[0]
 
 def usages():
-    return choice(Type, Var, String, Number)
+    return choice(Type, Var, String, Number, Bool, If, While)
 
 class Symbols(object):
 
@@ -146,23 +151,27 @@ class Symbols(object):
     def resolve(self, nd):
         try:
             self.do_resolve(nd)
-        except MissingSymbol, e:
+        except UnresolvedSymbol, e:
             self.missing[nd] = e.name
 
     @match(choice(Type, Var))
     def do_resolve(self, nd):
         self.qualify(nd)
 
-    @match(choice(String))
+    @match(String)
     def do_resolve(self, st):
         self.qualify(st, "String")
 
-    @match(choice(Number))
+    @match(Number)
     def do_resolve(self, n):
         if "." in n.text:
             self.qualify(n, "float")
         else:
             self.qualify(n, "int")
+
+    @match(choice(If, While, Bool))
+    def do_resolve(self, n):
+        self.qualify(n, "bool")
 
     @match(Type)
     def qualify(self, type):
@@ -202,7 +211,7 @@ class Symbols(object):
         for candidate in candidates:
             if self.exists(candidate):
                 return candidate
-        raise MissingSymbol(node, text)
+        raise UnresolvedSymbol(text)
 
     @match(Var)
     def __getitem__(self, var):

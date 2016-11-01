@@ -157,6 +157,9 @@ class Ref(Base):
     def __eq__(self, other):
         return isinstance(other, Ref) and self.name == other.name and self.params == other.params
 
+    def __ne__(self, other):
+        return not (self == other)
+
     def bind(self, bindings):
         if self.name in bindings:
             assert not self.params
@@ -198,15 +201,44 @@ class Param(Type):
             return self.repr(self.name)
 
 class Unresolved(Type):
+    pass
+
+class UnresolvedRef(Unresolved):
 
     """Every unresolved reference points to this type.
     """
 
+    @match(Ref)
     def __init__(self, ref):
         self.ref = ref
 
     def __repr__(self):
         return self.repr(self.ref)
+
+class UnresolvedField(Unresolved):
+
+    @match(Ref, basestring)
+    def __init__(self, type, name):
+        self.type = type
+        self.name = name
+
+    def __repr__(self):
+        return self.repr(self.type, self.name)
+
+class UnresolvedCall(Unresolved):
+
+    @match(Ref)
+    def __init__(self, type):
+        self.type = type
+
+    def __repr__(self):
+        return self.repr(self.type)
+
+class Unresolvable(Unresolved):
+
+    @match(Unresolved)
+    def __init__(self, un):
+        self.un = un
 
 class Typespace(object):
 
@@ -260,14 +292,14 @@ class Typespace(object):
         if ref in self.resolved:
             return self.resolved[ref]
         if ref.name not in self.types:
-            return Unresolved(ref)
+            return UnresolvedRef(ref)
         type = self.types[ref.name]
         if ref.params:
             assert isinstance(type, Template)
             assert len(ref.params) == len(type.params)
             for r in ref.params:
                 if isinstance(self.resolve(r), Unresolved):
-                    return Unresolved(ref)
+                    return UnresolvedRef(ref)
             bindings = {}
             for p, v in zip(type.params, ref.params):
                 bindings[p.name] = v
@@ -295,7 +327,11 @@ class Typespace(object):
     def get(self, object, name):
         """Calculate the result type of accessing a field.
         """
-        return self.resolve(object.byname[name].type)
+        field = object.byname.get(name, None)
+        if field:
+            return self.resolve(field.type)
+        else:
+            return UnresolvedField(self.unresolve(object), name)
 
     @match(lazy("Template"), basestring)
     def get(self, template, name):
@@ -309,10 +345,11 @@ class Typespace(object):
     def call(self, callable, *args):
         """Calculate the result type of invoking a callable.
         """
-        assert len(callable.arguments) == len(args)
-        for a1, a2 in zip(callable.arguments, args):
-            assert self.assignable(a1, a2), "cannot assign a %s to a %s" % (self.unresolve(a2), self.unresolve(a1))
         return self.resolve(callable.result)
+
+    @match(Unresolved, many(choice(Ref, Type)))
+    def call(self, un, *args):
+        return Unresolvable(un)
 
     @match(Type, Type, opt(bool))
     def cotraverse(self, a, b, bidi=False, use_bounds=True):

@@ -8,6 +8,8 @@ namespace quark {
         bool __eq__(int other);
     }
 
+    primitive String {}
+
     primitive bool {}
 
     primitive void {}
@@ -42,7 +44,6 @@ void usefib() {
     assertEqual(55, fib(10));
 }
 
-/*
 void strcat() {
-    assertEqual("ab", "a" + "b");
-    }*/
+    //assertEqual("ab", "a" + "b");
+}

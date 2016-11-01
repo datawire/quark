@@ -1,13 +1,22 @@
 from .match import *
-from .exceptions import *
+from .errors import *
 from .traits import *
 from .ast import *
 from .timer import Timer
 from .symbols import Symbols, name, traversal
 from collections import namedtuple, OrderedDict
 
+import errors
 import typespace as types
-from typespace import Typespace, Ref
+from typespace import Typespace, Ref, UnresolvedRef, UnresolvedField, UnresolvedCall, Unresolvable
+
+@match(choice(Expression, Statement, Block))
+def get_definition(nd):
+    return get_definition(nd.parent)
+
+@match(Definition)
+def get_definition(dfn):
+    return dfn
 
 class Types(object):
 
@@ -16,19 +25,40 @@ class Types(object):
         self.timer = timer
         self.symbols = symbols
         self.types = Typespace()
-        self.resolved = {}
-        self._violations = OrderedDict()
+        self.resolved = OrderedDict()
+        self.violations = OrderedDict()
         self.refset = None
 
-    @match(AST, Ref, Ref)
-    def violation(self, node, target, value):
-        key = (node, target, value)
-        if key not in self._violations:
-            self._violations[(node, target, value)] = UnassignableError(node, target, value)
+    @match(NodeError)
+    def add_violation(self, err):
+        if err.node not in self.violations:
+            self.violations[err.node] = []
+        errs = self.violations[err.node]
+        if err not in errs:
+            errs.append(err)
 
     @property
-    def violations(self):
-        return self._violations.values()
+    def unresolved(self):
+        for k, v in self.resolved.items():
+            err = self.unresolved_error(k, v)
+            if err:
+                yield err
+
+    @match(AST, UnresolvedRef)
+    def unresolved_error(self, n, un):
+        return UnresolvedType(n, un.ref)
+
+    @match(AST, UnresolvedField)
+    def unresolved_error(self, n, un):
+        return errors.UnresolvedField(n, un.type, un.name)
+
+    @match(AST, UnresolvedCall)
+    def unresolved_error(self, n, un):
+        return errors.UnresolvedCall(n, un.type)
+
+    @match(choice(AST, [many(Package)]), choice(Ref, Unresolvable))
+    def unresolved_error(self, n, un):
+        return None
 
     @match(choice(Class, Function, Method, [many(Package, min=1)]))
     def is_type(self, _):
@@ -101,7 +131,17 @@ class Types(object):
         else:
             result = self.types.unresolve(self.do_resolve(node))
             self.resolved[node] = result
+            self.validate_bool(node.parent, node, result)
             return result
+
+    # XXX: should validation be a separate phase?
+    @match(choice(If, While), Expression, types.Ref)
+    def validate_bool(self, p, n, r):
+        self.validate_ass(p, types.Ref('quark.bool'), r)
+
+    @match(AST, AST, choice(types.Ref, types.Unresolved))
+    def validate_bool(self, p, n, r):
+        pass
 
     @match([many(Package, min=1)])
     def resolve(self, pkgs):
@@ -110,7 +150,11 @@ class Types(object):
 
     @match(Return)
     def do_resolve(self, retr):
-        return self.resolve(retr.expr)
+        dtype = self.node(get_definition(retr)).result
+        rtype = self.resolve(retr.expr)
+        if not self.types.assignable(dtype, rtype):
+            self.add_violation(InvalidAssignment(retr, dtype, rtype))
+        return rtype
 
     @match(Local)
     def do_resolve(self, local):
@@ -120,9 +164,25 @@ class Types(object):
     def do_resolve(self, ass):
         left = self.resolve(ass.lhs)
         right = self.resolve(ass.rhs)
-        if not self.types.assignable(left, right):
-            self.violation(ass, left, right)
+        self.validate_ass(ass, left, right)
         return left
+
+    @match(AST, types.Ref, types.Ref)
+    def validate_ass(self, node, left, right):
+        if not self.types.assignable(left, right):
+            self.add_violation(InvalidAssignment(node, left, right))
+
+    @match(AST, types.Unresolved, types.Unresolved)
+    def validate_ass(self, *x):
+        pass
+
+    @match(AST, types.Ref, types.Unresolved)
+    def validate_ass(self, *x):
+        pass
+
+    @match(AST, types.Unresolved, types.Ref)
+    def validate_ass(self, *x):
+        pass
 
     @match(ExprStmt)
     def do_resolve(self, es):
@@ -149,8 +209,7 @@ class Types(object):
         left = self.resolve(declaration.type)
         if declaration.value:
             right = self.resolve(declaration.value)
-            if not self.types.assignable(left, right):
-                self.violation(declaration, left, right)
+            self.validate_ass(declaration, left, right)
         return left
 
     @match(Package)
@@ -187,15 +246,27 @@ class Types(object):
 
     @match(Call)
     def do_resolve(self, c):
-        expr = self.resolve(c.expr)
+        expr = self.node(c.expr)
         args = [self.resolve(a) for a in c.args]
+        self.validate_call(c, expr, *args)
         return self.types.call(expr, *args)
+
+    @match(Call, types.Callable, many(choice(types.Ref, types.Unresolved)))
+    def validate_call(self, c, expr, *args):
+        if len(expr.arguments) == len(args):
+            for n, p, a in zip(c.args, expr.arguments, args):
+                self.validate_ass(n, p, a)
+        else:
+            self.add_violation(InvalidInvocation(c, len(expr.arguments), len(args)))
+
+    @match(Call, types.Unresolved, many(choice(types.Ref, types.Unresolved)))
+    def validate_call(self, *x):
+        pass
 
     @match(Attr)
     def do_resolve(self, a):
         expr = self.resolve(a.expr)
         return self.types.get(expr, a.attr.text)
-
 
     @match(AST)
     def __getitem__(self, node):
@@ -208,6 +279,10 @@ class Types(object):
     @match(types.Ref)
     def node(self, ref):
         return self.types.resolve(ref)
+
+    @match(types.Unresolved)
+    def node(self, un):
+        return un
 
     @match(choice(AST, basestring))
     def node(self, nd):
