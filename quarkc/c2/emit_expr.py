@@ -306,5 +306,3 @@ def expr(fget, target):
     return "{target}.{field}".format(
         target=expr(fget.expr, target),
         field=fget.name)
-
-

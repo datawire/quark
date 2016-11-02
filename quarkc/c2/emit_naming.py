@@ -12,14 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .match import match, many, choice
-from .tree import isa, split, walk_dfs
-from .ir import (IR, Root, Package, Namespace, NamespaceName,
-                 Name, Definition,
-                 Check, Function, Class, Check, Void)
-
-from .emit_target import Target, Python, Ruby, Java, Go, Snowflake
-from .emit_ir import TestMethod, StaticMethod, TestClass
+from .match import match, choice
+from .tree import walk_dfs
+from .ir import IR, Root, Namespace, Definition, Class
+from .emit_target import Target, Python, Ruby, Java, Go
+from .emit_ir import TestClass, Snowflake
 
 
 @match(Root, Target)

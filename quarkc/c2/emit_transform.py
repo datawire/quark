@@ -19,8 +19,8 @@ from .ir import (IR, Root, Package, Namespace, NamespaceName,
                  Name, Definition, ExternalFunction,
                  Check, Function, Class, Check, Void)
 
-from .emit_target import Target, Python, Ruby, Java, Go, Snowflake
-from .emit_ir import TestMethod, StaticMethod, TestClass
+from .emit_target import Target, Python, Ruby, Java, Go
+from .emit_ir import TestMethod, StaticMethod, TestClass, Snowflake
 
 @match(IR, Target)
 def transform(node, target):

@@ -56,8 +56,8 @@ def test_package():
                           Return(Invoke(Ref("q:n.mul"), Var("a"), Var("b")))))
     print p1
     p = Python()
-    emit(p1, p)
-    print p.files
+    files = emit(p1, p)
+    print files
 
 def test_nesting():
     l = Local("foo", Int())
@@ -70,7 +70,9 @@ def test_nesting():
         print "collision:", c
 
 
-from quarkc.c2.emit import *
+from quarkc.c2.emit_code import code
+from quarkc.c2.emit import emit
+from quarkc.c2.emit_target import Python, Java
 
 def test_emit():
     stmt = If(Var("x"),
@@ -123,31 +125,3 @@ def test_reconstruct(sample):
     print r
 
 from quarkc.c2.match import match, many
-from quarkc.c2.emit_target import TargetDefinition, TargetNamespace
-
-@match(basestring, Target)
-def pretty_definitions(name, target):
-    f = tr.File("pretty_definitions")
-    f.add(tr.Comment("======="))
-    f.add(tr.Compound(
-        "{target} pretty_definitions for {name}".format(target=target.__class__.__name__, name=name),
-        tr.Block(*[pretty_definitions(k, v, target) for k, v in sorted(target.definitions.items(),
-                                                                       key=lambda (k,v):isinstance(k,tuple))])))
-    f.add(tr.Comment("======="))
-    print format(f, target)
-
-@match(Name, TargetDefinition, Target)
-def pretty_definitions(name, tgtdef, target):
-    return tr.Simple("{name} => {dfn}".format(name=name, dfn=tgtdef))
-
-@match((many(basestring),), TargetNamespace, Target)
-def pretty_definitions(name, tgtns, target):
-    return tr.Compound("{name} => namespace".format(name=name), tr.Block(
-        tr.Compound("imports", tr.Block(
-            *[tr.Simple(s) for s in tgtns.imports]
-            )),
-        tr.Compound("names", tr.Block(
-            *[tr.Simple("{name} => {target_name}".format(name=n, target_name=v))
-                      for n,v in tgtns.names.items()]
-            )),
-    ))
