@@ -35,29 +35,6 @@ class Snowflake(str):
         return "%s(%s)" % (self.__class__.__name__, repr(str(self)))
 
 
-class TargetNamespace(IR):
-    """ Name of an importable namespace/package in the target """
-    @match()
-    def __init__(self, target_name):
-        self.target_name = target_name
-        self.names = OrderedDict()
-        self.target_names = OrderedDict()
-        self.imports = set()
-
-    def __repr__(self):
-        return "TargetNamespace(%s,\n    names=%s,\n    target_names=%s)" % (self.target_name, pformat(self.names), pformat(self.target_names))
-
-class TargetDefinition(object):
-    """ Name of a ir.Definition in the target """
-    @match(basestring, TargetNamespace)
-    def __init__(self, target_name, namespace):
-        self.target_name = target_name
-        self.namespace = namespace
-
-    def __repr__(self):
-        return "TargetDefinition(%s, %s)" % (self.namespace.target_name, self.target_name)
-
-
 class StaticMethod(Method):
     """ Java way of doing functions """
     pass

@@ -1013,19 +1013,6 @@ class AssertEqual(NativeTestAssertion):
         return self.repr(self.expected, self.actual)
 
 
-@match(IR)
-def dfn_of(ir):
-    return dfn_of(getattr(ir, "parent", None))
-
-@match(Definition)
-def dfn_of(ir):
-    return ir
-
-@match(None)
-def dfn_of(ir):
-    raise Exception("Calling dfn_of without an ancestor Definition, forgot to backlink()?")
-    return None
-
 @match(choice(Package, Namespace))
 def restructure(pkg):
     """ Introduce Namespaces into a flat package """
