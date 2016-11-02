@@ -108,6 +108,46 @@ def ffi_namespace(ns, target):
             name = dfn_name
             ))
 
+
+
+@match(Package, Ruby)
+def generate(pkg, target):
+    for ns in pkg.definitions:
+        for m in generate(pkg, ns, target):
+            yield m
+        for m in generate(ns, target):
+            yield m
+    yield tr.File("/".join(("lib", pkg.name.package )) + ".rb",
+                  tr.Comment("Package entrypoint"),
+                  tuple(tr.Simple("require_relative \"{package}/{module}\"".format(
+                      package = ns.name.package,
+                      module = ns.name.path[0]))
+                        for ns in filter(isa(Namespace), pkg.definitions)))
+    yield tr.File("/".join(("test", "ts_" + ns.name.package)) + ".rb",
+                  tr.Comment("Package testsuite"),
+                  tuple(tr.Simple("require_relative \"{module}\"".format(
+                      module = "/".join(module_path(tc, target))))
+                        for tc in filter(isa(TestClass), walk_dfs(pkg))))
+
+@match(Package, Namespace, Ruby)
+def generate(parent, ns, target):
+    yield tr.File(filename(ns, ("lib",), target),
+                  tr.Comment("toplevel namespace"),
+                  tuple(ffi_namespace(ns, target)))
+
+@match(Namespace, Namespace, Ruby)
+def generate(parent, ns, target):
+    yield tr.File(filename(ns, ("lib",), target),
+                  tr.Comment("nested namespace"),
+                  tuple(ffi_namespace(ns, target)))
+
+@match(Namespace, Ruby)
+def ffi_namespace(ns, target):
+    _, dfns, _ = split(ns.children, isa(Check,TestClass), isa(Definition,Namespace))
+    for dfn in dfns:
+        yield tr.Simple("require_relative \"{module}\"".format(
+            module = "/".join(module_path(ns, dfn, target))))
+
 @match(Definition, choice(Go, Python, Java))
 def generate(dfn, target):
     yield tr.File(filename(dfn, target), header(dfn, target), code(dfn, target))
@@ -168,11 +208,11 @@ def filename(dfn, prefix, target):
 
 @match(Definition, Ruby)
 def filename(dfn, target):
-    return filename(dfn, (), target)
+    return filename(dfn, ("lib",), target)
 
 @match(TestClass, Ruby)
 def filename(dfn, target):
-    return filename(dfn, ("test",), target)
+    return "/".join(("test",) + module_path(dfn, target)) + ".rb"
 
 @match(choice(Namespace,Definition), (many(basestring),), Ruby)
 def filename(dfn, prefix, target):
@@ -255,6 +295,15 @@ def imports(dfn, target):
     define_imports(dfn, target, imports)
     for key, value in imports.items():
         yield tr.Simple("{require} \"{module}\"".format(**value))
+
+@match(TestClass, Ruby)
+def imports(dfn, target):
+    """ emit needed import statements """
+    imports = OrderedDict()
+    define_imports(dfn, target, imports)
+    for key, value in imports.items():
+        yield tr.Simple("{require} \"{module}\"".format(**value))
+    yield tr.Simple("require \"test/unit\"")
 
 @match(TestClass, Java)
 def imports(dfn, target):
@@ -402,7 +451,15 @@ def module_path(dfn, target):
         target.nameof(ns)
         for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,Definition))))
         )
-    return path
+    return (dfn.name.package,) + path
+
+@match(TestClass, Ruby)
+def module_path(dfn, target):
+    path = tuple(
+        target.nameof(ns)
+        for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,Definition))))
+        )
+    return (dfn.name.package,) + path[:-1] + ("tc_" + path[-1],)
 
 @match(Definition, Definition, Ruby)
 def module_path(dfn, ref_dfn, target):
@@ -414,6 +471,20 @@ def module_path(dfn, ref_dfn, target):
         if d != r:
             break
     path = ("..",) * len(dfn_path[common:-1]) + ref_path[common:]
+    return path
+
+@match(Namespace, choice(Namespace,Definition), Ruby)
+def module_path(dfn, ref_dfn, target):
+    """ calculate relative module path """
+    dfn_path = module_path(dfn, target)
+    ref_path =  module_path(ref_dfn, target)
+    assert dfn_path != ref_path
+    for common,(d,r) in enumerate(map(None, dfn_path, ref_path)):
+        if d != r:
+            break
+    assert common == len(dfn_path)
+    assert common >= 1
+    path = ref_path[common-1:]
     return path
 
 @match(choice(Namespace,Definition), Ruby)

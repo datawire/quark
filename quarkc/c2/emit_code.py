@@ -92,11 +92,11 @@ def code(fun, target):
         code(fun.body, target)
     )
 
-@match(Check, Ruby)
+@match(TestMethod, Ruby)
 def code(fun, target):
     return tr.Compound(
         "def test_{name}".format(
-            name=target.nameof(fun.name)),
+            name=fun.name),
         code(fun.body, target)
     )
 
@@ -299,6 +299,14 @@ def code(clazz, target):
 def code(clazz, target):
     return tr.Compound(
         "class {name}".format(
+            name = target.nameof(clazz.name)),
+        tr.Block(tuple([code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods]))
+        )
+
+@match(TestClass, Ruby)
+def code(clazz, target):
+    return tr.Compound(
+        "class {name} < Test::Unit::TestCase".format(
             name = target.nameof(clazz.name)),
         tr.Block(tuple([code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods]))
         )

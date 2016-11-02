@@ -54,3 +54,11 @@ def rename(dfn, target):
 def rename(ns, name, target):
     target.define_name(ns.name, "{pkg}_test".format(
         pkg = target.nameof(target.q.parent(ns))))
+
+@match(Class, Ruby)
+def rename(dfn, target):
+    rename(dfn, target.upcase(dfn.name.path[-1]), target)
+
+@match(TestClass, Ruby)
+def rename(dfn, target):
+    rename(dfn, "Test" + target.upcase(dfn.name.path[-1]), target)

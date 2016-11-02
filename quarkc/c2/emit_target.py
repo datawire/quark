@@ -384,6 +384,8 @@ class Ruby(Target):
          break case class def defined?  do else elsif end ensure false
          for if in module next nil not or redo rescue retry return
          self super then true undef unless until when while yield
+
+         Kernel Test
     """.split())
 
     @match(TargetNamespace, Definition)
