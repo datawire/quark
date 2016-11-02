@@ -1,1 +1,1 @@
-from quarkc.helpers import lineinfo
+from quarkc.helpers import is_newer

@@ -27,10 +27,12 @@ Options:
 """
 
 import os, sys
+import cPickle as pickle
 from docopt import docopt
 from .compiler import Compiler
 from .exceptions import QuarkError
 from .emit import emit, Java, Python, Ruby, Go
+from .helpers import is_newer
 
 import stats
 
@@ -66,8 +68,17 @@ def main(args):
 
     c = Compiler(verbose=verbose)
     for fname in args["<file>"]:
-        with open(fname) as f:
-            c.parse(fname, f.read())
+        cname = "%sp" % fname
+        if is_newer(cname, fname):
+            with open(cname) as f:
+                unp = pickle.Unpickler(f)
+                c.load(unp.load())
+        else:
+            with open(fname) as f:
+                ast = c.parse(fname, f.read())
+                with open(cname, "write") as fp:
+                    pickler = pickle.Pickler(fp, -1)
+                    pickler.dump(ast)
 
     try:
         c.check()

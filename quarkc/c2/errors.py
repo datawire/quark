@@ -1,6 +1,5 @@
 from .ast import *
 from .exceptions import QuarkError, CompileError
-from .helpers import lineinfo
 from .match import *
 from collections import OrderedDict
 
@@ -52,7 +51,7 @@ class Errors(object):
 
     @match(AST, basestring)
     def add(self, node, message):
-        self.add("%s: %s" % (lineinfo(node), message))
+        self.add("%s: %s" % (node.location, message))
 
     @match(QuarkError)
     def add(self, err):

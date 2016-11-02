@@ -32,6 +32,11 @@ class Compiler(object):
             for node in traversal(file):
                 self.desugar(node)
 
+        self.load(file)
+        return file
+
+    @match(File)
+    def load(self, file):
         self.files.append(file)
 
     @match(Class)
