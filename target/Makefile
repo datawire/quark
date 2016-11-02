@@ -2,6 +2,7 @@
 
 default clean test:
 	@$< { \
+	$(MAKE) -C javascript $@ && \
 	$(MAKE) -C python $@ && \
 	$(MAKE) -C go $@ && \
 	$(MAKE) -C ruby $@ && \

@@ -16,7 +16,7 @@
 Quark IR emitter.
 
 Usage:
-  quark-ir emit [options] (--go | --java | --python | --ruby) <files>...
+  quark-ir emit [options] (--go | --java | --python | --ruby | --javascript) <files>...
 
 Commands:
 
@@ -34,7 +34,7 @@ from .match import match
 from .ir import (IR, Root, Package,
                  )
 from .ir import reconstruct
-from .emit_target import Target, Go, Ruby, Java, Python
+from .emit_target import Target, Go, Ruby, Java, Python, Javascript
 from .emit_transform import transform
 from .emit_format import format
 from .emit_naming import rename
@@ -73,6 +73,7 @@ def main(args):
                 "--java" : Java,
                 "--ruby" : Ruby,
                 "--python" : Python,
+                "--javascript" : Javascript,
             }
     for fn in args["<files>"]:
         ir = IR.load_path(fn)

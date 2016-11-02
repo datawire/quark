@@ -1,5 +1,5 @@
 ##
-from match import match, many, lazy, choice
+from match import match, many, lazy, choice, opt
 from .tree import _Tree
 
 class TR(_Tree):
@@ -25,8 +25,10 @@ def many_tuple(x):
     return many(choice(x, (many(x),)))
 
 class Block(TR):
-    @match(many_tuple(Statement))
-    def __init__(self, *stmts):
+    @match(many_tuple(Statement), opt(basestring))
+    def __init__(self, *stmts, **kwargs):
+        self.extra_close = kwargs.pop("extra_close", "")
+        assert not kwargs, "Unexpected kwargs %s" % kwargs
         self.stmts = flattened(stmts)
 
     @match(many_tuple(Statement))

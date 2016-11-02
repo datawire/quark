@@ -18,7 +18,7 @@ from .ir import (IR, Function, Interface, Class, Check, If,
                  Message, Field, Method, Constructor, AssertEqual)
 from . import tr
 
-from .emit_target import Target, Python, Ruby, Java, Go
+from .emit_target import Target, Python, Ruby, Java, Go, Javascript
 from .emit_expr import expr
 from .emit_ir import TestClass, TestMethod
 
@@ -118,6 +118,28 @@ def code(fun, target):
         code(fun.body, target)
     )
 
+@match(Function, Javascript)
+def code(fun, target):
+    return tuple((
+        tr.Compound(
+            "function {name}({params})".format(
+                name=target.nameof(fun.name),
+                params=", ".join(expr(p, target) for p in fun.params)),
+            code(fun.body, target)),
+        tr.Simple("module.exports = {name}".format(
+                name=target.nameof(fun.name)))
+        ))
+
+@match(TestMethod, Javascript)
+def code(fun, target):
+    return tr.Compound(
+        "it('{name}', function()".format(
+            name=fun.name),
+        tr.Block(
+            *[code(s, target) for s in fun.body.statements],
+            extra_close = ")"
+        )
+    )
 ## If
 
 @match(If, Target)
@@ -180,6 +202,12 @@ def code(local, target):
         type=expr(local.type, target),
         initializer=opt_expr(" = ", local.expr, target)))
 
+@match(Local, Javascript)
+def code(local, target):
+    return tr.Simple("let {name}{initializer}".format(
+        name=local.name,
+        initializer=opt_expr(" = ", local.expr, target)))
+
 ## Assign
 
 @match(Assign, Target)
@@ -197,7 +225,7 @@ def code(fset, target):
         field=target.upcase(fset.name),
         value=expr(fset.value, target)))
 
-@match(Set, choice(Python, Java))
+@match(Set, choice(Python, Java, Javascript))
 def code(fset, target):
     return tr.Simple("{target}.{field} = {value}".format(
         target=expr(fset.expr, target),
@@ -242,6 +270,19 @@ def code(iface, target):
             name = target.nameof(iface.name)),
         tr.Block(*[code(m, target) for m in iface.methods]))
 
+@match(Interface, Javascript)
+def code(iface, target):
+    return tr.flattened(tuple((
+        tr.Comment("interface"),
+        tr.Compound(
+            "function {name}()".format(
+                name = target.nameof(iface.name)),
+            tr.Block(
+            )),
+        tr.Simple("module.exports = {name}".format(
+                name = target.nameof(iface.name))),
+    )) + tuple(code(m, target) for m in iface.methods))
+
 ## Message
 
 @match(Message, Python)
@@ -275,6 +316,18 @@ def code(fun, target):
             name=target.upcase(fun.name),
             params=", ".join(expr(p, target) for p in fun.params)
     ))
+
+@match(Message, Javascript)
+def code(fun, target):
+    return tr.Compound(
+        "{parent}.prototype.{name} = function({params})".format(
+            parent = target.nameof(target.q.parent(fun)),
+            name=fun.name,
+            params=", ".join(expr(p, target) for p in fun.params)),
+        tr.Block(
+            tr.Simple("throw Error('abstract')")
+        )
+    )
 
 ## Class
 
@@ -327,6 +380,16 @@ def code(clazz, target):
             name = target.nameof(clazz.name)),
         tr.Block(tuple([code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods]))
         )
+
+@match(Class, Javascript)
+def code(clazz, target):
+    return tr.flattened(tuple((
+        tr.Comment("class"),
+    )) + tuple(code(m, target) for m in clazz.constructors + clazz.methods))
+
+@match(TestClass, Javascript)
+def code(clazz, target):
+    return tr.flattened(tuple([code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods]))
 
 @match(basestring, choice(Class, Interface), Java)
 def implements(keyword, clazz, target):
@@ -409,6 +472,16 @@ def code(method, target):
         code(method.body, target)
     )
 
+@match(Method, Javascript)
+def code(method, target):
+    return tr.Compound(
+        "{parent}.prototype.{name} = function({params})".format(
+            parent = target.nameof(target.q.parent(method)),
+            name=method.name,
+            params=", ".join(expr(p, target) for p in method.params)),
+        code(method.body, target)
+    )
+
 
 ## Constructor
 
@@ -452,6 +525,20 @@ def code(constructor, target):
             tr.Simple("return this"))
         )
 
+@match(Constructor, Javascript)
+def code(constructor, target):
+    clazz = target.nameof(target.q.parent(constructor))
+    return tuple((
+        tr.Compound(
+            "function {name}({params})".format(
+                name=clazz,
+                params=", ".join(expr(p, target) for p in constructor.params)),
+            code(constructor.body, target)
+        ),
+        tr.Simple("module.exports = {name}".format(
+            name = clazz)),
+        ))
+
 ## AssertEqual
 
 @match(AssertEqual, Go)
@@ -480,6 +567,11 @@ def code(assrt, target):
         expected = expr(assrt.expected, target),
         actual = expr(assrt.actual, target)))
 
+@match(AssertEqual, Javascript)
+def code(assrt, target):
+    return tr.Simple("// assert_equal(({expected}), ({actual}))".format(
+        expected = expr(assrt.expected, target),
+        actual = expr(assrt.actual, target)))
 
 
 ###

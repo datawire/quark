@@ -17,14 +17,16 @@ import pytest
 
 from quarkc.c2.emit import transform, emit
 from quarkc.c2.ir import reconstruct
-from quarkc.c2.emit_target import Go, Python, Java, Ruby
+from quarkc.c2.emit_target import Go, Python, Java, Ruby, Javascript
 
 from .sample_ir import fibonacci_ir, minimal_ir, native_int, native_map_string_int, native_map_string_string
 
 samples = [fibonacci_ir, minimal_ir, native_int, native_map_string_string, native_map_string_int]
 
+targets = [Javascript, Go, Python, Java, Ruby]
+
 @pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
-@pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
+@pytest.mark.parametrize("target", targets)
 def test_transform(sample, target):
     s = sample()
     r = reconstruct(s)
@@ -33,7 +35,7 @@ def test_transform(sample, target):
 
 
 @pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
-@pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
+@pytest.mark.parametrize("target", targets)
 def test_emit_sample(sample, target):
     t = target()
     for name, content in emit(sample(), t):

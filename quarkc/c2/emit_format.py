@@ -60,7 +60,7 @@ def format(stmt, target, indent):
 
 @match(Block, Target, Indent)
 def format(block, target, indent):
-    return "\n".join([" {"] + [format(s, target, indent.more).rstrip() for s in block.children] + [indent("} ")])
+    return "\n".join([" {"] + [format(s, target, indent.more).rstrip() for s in block.children] + [indent("}%s " % block.extra_close)])
 
 @match(Block, Python, Indent)
 def format(block, target, indent):

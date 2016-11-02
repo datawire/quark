@@ -19,7 +19,7 @@ from .ir import (IR, Root, Package, Namespace, NamespaceName,
                  Name, Definition, ExternalFunction,
                  Check, Function, Class, Check, Void)
 
-from .emit_target import Target, Python, Ruby, Java, Go
+from .emit_target import Target, Python, Ruby, Java, Go, Javascript
 from .emit_ir import TestMethod, StaticMethod, TestClass, Snowflake
 
 @match(IR, Target)
@@ -75,7 +75,7 @@ def transform(ns, checks, target):
               *[TestMethod(fn.name.path[-1], Void(), fn.body)
                 for fn in checks]), ))
 
-@match(Namespace, (many(Check, min=1),), choice(Ruby, Python))
+@match(Namespace, (many(Check, min=1),), choice(Ruby, Python, Javascript))
 def transform(ns, checks, target):
     """ Python and Ruby use an annotated class for unit tests """
     return tuple((

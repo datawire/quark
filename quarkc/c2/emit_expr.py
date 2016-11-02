@@ -21,7 +21,7 @@ from .ir import (
     Map
 )
 
-from .emit_target import Target, Python, Java, Go, Ruby
+from .emit_target import Target, Python, Java, Go, Ruby, Javascript
 
 
 @match(Type, Java)
@@ -147,6 +147,10 @@ def expr(param, target):
         type=expr(param.type, target),
         name=param.name)
 
+@match(Param, Javascript)
+def expr(param, target):
+    return param.name
+
 ## Names
 
 @match(Name, Java)
@@ -208,7 +212,7 @@ def expr(lit, target):
 
 ## StringLit
 
-@match(BoolLit, choice(Ruby, Java, Go))
+@match(BoolLit, choice(Ruby, Java, Go, Javascript))
 def expr(lit, target):
     return lit.value and "true" or "false"
 
@@ -286,6 +290,13 @@ def expr(cons, target):
         args = ", ".join(expr(a, target) for a in cons.args)
     )
 
+@match(Construct, Javascript)
+def expr(cons, target):
+    return "new {name}({args})".format(
+        name=expr(cons.name, target),
+        args = ", ".join(expr(a, target) for a in cons.args)
+    )
+
 
 ## Get
 
@@ -295,7 +306,7 @@ def expr(fget, target):
         target=expr(fget.expr, target),
         field=target.upcase(fget.name))
 
-@match(Get, choice(Python, Java))
+@match(Get, choice(Python, Java, Javascript))
 def expr(fget, target):
     return "{target}.{field}".format(
         target=expr(fget.expr, target),

@@ -34,8 +34,6 @@ class Target(object):
     @match()
     def __init__(self):
         self.parent = None
-        self.files = OrderedDict()
-        self.modules = OrderedDict()
         self.names = dict()
         self.imports = dict()
         self.q = None
@@ -43,8 +41,6 @@ class Target(object):
     @match("private", lazy("Target"), Root)
     def __init__(self, _, parent, root):
         self.parent = parent
-        self.files = parent.files
-        self.modules = parent.modules
         self.names = parent.names
         self.imports = parent.imports
         self.q = NameQuery(root)

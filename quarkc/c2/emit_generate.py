@@ -18,7 +18,7 @@ from .ir import (Root, Package, Namespace, Definition,
                  Check, Function, Ref, ExternalPackage)
 from .tree import walk_dfs, isa, split
 from . import tr
-from .emit_target import Target, Go, Ruby, Java, Python
+from .emit_target import Target, Go, Ruby, Java, Python, Javascript
 from .emit_code import code
 from .emit_ir import Snowflake, TestClass
 
@@ -148,7 +148,44 @@ def ffi_namespace(ns, target):
         yield tr.Simple("require_relative \"{module}\"".format(
             module = "/".join(module_path(ns, dfn, target))))
 
-@match(Definition, choice(Go, Python, Java))
+
+@match(Package, Javascript)
+def generate(pkg, target):
+    for ns in pkg.definitions:
+        for m in generate(pkg, ns, target):
+            yield m
+        for m in generate(ns, target):
+            yield m
+    yield tr.File("/".join(("lib", pkg.name.package )) + ".js",
+                  tr.Comment("Package entrypoint"),
+                  tuple(tr.Simple("exports.{module} = require('{package}/{module}')".format(
+                      package = ns.name.package,
+                      module = ns.name.path[0]))
+                        for ns in filter(isa(Namespace), pkg.definitions)))
+
+@match(Package, Namespace, Javascript)
+def generate(parent, ns, target):
+    yield tr.File(filename(ns, target),
+                  tr.Comment("toplevel namespace"),
+                  tuple(ffi_namespace(ns, target)))
+
+@match(Namespace, Namespace, Javascript)
+def generate(parent, ns, target):
+    yield tr.File(filename(ns, target),
+                  tr.Comment("nested namespace"),
+                  tuple(ffi_namespace(ns, target)))
+
+@match(Namespace, Javascript)
+def ffi_namespace(ns, target):
+    _, dfns, _ = split(ns.children, isa(Check,TestClass), isa(Definition,Namespace))
+    for dfn in dfns:
+        yield tr.Simple("exports.{name} = require(\"{module}\")".format(
+            name = target.nameof(dfn),
+            module = "/".join(module_path(ns, dfn, target))))
+
+
+
+@match(Definition, choice(Go, Python, Java, Javascript))
 def generate(dfn, target):
     yield tr.File(filename(dfn, target), header(dfn, target), code(dfn, target))
 
@@ -158,13 +195,30 @@ def generate(dfn, target):
                   generate(dfn, module_ffi_path(dfn, target), target)
     )
 
-@match(Definition, (many(basestring),), Ruby)
+
+@match(TestClass, Javascript)
+def generate(dfn, target):
+    yield tr.File(filename(dfn, target), header(dfn, target),
+                  generate(dfn, module_path(dfn, target), target)
+    )
+
+@match(TestClass, (), Javascript)
 def generate(dfn, nesting, target):
-    if not nesting:
-        return code(dfn, target)
-    else:
-        return tr.Compound("module {ns}".format(ns=nesting[0]),
-                           tr.Block(generate(dfn, nesting[1:], target)))
+    return code(dfn, target)
+
+@match(TestClass, (many(basestring, min=1),), Javascript)
+def generate(dfn, nesting, target):
+    return tr.Compound("describe('{ns}', function()".format(ns=nesting[0]),
+                       tr.Block(generate(dfn, nesting[1:], target), extra_close=")"))
+
+@match(Definition, (), Ruby)
+def generate(dfn, nesting, target):
+    return code(dfn, target)
+
+@match(Definition, (many(basestring, min=1),), Ruby)
+def generate(dfn, nesting, target):
+    return tr.Compound("module {ns}".format(ns=nesting[0]),
+                       tr.Block(generate(dfn, nesting[1:], target)))
 
 @match(Check, Go)
 def generate(dfn, target):
@@ -218,6 +272,18 @@ def filename(dfn, target):
 def filename(dfn, prefix, target):
     return "/".join(prefix + module_path(dfn, target)) + ".rb"
 
+
+
+@match(choice(Namespace,Definition), Javascript)
+def filename(dfn, target):
+    return "/".join(("lib",) + module_path(dfn, target)) + ".js"
+
+@match(TestClass, Javascript)
+def filename(dfn, target):
+    return "/".join(("test",) + ("_".join(("test",) + module_path(dfn, target)),)) + ".js"
+
+
+
 @match(Definition, Go)
 def header(dfn, target):
     return tuple((
@@ -252,6 +318,10 @@ def header(dfn, target):
     ) + tuple(imports(dfn, target))
 
 @match(choice(Namespace,Definition), Ruby)
+def header(dfn, target):
+    return tuple(imports(dfn, target))
+
+@match(choice(Namespace,Definition), Javascript)
 def header(dfn, target):
     return tuple(imports(dfn, target))
 
@@ -295,6 +365,14 @@ def imports(dfn, target):
     define_imports(dfn, target, imports)
     for key, value in imports.items():
         yield tr.Simple("{require} \"{module}\"".format(**value))
+
+@match(Definition, Javascript)
+def imports(dfn, target):
+    """ emit needed import statements """
+    imports = OrderedDict()
+    define_imports(dfn, target, imports)
+    for key, value in imports.items():
+        yield tr.Simple("var {alias} = require('{module}')".format(**value))
 
 @match(TestClass, Ruby)
 def imports(dfn, target):
@@ -418,6 +496,36 @@ def define_imports(dfn, target, imports):
             ref_target_name = ref_dfn_target_name
         target.define_import(dfn, ref, ref_target_name)
 
+@match(Definition, Javascript, dict)
+def define_imports(dfn, target, imports):
+    """For all refs inside definition, calculate required import
+    statements and remember actual names that refs should resolve to
+
+    """
+    for ref in filter(isa(Ref), walk_dfs(dfn)):
+        ref_dfn = target.q.definition(ref)
+        ref_dfn_target_name = target.nameof(ref_dfn)
+        if dfn.name.package != ref.package or isinstance(dfn, (TestClass, Check)):
+            # import from FFI namespace
+            ref_module_path = module_ffi_path(ref_dfn, target)
+            ref_dfn_alias = ".".join(ref_module_path + (ref_dfn_target_name,))
+            imports[ref_module_path[0]] = dict(module = ref_module_path[0],
+                                               alias = ref_module_path[0])
+            ref_target_name = ref_dfn_alias
+        elif dfn.name != ref_dfn.name:
+            # import from impl using relative module path.
+            ref_module_path = module_path(dfn, ref_dfn, target)
+            if ref_module_path[0] != "..":
+                ref_module_path = (".",) + ref_module_path
+            ref_dfn_alias = "_".join(module_path(ref_dfn, target))
+            imports[ref_module_path] = dict(module = "/".join(ref_module_path),
+                                            alias = ref_dfn_alias)
+            ref_target_name = ref_dfn_alias
+        else:
+            # no need to import at all
+            ref_target_name = ref_dfn_target_name
+        target.define_import(dfn, ref, ref_target_name)
+
 @match(choice(Namespace, Definition), Go)
 def module_path(dfn, target):
     return tuple((dfn.name.package, target.nameof(target.q.parent(dfn))))
@@ -453,6 +561,21 @@ def module_path(dfn, target):
         )
     return (dfn.name.package,) + path
 
+@match(choice(Namespace, Definition), Javascript)
+def module_path(dfn, target):
+    path = tuple(
+        target.nameof(ns)
+        for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,Definition))))
+        )
+    return (dfn.name.package,) + path
+
+@match(choice(Namespace, Definition), Javascript)
+def module_ffi_path(dfn, target):
+    return tuple(
+        target.nameof(ns)
+        for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,))))
+    )
+
 @match(TestClass, Ruby)
 def module_path(dfn, target):
     path = tuple(
@@ -461,7 +584,7 @@ def module_path(dfn, target):
         )
     return (dfn.name.package,) + path[:-1] + ("tc_" + path[-1],)
 
-@match(Definition, Definition, Ruby)
+@match(Definition, Definition, Target)
 def module_path(dfn, ref_dfn, target):
     """ calculate relative module path """
     dfn_path = module_path(dfn, target)
@@ -473,7 +596,7 @@ def module_path(dfn, ref_dfn, target):
     path = ("..",) * len(dfn_path[common:-1]) + ref_path[common:]
     return path
 
-@match(Namespace, choice(Namespace,Definition), Ruby)
+@match(Namespace, choice(Namespace,Definition), Target)
 def module_path(dfn, ref_dfn, target):
     """ calculate relative module path """
     dfn_path = module_path(dfn, target)
