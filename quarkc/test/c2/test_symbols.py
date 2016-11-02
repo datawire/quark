@@ -435,4 +435,23 @@ def test_nesting():
               "nesting.bool.bool": (Method, "bool")},
     duplicates=["nesting.foo.d"], missing=["c"])
 
+def test_import():
+    check("import", """
+    package quark {
+        primitive void {}
+    }
+
+    package a {
+        void foo() {}
+    }
+
+    import a;
+
+    package b {
+        void bar() {
+            foo();
+        }
+    }
+    """)
+
 ###############################################################################

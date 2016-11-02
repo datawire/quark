@@ -2,7 +2,6 @@ from .ast import *
 from .errors import *
 from .match import *
 from .parse import traversal
-from .helpers import lineinfo
 from collections import OrderedDict
 
 import stats
@@ -12,30 +11,13 @@ class UnresolvedSymbol(Exception):
     def __init__(self, name):
         self.name = name
 
-@match(choice(Package, Callable, Class, Declaration, TypeParam))
-def path(n):
-    return path(n.parent) + (n.name,)
-
-@match(File)
-def path(f):
-    return ()
-
-@match(choice(Statement, Block))
-def path(n):
-    return path(n.parent)
-
-@match(choice(Package, Callable, Class, Declaration, TypeParam))
+@match(choice(Package, Callable, Class, Declaration, TypeParam, Import))
 def name(n):
-    return ".".join([n.text for n in path(n)])
+    return n.scopes[0]
 
 @match([many(Name)])
 def name(path):
     return ".".join([n.text for n in path])
-
-@match(Import)
-def name(imp):
-    assert imp.alias
-    return ".".join([n.text for n in path(imp.parent)] + [imp.alias.text])
 
 def definitions():
     return choice(Function, Class, Interface, Method, Declaration, TypeParam)
@@ -179,10 +161,10 @@ class Symbols(object):
     def qualify(self, node, text):
         with stats.charge("qualify"):
             for s in node.scopes:
-                candidate = ".".join([name(s), text])
+                candidate = "%s.%s" % (s, text)
                 if self.exists(candidate):
                     return candidate
-            candidates = [text, ".".join(["quark", text])]
+            candidates = [text, "quark.%s" % text]
             for candidate in candidates:
                 if self.exists(candidate):
                     return candidate

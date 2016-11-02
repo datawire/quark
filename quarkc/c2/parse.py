@@ -43,13 +43,28 @@ def postorder_traversal(pkgs):
         for n in postorder_traversal(p):
             yield n
 
+@match(File, basestring)
+def scope_name(f, text):
+    return text
+
+@match(AST, basestring)
+def scope_name(n, text):
+    return "%s.%s" % (n.scopes[0], text)
+
 @match(AST)
 def scopes(n):
     n.scopes = n.parent.scopes
 
-@match(choice(Package, Function, Class, Interface, Method))
+@match(choice(Package, Callable, Class, Declaration, TypeParam))
 def scopes(s):
-    s.scopes = (s,) + s.parent.scopes
+    s.scopes = (scope_name(s.parent, s.name.text),) + s.parent.scopes
+
+@match(Import)
+def scopes(s):
+    if s.alias:
+        s.scopes = (scope_name(s.parent, s.alias.text),) + s.parent.scopes
+    else:
+        s.scopes = s.parent.scopes
 
 @match(File)
 def scopes(f):
@@ -62,7 +77,7 @@ def imported_scopes(n):
 @match(Import)
 def imported_scopes(imp):
     if not imp.alias:
-        yield imp.path
+        yield ".".join([n.text for n in imp.path])
 
 @match(File)
 def wire(file):
