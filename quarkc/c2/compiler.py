@@ -67,7 +67,7 @@ class Compiler(object):
         with stats.charge("resolve-symbols"):
             for file in self.files:
                 for n in traversal(file):
-                    if self.symbols.is_name(n):
+                    if self.symbols.is_usage(n):
                         self.symbols.resolve(n)
 
         for sym, nodes in self.symbols.duplicates.items():

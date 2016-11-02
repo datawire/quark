@@ -96,11 +96,11 @@ class Symbols(object):
         pkgs.append(pkg)
 
     @match(usages())
-    def is_name(self, _):
+    def is_usage(self, _):
         return True
 
     @match(AST)
-    def is_name(self, _):
+    def is_usage(self, _):
            return False
 
     @match(usages())
