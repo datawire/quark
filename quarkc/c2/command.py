@@ -13,6 +13,7 @@ Options:
   -v --verbose          Show more detail.
 
   -o DIR, --output DIR  Target directory for output files. [default: output]
+  --force               Ignore any cached intermediate representations.
 
   --all                 Install/emit code for all available target languages.
                         [this is the default if no targets are specified]
@@ -69,7 +70,7 @@ def main(args):
     c = Compiler(verbose=verbose)
     for fname in args["<file>"]:
         cname = "%sp" % fname
-        if is_newer(cname, fname):
+        if is_newer(cname, fname) and not args["--force"]:
             with open(cname) as f:
                 unp = pickle.Unpickler(f)
                 c.load(unp.load())
