@@ -192,6 +192,22 @@ class Java(Target):
         return run("java", "-cp", ":".join((testjar, rtjar, self.junit, self.hamcrest)), "org.junit.runner.JUnitCore",
                    *self.jtests(testjar))
 
+class Javascript(Target):
+
+    lang = "javascript"
+    src = "emit"
+
+    def run(self):
+        self.gen()
+        self.npm_install("mocha")
+        return run_in(os.path.join(self.target, self.src), "../node_modules/.bin/mocha", env={"NODE_PATH": self.path("emit", "rt")})
+
+    def npm_install(self, pkg):
+        node_modules = os.path.join(self.target, "node_modules")
+        ensure_dir(node_modules)
+        if not os.path.isdir(os.path.join(node_modules, pkg)):
+            run_in(self.target, "npm", "install", pkg)
+
 RED = "31"
 GREEN = "32"
 WHITE = "37"
@@ -233,7 +249,7 @@ def main(args):
     if args["--verbose"]:
         VERBOSE = 1
 
-    targets = (Go(), Ruby(), Python(), Java())
+    targets = (Go(), Ruby(), Python(), Java(), Javascript())
 
     if args["clean"]:
         for tgt in targets:

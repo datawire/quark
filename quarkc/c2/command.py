@@ -31,7 +31,7 @@ import cPickle as pickle
 from docopt import docopt
 from .compiler import Compiler
 from .exceptions import QuarkError
-from .emit import emit, Java, Python, Ruby, Go
+from .emit import emit, Java, Python, Ruby, Go, Javascript
 from .helpers import is_newer
 
 import stats
@@ -62,7 +62,7 @@ def main(args):
     if java or all: targets.append(Java())
     if python or all: targets.append(Python())
 #    if python3 or all: targets.append(Python3())
-#    if javascript or all: targets.append(Javascript())
+    if javascript or all: targets.append(Javascript())
     if ruby or all: targets.append(Ruby())
     if go or all: targets.append(Go())
 
