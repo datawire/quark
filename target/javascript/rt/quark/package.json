@@ -1,4 +1,4 @@
 {
   "name": "quark",
-  "main": "lib/quark"
+  "main": "index.js"
 }
