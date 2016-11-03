@@ -156,12 +156,18 @@ def generate(pkg, target):
             yield m
         for m in generate(ns, target):
             yield m
-    yield tr.File("/".join(("lib", pkg.name.package )) + ".js",
+    yield tr.File("/".join((pkg.name.package, "index" )) + ".js",
                   tr.Comment("Package entrypoint"),
-                  tuple(tr.Simple("exports.{module} = require('{package}/{module}')".format(
-                      package = ns.name.package,
-                      module = ns.name.path[0]))
-                        for ns in filter(isa(Namespace), pkg.definitions)))
+                  tuple(
+                      tr.Simple("exports.{module} = require('./lib/{module}')".format(
+                          package = ns.name.package,
+                          module = ns.name.path[0]))
+                      for ns in filter(isa(Namespace), pkg.definitions)))
+    yield tr.File("/".join((pkg.name.package, "package.json" )),
+                  tr.Compound("", tr.Block(
+                      tr.Simple("\"name\": \"{package}\",".format(
+                          package = ns.name.package)),
+                      tr.Simple("\"main\": \"index.js\""))))
 
 @match(Package, Namespace, Javascript)
 def generate(parent, ns, target):
@@ -181,9 +187,15 @@ def ffi_namespace(ns, target):
     for dfn in dfns:
         yield tr.Simple("exports.{name} = require(\"{module}\")".format(
             name = target.nameof(dfn),
-            module = "/".join(module_path(ns, dfn, target))))
+            module = "/".join(require_path(ns, dfn, target))))
 
-
+@match(choice(Namespace, Definition), choice(Namespace, Definition), Javascript)
+def require_path(dfn, ref_dfn, target):
+    ref_module_path = module_path(dfn, ref_dfn, target)
+    if ref_module_path[0][0] != ".":
+        return (".",) + ref_module_path
+    else:
+        return ref_module_path
 
 @match(Definition, choice(Go, Python, Java, Javascript))
 def generate(dfn, target):
@@ -276,7 +288,7 @@ def filename(dfn, prefix, target):
 
 @match(choice(Namespace,Definition), Javascript)
 def filename(dfn, target):
-    return "/".join(("lib",) + module_path(dfn, target)) + ".js"
+    return "/".join((dfn.name.package, "lib",) + module_path(dfn, target)) + ".js"
 
 @match(TestClass, Javascript)
 def filename(dfn, target):
@@ -373,6 +385,14 @@ def imports(dfn, target):
     define_imports(dfn, target, imports)
     for key, value in imports.items():
         yield tr.Simple("var {alias} = require('{module}')".format(**value))
+
+@match(TestClass, Javascript)
+def imports(dfn, target):
+    """ emit needed import statements """
+    imports = OrderedDict({"assert": dict(alias="assert", module="assert")})
+    define_imports(dfn, target, imports)
+    for key, value in imports.items():
+        yield tr.Simple("const {alias} = require('{module}')".format(**value))
 
 @match(TestClass, Ruby)
 def imports(dfn, target):
@@ -514,9 +534,7 @@ def define_imports(dfn, target, imports):
             ref_target_name = ref_dfn_alias
         elif dfn.name != ref_dfn.name:
             # import from impl using relative module path.
-            ref_module_path = module_path(dfn, ref_dfn, target)
-            if ref_module_path[0] != "..":
-                ref_module_path = (".",) + ref_module_path
+            ref_module_path = require_path(dfn, ref_dfn, target)
             ref_dfn_alias = "_".join(module_path(ref_dfn, target))
             imports[ref_module_path] = dict(module = "/".join(ref_module_path),
                                             alias = ref_dfn_alias)
@@ -567,11 +585,11 @@ def module_path(dfn, target):
         target.nameof(ns)
         for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,Definition))))
         )
-    return (dfn.name.package,) + path
+    return path
 
 @match(choice(Namespace, Definition), Javascript)
 def module_ffi_path(dfn, target):
-    return tuple(
+    return tuple((dfn.name.package,)) + tuple(
         target.nameof(ns)
         for ns in reversed(tuple(target.q.ancestors_or_self(dfn, (Namespace,))))
     )

@@ -14,7 +14,7 @@
 
 from .match import match, opt, choice
 
-from .emit_target import Target, Python, Ruby, Go, Java
+from .emit_target import Target, Python, Ruby, Go, Java, Javascript
 
 from .tr import File, Block, Simple, Compound, Comment
 
@@ -101,6 +101,6 @@ def format(stmt, target, indent):
 def format(comment, target, indent):
     return indent.commented("# ")(comment.comment)
 
-@match(Comment, choice(Java, Go), Indent)
+@match(Comment, choice(Java, Go, Javascript), Indent)
 def format(comment, target, indent):
     return indent.commented("// ")(comment.comment)
