@@ -204,7 +204,27 @@ class Code(object):
 
     @match(String)
     def compile(self, s):
-        return ir.StringLit(s.text)
+        value = ""
+        idx = 1
+        while idx < len(s.text) - 1:
+            c = s.text[idx]
+            next = s.text[idx + 1]
+            if c == "\\":
+                if next == "x":
+                    value += chr(int(s.text[idx+2:idx+4], 16))
+                    idx += 4
+                elif next == "n":
+                    value += "\n"
+                    idx += 2
+                elif next == "\r":
+                    value += "\r"
+                    idx += 2
+                else:
+                    assert False, "bad string literal: %s" % s.text
+            else:
+                value += c
+                idx += 1
+        return ir.StringLit(value)
 
     @match(Return)
     def compile(self, retr):
