@@ -8,13 +8,15 @@ namespace quark {
         bool __eq__(int other);
     }
 
-    primitive String {}
+    primitive String {
+        String __add__(String other);
+    }
 
     primitive bool {}
 
     primitive void {}
 
-    void assertEqual(int a, int b);
+    void assertEqual(void a, void b);
 
 }
 
@@ -45,5 +47,20 @@ void usefib() {
 }
 
 void strcat() {
-    //assertEqual("ab", "a" + "b");
+    assertEqual("ab", "a" + "b");
+    assertEqual("ab", "ab" + "");
+    assertEqual("ab", "" + "ab");
+
+    assertEqual("a\nb", "a\nb" + "");
+    assertEqual("a\nb", "a\n" + "b");
+    assertEqual("a\nb", "a" + "\nb");
+    assertEqual("a\nb", "" + "a\nb");
+
+    assertEqual("ab\n", "ab\n" + "");
+    assertEqual("ab\n", "ab" + "\n");
+    assertEqual("ab\n", "a" + "b\n");
+    assertEqual("ab\n", "" + "ab\n");
+
+    assertEqual("a", "\x61");
+    assertEqual("\x0a", "\n");
 }

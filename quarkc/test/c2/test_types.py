@@ -243,7 +243,9 @@ def check_violation(code, signature):
     prolog = """
         namespace quark {
             primitive void {}
-            primitive bool {}
+            primitive bool {
+                bool __eq__(bool b);
+            }
             primitive int {
                 int __add__(int n);
             }
@@ -255,6 +257,8 @@ def check_violation(code, signature):
     prolog_sig = {
         'quark.void.void': (CALLABLE, 'quark.void'),
         'quark.bool.bool': (CALLABLE, 'quark.bool'),
+        'quark.bool.__eq__': ((CALLABLE, 'quark.bool', 'quark.bool'),
+                              (DECLARE, 'b', 'quark.bool')),
         'quark.int.int': (CALLABLE, 'quark.int'),
         'quark.int.__add__': ((CALLABLE, 'quark.int', 'quark.int'),
                               (DECLARE, 'n', 'quark.int')),

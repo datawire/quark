@@ -12,6 +12,8 @@ public class Functions {
     public static int     int___add__(int i, int j) { return i + j; }
     public static int     int___sub__(int i, int j) { return i - j; }
 
+    public static String String___add__ (String a, String b) { return a + b; }
+
     private static String null_check(String value) {
         if (value != null) {
             return value;

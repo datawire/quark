@@ -68,10 +68,17 @@ class Types(object):
 
     @match(Class)
     def define(self, cls):
-        clstype = types.Object(*[self.field(d, cls.parameters) for d in cls.definitions])
+        clstype = types.Object(*[self.field(d, cls.parameters) for d in self.fields(cls)])
         if cls.parameters:
             clstype = types.Template(*[types.Param(name(p)) for p in cls.parameters] + [clstype])
         self.types[name(cls)] = clstype
+
+    def fields(self, cls):
+        for d in cls.definitions:
+            if d.static or d.type is None:
+                continue
+            else:
+                yield d
 
     @match(Function)
     def define(self, fun):
@@ -150,8 +157,7 @@ class Types(object):
     def do_resolve(self, retr):
         dtype = self.node(get_definition(retr)).result
         rtype = self.resolve(retr.expr)
-        if not self.types.assignable(dtype, rtype):
-            self.add_violation(InvalidAssignment(retr, dtype, rtype))
+        self.validate_ass(retr, dtype, rtype)
         return rtype
 
     @match(Local)
@@ -240,7 +246,10 @@ class Types(object):
 
     @match(choice(Method, Function))
     def do_resolve(self, meth):
-        return self.types.get(self.types[name(meth.parent)], meth.name.text)
+        if meth.type:
+            return self.types.get(self.types[name(meth.parent)], meth.name.text)
+        else:
+            return self.types[name(meth)]
 
     @match(Call)
     def do_resolve(self, c):
