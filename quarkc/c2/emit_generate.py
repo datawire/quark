@@ -157,6 +157,7 @@ def generate(pkg, target):
         for m in generate(ns, target):
             yield m
     yield tr.File("/".join((pkg.name.package, "index" )) + ".js",
+                  tr.Simple("\"use strict\";"),
                   tr.Comment("Package entrypoint"),
                   tuple(
                       tr.Simple("exports.{module} = require('./lib/{module}')".format(
@@ -172,12 +173,14 @@ def generate(pkg, target):
 @match(Package, Namespace, Javascript)
 def generate(parent, ns, target):
     yield tr.File(filename(ns, target),
+                  tr.Simple("\"use strict\";"),
                   tr.Comment("toplevel namespace"),
                   tuple(ffi_namespace(ns, target)))
 
 @match(Namespace, Namespace, Javascript)
 def generate(parent, ns, target):
     yield tr.File(filename(ns, target),
+                  tr.Simple("\"use strict\";"),
                   tr.Comment("nested namespace"),
                   tuple(ffi_namespace(ns, target)))
 
@@ -335,7 +338,7 @@ def header(dfn, target):
 
 @match(choice(Namespace,Definition), Javascript)
 def header(dfn, target):
-    return tuple(imports(dfn, target))
+    return (tr.Simple("\"use strict\";"),) + tuple(imports(dfn, target))
 
 @match(Definition, Go)
 def imports(dfn, target):
