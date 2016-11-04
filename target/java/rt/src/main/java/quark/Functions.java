@@ -2,6 +2,8 @@ package quark;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Functions {
     public static boolean object___ne__(Object left, Object right) { return left == right; }
@@ -56,5 +58,26 @@ public class Functions {
     }
     public static int map_string_int___len__(Map<String,Integer> map) {
         return map.size();
+    }
+
+
+    public static List<Integer> list_int___init__() {
+        return new ArrayList<Integer>();
+    }
+    public static int list_int___get__(List<Integer> list, int key) {
+        Integer ret = list.get(key);
+        return null_check(ret);
+    }
+    public static void list_int___set__(List<Integer> list, int key, int value) {
+        list.set(key,value);
+    }
+    public static int list_int___len__(List<Integer> list) {
+        return list.size();
+    }
+    public static void list_int_append(List<Integer> list, int value) {
+        list.add(value);
+    }
+    public static void list_int_extend(List<Integer> list, List<Integer> another) {
+        list.addAll(another);
     }
 }

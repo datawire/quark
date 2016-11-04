@@ -251,6 +251,18 @@ class Map(NativeType):
     def __repr__(self):
         return self.repr(self.key, self.value)
 
+class List(NativeType):
+    @match(NativeType)
+    def __init__(self, value):
+        self.value = value
+
+    @property
+    def children(self):
+        yield self.value
+
+    def __repr__(self):
+        return self.repr(self.value)
+
 class Declaration(IR):
 
     @match(basestring, AbstractType)

@@ -18,7 +18,7 @@ from .ir import (
     Param, Var, This, Call, Invoke, Send, Construct, Get,
     Void, Null,
     Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit,
-    Map
+    Map, List
 )
 
 from .emit_target import Target, Python, Java, Go, Ruby, Javascript
@@ -124,6 +124,30 @@ def expr(mapt, target):
     return "map[{key}] {value}".format(
         key=expr(mapt.key, target),
         value=expr(mapt.value, target))
+
+## List
+
+@match(List, Target)
+def expr(listt, target):
+    return ""
+
+@match(List, Java)
+def expr(listt, target):
+    return "java.util.List<{value}>".format(
+        value=expr(listt, listt.value, target))
+
+@match(List, AbstractType, Java)
+def expr(listt, type, target):
+    return expr(type, target)
+
+@match(List, Int, Java)
+def expr(listt, type, target):
+    return "Integer"
+
+@match(List, Go)
+def expr(listt, target):
+    return "*[]{value}".format(
+        value=expr(listt.value, target))
 
 ## Param
 
