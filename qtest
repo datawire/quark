@@ -50,8 +50,9 @@ def run(*cmd, **kwargs):
         pfx = "CWD=...%s " % cwd[len(common):]
     else:
         pfx = ""
-    env = kwargs.get("env", {})
-    env["PATH"] = os.environ["PATH"]
+    env = {}
+    env.update(os.environ)
+    env.update(kwargs.get("env", {}))
     kwargs["env"] = env
     if VERBOSE:
         print "%s%s" % (pfx, " ".join(cmd))
