@@ -45,7 +45,7 @@ fi
 #    exit 1
 #fi
 
-if py.test -svv; then
+if py.test -svv && ./qtest run; then
     echo Tests passed
 else
     ./quarkc/test/compare --batch
