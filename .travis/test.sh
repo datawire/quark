@@ -64,11 +64,11 @@ else
     exit 1
 fi
 
-if pylint $TEST_SUITE; then
-    echo pylint passed
-else
-    exit 1
-fi
+#if pylint $TEST_SUITE; then
+#    echo pylint passed
+#else
+#    exit 1
+#fi
 
 if py.test -v $TEST_SUITE "${pytest_args[@]}"; then
     echo Tests passed
