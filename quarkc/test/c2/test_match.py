@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pytest
-from quarkc.c2.match import *
+from quarkc.c2.match import (
+    compile, match, many, opt, when, choice, one, delay, lazy, trait, MatchError
+)
 
 class Action(object):
 
@@ -102,7 +103,7 @@ def test_giant_switch():
     try:
         n.apply("one", 1, "two", 2, "three")
         assert False, "expected MatchError"
-    except MatchError, e:
+    except MatchError:
         pass
 
 @match(int, str)

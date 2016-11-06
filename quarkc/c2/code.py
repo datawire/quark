@@ -1,7 +1,9 @@
-from .match import *
-from .traits import *
-from .ast import *
-from .symbols import *
+from .match import match, choice, many, ntuple
+from .ast import (
+    Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param,
+    While, Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt
+)
+from .symbols import Symbols, name
 
 import ir, types
 

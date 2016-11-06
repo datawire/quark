@@ -26,9 +26,7 @@
 #     streams have eliminated dependencies on frontend features like
 #     inheritence. Hypothetically it could even be an alternative
 #     frontend.
-from contextlib import contextmanager
 from functools import total_ordering
-from collections import deque
 from itertools import groupby
 
 from .match import match, lazy, ntuple, many, opt, choice

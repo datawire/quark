@@ -1,10 +1,15 @@
-from .match import *
-from .errors import *
-from .parse import *
-from .symbols import *
+from .match import match, choice
+from .errors import Errors, DuplicateSymbol, MissingSymbol
+from .ast import (
+    AST, File, Class, Method, Name, Block, Interface
+)
+from .parse import (
+    parse, traversal, ParseError, wire
+)
+from .symbols import Symbols, depackage
 from .types import Types
 from .code import Code
-from .traits import *
+from .traits import COMPILER
 
 import stats
 

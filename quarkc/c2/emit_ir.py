@@ -12,10 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections import OrderedDict
-from pprint import pformat
-from .match import match
-from .ir import IR, Method, Class
+from .ir import Method, Class
 
 class Snowflake(str):
     """ Avoid dictionary lookup of reserved identifiers """

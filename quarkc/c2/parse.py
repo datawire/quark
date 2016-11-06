@@ -1,5 +1,7 @@
-from .match import *
-from .ast import *
+from .match import match, choice, many, opt
+from .ast import (
+    AST, File, Package, Callable, Class, Declaration, TypeParam, Import
+)
 from .parser import Parser
 from .exceptions import ParseError
 from parsimonious import ParseError as GParseError

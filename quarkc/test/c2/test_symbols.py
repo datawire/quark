@@ -1,8 +1,9 @@
-import pytest
-from collections import OrderedDict, defaultdict
+from collections import OrderedDict
 
-from quarkc.c2.match import *
-from quarkc.c2.ast import *
+from quarkc.c2.match import match, many, choice, lazy
+from quarkc.c2.ast import (
+    AST, Field, Param, Declaration, Package, File, Function, Primitive, Class, Interface, TypeParam, Method, Local
+)
 from quarkc.c2.compiler import Compiler
 
 ###############################################################################
@@ -240,7 +241,7 @@ def test_explicit_foofoo():
     duplicates=["ns.foo"],
     missing=["void"])
 
-def symerr(filename, topname, code, tree):
+def symerr(filename, topname, tree):
     expected = {}
     dups = []
     for sym, sig in tree.symbols(filename, topname):
@@ -257,8 +258,8 @@ def test_permutations():
     topname = "asdf"
     depth = 5
     for t in TOP:
-        tree = symtree(t, Namer("n"), 5)
-        expected, dups = symerr(fname, topname, code, tree)
+        tree = symtree(t, Namer("n"), depth)
+        expected, dups = symerr(fname, topname, tree)
         assert not dups
         check(fname, tree.code(topname), expected, missing=['T'])
 
@@ -271,9 +272,8 @@ def test_collisions():
         for nd in tree.nodes():
             for name in nd.children:
                 nd.add(name, *[SymbolTree(c) for c in CHILDREN[nd.type]])
-        code = tree.code(topname)
-        expected, dups = symerr(fname, topname, code, tree)
-        check(fname, code, duplicates=dups, missing=['T'])
+        expected, dups = symerr(fname, topname, tree)
+        check(fname, tree.code(topname), duplicates=dups, missing=['T'])
 
 def test_missing_type1():
     check("missing_type", """

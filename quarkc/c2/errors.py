@@ -1,6 +1,6 @@
-from .ast import *
+from .ast import AST
 from .exceptions import QuarkError, CompileError
-from .match import *
+from .match import match, delay
 from collections import OrderedDict
 
 class Error(object):
@@ -99,8 +99,6 @@ class InvalidInvocation(NodeError):
     def __init__(self, node, expected, actual):
         self.init(node, "expected {expected} args, got {actual}", expected=expected, actual=actual)
 
-import types
-
 def ref():
     return delay(lambda: types.Ref)
 
@@ -121,3 +119,5 @@ class UnresolvedCall(NodeError):
     @match(AST, ref())
     def __init__(self, node, type):
         self.init(node, "not callable: {type}", type=type)
+
+import types

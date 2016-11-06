@@ -1,9 +1,7 @@
 from contextlib import contextmanager
-from functools import total_ordering
 from collections import deque
-from itertools import groupby
 
-from .match import match, lazy, ntuple, many, opt, choice
+from .match import match, many
 
 
 class _Indent(object):

@@ -1,7 +1,8 @@
-from .ast import *
-from .errors import *
-from .match import *
-from .parse import traversal
+from .ast import (
+    AST, Package, Callable, Class, Declaration, TypeParam, Import, Method, Type, Var, String, Number, Bool, If,
+    While, Name, Function, Interface
+)
+from .match import match, many, choice
 from collections import OrderedDict
 
 import stats

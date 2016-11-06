@@ -183,7 +183,6 @@ class State:
 
 def deduplicate(items):
     deduped = []
-    count = 0
     for item in items:
         if not deduped:
             deduped.append([item, 1])

@@ -1,5 +1,5 @@
-from .match import *
-from .parse import *
+from .match import match
+from .parse import File, traverse
 
 from errors import Errors
 from symbols import Symbols

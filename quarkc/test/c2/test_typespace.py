@@ -1,5 +1,4 @@
-import pytest
-from quarkc.c2.typespace import *
+from quarkc.c2.typespace import Typespace, Object, Field, Final, Ref, Template, Param, Callable, Unresolved
 
 def typespace():
     space = Typespace()

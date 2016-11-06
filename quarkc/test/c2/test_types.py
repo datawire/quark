@@ -1,10 +1,11 @@
 from quarkc.c2.compiler import Compiler
-from quarkc.c2.match import *
-from quarkc.c2.ast import *
-from quarkc.c2.errors import *
-from quarkc.c2.parse import *
-from quarkc.c2.symbols import depackage
-from quarkc.c2.types import Ref
+from quarkc.c2.match import match, choice, many
+from quarkc.c2.ast import (
+    AST, Package, Declaration, Local, Param, Class, Function, PrimitiveLiteral, If, While, Block, Assign, ExprStmt,
+    Return, Call, Attr, Var
+)
+from quarkc.c2.parse import traversal
+from quarkc.c2.errors import InvalidInvocation, InvalidAssignment
 from quarkc.c2 import typespace as types
 
 class Base(object):

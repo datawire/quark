@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from .match import *
+from .match import match, lazy, many, opt, choice
 
 """A type is represented as a node in a graph. There are two kinds of
 nodes: Object and Callable. Edges are represented either implicitly

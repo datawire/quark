@@ -17,10 +17,10 @@ from .match import match, many, choice
 from .tree import isa, split, walk_dfs
 from .ir import (IR, Root, Package, Namespace, NamespaceName,
                  Name, Definition, ExternalFunction,
-                 Check, Function, Class, Check, Void)
+                 Check, Function, Check, Void)
 
 from .emit_target import Target, Python, Ruby, Java, Go, Javascript
-from .emit_ir import TestMethod, StaticMethod, TestClass, Snowflake
+from .emit_ir import TestMethod, TestClass, Snowflake
 
 @match(IR, Target)
 def transform(node, target):

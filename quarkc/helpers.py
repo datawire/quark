@@ -15,13 +15,9 @@
 import os
 
 from .ast import (
-    Class, Field, File, Name, Callable, Local, If, Block, Assign, While,
-    Return, ExprStmt, Native, Statement, Expression, Call, Super, Method,
-    String, Number, Package, Primitive, Interface, Annotation, Macro,
-    Function, CompilerVersionSpec, AST,
+    Callable, Local, If, Block, Assign, While, Return, ExprStmt, Native, Statement, Expression, Call, Super
 )
-from .c2.match import *
-from .exceptions import CompileError
+from .c2.match import match
 
 DEFAULT = object()
 

@@ -14,7 +14,10 @@
 
 import pytest
 
-from quarkc.c2.ir import *
+from quarkc.c2.ir import (
+    Name, Function, Int, Param, Return, Invoke, Ref, Local, Package, Var, While, If, Block, Call,
+    Void, Send
+)
 
 NAMES = [
 #    (("foo",), "foo", ()),
@@ -98,7 +101,9 @@ def test_emit():
     print code(stmt, j)
 
 
-from .sample_ir import *
+from .sample_ir import (
+    fibonacci_ir, minimal_ir, native_int, native_map_string_string, native_map_string_int
+)
 
 samples = [fibonacci_ir, minimal_ir, native_int, native_map_string_string, native_map_string_int]
 from quarkc.c2.ir import restructure, model_externals, reconstruct
@@ -123,5 +128,3 @@ def test_reconstruct(sample):
     r = reconstruct(s)
     assert len(repr(r)) >= len(repr(s))
     print r
-
-from quarkc.c2.match import match, many
