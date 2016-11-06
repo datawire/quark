@@ -1,3 +1,0 @@
-FROM ubuntu-pip
-RUN apt-get -y install ruby2.3 ruby2.3-dev
-CMD /bin/bash
