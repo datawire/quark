@@ -79,6 +79,7 @@ def ensure_clean(d):
 
 def ensure_fetch(local, remote):
     if not os.path.exists(local):
+        ensure_dir(os.path.dirname(local))
         run("curl", "-o", local, remote)
 
 def path(base, *elements):
