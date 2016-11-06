@@ -69,6 +69,7 @@ case "${TRAVIS_OS_NAME}" in
         type gem
         sanitize mid-install # recalculate PATH
         gem install --verbose --no-user-install bundler
+        gem install --verbose --no-user-install test-unit
         hash -r
         type bundle
         brew install go

@@ -4,6 +4,8 @@ matrix:
   include:
     - os: linux
       env: TEST_SUITE=quarkc-no-lib-indiv
+    - os: osx
+      env: TEST_SUITE=quarkc-no-lib-indiv
   exclude:
     - env: TEST_SUITE=should-never-be-selected
 
