@@ -40,6 +40,7 @@ case "${TRAVIS_OS_NAME}" in
                 nvm alias default 4.2.2
         )
         set +x && source ~/.nvm/nvm.sh && set -x
+        sudo apt-get -y install golang
         ;;
     osx)
         sudo chown -R $USER /usr/local
@@ -69,6 +70,7 @@ case "${TRAVIS_OS_NAME}" in
         gem install --verbose --no-user-install bundler
         hash -r
         type bundle
+        brew install go
         ;;
     *)
         echo "Unsupported platform $TRAVIS_OS_NAME"
