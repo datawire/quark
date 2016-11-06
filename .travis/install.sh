@@ -25,6 +25,7 @@ case "${TRAVIS_OS_NAME}" in
         gem install bundler
         hash -r
         type bundle
+        gem install test-unit
         sudo apt-get -y install libssl-dev swig python-dev curl\
              python2.7 python-pip tar gcc make python-dev libffi-dev\
              python-virtualenv openjdk-7-jdk maven
