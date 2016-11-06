@@ -3,7 +3,7 @@
 Quark compiler.
 
 Usage:
-  quark [options] [ (--java | --python | --python3 | --javascript | --ruby | --go | --ir)... | --all ] [<file>]...
+  quark [options] [ (--java | --python | --python3 | --javascript | --ruby | --go | --ir)... | --all ] <file>...
   quark -h | --help
   quark --version
 

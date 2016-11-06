@@ -1,9 +1,0 @@
-File(CompilerVersionSpec(),
- Use(url=quark.q), Import(Name(quark)),
-
- Package(Name(recursive),
-
-  Function(Type(Name(int)), Name(foo), Block(
-    ExprStmt(Call(Var(Name(foo), $type=0.recursive.foo), $type=1.quark.int)),
-    Return(Number(3, $type=1.quark.int)))))
-)

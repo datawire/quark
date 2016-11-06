@@ -17,12 +17,6 @@ import subprocess
 
 from quarkc import _metadata
 
-def is_excluded_file(name):
-    if "quarkc/lib/" in name or name == "reflector":
-        return True
-    else:
-        return False
-
 def is_runtime(path):
     return "quark_" in path and "_runtime" in path
 

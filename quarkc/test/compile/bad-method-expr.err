@@ -1,1 +1,0 @@
-bad-method-expr.q:4:24:type mismatch: expected 1.quark.String, got 0.bad_method_expr.Foo.bar

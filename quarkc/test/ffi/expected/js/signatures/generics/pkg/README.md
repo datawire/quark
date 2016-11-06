@@ -1,7 +1,0 @@
-## Foo
-
-## StringFoo
-
-## Box
-
-## StringBox

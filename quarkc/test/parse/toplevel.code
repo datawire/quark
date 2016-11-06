@@ -1,6 +1,4 @@
 quark *;
-
-
 include foo.q;
 include native.js;
 include native.py;

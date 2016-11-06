@@ -1,1 +1,0 @@
-interface-method-mismatch-templatized-generics.q:10:5: method signature '1.quark.void willMismatch(1.quark.List<1.quark.int>)' on 0.interface_method_mismatch_templatized_generics.C does not match method '1.quark.void willMismatch(1.quark.List<1.quark.String>)' on interface 0.interface_method_mismatch_templatized_generics.I

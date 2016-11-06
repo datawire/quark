@@ -1,7 +1,0 @@
-File(CompilerVersionSpec(),
- Use(url=quark.q), Import(Name(quark)),
-
- Package(Name(shared),
-
-  Function(Type(Name(void)), Name(a_function), Block()))
-)

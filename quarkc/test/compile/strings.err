@@ -1,3 +1,0 @@
-strings.q:3:11: Rule 'RPR' didn't match at '"\uZZZZ");
-}
-' (line 3, column 11).

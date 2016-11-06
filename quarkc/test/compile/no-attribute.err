@@ -1,4 +1,0 @@
-no-attribute.q:6:15:Test has no such attribute: nonexistent
-no-attribute.q:7:15:Test has no such attribute: nosuchmethod
-no-attribute.q:8:13:Test has no such attribute: __get__
-no-attribute.q:9:5:Test has no such attribute: __set__

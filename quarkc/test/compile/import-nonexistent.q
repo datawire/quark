@@ -1,2 +1,0 @@
-quark *;
-import nonexistent;

@@ -1,6 +1,4 @@
 quark *;
-
-
 package native {
     void test() {
         x = ${this is directly emitted};

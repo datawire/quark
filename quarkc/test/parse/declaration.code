@@ -1,6 +1,4 @@
 quark *;
-
-
 package declaration {
     void f() {
         int x = (blah)();

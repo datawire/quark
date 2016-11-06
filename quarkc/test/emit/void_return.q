@@ -1,2 +1,0 @@
-quark *;
-void foo() { return; }

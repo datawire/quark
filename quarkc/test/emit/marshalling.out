@@ -1,5 +1,0 @@
-{"$class":"m.Outer","outer_int":1010,"outer_string":"str of 101","outer_float":314101.15,"outer_inner_list":[{"$class":"m.Inner","inner_int":101,"inner_string":"str of 101","inner_float":401.14,"inner_string_list":["i"]},{"$class":"m.Inner","inner_int":143,"inner_string":"str of 143","inner_float":443.14,"inner_string_list":["i"]},{"$class":"m.Inner","inner_int":4242,"inner_string":"str of 4242","inner_float":4542.14,"inner_string_list":["i"]}]}
-1010
-str of 101
-314101.15
-443.14

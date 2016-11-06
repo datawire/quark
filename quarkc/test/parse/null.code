@@ -1,6 +1,4 @@
 quark *;
-
-
 package null {
     void test() {
         null;

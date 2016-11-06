@@ -1,6 +1,4 @@
 quark *;
-
-
 package literals {
     void literals() {
         3;

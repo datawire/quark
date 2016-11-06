@@ -1,4 +1,0 @@
-quark *;
-void test() {
-    !!!!!
-}

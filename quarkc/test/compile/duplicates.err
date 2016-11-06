@@ -1,7 +1,0 @@
-duplicates.q:3:1: duplicate definition of Test (first definition duplicates.q:1:8)
-duplicates.q:4:18: duplicate definition of a (first definition duplicates.q:4:11)
-duplicates.q:7:5: duplicate definition of x (first definition duplicates.q:6:5)
-duplicates.q:9:5: duplicate definition of bar (first definition duplicates.q:8:5)
-duplicates.q:13:5: duplicate definition of foo (first definition duplicates.q:12:5)
-duplicates.q:15:1: duplicate definition of Bar (first definition duplicates.q:11:1)
-duplicates.q:18:5: duplicate definition of x (first definition duplicates.q:17:5)

@@ -1,6 +1,4 @@
 quark *;
-
-
 package expressions {
     void expressions() {
         a;

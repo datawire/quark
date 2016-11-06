@@ -1,3 +1,0 @@
-File(CompilerVersionSpec(),
- Use(url=quark.q), Import(Name(quark))
-)

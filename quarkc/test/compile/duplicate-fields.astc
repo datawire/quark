@@ -1,7 +1,0 @@
-File(
- Class(Name(A),
-  Field(Type(Name(String)), Name(name), $type=0.String)),
-
- Class(Name(B), Name(A),
-  Field(Type(Name(String)), Name(name), $type=0.String))
-)
