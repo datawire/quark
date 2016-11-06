@@ -208,7 +208,7 @@ class Javascript(Target):
         node_modules = os.path.join(self.target, "node_modules")
         ensure_dir(node_modules)
         if not os.path.isdir(os.path.join(node_modules, pkg)):
-            run_in(self.target, "npm", "install", pkg)
+            run_in(self.target, "npm", "-s", "install", pkg)
 
 RED = "31"
 GREEN = "32"
