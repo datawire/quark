@@ -100,8 +100,8 @@ class Target(object):
 
     def gen(self):
         ensure_clean(self.abs_src)
-        run("quark-ir", "emit", "-o", self.abs_src, "--%s" % self.lang, *glob(DIR, "quarkc/test/c2/ffi_ir/*.ir"))
-        qfiles = glob(DIR, "quarkc/test/c2/ffi_ir/*.q")
+        run("quark-ir", "emit", "-o", self.abs_src, "--%s" % self.lang, *glob(DIR, "quarkc/test/ffi_ir/*.ir"))
+        qfiles = glob(DIR, "quarkc/test/ffi_ir/*.q")
         if qfiles:
             run("quark", "-o", self.abs_src, "--%s" % self.lang, *qfiles)
 

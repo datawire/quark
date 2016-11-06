@@ -15,9 +15,9 @@
 import pytest
 
 
-from quarkc.c2.emit import transform, emit
-from quarkc.c2.ir import reconstruct
-from quarkc.c2.emit_target import Go, Python, Java, Ruby, Javascript
+from quarkc.emit import transform, emit
+from quarkc.ir import reconstruct
+from quarkc.emit_target import Go, Python, Java, Ruby, Javascript
 
 from .sample_ir import fibonacci_ir, minimal_ir, native_int, native_map_string_int, native_map_string_string
 

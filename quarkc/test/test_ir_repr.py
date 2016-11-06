@@ -1,12 +1,12 @@
 import pytest
-from quarkc.c2.ir import ( IR, Name, Ref, Local, Package, Literal,
-                           Declaration, Field, Message, Method,
-                           Construct, Constructor, Function, Class, Interface,
-                           Void, Int, Float, String, Bool, Return, Type, InterfaceType,
-                           ClassType,
-                           Var, Get, Set, Invoke, Send,
-                           This, Null, StringLit, IntLit, FloatLit, BoolLit,
-                           Block, If, While, Evaluate, Break, Continue)
+from quarkc.ir import ( IR, Name, Ref, Local, Package, Literal,
+                        Declaration, Field, Message, Method,
+                        Construct, Constructor, Function, Class, Interface,
+                        Void, Int, Float, String, Bool, Return, Type, InterfaceType,
+                        ClassType,
+                        Var, Get, Set, Invoke, Send,
+                        This, Null, StringLit, IntLit, FloatLit, BoolLit,
+                        Block, If, While, Evaluate, Break, Continue)
 
 def nameof(c, default=None):
     if default is None:

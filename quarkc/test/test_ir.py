@@ -14,7 +14,7 @@
 
 import pytest
 
-from quarkc.c2.ir import (
+from quarkc.ir import (
     Name, Function, Int, Param, Return, Invoke, Ref, Local, Package, Var, While, If, Block, Call,
     Void, Send
 )
@@ -73,9 +73,9 @@ def test_nesting():
         print "collision:", c
 
 
-from quarkc.c2.emit_code import code
-from quarkc.c2.emit import emit
-from quarkc.c2.emit_target import Python, Java
+from quarkc.emit_code import code
+from quarkc.emit import emit
+from quarkc.emit_target import Python, Java
 
 def test_emit():
     stmt = If(Var("x"),
@@ -106,7 +106,7 @@ from .sample_ir import (
 )
 
 samples = [fibonacci_ir, minimal_ir, native_int, native_map_string_string, native_map_string_int]
-from quarkc.c2.ir import restructure, model_externals, reconstruct
+from quarkc.ir import restructure, model_externals, reconstruct
 
 @pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
 def test_restructure(sample):

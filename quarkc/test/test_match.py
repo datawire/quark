@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from quarkc.c2.match import (
+from quarkc.match import (
     compile, match, many, opt, when, choice, one, delay, lazy, trait, MatchError
 )
 

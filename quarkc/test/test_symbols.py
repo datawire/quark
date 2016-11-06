@@ -1,10 +1,10 @@
 from collections import OrderedDict
 
-from quarkc.c2.match import match, many, choice, lazy
-from quarkc.c2.ast import (
+from quarkc.match import match, many, choice, lazy
+from quarkc.ast import (
     AST, Field, Param, Declaration, Package, File, Function, Primitive, Class, Interface, TypeParam, Method, Local
 )
-from quarkc.c2.compiler import Compiler
+from quarkc.compiler import Compiler
 
 ###############################################################################
 # Check that a given file/content produces the expected symbols or errors

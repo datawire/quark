@@ -17,7 +17,7 @@ import os
 from .ast import (
     Callable, Local, If, Block, Assign, While, Return, ExprStmt, Native, Statement, Expression, Call, Super
 )
-from .c2.match import match
+from .match import match
 
 DEFAULT = object()
 

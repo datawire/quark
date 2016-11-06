@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest
-from quarkc.c2.parse import parse
+from quarkc.parse import parse
 from .util import assert_file, maybe_xfail
 
 directory = os.path.join(os.path.dirname(__file__), "parse")
