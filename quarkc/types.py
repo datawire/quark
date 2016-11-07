@@ -235,16 +235,14 @@ class Types(object):
 
     @match(Type, Call)
     def do_resolve(self, type, _):
-        tobj = self.do_resolve(type, None)
         cls = self.symbols[type]
-        return self.types.get(tobj, cls.name.text)
+        return self.types.resolve(types.Ref("%s.%s" % (self.symbols.qualify(type), cls.name.text),
+                                            *[self.resolve(p) for p in type.parameters]))
 
-    @match(Type, choice(AST, None))
+    @match(Type, AST)
     def do_resolve(self, type, _):
-        if type.parameters:
-            return self.types.resolve(types.Ref(self.symbols.qualify(type), *[self.resolve(p) for p in type.parameters]))
-        else:
-            return self.types.resolve(types.Ref(self.symbols.qualify(type)))
+        params = type.parameters or ()
+        return self.types.resolve(types.Ref(self.symbols.qualify(type), *[self.resolve(p) for p in params]))
 
     @match(choice(Method, Function))
     def do_resolve(self, meth):

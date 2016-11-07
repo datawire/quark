@@ -33,17 +33,17 @@ public class Functions {
         }
     }
 
-    public static Map<String,String> map_string_string___init__() {
+    public static Map<String,String> Map_string_string___init__() {
         return new HashMap<String,String>();
     }
-    public static String map_string_string___get__(Map<String,String> map, String key) {
+    public static String Map_string_string___get__(Map<String,String> map, String key) {
         String ret = map.get(key);
         return null_check(ret);
     }
-    public static void map_string_string___set__(Map<String,String> map, String key, String value) {
+    public static void Map_string_string___set__(Map<String,String> map, String key, String value) {
         map.put(key, value);
     }
-    public static int map_string_string___len__(Map<String,String> map) {
+    public static int Map_string_string___len__(Map<String,String> map) {
         return map.size();
     }
 
@@ -63,23 +63,23 @@ public class Functions {
     }
 
 
-    public static List<Integer> list_int___init__() {
+    public static List<Integer> List_int___init__() {
         return new ArrayList<Integer>();
     }
-    public static int list_int___get__(List<Integer> list, int key) {
+    public static int List_int___get__(List<Integer> list, int key) {
         Integer ret = list.get(key);
         return null_check(ret);
     }
-    public static void list_int___set__(List<Integer> list, int key, int value) {
+    public static void List_int___set__(List<Integer> list, int key, int value) {
         list.set(key,value);
     }
-    public static int list_int___len__(List<Integer> list) {
+    public static int List_int___len__(List<Integer> list) {
         return list.size();
     }
-    public static void list_int_append(List<Integer> list, int value) {
+    public static void List_int_append(List<Integer> list, int value) {
         list.add(value);
     }
-    public static void list_int_extend(List<Integer> list, List<Integer> another) {
+    public static void List_int_extend(List<Integer> list, List<Integer> another) {
         list.addAll(another);
     }
 }

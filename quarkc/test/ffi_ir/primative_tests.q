@@ -24,3 +24,15 @@ void strings() {
     assertEqual("a", "\x61");
     assertEqual("\x0a", "\n");
 }
+
+void maps() {
+    Map<String,String> m = new Map<String,String>();
+    m["asdf"] = "fdsa";
+    assertEqual("fdsa", m["asdf"]);
+}
+
+void lists() {
+    List<int> l = new List<int>();
+    l.append(3);
+    assertEqual(3, l[0]);
+}

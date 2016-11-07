@@ -81,7 +81,11 @@ class Code(object):
 
     @match(types.Ref)
     def compile_ref(self, ref):
-        return self.compile_ref(self.mangle(ref.bind(self.bindings)))
+        return self.compile_ref(ref, "")
+
+    @match(types.Ref, basestring)
+    def compile_ref(self, ref, suffix):
+        return self.compile_ref(self.mangle(ref.bind(self.bindings)) + suffix)
 
     @match(types.Ref)
     def compile_ref_bound(self, ref):
@@ -89,7 +93,23 @@ class Code(object):
 
     @match(types.Ref)
     def mangle(self, ref):
-        return "_".join([ref.name] + [self.mangle(p).replace(".", "_") for p in ref.params])
+        return "_".join([ref.name] + [self.mangle_param(p).replace(".", "_") for p in ref.params])
+
+    @match(types.Ref)
+    def mangle_param(self, ref):
+        return "_".join([self.mangle_param(ref.name)] + [self.mangle_param(p).replace(".", "_") for p in ref.params])
+
+    @match("quark.int")
+    def mangle_param(self, sym):
+        return "int"
+
+    @match("quark.String")
+    def mangle_param(self, sym):
+        return "string"
+
+    @match(basestring)
+    def mangle_param(self, sym):
+        return sym
 
     @match(basestring)
     def compile_ref(self, name):
@@ -107,10 +127,6 @@ class Code(object):
         bound = ref.bind(self.bindings)
         return self.compile_bound(bound)
 
-    @match(types.Ref)
-    def compile_bound(self, ref):
-        return ir.Type(self.compile_ref_bound(ref))
-
     @match(types.Ref("quark.int"))
     def compile_bound(self, ref):
         return ir.Int()
@@ -124,8 +140,24 @@ class Code(object):
         return ir.String()
 
     @match(types.Ref("quark.void"))
-    def compile(self, ref):
+    def compile_bound(self, ref):
         return ir.Void()
+
+    @match(types.Ref)
+    def compile_bound(self, ref):
+        return self.compile_bound(ref.name, *ref.params)
+
+    @match("quark.List", many(types.Ref))
+    def compile_bound(self, name, element):
+        return ir.List(self.compile(element))
+
+    @match("quark.Map", many(types.Ref))
+    def compile_bound(self, name, key, value):
+        return ir.Map(self.compile(key), self.compile(value))
+
+    @match(basestring, many(types.Ref))
+    def compile_bound(self, name, *params):
+        return ir.Type(self.compile_ref_bound(ref))
 
     @match(Type)
     def compile(self, t):
@@ -175,8 +207,8 @@ class Code(object):
 
     @match(types.Ref, Primitive, Method, ir.Expression, [many(Expression)])
     def compile_call_method(self, ref, objdfn, methdfn, expr, args):
-        n = self.compile_ref("%s_%s" % (name(objdfn), methdfn.name.text))
-        return ir.Invoke(n, expr, *[self.compile(a) for a in args])
+        n = "%s_%s" % (self.mangle(types.Ref(name(objdfn), *ref.params)), methdfn.name.text)
+        return ir.Invoke(self.compile_ref(n), expr, *[self.compile(a) for a in args])
 
     @match(types.Ref, Function, Var, [many(Expression)])
     def compile_call(self, ref, dfn, var, args):
@@ -194,7 +226,10 @@ class Code(object):
     @match(types.Ref, Method, Type, [many(Expression)])
     def compile_call(self, ref, cons, type, args):
         callable = self.types.node(ref)
-        return ir.Construct(self.compile_ref(callable.result), tuple([self.compile(a) for a in args]))
+        if isinstance(cons.parent, Primitive):
+            return ir.Invoke(self.compile_ref(callable.result, "___init__"), *[self.compile(a) for a in args])
+        else:
+            return ir.Construct(self.compile_ref(callable.result), tuple([self.compile(a) for a in args]))
 
     @match(Attr)
     def compile(self, attr):

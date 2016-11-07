@@ -20,8 +20,14 @@ namespace quark {
     }
 
     primitive Map<K,V> {
-        void __setitem__(K key, V value);
-        V __getitem__(K key);
+        void __set__(K key, V value);
+        V __get__(K key);
+    }
+
+    primitive List<T> {
+        void append(T value);
+        void __set__(int index, T value);
+        T __get__(int index);
     }
 
     void assertEqual(void a, void b);
