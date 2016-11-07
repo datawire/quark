@@ -13,6 +13,8 @@ public class Functions {
     public static boolean int___eq__ (int i, int j) { return i == j; }
     public static int     int___add__(int i, int j) { return i + j; }
     public static int     int___sub__(int i, int j) { return i - j; }
+    public static int     int___neg__(int n) { return -n; }
+    public static int     int___mul__(int i, int j) { return i * j; }
 
     public static String String___add__ (String a, String b) { return a + b; }
 

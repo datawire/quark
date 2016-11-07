@@ -266,7 +266,7 @@ class Types(object):
             for n, p, a in zip(c.args, expr.arguments, args):
                 self.validate_ass(n, p, a)
         else:
-            self.add_violation(InvalidInvocation(c, len(expr.arguments), len(args)))
+            self.add_violation(InvalidInvocation(c, self.types.unresolve(expr), len(expr.arguments), len(args)))
 
     @match(Call, types.Unresolved, many(choice(types.Ref, types.Unresolved)))
     def validate_call(self, *x):

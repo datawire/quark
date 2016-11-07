@@ -87,20 +87,20 @@ class MissingSymbol(NodeError):
     def __init__(self, node, name):
         self.init(node, "no such symbol {name}", name=name)
 
+def ref():
+    return delay(lambda: types.Ref)
+
 class InvalidAssignment(NodeError):
 
-    @match(AST, object, object)
+    @match(AST, ref(), ref())
     def __init__(self, node, target, value):
         self.init(node, "cannot assign {value} to {target}", value=value, target=target)
 
 class InvalidInvocation(NodeError):
 
-    @match(AST, int, int)
-    def __init__(self, node, expected, actual):
-        self.init(node, "expected {expected} args, got {actual}", expected=expected, actual=actual)
-
-def ref():
-    return delay(lambda: types.Ref)
+    @match(AST, ref(), int, int)
+    def __init__(self, node, type, expected, actual):
+        self.init(node, "{type} expected {expected} args, got {actual}", type=type, expected=expected, actual=actual)
 
 class UnresolvedType(NodeError):
 
