@@ -7,9 +7,10 @@ function check_null(v) {
         return v
     }
 }
-exports.list_int___init__ = function() { return [] }
-exports.list_int___set__ = function(l,k,v) { l[k] = v }
-exports.list_int___get__ = function(l,k) { return check_null(l[k]) }
-exports.list_int___len__ = function(l) { return l.length }
-exports.list_int_append = function(l, v) { l.push(v) }
-exports.list_int_extend = function(l, r) { r.forEach(x => l.push(x)) }
+exports.List_int___init__ = function() { return [] }
+exports.List_int___setitem__ = function(l,k,v) { l[k] = v }
+exports.List_int___getitem__ = function(l,k) { return check_null(l[k]) }
+exports.List_int_size = function(l) { return l.length }
+exports.List_int_append = function(l, v) { l.push(v) }
+exports.List_int_extend = function(l, r) { r.forEach(x => l.push(x)) }
+exports.List_int_remove = function(l, k) { return l.splice(k,1)[0] }

@@ -1,0 +1,86 @@
+    Package(
+        Check(
+            Name("native_bool:native_bool.eq_T_T_T"),
+            Block(
+                AssertEqual(BoolLit(True), Invoke(Ref("quark:quark.bool___eq__"), BoolLit(True), BoolLit(True)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.eq_F_F_T"),
+            Block(
+                AssertEqual(BoolLit(True), Invoke(Ref("quark:quark.bool___eq__"), BoolLit(False), BoolLit(False)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.eq_F_T_F"),
+            Block(
+                AssertEqual(BoolLit(False), Invoke(Ref("quark:quark.bool___eq__"), BoolLit(False), BoolLit(True)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.eq_T_F_F"),
+            Block(
+                AssertEqual(BoolLit(False), Invoke(Ref("quark:quark.bool___eq__"), BoolLit(True), BoolLit(False)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.not_T_F"),
+            Block(
+                AssertEqual(BoolLit(False), Invoke(Ref("quark:quark.bool___not__"), BoolLit(True)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.not_F_T"),
+            Block(
+                AssertEqual(BoolLit(True), Invoke(Ref("quark:quark.bool___not__"), BoolLit(False)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.and_T_T_T"),
+            Block(
+                AssertEqual(BoolLit(True), Invoke(Ref("quark:quark.bool___and__"), BoolLit(True), BoolLit(True)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.and_T_F_F"),
+            Block(
+                AssertEqual(BoolLit(False), Invoke(Ref("quark:quark.bool___and__"), BoolLit(True), BoolLit(False)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.and_F_T_F"),
+            Block(
+                AssertEqual(BoolLit(False), Invoke(Ref("quark:quark.bool___and__"), BoolLit(False), BoolLit(True)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.and_F_F_F"),
+            Block(
+                AssertEqual(BoolLit(False), Invoke(Ref("quark:quark.bool___and__"), BoolLit(False), BoolLit(False)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.or_T_T_T"),
+            Block(
+                AssertEqual(BoolLit(True), Invoke(Ref("quark:quark.bool___or__"), BoolLit(True), BoolLit(True)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.or_T_F_T"),
+            Block(
+                AssertEqual(BoolLit(True), Invoke(Ref("quark:quark.bool___or__"), BoolLit(True), BoolLit(False)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.or_F_T_T"),
+            Block(
+                AssertEqual(BoolLit(True), Invoke(Ref("quark:quark.bool___or__"), BoolLit(False), BoolLit(True)))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.or_F_F_F"),
+            Block(
+                AssertEqual(BoolLit(False), Invoke(Ref("quark:quark.bool___or__"), BoolLit(False), BoolLit(False)))
+            )
+        ),
+    )

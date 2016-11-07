@@ -24,3 +24,11 @@ void strings() {
     assertEqual("a", "\x61");
     assertEqual("\x0a", "\n");
 }
+
+void map_string_string() {
+    //Map<String,String> m;
+
+    //m = new Map<String,String>();
+
+    //assertEqual(0, m.size());
+}

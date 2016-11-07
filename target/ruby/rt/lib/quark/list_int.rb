@@ -1,24 +1,27 @@
 module Quark
   #
-  # List<String,int>
+  # List<int>
   #
-  def self.list_int___init__
+  def self.List_int___init__
     list = []
     list
   end
-  def self.list_int___get__(list, key)
+  def self.List_int___getitem__(list, key)
     list[key]
   end
-  def self.list_int___set__(list, key, value)
+  def self.List_int___setitem__(list, key, value)
     list[key] = value
   end
-  def self.list_int___len__(list)
+  def self.List_int_size(list)
     list.length
   end
-  def self.list_int_append(list, value)
-    list.push(value)
+  def self.List_int_append(list, value)
+    list.push value
   end
-  def self.list_int_extend(list, another)
-    list.push(*another)
+  def self.List_int_extend(list, another)
+    list.push *another
+  end
+  def self.List_int_remove(list, key)
+    list.delete_at key
   end
 end

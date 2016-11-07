@@ -4,6 +4,7 @@ namespace quark {
 
     primitive bool {
         bool __eq__(bool b);
+        bool __not__(bool b);
     }
 
     primitive int {
@@ -12,16 +13,38 @@ namespace quark {
         int __neg__();
         int __mul__(int other);
         bool __eq__(int other);
+        bool __ne__(int other);
+        bool __ge__(int other);
+        bool __le__(int other);
+        bool __gt__(int other);
+        bool __lt__(int other);
     }
 
     primitive String {
         String __add__(String other);
         bool __eq__(String other);
+        int size();
+        String substring(int start, int end);
     }
 
     primitive Map<K,V> {
         void __setitem__(K key, V value);
         V __getitem__(K key);
+        int size();
+        List<K> keys();
+        V remove(K key);
+        bool contains(K key);
+        void update(Map<K,V> other);
+    }
+
+    primitive List<V> {
+        void __setitem__(int index, V value);
+        V __getitem__(int index);
+        int size();
+        void append(V element);
+        void extend(List<V> other);
+        V remove(int index);
+        bool index(V element);
     }
 
     void assertEqual(void a, void b);

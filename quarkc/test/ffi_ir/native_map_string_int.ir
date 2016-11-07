@@ -1,36 +1,56 @@
     Package(
         Check(
-            Name("native_map_string_int:native_map.string_int.make"),
+            Name("native_Map_String_int:native_map.String_int.make"),
             Block(
-                Local("map_", Map(String(), Int()), Invoke(Ref("quark:quark.map_string_int___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.map_string_int___set__"), Var("map_"), StringLit("abra"), IntLit(42))),
-                AssertEqual(IntLit(42), Invoke(Ref("quark:quark.map_string_int___get__"), Var("map_"), StringLit("abra")))
+                Local("map_", Map(String(), Int()), Invoke(Ref("quark:quark.Map_String_int___init__"))),
+                Evaluate(Invoke(Ref("quark:quark.Map_String_int___setitem__"), Var("map_"), StringLit("abra"), IntLit(42))),
+                AssertEqual(IntLit(42), Invoke(Ref("quark:quark.Map_String_int___getitem__"), Var("map_"), StringLit("abra")))
             )
         ),
         Check(
-            Name("native_map_string_int:native_map.string_int.no_key_null"),
+            Name("native_Map_String_int:native_map.String_int.no_key_null"),
             Block(
-                Local("map_", Map(String(), Int()), Invoke(Ref("quark:quark.map_string_int___init__"))),
-                AssertEqual(Null(Int()), Invoke(Ref("quark:quark.map_string_int___get__"), Var("map_"), StringLit("abra")))
+                Local("map_", Map(String(), Int()), Invoke(Ref("quark:quark.Map_String_int___init__"))),
+                AssertEqual(Null(Int()), Invoke(Ref("quark:quark.Map_String_int___getitem__"), Var("map_"), StringLit("abra")))
             )
         ),
         Check(
-            Name("native_map_string_int:native_map.string_int.size_empty"),
+            Name("native_Map_String_int:native_map.String_int.size_empty"),
             Block(
-                Local("map_", Map(String(), Int()), Invoke(Ref("quark:quark.map_string_int___init__"))),
-                AssertEqual(IntLit(0), Invoke(Ref("quark:quark.map_string_int___len__"), Var("map_")))
+                Local("map_", Map(String(), Int()), Invoke(Ref("quark:quark.Map_String_int___init__"))),
+                AssertEqual(IntLit(0), Invoke(Ref("quark:quark.Map_String_int_size"), Var("map_")))
             )
         ),
         Check(
-            Name("native_map_string_int:native_map.string_int.size_five"),
+            Name("native_Map_String_int:native_map.String_int.keys_empty"),
             Block(
-                Local("map_", Map(String(), Int()), Invoke(Ref("quark:quark.map_string_int___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.map_string_int___set__"), Var("map_"), StringLit("one"),   IntLit(1))),
-                Evaluate(Invoke(Ref("quark:quark.map_string_int___set__"), Var("map_"), StringLit("two"),   IntLit(2))),
-                Evaluate(Invoke(Ref("quark:quark.map_string_int___set__"), Var("map_"), StringLit("three"), IntLit(3))),
-                Evaluate(Invoke(Ref("quark:quark.map_string_int___set__"), Var("map_"), StringLit("four"),  IntLit(4))),
-                Evaluate(Invoke(Ref("quark:quark.map_string_int___set__"), Var("map_"), StringLit("five"),  IntLit(5))),
-                AssertEqual(IntLit(5), Invoke(Ref("quark:quark.map_string_int___len__"), Var("map_")))
+                Local("map_", Map(String(), Int()), Invoke(Ref("quark:quark.Map_String_int___init__"))),
+                AssertEqual(IntLit(0),
+                            Invoke(Ref("quark:quark.List_String_size"),
+                                   Invoke(Ref("quark:quark.Map_String_int_keys"),
+                                          Var("map_"))))
+            )
+        ),
+        Check(
+            Name("native_Map_String_int:native_map.String_int.size_five"),
+            Block(
+                Local("map_", Map(String(), Int()), Invoke(Ref("quark:quark.Map_String_int___init__"))),
+                Evaluate(Invoke(Ref("quark:quark.Map_String_int___setitem__"), Var("map_"), StringLit("one"),   IntLit(1))),
+                Evaluate(Invoke(Ref("quark:quark.Map_String_int___setitem__"), Var("map_"), StringLit("two"),   IntLit(2))),
+                Evaluate(Invoke(Ref("quark:quark.Map_String_int___setitem__"), Var("map_"), StringLit("three"), IntLit(3))),
+                Evaluate(Invoke(Ref("quark:quark.Map_String_int___setitem__"), Var("map_"), StringLit("four"),  IntLit(4))),
+                Evaluate(Invoke(Ref("quark:quark.Map_String_int___setitem__"), Var("map_"), StringLit("five"),  IntLit(5))),
+                AssertEqual(IntLit(5), Invoke(Ref("quark:quark.Map_String_int_size"), Var("map_")))
+            )
+        ),
+        Check(
+            Name("native_Map_String_int:native_map.String_int.keys_one"),
+            Block(
+                Local("map_", Map(String(), Int()), Invoke(Ref("quark:quark.Map_String_int___init__"))),
+                Evaluate(Invoke(Ref("quark:quark.Map_String_int___setitem__"), Var("map_"), StringLit("one"),   IntLit(1))),
+                Local("keys_", List(String()), Invoke(Ref("quark:quark.Map_String_int_keys"), Var("map_"))),
+                AssertEqual(IntLit(1), Invoke(Ref("quark:quark.List_String_size"), Var("keys_"))),
+                AssertEqual(StringLit("one"), Invoke(Ref("quark:quark.List_String___getitem__"), Var("keys_"), IntLit(0))),
             )
         ),
     )
