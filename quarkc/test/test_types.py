@@ -3,7 +3,7 @@ from quarkc.compiler import Compiler
 from quarkc.match import match, choice, many
 from quarkc.ast import (
     AST, Package, Declaration, Local, Param, Class, Function, PrimitiveLiteral, If, While, Block, Assign, ExprStmt,
-    Return, Call, Attr, Var
+    Return, Call, Attr, Var, TypeParam
 )
 from quarkc.parse import traversal
 from quarkc.errors import InvalidInvocation, InvalidAssignment
@@ -30,6 +30,7 @@ RETURN = Constant("RETURN")
 IF = Constant("IF")
 WHILE = Constant("WHILE")
 CALLABLE = Constant("CALLABLE")
+TEMPLATE = Constant("TEMPLATE")
 UNKNOWN = Constant("UNKNOWN")
 ASSIGN = Constant("ASSIGN")
 VIOLATION = Constant("VIOLATION")
@@ -94,6 +95,10 @@ def typesig(c):
 def typesig(o):
     return set(o.byname.keys())
 
+@match(types.Template)
+def typesig(t):
+    return (TEMPLATE,) + tuple(p.name for p in t.params) + (typesig(t.type),)
+
 @match(types.UnresolvedField)
 def typesig(u):
     return (UNKNOWN, typesig(u.type), u.name)
@@ -106,7 +111,7 @@ def typesig(r):
 def typesig(c, pkgs):
     return None
 
-@match(Compiler, choice(Class))
+@match(Compiler, choice(Class, TypeParam))
 def typesig(c, cls):
     return None
 
@@ -241,28 +246,35 @@ def test_unknown_field():
           })
 
 
-@pytest.mark.xfail
-def test_templated_field():
+def test_templated_fields():
     check("f",
           """
           class X {}
           class C<T> {
               D<T> foo;
+              D<T> bar() {
+                  return foo;
+              }
           }
 
           class D<T> { }
 
-          C<X> foo() {
+          C<X> fun() {
               C<X> f = new C<X>();
               D<X> g = f.foo;
+              D<X> h = f.bar();
           }
           """,
           {
               'f.X.X': (CALLABLE, 'f.X'),
-              'f.C.C': (CALLABLE, 'f.C'),
-              'f.D.D': (CALLABLE, 'f.D'),
-              'f.foo': ((CALLABLE, 'f.C'),
-                        (UNKNOWN, 'f.C', 'foo'))
+              'f.C.C': (TEMPLATE, 'f.C.T', (CALLABLE, 'f.C<f.C.T>')),
+              'f.D.D': (TEMPLATE, 'f.D.T', (CALLABLE, 'f.D<f.D.T>')),
+              'f.C.foo': (DECLARE, 'foo', 'f.D<f.C.T>'),
+              'f.C.bar': ((CALLABLE, 'f.D<f.C.T>'), (RETURN, 'f.D<f.C.T>')),
+              'f.fun': ((CALLABLE, 'f.C<f.X>'),
+                        (DECLARE, 'f', 'f.C<f.X>', 'f.C<f.X>'),
+                        (DECLARE, 'g', 'f.D<f.X>', 'f.D<f.X>'),
+                        (DECLARE, 'h', 'f.D<f.X>', 'f.D<f.X>'))
           })
 
 

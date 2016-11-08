@@ -102,19 +102,23 @@ class Types(object):
     @match(Callable)
     def callable(self, c):
         if c.type:
-            result = types.Ref(self.symbols.qualify(c.type))
+            result = self.ref(c.type)
         else:
             result = types.Ref(name(c.parent), *[types.Ref(name(p)) for p in c.parent.parameters])
-        args = [types.Ref(self.symbols.qualify(p.type)) for p in c.params]
-        return types.Callable(result, *args)
+        return types.Callable(result, *[self.ref(p.type) for p in c.params])
 
     @match(Field, [many(TypeParam)])
     def field(self, f, parameters):
-        return types.Field(f.name.text, types.Ref(self.symbols.qualify(f.type)))
+        return types.Field(f.name.text, self.ref(f.type))
 
     @match(Method, [many(TypeParam)])
     def field(self, m, parameters):
         return types.Final(m.name.text, types.Ref(name(m), *[types.Ref(name(p)) for p in parameters]))
+
+    @match(Type)
+    def ref(self, type):
+        params = type.parameters or ()
+        return types.Ref(self.symbols.qualify(type), *[self.ref(p) for p in params])
 
 
     @match(choice(Function, Class, Declaration, Package, [many(Package, min=1)], Expression, Type, Local,
