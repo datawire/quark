@@ -75,7 +75,7 @@ class Code(object):
             ret = self.types[meth.type]
         else:
             klass = ir.Constructor
-            name = self.mangle(types.Ref(meth.name.text, *self.ref.params))
+            name = self.mangle(meth.name.text, *self.ref.params)
             ret = self.types.node(meth).result
         return klass(name, self.compile(ret), *(self.compile(meth.params) + [self.compile(meth.body)]))
 
@@ -88,12 +88,12 @@ class Code(object):
         return self.compile_ref(self.mangle(ref.bind(self.bindings)) + suffix)
 
     @match(types.Ref)
-    def compile_ref_bound(self, ref):
-        return self.compile_ref(self.mangle(ref))
-
-    @match(types.Ref)
     def mangle(self, ref):
-        return "_".join([ref.name] + [self.mangle_param(p).replace(".", "_") for p in ref.params])
+        return self.mangle(ref.name, *ref.params)
+
+    @match(basestring, many(types.Ref))
+    def mangle(self, name, *params):
+        return "_".join([name] + [self.mangle_param(p).replace(".", "_") for p in params])
 
     @match(types.Ref)
     def mangle_param(self, ref):
@@ -157,7 +157,7 @@ class Code(object):
 
     @match(basestring, many(types.Ref))
     def compile_bound(self, name, *params):
-        return ir.Type(self.compile_ref_bound(ref))
+        return ir.Type(self.mangle(name, *params))
 
     @match(Type)
     def compile(self, t):
@@ -207,7 +207,7 @@ class Code(object):
 
     @match(types.Ref, Primitive, Method, ir.Expression, [many(Expression)])
     def compile_call_method(self, ref, objdfn, methdfn, expr, args):
-        n = "%s_%s" % (self.mangle(types.Ref(name(objdfn), *ref.params)), methdfn.name.text)
+        n = "%s_%s" % (self.mangle(name(objdfn), *ref.params), methdfn.name.text)
         return ir.Invoke(self.compile_ref(n), expr, *[self.compile(a) for a in args])
 
     @match(types.Ref, Function, Var, [many(Expression)])
