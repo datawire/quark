@@ -498,11 +498,9 @@ def define_imports(dfn, target, imports):
     """
     for ref in filter(isa(Ref), walk_dfs(dfn)):
         ref_dfn = target.q.definition(ref)
-        ref_dfn_target_name = target.nameof(ref_dfn)
         if dfn.name.package != ref.package or isinstance(dfn, (TestClass, Check)):
             # import from FFI namespace
-            ref_module_path = module_ffi_path(ref_dfn, target)
-            ref_dfn_alias = ".".join(ref_module_path + (ref_dfn_target_name,))
+            ref_dfn_alias = module_ffi_name(ref_dfn, target)
             imports[ref.package] = dict(require = "require",
                                         module = ref.package)
             ref_target_name = ref_dfn_alias
@@ -511,13 +509,25 @@ def define_imports(dfn, target, imports):
             require_module_path = module_path(dfn, ref_dfn, target)
             imports[require_module_path] = dict(require = "require_relative",
                                                 module = "/".join(require_module_path))
-            ref_module_path = module_ffi_path(ref_dfn, target)
-            ref_dfn_alias = ".".join(ref_module_path + (ref_dfn_target_name,))
+            ref_dfn_alias = module_ffi_name(ref_dfn, target)
             ref_target_name = ref_dfn_alias
         else:
             # no need to import at all
+            ref_dfn_target_name = target.nameof(ref_dfn)
             ref_target_name = ref_dfn_target_name
         target.define_import(dfn, ref, ref_target_name)
+
+@match(Definition, Ruby)
+def module_ffi_name(dfn, target):
+    module_path = module_ffi_path(dfn, target)
+    target_name = target.nameof(dfn)
+    return "::".join(module_path + (target_name,))
+
+@match(Function, Ruby)
+def module_ffi_name(dfn, target):
+    module_path = module_ffi_path(dfn, target)
+    target_name = target.nameof(dfn)
+    return ".".join(("::".join(module_path), target_name))
 
 @match(Definition, Javascript, dict)
 def define_imports(dfn, target, imports):

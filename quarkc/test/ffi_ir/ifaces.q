@@ -1,4 +1,3 @@
-
 interface Config {
     String get(String key);
 }
@@ -12,9 +11,8 @@ class DefaultConfig {
     }
 }
 
-/*
+
 void doit() {
     Config conf = new DefaultConfig();
     assertEqual("blah", conf.get("TEST"));
 }
-*/
