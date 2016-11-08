@@ -1,3 +1,4 @@
+import pytest
 from quarkc.compiler import Compiler
 from quarkc.match import match, choice, many
 from quarkc.ast import (
@@ -235,6 +236,31 @@ def test_unknown_field():
           """,
           {
               'f.C.C': (CALLABLE, 'f.C'),
+              'f.foo': ((CALLABLE, 'f.C'),
+                        (UNKNOWN, 'f.C', 'foo'))
+          })
+
+
+@pytest.mark.xfail
+def test_templated_field():
+    check("f",
+          """
+          class X {}
+          class C<T> {
+              D<T> foo;
+          }
+
+          class D<T> { }
+
+          C<X> foo() {
+              C<X> f = new C<X>();
+              D<X> g = f.foo;
+          }
+          """,
+          {
+              'f.X.X': (CALLABLE, 'f.X'),
+              'f.C.C': (CALLABLE, 'f.C'),
+              'f.D.D': (CALLABLE, 'f.D'),
               'f.foo': ((CALLABLE, 'f.C'),
                         (UNKNOWN, 'f.C', 'foo'))
           })
