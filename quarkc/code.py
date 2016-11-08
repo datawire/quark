@@ -61,7 +61,7 @@ class Code(object):
 
     @match(Class)
     def compile(self, cls):
-        return ir.Class(self.compile_def(self.mangle(self.ref)), *[self.compile(d) for d in cls.definitions])
+        return ir.Class(self.compile_def(self.mangle(self.ref)), *[self.compile(d) for d in cls.bases + cls.definitions])
 
     @match(Field)
     def compile(self, field):
@@ -168,7 +168,11 @@ class Code(object):
 
     @match(basestring, many(types.Ref))
     def compile_bound(self, name, *params):
-        return ir.Type(self.compile_ref(self.mangle(name, *params)))
+        # XXX: hardcoding InterfaceType here seems wrong.  Either IR
+        # must stop distinguishing between ClassType and InterfaceType
+        # or frontend needs to work a bit harder to propagate this
+        # info, but that is beyond my current frontend-fu
+        return ir.InterfaceType(self.compile_ref(self.mangle(name, *params)))
 
     @match(Type)
     def compile(self, t):
