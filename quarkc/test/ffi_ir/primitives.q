@@ -71,17 +71,16 @@ void map_string_string_no_key() {
     assertEqual(0, m.size());
 }
 
-// XXX type of m.keys() is not computed correctly
-//void map_string_string_keys() {
-//    Map<String,String> m = new Map<String,String>();
-//    List<String> k1 = m.keys();
-//    assertEqual(0, k1.size());
-//    m["asdf"] = "fdsa";
-//    assertEqual(0, k1.size());
-//    List<String> k2 = m.keys();
-//    assertEqual(1, k2.size());
-//    assertEqual("asdf", k2[0]);
-//}
+void map_string_string_keys() {
+    Map<String,String> m = new Map<String,String>();
+    List<String> k1 = m.keys();
+    assertEqual(0, k1.size());
+    m["asdf"] = "fdsa";
+    assertEqual(0, k1.size());
+    List<String> k2 = m.keys();
+    assertEqual(1, k2.size());
+    assertEqual("asdf", k2[0]);
+}
 
 void map_string_int_getset() {
     Map<String,int> m = new Map<String,int>();
@@ -106,17 +105,16 @@ void map_string_int_no_key() {
     assertEqual(0, m.size());
 }
 
-// XXX type of m.keys() is not computed correctly
-//void map_string_int_keys() {
-//    Map<String,int> m = new Map<String,int>();
-//    List<String> k1 = m.keys();
-//    assertEqual(0, k1.size());
-//    m["asdf"] = 11;
-//    assertEqual(0, k1.size());
-//    List<String> k2 = m.keys();
-//    assertEqual(1, k2.size());
-//    assertEqual("asdf", k2[0]);
-//}
+void map_string_int_keys() {
+    Map<String,int> m = new Map<String,int>();
+    List<String> k1 = m.keys();
+    assertEqual(0, k1.size());
+    m["asdf"] = 11;
+    assertEqual(0, k1.size());
+    List<String> k2 = m.keys();
+    assertEqual(1, k2.size());
+    assertEqual("asdf", k2[0]);
+}
 
 
 void list_int_append() {
@@ -147,19 +145,18 @@ void list_int_set() {
 }
 
 
-// XXX type of r.extend() parameter is not computed correctly
-//void list_int_extend() {
-//    List<int> l = new List<int>();
-//    List<int> r = new List<int>();
-//    l.append(11);
-//    r.extend(l);
-//    l.append(22);
-//    assertEqual(2, l.size());
-//    assertEqual(1, r.size());
-//    assertEqual(11, l[0]);
-//    assertEqual(22, l[1]);
-//    assertEqual(11, r[0]);
-//}
+void list_int_extend() {
+    List<int> l = new List<int>();
+    List<int> r = new List<int>();
+    l.append(11);
+    r.extend(l);
+    l.append(22);
+    assertEqual(2, l.size());
+    assertEqual(1, r.size());
+    assertEqual(11, l[0]);
+    assertEqual(22, l[1]);
+    assertEqual(11, r[0]);
+}
 
 
 void list_int_remove() {
@@ -209,19 +206,18 @@ void list_string_set() {
 }
 
 
-// XXX type of r.extend() parameter is not computed correctly
-//void list_string_extend() {
-//    List<String> l = new List<String>();
-//    List<String> r = new List<String>();
-//    l.append("asdf");
-//    r.extend(l);
-//    l.append("fdsa");
-//    assertEqual(2, l.size());
-//    assertEqual(1, r.size());
-//    assertEqual("asdf", l[0]);
-//    assertEqual("fdsa", l[1]);
-//    assertEqual("asdf", r[0]);
-//}
+void list_string_extend() {
+    List<String> l = new List<String>();
+    List<String> r = new List<String>();
+    l.append("asdf");
+    r.extend(l);
+    l.append("fdsa");
+    assertEqual(2, l.size());
+    assertEqual(1, r.size());
+    assertEqual("asdf", l[0]);
+    assertEqual("fdsa", l[1]);
+    assertEqual("asdf", r[0]);
+}
 
 
 void list_string_remove() {
