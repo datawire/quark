@@ -2,7 +2,7 @@ interface Config {
     String get(String key);
 }
 
-class DefaultConfig {
+class DefaultConfig extends Config {
     String get(String key) {
         if (key == "TEST") {
             return "blah";
