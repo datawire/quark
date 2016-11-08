@@ -236,8 +236,9 @@ class Types(object):
     @match(Type, Call)
     def do_resolve(self, type, _):
         cls = self.symbols[type]
+        params = type.parameters or ()
         return self.types.resolve(types.Ref("%s.%s" % (self.symbols.qualify(type), cls.name.text),
-                                            *[self.resolve(p) for p in type.parameters]))
+                                            *[self.resolve(p) for p in params]))
 
     @match(Type, AST)
     def do_resolve(self, type, _):

@@ -79,6 +79,17 @@ class Code(object):
             ret = self.types.node(meth).result
         return klass(name, self.compile(ret), *(self.compile(meth.params) + [self.compile(meth.body)]))
 
+    @match(Interface)
+    def compile(self, iface):
+        return ir.Interface(self.compile_def(self.mangle(self.ref)),
+                            *[self.compile_interface(d) for d in iface.definitions])
+
+    @match(Method)
+    def compile_interface(self, meth):
+        assert meth.type
+        assert not meth.body
+        return ir.Message(meth.name.text, self.compile(self.types.node(meth).result), *self.compile(meth.params))
+
     @match(types.Ref)
     def compile_ref(self, ref):
         return self.compile_ref(ref, "")
@@ -157,7 +168,7 @@ class Code(object):
 
     @match(basestring, many(types.Ref))
     def compile_bound(self, name, *params):
-        return ir.Type(self.mangle(name, *params))
+        return ir.Type(self.compile_ref(self.mangle(name, *params)))
 
     @match(Type)
     def compile(self, t):
@@ -173,7 +184,8 @@ class Code(object):
 
     @match(If)
     def compile(self, if_):
-        return ir.If(self.compile(if_.predicate), self.compile(if_.consequence), self.compile(if_.alternative))
+        alt = self.compile(if_.alternative) if if_.alternative else ir.Block()
+        return ir.If(self.compile(if_.predicate), self.compile(if_.consequence), alt)
 
     @match(While)
     def compile(self, while_):

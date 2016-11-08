@@ -438,7 +438,7 @@ def code(method, target):
     return tr.Compound(
         "def {name}({params})".format(
             name=method.name,
-            params=", ".join(expr(p, target) for p in method.params)),
+            params=", ".join(["self"] + [expr(p, target) for p in method.params])),
         code(method.body, target)
     )
 
