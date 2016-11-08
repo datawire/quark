@@ -23,16 +23,6 @@ compiler then generates idiomatic implementations of the protocol in
 multiple languages (currently Java, JavaScript, and Python, with Ruby
 support in progress).
 
-# Use cases
-
-The use cases for Quark are highly varied. Some examples:
-
-* the [Slack API](https://api.slack.com/) includes rate limiting
-  behavior over a WebSockets and REST API; see [slack.q](examples/slack) for an example implementation
-* the [AMQP 1.0](https://www.amqp.org/resources/specifications)
-  protocol requires sophisticated client behavior for flow control and
-  reconnect
-
 ## Getting Started
 
 A popular use case for Quark is to add resilience semantics for
@@ -43,37 +33,9 @@ which embeds Quark.
 If you're interested in using Quark directly to develop a protocol,
 just install Quark:
 
-        curl -sL https://raw.githubusercontent.com/datawire/quark/master/install.sh | sh
-
-## Examples
-
-Check out the examples in the [Quark Examples repository](examples):
-
-        git clone git@github.com:datawire/quark.git
-        cd quark/examples
+        curl -sL https://raw.githubusercontent.com/datawire/quark/tree/q2/install.sh | sh
 
 ## Next Steps
-
-The [Quark Quick Start](http://datawire.github.io/quark/1.0/quick-start/index.html)
-provides an overview of the basic installation requirements and
-process, basic compile commands, and the Quark language. If you have
-successfully run any of the examples linked above, you can probably
-skip this book.
-
-Please read the
-[Quark Installation and Configuration Guide](http://datawire.github.io/quark/1.0/install/index.html)
-for more detailed information about installation, configuration,
-compilation, packaging, and documentation generation.
-
-The [Quark Language Reference](http://datawire.github.io/quark/1.0/language-reference/index.html)
-provides information about how to code in Quark and specifics about
-individual language elements including keywords, operators, functions,
-data types, and annotations.
-
-The [Quark Issues list](https://github.com/datawire/quark/issues)
-provides a list of known issues - please feel free to add new issues
-or feature requests as you start to use Quark. You can also join
-our public Slack [support channel](https://datawire-quark.herokuapp.com).
 
 If you want to contribute to Quark see the [contributing documentation](CONTRIBUTING.md) and
 [testing documentation](TESTING.md).
