@@ -299,10 +299,5 @@ msg
 msg "  Quark is now installed. You may want to run '. ${conf}'"
 msg "  in any existing shells."
 msg
-msg "  To get started, try:"
-msg
-msg "    git clone${cloneargs} git@github.com:datawire/quark.git"
-msg "    cd quark/examples"
-msg
 
 } # this ensures the entire script is downloaded #

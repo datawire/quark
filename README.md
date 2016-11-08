@@ -33,7 +33,7 @@ which embeds Quark.
 If you're interested in using Quark directly to develop a protocol,
 just install Quark:
 
-        curl -sL https://raw.githubusercontent.com/datawire/quark/q2/install.sh | sh -- q2
+        curl -sL https://raw.githubusercontent.com/datawire/quark/q2/install.sh | sh -s q2
 
 ## Next Steps
 
