@@ -2,18 +2,21 @@ module Quark
   #
   # Map<String,String>
   #
-  def self.Map_string_string___init__
+  def self.Map_String_String___init__
     map = {}
     map.default= ""
     map
   end
-  def self.Map_string_string___get__(map, key)
+  def self.Map_String_String___get__(map, key)
     map[key]
   end
-  def self.Map_string_string___set__(map, key, value)
+  def self.Map_String_String___set__(map, key, value)
     map[key] = value
   end
-  def self.Map_string_string___len__(map)
+  def self.Map_String_String_size(map)
     map.length
+  end
+  def self.Map_String_String_keys(map)
+    map.keys
   end
 end

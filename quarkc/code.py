@@ -105,7 +105,7 @@ class Code(object):
 
     @match("quark.String")
     def mangle_param(self, sym):
-        return "string"
+        return "String"
 
     @match(basestring)
     def mangle_param(self, sym):

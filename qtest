@@ -169,7 +169,7 @@ class Java(Target):
         if deps:
             args.append("-cp")
             args.append(":".join(deps))
-        run("javac", "-g", "-sourcepath", sources, "-d", classes, *args)
+        run("javac", "-Xlint:unchecked", "-g", "-sourcepath", sources, "-d", classes, *args)
         run_in(classes, "jar", "cf", jar, ".")
 
     def jtests(self, jar):

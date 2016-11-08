@@ -77,9 +77,10 @@ def main(args):
         else:
             with open(fname) as f:
                 ast = c.parse(fname, f.read())
-                with open(cname, "write") as fp:
-                    pickler = pickle.Pickler(fp, -1)
-                    pickler.dump(ast)
+                if ast:
+                    with open(cname, "write") as fp:
+                        pickler = pickle.Pickler(fp, -1)
+                        pickler.dump(ast)
 
     try:
         c.check()
