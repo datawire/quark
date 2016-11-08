@@ -1,4 +1,3 @@
-import pytest
 from quarkc.compiler import Compiler
 from quarkc.match import match, choice, many
 from quarkc.ast import (
