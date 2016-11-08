@@ -4,7 +4,7 @@
 Quark test runner.
 
 Usage:
-  qtest [options] run [ -x ]
+  qtest [options] run [ -x ] [ --cached ]
   qtest [options] clean
   qtest -h | --help
   qtest --version
@@ -18,6 +18,7 @@ Options:
   --version             Show version.
   -v --verbose          Show more output.
   -x, --exit            Exit on first error.
+  --cached              Use cached AST if it exists
 """
 
 import os, subprocess, shutil, fnmatch, zipfile
@@ -30,6 +31,7 @@ DIR = os.path.abspath(os.path.dirname(__file__))
 CWD = os.getcwd()
 HEIGHT, WIDTH = [int(s) for s in call("stty", "size").split()]
 VERBOSE = 0
+CACHED = 0
 
 def glob(dir, pattern):
     result = []
@@ -105,7 +107,11 @@ class Target(object):
         run("quark-ir", "emit", "-o", self.abs_src, "--%s" % self.lang, *glob(DIR, "quarkc/test/ffi_ir/*.ir"))
         qfiles = glob(DIR, "quarkc/test/ffi_ir/*.q")
         if qfiles:
-            run("quark", "-o", self.abs_src, "--%s" % self.lang, *qfiles)
+            args = ["quark", "-o", self.abs_src, "--%s" % self.lang]
+            if not CACHED:
+                args.append("--force")
+            args.extend(qfiles)
+            run(*args)
 
     def clean(self):
         clean_dir(self.abs_src)
@@ -250,6 +256,10 @@ def main(args):
     global VERBOSE
     if args["--verbose"]:
         VERBOSE = 1
+
+    global CACHED
+    if args["--cached"]:
+        CACHED = 1
 
     targets = (Go(), Ruby(), Python(), Java(), Javascript())
 

@@ -13,8 +13,9 @@ clean:
 	rm -fr "$(CURDIR)/emit"
 
 EMIT_DIR = emit
+QUARK_FLAGS = --force
 
 emit:
 	mkdir -p $(EMIT_DIR)
 	quark-ir emit -o $(EMIT_DIR) $(EMIT_TARGET) ../../quarkc/test/ffi_ir/*.ir
-	quark -o $(EMIT_DIR) $(EMIT_TARGET) ../../quarkc/test/ffi_ir/*.q
+	quark -o $(EMIT_DIR) $(EMIT_TARGET) $(QUARK_FLAGS) ../../quarkc/test/ffi_ir/*.q
