@@ -34,6 +34,7 @@ namespace quark {
         V remove(K key);
         bool contains(K key);
         void update(Map<K,V> other);
+        int size();
     }
 
     primitive List<T> {
