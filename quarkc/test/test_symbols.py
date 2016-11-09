@@ -5,6 +5,7 @@ from quarkc.ast import (
     AST, Field, Param, Declaration, Package, File, Function, Primitive, Class, Interface, TypeParam, Method, Local
 )
 from quarkc.compiler import Compiler
+from quarkc.symbols import Self
 
 ###############################################################################
 # Check that a given file/content produces the expected symbols or errors
@@ -153,6 +154,8 @@ class SymbolTree(object):
         yield ".".join(path), (Package if self.type == File else self.type, path[-1])
         if self.type == Class:
             yield ".".join(path + (path[-1],)), (Method, path[-1])
+        if self.type == Method and self.children:
+            yield ".".join(path + ("self",)), (Self, path[-2])
         for name, trees in self.children.items():
             for tree in trees:
                 if self.type == File and tree.type == Package:
@@ -453,5 +456,62 @@ def test_import():
         }
     }
     """)
+
+def test_self():
+    check("f", """
+    package quark {
+        primitive void {}
+        primitive int {}
+    }
+
+    class C {
+        int field = 0;
+        void meth() {
+            self;
+        }
+    }
+    """,
+    expected={
+        'f': (File, 'f'),
+        'f.C': (Class, 'C'),
+        'f.C.C': (Method, 'C'),
+        'f.C.field': (Field, 'field'),
+        'f.C.meth': (Method, 'meth'),
+        'f.C.meth.self': (Self, 'C'),
+        'quark': (Package, 'quark'),
+        'quark.int': (Primitive, 'int'),
+        'quark.int.int': (Method, 'int'),
+        'quark.void': (Primitive, 'void'),
+        'quark.void.void': (Method, 'void')
+    })
+
+def test_selfdup():
+    check("f", """
+    package quark {
+        primitive void {}
+        primitive int {}
+    }
+
+    class C {
+        int field = 0;
+        void meth() {
+            int self = 0;
+        }
+    }
+    """,
+    expected={
+        'f': (File, 'f'),
+        'f.C': (Class, 'C'),
+        'f.C.C': (Method, 'C'),
+        'f.C.field': (Field, 'field'),
+        'f.C.meth': (Method, 'meth'),
+        'f.C.meth.self': (Self, 'C'),
+        'quark': (Package, 'quark'),
+        'quark.int': (Primitive, 'int'),
+        'quark.int.int': (Method, 'int'),
+        'quark.void': (Primitive, 'void'),
+        'quark.void.void': (Method, 'void')
+    },
+    duplicates=["f.C.meth.self"])
 
 ###############################################################################

@@ -4,7 +4,7 @@ from .ast import (
     AST, Expression, Statement, Block, Call, Attr, Function, Method, Type, Import, Class, Assign, Return, ExprStmt,
     TypeParam, If, While, Declaration, Package, String, Number, Var, Local, Name, Field, Callable, Definition
 )
-from .symbols import Symbols, name
+from .symbols import Symbols, name, Self
 from collections import OrderedDict
 
 import errors
@@ -122,7 +122,7 @@ class Types(object):
 
 
     @match(choice(Function, Class, Declaration, Package, [many(Package, min=1)], Expression, Type, Local,
-                  Return, Assign, ExprStmt))
+                  Return, Assign, ExprStmt, Self))
     def has_type(self, _):
         return True
 
@@ -135,7 +135,7 @@ class Types(object):
         return True if imp.alias else False
 
     @match(choice(Class, Function, Method, Declaration, Package, Expression, Type, Local, Return, Assign, Import,
-                  ExprStmt))
+                  ExprStmt, Self))
     def resolve(self, node):
         if node in self.resolved:
             return self.resolved[node]
@@ -279,6 +279,10 @@ class Types(object):
     def do_resolve(self, a):
         expr = self.resolve(a.expr)
         return self.types.get(expr, a.attr.text)
+
+    @match(Self)
+    def do_resolve(self, s):
+        return self.resolve(s.klass)
 
     @match(AST)
     def __getitem__(self, node):

@@ -3,6 +3,7 @@ from .ast import (
     While, Name, Function, Interface
 )
 from .match import match, many, choice
+from .parse import wire
 from collections import OrderedDict
 
 import stats
@@ -11,6 +12,20 @@ class UnresolvedSymbol(Exception):
 
     def __init__(self, name):
         self.name = name
+
+class Self(AST):
+
+    @match(Class)
+    def __init__(self, klass):
+        self.klass = klass
+
+    @property
+    def name(self):
+        return self.klass.name
+
+    @property
+    def children(self):
+        return ()
 
 @match(choice(Package, Callable, Class, Declaration, TypeParam, Import))
 def name(n):
@@ -23,7 +38,7 @@ def name(path):
 def definitions():
     return choice(Function, Class, Interface, Method, Declaration, TypeParam)
 
-@match(definitions())
+@match(choice(definitions(), Self))
 def depackage(dfn):
     return dfn
 
@@ -64,6 +79,18 @@ class Symbols(object):
     @match(choice(definitions(), Package))
     def define(self, dfn):
         self.define(name(dfn), dfn)
+        self.define_implicit(dfn)
+
+    @match(Method)
+    def define_implicit(self, meth):
+        if meth.body and meth.body.statements:
+            s = Self(meth.parent)
+            wire(meth, s)
+            self.define("%s.self" % name(meth), s)
+
+    @match(AST)
+    def define_implicit(self, _):
+        pass
 
     @match(Import)
     def define(self, imp):
@@ -72,11 +99,11 @@ class Symbols(object):
         else:
             assert False
 
-    @match(basestring, choice(definitions(), Package, Import))
+    @match(basestring, choice(definitions(), Package, Import, Self))
     def define(self, name, dfn):
         self.define(name, dfn, self.definitions.get(name, None))
 
-    @match(basestring, choice(definitions(), Import), None)
+    @match(basestring, choice(definitions(), Import, Self), None)
     def define(self, name, dfn, prev):
         self.definitions[name] = dfn
 

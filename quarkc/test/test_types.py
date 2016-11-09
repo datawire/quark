@@ -5,6 +5,7 @@ from quarkc.ast import (
     Return, Call, Attr, Var, TypeParam
 )
 from quarkc.parse import traversal
+from quarkc.symbols import Self
 from quarkc.errors import InvalidInvocation, InvalidAssignment
 from quarkc import typespace as types
 
@@ -164,7 +165,7 @@ def typesig(c, r):
 def typesig(c, stmt):
     return vcheck(c, stmt, typesig(c, stmt.expr))
 
-@match(Compiler, choice(Call, Attr, Var))
+@match(Compiler, choice(Call, Attr, Var, Self))
 def typesig(c, nd):
     return vcheck(c, nd, typesig(c.types[nd]))
 
@@ -227,6 +228,7 @@ def test_check():
                    (RETURN, 'quark.int'))),
      'asdf.Foo.Foo': (CALLABLE, 'asdf.Foo'),
      'asdf.Foo.get': ((CALLABLE, 'quark.int'), (RETURN, 'quark.int')),
+     'asdf.Foo.get.self': 'asdf.Foo',
      'asdf.Foo.n': (DECLARE, 'n', 'quark.int', 'quark.int')})
 
 def test_unknown_field():
@@ -270,6 +272,7 @@ def test_templated_fields():
               'f.D.D': (TEMPLATE, 'f.D.T', (CALLABLE, 'f.D<f.D.T>')),
               'f.C.foo': (DECLARE, 'foo', 'f.D<f.C.T>'),
               'f.C.bar': ((CALLABLE, 'f.D<f.C.T>'), (RETURN, 'f.D<f.C.T>')),
+              'f.C.bar.self': 'f.C',
               'f.fun': ((CALLABLE, 'f.C<f.X>'),
                         (DECLARE, 'f', 'f.C<f.X>', 'f.C<f.X>'),
                         (DECLARE, 'g', 'f.D<f.X>', 'f.D<f.X>'),

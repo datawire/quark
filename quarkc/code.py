@@ -3,7 +3,7 @@ from .ast import (
     Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param,
     While, Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt
 )
-from .symbols import Symbols, name
+from .symbols import Symbols, name, Self
 
 import ir, types
 
@@ -168,11 +168,11 @@ class Code(object):
 
     @match(basestring, many(types.Ref))
     def compile_bound(self, name, *params):
-        # XXX: hardcoding InterfaceType here seems wrong.  Either IR
-        # must stop distinguishing between ClassType and InterfaceType
-        # or frontend needs to work a bit harder to propagate this
-        # info, but that is beyond my current frontend-fu
-        return ir.InterfaceType(self.compile_ref(self.mangle(name, *params)))
+        dfn = self.symbols[name]
+        if isinstance(dfn, Interface):
+            return ir.InterfaceType(self.compile_ref(self.mangle(name, *params)))
+        else:
+            return ir.ClassType(self.compile_ref(self.mangle(name, *params)))
 
     @match(Type)
     def compile(self, t):
@@ -295,6 +295,10 @@ class Code(object):
     def compile_var(self, p, v):
         return ir.Get(ir.This(), v.name.text)
 
+    @match(Self, Var)
+    def compile_var(self, s, v):
+        return ir.This()
+
     @match(Assign)
     def compile(self, ass):
         return self.compile_assign(ass.lhs, ass.rhs)
@@ -310,6 +314,10 @@ class Code(object):
     @match(choice(Param, Declaration), Var, Expression)
     def compile_assign(self, decl, var, expr):
         return ir.Assign(self.compile(var), self.compile(expr))
+
+    @match(Attr, Expression)
+    def compile_assign(self, attr, expr):
+        return ir.Set(self.compile(attr.expr), attr.attr.text, self.compile(expr))
 
     @match(ExprStmt)
     def compile(self, exprs):
