@@ -123,7 +123,7 @@ class Go(Target):
 
     def run(self):
         self.gen()
-        return run_in(self.target, "go", "test", "./...", env={"GOPATH": self.path("emit", "rt")})
+        return run_in(self.abs_src, "go", "test", "./...", env={"GOPATH": self.path("emit", "rt")})
 
 class Ruby(Target):
 
