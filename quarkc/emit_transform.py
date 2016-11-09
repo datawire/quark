@@ -48,7 +48,7 @@ def transform(ns, target):
 @match(Namespace, Go)
 def transform(ns, target):
     """ Flatten the go namespace to toplevel for all Definitions, and test namespace for all Checks """
-    checks, defs, _ = split(walk_dfs(ns), isa(Check), isa(Definition))
+    checks, defs, _ = split(walk_dfs(ns), isa(Check, TestClass), isa(Definition))
     checks = transform(ns, checks, target)
     defs = transform(ns, defs, target)
     if checks:

@@ -235,7 +235,7 @@ def generate(dfn, nesting, target):
     return tr.Compound("module {ns}".format(ns=nesting[0]),
                        tr.Block(generate(dfn, nesting[1:], target)))
 
-@match(Check, Go)
+@match(choice(Check,TestClass), Go)
 def generate(dfn, target):
     """ supress checks, they are transformed in a batch in their namespace """
     if False: yield

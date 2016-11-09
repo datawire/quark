@@ -9,6 +9,8 @@
 //    assertEqual(XXX_false, b); // XXX: false kills compiler
 //}
 
+class IntegerTest {
+
 void integer_addition() {
     int a = 0;
     assertEqual(1, a+1);
@@ -25,6 +27,10 @@ void integer_multiplication() {
     assertEqual(4, a*b);
 }
 
+}
+
+
+class StringTest {
 void string_concat() {
     assertEqual("ab", "a" + "b");
     assertEqual("ab", "ab" + "");
@@ -46,6 +52,8 @@ void string_concat() {
 
 void string_substring() {
     assertEqual("cde", "abcdefg".substring(2, 5));
+}
+
 }
 
 void map_string_string_getset() {
