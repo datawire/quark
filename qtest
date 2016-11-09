@@ -161,7 +161,7 @@ class Java(Target):
 
     @property
     def build(self):
-        return os.path.join(self.target, "build")
+        return os.path.join(self.target, "emit/build")
 
     def clean(self):
         Target.clean(self)
@@ -181,7 +181,7 @@ class Java(Target):
     def jtests(self, jar):
         zf = zipfile.PyZipFile(jar)
         for name in zf.namelist():
-            if name.endswith("/Tests.class"):
+            if name.endswith(".class"):
                 yield name[:-len(".class")].replace('/', '.')
 
     def run(self):
@@ -193,11 +193,17 @@ class Java(Target):
         rtjar = os.path.join(self.build, "rt.jar")
         self.jbuild(rtsources, rtjar)
 
-        testsources = os.path.join(self.target, "emit/src")
-        testjar = os.path.join(self.build, "tests.jar")
-        self.jbuild(testsources, testjar, rtjar, self.junit)
+        emitsources = os.path.join(self.target, "emit/src/main/java")
+        emitjar = os.path.join(self.build, "emit.jar")
+        self.jbuild(emitsources, emitjar, rtjar)
 
-        return run("java", "-cp", ":".join((testjar, rtjar, self.junit, self.hamcrest)), "org.junit.runner.JUnitCore",
+        testsources = os.path.join(self.target, "emit/src/test/java")
+        testjar = os.path.join(self.build, "tests.jar")
+        self.jbuild(testsources, testjar, emitjar, rtjar, self.junit)
+
+        return run("java", "-cp",
+                   ":".join((testjar, emitjar, rtjar, self.junit, self.hamcrest)),
+                   "org.junit.runner.JUnitCore",
                    *self.jtests(testjar))
 
 class Javascript(Target):
