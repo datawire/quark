@@ -74,9 +74,14 @@ class Code(object):
             name = meth.name.text
             ret = self.types[meth.type]
         else:
+            # XXX: this would benefit from a way to navigate from a
+            # method to its object in typespace, because we don't have
+            # that, we need to navigate in the AST and then explicitly
+            # rebind. In general navigation in typespace is clumsy
+            # right now.
             klass = ir.Constructor
             name = self.mangle(meth.name.text, *self.ref.params)
-            ret = self.types.node(meth).result
+            ret = self.types.node(meth).bind(self.bindings).result
         return klass(name, self.compile(ret), *(self.compile(meth.params) + [self.compile(meth.body)]))
 
     @match(Interface)
@@ -104,7 +109,9 @@ class Code(object):
 
     @match(basestring, many(types.Ref))
     def mangle(self, name, *params):
-        return "_".join([name] + [self.mangle_param(p).replace(".", "_") for p in params])
+        ref = types.Ref(name, *params)
+        ref = ref.bind(self.bindings)
+        return "_".join([name] + [self.mangle_param(p).replace(".", "_") for p in ref.params])
 
     @match(types.Ref)
     def mangle_param(self, ref):

@@ -445,7 +445,7 @@ class Function(Definition):
 
 class Field(IR):
 
-    @match(basestring, Type, opt(lazy('Null')))
+    @match(basestring, AbstractType, opt(lazy('Null')))
     def __init__(self, name, type, initializer=None):
         self.type = type
         self.name = name
@@ -659,7 +659,7 @@ def makeNull(_):
 def makeNull(_):
     return FloatLit(0.0)
 
-@match(choice(Type, Any, Callable))
+@match(choice(AbstractType, Any, Callable))
 def makeNull(type):
     return SimpleExpression.__new__(Null, type)
 
