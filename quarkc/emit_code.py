@@ -15,7 +15,8 @@
 from .match import match, opt, choice, many
 from .ir import (IR, Function, Interface, Class, Check, If,
                  While, Block, Evaluate, Local, Assign, Return, Set,
-                 Message, Field, Method, Constructor, AssertEqual)
+                 Message, Field, Method, Constructor, AssertEqual,
+                 Null)
 from . import tr
 
 from .emit_target import Target, Python, Ruby, Java, Go, Javascript
@@ -24,12 +25,12 @@ from .emit_ir import TestClass, TestMethod
 
 @match(basestring, IR, Target, opt(basestring))
 def opt_expr(glue, nd, target, default=""):
-    if nd is None:
-        return default
-    else:
-        return "{glue}{expr}".format(
-            glue=glue, expr=expr(nd, target))
+    return "{glue}{expr}".format(
+        glue=glue, expr=expr(nd, target))
 
+@match(basestring, None, Target, opt(basestring))
+def opt_expr(glue, nd, target, default=""):
+    return default
 
 ## Function
 
@@ -118,6 +119,14 @@ def code(fun, target):
         code(fun.body, target)
     )
 
+@match(TestMethod, Go)
+def code(fun, target):
+    return tr.Compound(
+        "func TestQ_{name}(t__ *testing.T)".format(
+            name=target.upcase(fun.name)),
+        code(fun.body, target)
+    )
+
 @match(Function, Javascript)
 def code(fun, target):
     return tuple((
@@ -186,7 +195,7 @@ def code(retr, target):
 def code(local, target):
     return tr.Simple("{name}{initializer}".format(
         name=local.name,
-        initializer=opt_expr(" = ", local.expr, target)))
+        initializer=opt_expr(" = ", local.expr or Null(local.type), target)))
 
 @match(Local, Java)
 def code(local, target):
@@ -376,7 +385,7 @@ def code(clazz, target):
 @match(TestClass, Java)
 def code(clazz, target):
     return tr.Compound(
-        "public class Tests".format(
+        "public class {name}".format(
             name = target.nameof(clazz.name)),
         tr.Block(tuple([code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods]))
         )

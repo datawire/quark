@@ -32,7 +32,7 @@ import cPickle as pickle
 from docopt import docopt
 from .compiler import Compiler
 from .exceptions import QuarkError
-from .emit import emit, Java, Python, Ruby, Go, Javascript
+from .emit import emit, Java, Python, Ruby, Go, Javascript, transform, reconstruct
 from .helpers import is_newer
 
 import stats
@@ -41,6 +41,11 @@ def ensure_dir(fname):
     dir = os.path.dirname(fname)
     if not os.path.exists(dir):
         os.makedirs(dir)
+
+def write_ir(fname, pkg):
+        ensure_dir(fname)
+        with open(fname, "write") as f:
+            f.write("%s\n" % repr(pkg))
 
 def main(args):
     verbose = 0
@@ -92,15 +97,23 @@ def main(args):
         files = emit(pkg, tgt)
         for name, content in files:
             fname = os.path.join(output, name)
+            if verbose:
+                print fname
             ensure_dir(fname)
             with open(fname, "write") as f:
                 f.write(content)
 
     if ir:
-        fname = os.path.join(output, os.path.basename(args["<file>"][0]) + ".ir")
-        ensure_dir(fname)
-        with open(fname, "write") as f:
-            f.write("%s\n" % repr(pkg))
+        fname = os.path.join(output, os.path.basename(args["<file>"][0]))
+        write_ir(fname + ".ir", pkg)
+        fname += "-reconstruct"
+        pkg = reconstruct(pkg)
+        write_ir(fname + ".ir", pkg)
+        fname += "-transform"
+        for tgt in targets:
+            ext = "-%s.ir" % tgt.__class__.__name__
+            write_ir(fname + ext, transform(pkg, tgt))
+
 
 def call_main():
     args = docopt(__doc__, version="Quark %s" % 2.0)
