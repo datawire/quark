@@ -16,7 +16,7 @@ from .match import match, opt, choice, many
 from .ir import (IR, Function, Interface, Class, Check, If,
                  While, Block, Evaluate, Local, Assign, Return, Set,
                  Message, Field, Method, Constructor, AssertEqual,
-                 Null, Construct, Ref)
+                 Null)
 from . import tr
 
 from .emit_target import Target, Python, Ruby, Java, Go, Javascript
