@@ -23,14 +23,14 @@ from .emit_target import Target, Python, Ruby, Java, Go, Javascript
 from .emit_expr import expr
 from .emit_ir import TestClass, TestMethod
 
-@match(basestring, choice(IR,None), Target, opt(basestring))
+@match(basestring, IR, Target, opt(basestring))
 def opt_expr(glue, nd, target, default=""):
-    if nd is None:
-        return default
-    else:
-        return "{glue}{expr}".format(
-            glue=glue, expr=expr(nd, target))
+    return "{glue}{expr}".format(
+        glue=glue, expr=expr(nd, target))
 
+@match(basestring, None, Target, opt(basestring))
+def opt_expr(glue, nd, target, default=""):
+    return default
 
 ## Function
 
