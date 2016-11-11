@@ -27,7 +27,7 @@ public class Functions {
     public static boolean int___lt__(int i, int j) { return i < j; }
 
     public static String String___add__ (String a, String b) { return a + b; }
-    public static boolean String___eq__ (String a, String b) { return a == b; }
+    public static boolean String___eq__ (String a, String b) { return a == b || (a != null && a.equals(b)); }
     public static int String_size (String a) { return a.length(); }
     public static String String_substring (String a, int start, int end) {
         int l = a.length();

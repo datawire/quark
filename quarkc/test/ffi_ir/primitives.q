@@ -51,7 +51,14 @@ void string_concat() {
 }
 
 void string_substring() {
-    assertEqual("cde", "abcdefg".substring(2, 5));
+    assertEqual("abc", "abcdefghi".substring(0, 3));
+    assertEqual("def", "abcdefghi".substring(3, 6));
+    assertEqual("ghi", "abcdefghi".substring(6, 9));
+}
+
+void string_equals() {
+    assertEqual(true, "abc" == "abc");
+    assertEqual(false, "abc" == "def");
 }
 
 }

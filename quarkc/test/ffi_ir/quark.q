@@ -4,7 +4,8 @@ namespace quark {
 
     primitive bool {
         bool __eq__(bool b);
-        bool __not__(bool b);
+        bool __not__();
+        bool __or__(bool b);
     }
 
     primitive int {
