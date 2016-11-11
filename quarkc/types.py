@@ -2,7 +2,8 @@ from .match import match, choice, many
 from .errors import NodeError, InvalidInvocation, InvalidAssignment, UnresolvedType
 from .ast import (
     AST, Expression, Statement, Block, Call, Attr, Function, Method, Type, Import, Class, Assign, Return, ExprStmt,
-    TypeParam, If, While, Declaration, Package, String, Number, Var, Local, Name, Field, Callable, Definition
+    TypeParam, If, While, Switch, Case, Declaration, Package, String, Number, Bool, Var, Local, Name, Field, Callable,
+    Definition, List
 )
 from .symbols import Symbols, name, Self
 from collections import OrderedDict
@@ -126,7 +127,7 @@ class Types(object):
     def has_type(self, _):
         return True
 
-    @match(choice(Name, Block, If, While, TypeParam))
+    @match(choice(Name, Block, If, While, TypeParam, Switch, Case))
     def has_type(self, _):
         return False
 
@@ -203,12 +204,34 @@ class Types(object):
         return self.types[name(dfn)]
 
     @match(String)
-    def do_resolve(self, st):
+    def do_resolve(self, _):
         return types.Ref("quark.String")
 
     @match(Number)
-    def do_resolve(self, st):
+    def do_resolve(self, _):
         return types.Ref("quark.int")
+
+    @match(Bool)
+    def do_resolve(self, _):
+        return types.Ref("quark.bool")
+
+    @match(List)
+    def do_resolve(self, l):
+        return self.do_resolve_list(l.parent, l)
+
+    @match(Declaration, List)
+    def do_resolve_list(self, d, _):
+        return self.resolve(d.type)
+
+    @match(List, List)
+    def do_resolve_list(self, l, _):
+        return self.resolve(l).params[0]
+
+    @match(Call, List)
+    def do_resolve_list(self, c, l):
+        expr = self.resolve(c.expr)
+        callable = self.node(expr)
+        return callable.arguments[c.args.index(l)]
 
     @match(Var)
     def do_resolve(self, v):
