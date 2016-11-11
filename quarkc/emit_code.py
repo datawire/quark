@@ -169,6 +169,14 @@ def code(wh, target):
         code(wh.body, target)
     )
 
+@match(While, Go)
+def code(wh, target):
+    return tr.Compound(
+        "for ({predicate})".format(
+            predicate=expr(wh.predicate, target)),
+        code(wh.body, target)
+    )
+
 ## Blocks
 
 @match(Block, Target)
