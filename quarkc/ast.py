@@ -604,6 +604,41 @@ class While(Statement):
     def copy(self):
         return While(copy(self.condition), copy(self.body))
 
+class Switch(Statement):
+
+    def __init__(self, expr, cases):
+        self.expr = expr
+        self.cases = cases
+
+    @property
+    def children(self):
+        yield self.expr
+        for c in self.cases:
+            yield c
+
+    @coder
+    def code(self, coder):
+        return "switch (%s) {%s}" % (self.expr.code(coder), coder.code(self.cases, "\n", "\n", "\n"))
+
+    def copy(self):
+        assert False
+
+class Case(AST):
+
+    def __init__(self, exprs, body):
+        self.exprs = exprs
+        self.body = body
+
+    @property
+    def children(self):
+        for e in self.exprs:
+            yield e
+        yield self.body
+
+    @coder
+    def code(self, coder):
+        return "case (%s) %s" % (coder.code(self.exprs), self.body.code(coder))
+
 class ExprStmt(Statement):
 
     def __init__(self, expr):

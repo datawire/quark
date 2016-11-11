@@ -24,7 +24,7 @@ from .ast import (
     Bool, List, Map, Null, Native, NativeCase, Fixed, Attr, Cast,
     Param, Declaration, Super, Name, CompilerVersionSpec, Annotation,
     Constructor, MethodMacro, Block, Entry, DistUnit, Use, Include,
-    ConstructorMacro, Operator, ArithmeticOperator
+    ConstructorMacro, Operator, ArithmeticOperator, Switch, Case
 )
 from .grammar import Grammar
 
@@ -56,7 +56,8 @@ class Parser:
     keywords = ["package", "use", "include", "import", "as", "namespace",
                 "class", "interface", "primitive", "extends", "return",
                 "macro", "new", "null", "if", "else", "while", "super",
-                "true", "false", "break", "continue", "static", "quark"]
+                "true", "false", "break", "continue", "static", "quark",
+                "switch", "case"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -326,7 +327,7 @@ class Parser:
     #   Box<int> x; looks like a declaration
     #      vs
     #    a < b > c; looks like a comparison
-    @g.rule('statement = import / return / break / continue / assign / local / if / while / exprstmt')
+    @g.rule('statement = import / return / break / continue / assign / local / if / while / switch / exprstmt')
     def visit_statement(self, node, (stmt,)):
         return stmt
 
@@ -408,6 +409,14 @@ class Parser:
     @g.rule('while = WHILE LPR expr RPR block')
     def visit_while(self, node, (kw, lp, expr, rp, body)):
         return While(expr, body)
+
+    @g.rule('switch = SWITCH LPR expr RPR LBR case* RBR')
+    def visit_switch(self, node, (kw, lp, expr, rp, lb, cases, rb)):
+        return Switch(expr, cases)
+
+    @g.rule('case = CASE exprs COLON statements')
+    def visit_case(self, node, (kw, exprs, _, statements)):
+        return Case(exprs, Block(statements))
 
     visit_expr = right_associative_infix_rule(Operator,
         'expr = oroperand (OR oroperand)*')
