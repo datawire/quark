@@ -34,6 +34,17 @@ class Train<T> {
 
 }
 
+class Plain {
+}
+
+class Factory<X> {
+    X make() {
+         X foo;
+         // foo = new X(); /// XXX: this doesnt work yet.
+         return foo;
+    }
+}
+
 void box() {
     Box<int> b = new Box<int>();
     b.set(3);
@@ -48,4 +59,11 @@ void train() {
     t.add(2);
     assertEqual(1, t.first());
     assertEqual(2, t.last());
+}
+
+void factory() {
+    Factory<Plain> fp = new Factory<Plain>();
+    Plain p = fp.make();
+    Plain pp = fp.make();
+    assertEqual(p, pp); // this should fail after factory is fixed., it just silences go compiler for now
 }
