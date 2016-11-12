@@ -1,7 +1,7 @@
 from .match import match, choice, many, ntuple
 from .ast import (
-    Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param,
-    While, Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt
+    Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param, While, Switch, Case,
+    Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List
 )
 from .symbols import Symbols, name, Self
 
@@ -25,6 +25,8 @@ class Code(object):
         self.bindings = None
 
         self.asserts = 0
+        self.counter = 0
+        self.stack = []
 
     @match(choice(Interface, Class))
     def is_top(self, dfn):
@@ -209,9 +211,32 @@ class Code(object):
     def compile(self, params):
         return [ir.Param(p.name.text, self.compile(p.type)) for p in params]
 
+    @match(ir.AbstractType)
+    def temp(self, type):
+        tmp = "temp%s" % self.counter
+        self.counter += 1
+        self.add(ir.Local(tmp, type))
+        return tmp
+
+    @match(ir.Statement)
+    def add(self, stmt):
+        self.stack[-1].append(stmt)
+
+    def push(self):
+        self.stack.append([])
+
+    def pop(self):
+        return self.stack.pop()
+
     @match(Block)
     def compile(self, block):
-        return ir.Block(*[self.compile(s) for s in block.statements])
+        stmts = []
+        for s in block.statements:
+            self.push()
+            c = self.compile(s)
+            stmts.extend(self.pop())
+            stmts.append(c)
+        return ir.Block(*stmts)
 
     @match(If)
     def compile(self, if_):
@@ -222,6 +247,42 @@ class Code(object):
     def compile(self, while_):
         return ir.While(self.compile(while_.condition), self.compile(while_.body))
 
+    @match(Switch)
+    def compile(self, switch):
+        tmp = self.temp(self.compile(self.types[switch.expr]))
+        self.add(ir.Assign(ir.Var(tmp), self.compile(switch.expr)))
+        return self.compile(self.types[switch.expr], tmp, *switch.cases)
+
+    @match(types.Ref, basestring, many(Case, min=2))
+    def compile(self, ref, temp, first, *rest):
+        return ir.If(self.compile_case(ref, temp, *first.exprs),
+                     self.compile(first.body),
+                     ir.Block(self.compile(ref, temp, *rest)))
+
+    @match(types.Ref, basestring, Case)
+    def compile(self, ref, temp, case):
+        return ir.If(self.compile_case(ref, temp, *case.exprs), self.compile(case.body), ir.Block())
+
+    @match(types.Ref, basestring, many(Expression, min=2))
+    def compile_case(self, ref, temp, first, *rest):
+        test = self.compile_send(ref, ir.Var(temp), "__eq__", first)
+        return self.compile_send(types.Ref("quark.bool"), test, "__or__", self.compile_case(ref, temp, *rest))
+
+    @match(types.Ref, basestring, Expression)
+    def compile_case(self, ref, temp, expr):
+        return self.compile_send(ref, ir.Var(temp), "__eq__", expr)
+
+    @match(types.Ref, ir.Expression, basestring, many(Expression))
+    def compile_send(self, ref, expr, name, *args):
+        return self.compile_send(ref, expr, name, *[self.compile(a) for a in args])
+
+    @match(types.Ref, ir.Expression, basestring, many(ir.Expression))
+    def compile_send(self, ref, expr, name, *args):
+        mref = self.types.types.unresolve(self.types.types.get(ref, name))
+        cls = self.symbols[ref.name]
+        meth = self.symbols[mref.name]
+        return self.compile_call_method(mref, cls, meth, expr, list(args))
+
     @match(Local)
     def compile(self, local):
         expr = (self.compile(local.declaration.value),) if local.declaration.value else ()
@@ -229,10 +290,14 @@ class Code(object):
 
     @match(Call)
     def compile(self, call):
-        t = self.types[call.expr]
+        return self.compile_call(call.expr, call.args)
+
+    @match(choice(Expression, Type), [many(Expression)])
+    def compile_call(self, expr, args):
+        t = self.types[expr]
         assert isinstance(t, types.Ref)
         dfn = self.symbols[t.name]
-        return self.compile_call(t, dfn, call.expr, call.args)
+        return self.compile_call(t, dfn, expr, args)
 
     @match(types.Ref, Method, Attr, [many(Expression)])
     def compile_call(self, ref, dfn, attr, args):
@@ -244,14 +309,18 @@ class Code(object):
         assert var.name.text == dfn.name.text
         return self.compile_call_method(ref, dfn.parent, dfn, ir.This(), args)
 
-    @match(types.Ref, Class, Method, ir.Expression, [many(Expression)])
+    @match(types.Ref, Class, Method, ir.Expression, [many(Expression, min=1)])
     def compile_call_method(self, ref, objdfn, methdfn, expr, args):
-        return ir.Send(expr, methdfn.name.text, tuple([self.compile(a) for a in args]))
+        return self.compile_call_method(ref, objdfn, methdfn, expr, [self.compile(a) for a in args])
 
-    @match(types.Ref, Primitive, Method, ir.Expression, [many(Expression)])
+    @match(types.Ref, Class, Method, ir.Expression, [many(ir.Expression)])
+    def compile_call_method(self, ref, objdfn, methdfn, expr, args):
+        return ir.Send(expr, methdfn.name.text, tuple(args))
+
+    @match(types.Ref, Primitive, Method, ir.Expression, [many(ir.Expression)])
     def compile_call_method(self, ref, objdfn, methdfn, expr, args):
         n = "%s_%s" % (self.mangle(name(objdfn), *ref.params), methdfn.name.text)
-        return ir.Invoke(self.compile_ref(n), expr, *[self.compile(a) for a in args])
+        return ir.Invoke(self.compile_ref(n), expr, *args)
 
     @match(types.Ref, Function, Var, [many(Expression)])
     def compile_call(self, ref, dfn, var, args):
@@ -268,6 +337,10 @@ class Code(object):
 
     @match(types.Ref, Method, Type, [many(Expression)])
     def compile_call(self, ref, cons, type, args):
+        return self.compile_call(ref, cons, args)
+
+    @match(types.Ref, Method, [many(Expression)])
+    def compile_call(self, ref, cons, args):
         callable = self.types.node(ref)
         if isinstance(cons.parent, Primitive):
             return ir.Invoke(self.compile_ref(callable.result, "___init__"), *[self.compile(a) for a in args])
@@ -305,6 +378,21 @@ class Code(object):
                 value += c
                 idx += 1
         return ir.StringLit(value)
+
+    @match(Bool)
+    def compile(self, b):
+        return ir.BoolLit(b.text == "true")
+
+    @match(List)
+    def compile(self, l):
+        ref = self.types[l]
+        tmp = self.temp(self.compile(ref))
+        lst = self.symbols[ref.name]
+        mref = types.Ref("%s.%s" % (ref.name, lst.name.text), *ref.params)
+        self.add(ir.Assign(ir.Var(tmp), self.compile_call(mref, self.symbols[mref.name], [])))
+        for el in l.elements:
+            self.add(ir.Evaluate(self.compile_send(ref, ir.Var(tmp), "append", el)))
+        return ir.Var(tmp)
 
     @match(Return)
     def compile(self, retr):
