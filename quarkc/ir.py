@@ -677,6 +677,33 @@ class Var(SimpleExpression):
     def __repr__(self):
         return self.repr(self.name)
 
+# short-circuit bool operators
+class And(Expression):
+    @match(many(Expression, min=2))
+    def __init__(self, *exprs):
+        self.exprs = exprs
+
+    @property
+    def children(self):
+        for e in self.exprs:
+            yield e
+
+    def __repr__(self):
+        return self.repr(*self.exprs)
+
+class Or(Expression):
+    @match(many(Expression, min=2))
+    def __init__(self, *exprs):
+        self.exprs = exprs
+
+    @property
+    def children(self):
+        for e in self.exprs:
+            yield e
+
+    def __repr__(self):
+        return self.repr(*self.exprs)
+
 # access a Field or a Method
 class Get(Expression):
 

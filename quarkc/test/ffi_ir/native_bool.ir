@@ -83,4 +83,52 @@
                 AssertEqual(BoolLit(False), Invoke(Ref("quark:quark.bool___or__"), BoolLit(False), BoolLit(False)))
             )
         ),
+        Function(
+            Name("native_bool:native_bool.sideeffect"),
+            Bool(),
+            Param("ret", Bool()),
+            Param("l", List(String())),
+            Param("v", String()),
+            Block(
+                Evaluate(Invoke(Ref("quark:quark.List_String_append"), Var("l"), Var("v"))),
+                Return(Var("ret"))
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.or_shortcircuit"),
+            Block(
+                Local("l", List(String()), Invoke(Ref("quark:quark.List_String___init__"))),
+                AssertEqual(BoolLit(True),
+                            Or(Invoke(Ref("native_bool:native_bool.sideeffect"),
+                                      BoolLit(True),
+                                      Var("l"),
+                                      StringLit("should-happen")),
+                               Invoke(Ref("native_bool:native_bool.sideeffect"),
+                                      BoolLit(False),
+                                      Var("l"),
+                                      StringLit("should-not-happen")
+                               )
+                            )
+                ),
+                AssertEqual(IntLit(1), Invoke(Ref("quark:quark.List_String_size"), Var("l"))),
+                AssertEqual(StringLit("should-happen"), Invoke(Ref("quark:quark.List_String___get__"), Var("l"), IntLit(0))),
+            )
+        ),
+        Check(
+            Name("native_bool:native_bool.and_shortcircuit"),
+            Block(
+                Local("l", List(String()), Invoke(Ref("quark:quark.List_String___init__"))),
+                AssertEqual(BoolLit(False),
+                            And(Invoke(Ref("native_bool:native_bool.sideeffect"),
+                                       BoolLit(False),
+                                       Var("l"),
+                                       StringLit("should-happen")),
+                                Invoke(Ref("native_bool:native_bool.sideeffect"),
+                                       BoolLit(True),
+                                       Var("l"),
+                                       StringLit("should-not-happen")))),
+                AssertEqual(IntLit(1), Invoke(Ref("quark:quark.List_String_size"), Var("l"))),
+                AssertEqual(StringLit("should-happen"), Invoke(Ref("quark:quark.List_String___get__"), Var("l"), IntLit(0))),
+            )
+        ),
     )

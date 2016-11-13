@@ -18,7 +18,7 @@ from .ir import (
     Param, Var, This, Call, Invoke, Send, Construct, Get,
     Void, Null,
     Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit,
-    Map, List
+    Map, List, And, Or
 )
 
 from .emit_target import Target, Python, Java, Go, Ruby, Javascript
@@ -321,6 +321,30 @@ def expr(cons, target):
         args = ", ".join(expr(a, target) for a in cons.args)
     )
 
+
+## And
+
+@match(And, choice(Go, Javascript, Java))
+def expr(and_, target):
+    return " && ".join("({expr})".format(
+        expr=expr(exp, target)) for exp in and_.exprs)
+
+@match(And, choice(Python, Ruby))
+def expr(and_, target):
+    return " and ".join("({expr})".format(
+        expr=expr(exp, target)) for exp in and_.exprs)
+
+## Or
+
+@match(Or, choice(Go, Javascript, Java))
+def expr(or_, target):
+    return " || ".join("({expr})".format(
+        expr=expr(exp, target)) for exp in or_.exprs)
+
+@match(Or, choice(Python, Ruby))
+def expr(or_, target):
+    return " or ".join("({expr})".format(
+        expr=expr(exp, target)) for exp in or_.exprs)
 
 ## Get
 
