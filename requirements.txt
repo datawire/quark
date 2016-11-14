@@ -4,6 +4,7 @@ pip>=8
 future==0.15.2
 pytest
 pytest-xdist
+tox
 pexpect
 virtualenv>=13
 semantic-version==2.5.0
