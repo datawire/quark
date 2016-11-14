@@ -144,7 +144,7 @@ class Python(Target):
 
     def run(self):
         self.gen()
-        return run_in(self.target, "py.test", env={"PYTHONPATH": self.path("emit", "rt")})
+        return run_in(self.target, "tox")
 
 class Java(Target):
 
