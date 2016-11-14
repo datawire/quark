@@ -10,6 +10,17 @@ int fib(int n) {
     }
 }
 
+/*
+// XXX: this confuses ruby emitted code???
+int fibx(int n) {
+    if (n == 0 || n == 1) {
+        return n;
+    } else {
+        return fibx(n-1) + fib(n-2);
+    }
+}
+*/
+
 void usefib() {
     assertEqual(0, fib(0));
     assertEqual(1, fib(1));

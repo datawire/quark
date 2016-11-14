@@ -319,8 +319,29 @@ class Code(object):
 
     @match(types.Ref, Primitive, Method, ir.Expression, [many(ir.Expression)])
     def compile_call_method(self, ref, objdfn, methdfn, expr, args):
+        return self.compile_call_primitive(ref, objdfn, self.types[objdfn].bind(self.bindings), methdfn, expr, args)
+
+    @match(types.Ref, Primitive, types.Ref, Method, ir.Expression, [many(ir.Expression)])
+    def compile_call_primitive(self, ref, objdfn, methref, methdfn, expr, args):
         n = "%s_%s" % (self.mangle(name(objdfn), *ref.params), methdfn.name.text)
         return ir.Invoke(self.compile_ref(n), expr, *args)
+
+    @match(types.Ref, Primitive, types.Ref("quark.bool"), Method, ir.Expression, [many(ir.Expression)])
+    def compile_call_primitive(self, ref, objdfn, methref, methdfn, expr, args):
+        return self.compile_call_boolop(ref, objdfn, methref, methdfn.name.text, expr, args)
+
+    @match(types.Ref, Primitive, types.Ref("quark.bool"), basestring, ir.Expression, [many(ir.Expression)])
+    def compile_call_boolop(self, ref, objdfn, methref, methname, expr, args):
+        n = "%s_%s" % (self.mangle(name(objdfn), *ref.params), methname)
+        return ir.Invoke(self.compile_ref(n), expr, *args)
+
+    @match(types.Ref, Primitive, types.Ref("quark.bool"), "__or__", ir.Expression, [many(ir.Expression)])
+    def compile_call_boolop(self, ref, objdfn, methref, methname, expr, args):
+        return ir.Or(expr, *args)
+
+    @match(types.Ref, Primitive, types.Ref("quark.bool"), "__and__", ir.Expression, [many(ir.Expression)])
+    def compile_call_boolop(self, ref, objdfn, methref, methname, expr, args):
+        return ir.And(expr, *args)
 
     @match(types.Ref, Function, Var, [many(Expression)])
     def compile_call(self, ref, dfn, var, args):

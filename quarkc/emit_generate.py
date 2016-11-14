@@ -319,6 +319,7 @@ def header(dfn, target):
 @match(Definition, Python)
 def header(dfn, target):
     return tuple((
+        tr.Simple("from __future__ import absolute_import"),
         tr.Comment("module {name}".format(
             name = target.nameof(target.q.parent(dfn))
             )),)

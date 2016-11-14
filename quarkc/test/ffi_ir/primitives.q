@@ -9,6 +9,62 @@
 //    assertEqual(XXX_false, b); // XXX: false kills compiler
 //}
 
+class SideEffect {
+    List<String> log;
+    SideEffect() {
+        self.log = new List<String>();
+    }
+    bool effect(bool ret, String v) {
+        self.log.append(v);
+        return ret;
+    }
+}
+
+class BooleanTest {
+    void short_circuit_and_FTT() {
+        SideEffect side = new SideEffect();
+        bool actual =
+            side.effect(false, "should-happen") &&
+            side.effect(true, "should-not-happen") &&
+            side.effect(true, "should-not-happen");
+        assertEqual(false, actual);
+        assertEqual(1, side.log.size());
+        assertEqual("should-happen", side.log[0]);
+    }
+    void short_circuit_and_TFT() {
+        SideEffect side = new SideEffect();
+        bool actual =
+            side.effect(true, "should-happen") &&
+            side.effect(false, "should-happen-too") &&
+            side.effect(true, "should-not-happen");
+        assertEqual(false, actual);
+        assertEqual(2, side.log.size());
+        assertEqual("should-happen", side.log[0]);
+        assertEqual("should-happen-too", side.log[1]);
+    }
+    void short_circuit_or_TFF() {
+        SideEffect side = new SideEffect();
+        bool actual =
+            side.effect(true, "should-happen") ||
+            side.effect(false, "should-not-happen") ||
+            side.effect(false, "should-not-happen");
+        assertEqual(true, actual);
+        assertEqual(1, side.log.size());
+        assertEqual("should-happen", side.log[0]);
+    }
+    void short_circuit_or_FTF() {
+        SideEffect side = new SideEffect();
+        bool actual =
+            side.effect(false, "should-happen") ||
+            side.effect(true, "should-happen-too") ||
+            side.effect(false, "should-not-happen");
+        assertEqual(true, actual);
+        assertEqual(2, side.log.size());
+        assertEqual("should-happen", side.log[0]);
+        assertEqual("should-happen-too", side.log[1]);
+    }
+}
+
 class IntegerTest {
 
 void integer_addition() {

@@ -2,6 +2,7 @@ from .ast import (
     AST, Package, Callable, Class, Declaration, TypeParam, Import, Method, Type, Var, String, Number, Bool, If,
     While, Name, Function, Interface
 )
+from .ast import coder
 from .match import match, many, choice
 from .parse import wire
 from collections import OrderedDict
@@ -26,6 +27,10 @@ class Self(AST):
     @property
     def children(self):
         return ()
+
+    @coder
+    def code(self, coder):
+        return "self"
 
 @match(choice(Package, Callable, Class, Declaration, TypeParam, Import))
 def name(n):
