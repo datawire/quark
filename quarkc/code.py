@@ -1,7 +1,8 @@
 from .match import match, choice, many, ntuple
 from .ast import (
     Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param, While, Switch, Case,
-    Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List
+    Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List, Break,
+    Continue
 )
 from .symbols import Symbols, name, Self
 
@@ -466,3 +467,11 @@ class Code(object):
     @match(ir.Expression)
     def to_stmt(self, expr):
         return ir.Evaluate(expr)
+
+    @match(Break)
+    def compile(self, brk):
+        return ir.Break()
+
+    @match(Continue)
+    def compile(self, brk):
+        return ir.Continue()

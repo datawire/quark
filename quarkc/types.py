@@ -3,7 +3,7 @@ from .errors import NodeError, InvalidInvocation, InvalidAssignment, UnresolvedT
 from .ast import (
     AST, Expression, Statement, Block, Call, Attr, Function, Method, Type, Import, Class, Assign, Return, ExprStmt,
     TypeParam, If, While, Switch, Case, Declaration, Package, String, Number, Bool, Var, Local, Name, Field, Callable,
-    Definition, List
+    Definition, List, Break, Continue
 )
 from .symbols import Symbols, name, Self
 from collections import OrderedDict
@@ -12,7 +12,7 @@ import errors
 import typespace as types
 from typespace import Typespace, Ref, UnresolvedRef, UnresolvedField, UnresolvedCall, Unresolvable
 
-@match(choice(Expression, Statement, Block))
+@match(choice(Expression, Statement, Block, Case))
 def get_definition(nd):
     return get_definition(nd.parent)
 
@@ -127,7 +127,7 @@ class Types(object):
     def has_type(self, _):
         return True
 
-    @match(choice(Name, Block, If, While, TypeParam, Switch, Case))
+    @match(choice(Name, Block, If, While, TypeParam, Switch, Case, Break, Continue))
     def has_type(self, _):
         return False
 

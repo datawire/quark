@@ -16,7 +16,7 @@ from .match import match, opt, choice, many
 from .ir import (IR, Function, Interface, Class, Check, If,
                  While, Block, Evaluate, Local, Assign, Return, Set,
                  Message, Field, Method, Constructor, AssertEqual,
-                 Null)
+                 Null, Break, Continue)
 from . import tr
 
 from .emit_target import Target, Python, Ruby, Java, Go, Javascript
@@ -196,6 +196,16 @@ def code(evaluate, target):
 def code(retr, target):
     return tr.Simple("return {expr}".format(
         expr=expr(retr.expr, target)))
+
+## Break
+
+@match(Break, Target)
+def code(brk, target):
+    return tr.Simple("break")
+
+@match(Continue, Target)
+def code(brk, target):
+    return tr.Simple("continue")
 
 ## Local
 
