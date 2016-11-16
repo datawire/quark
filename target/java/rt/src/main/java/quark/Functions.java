@@ -48,6 +48,13 @@ public class Functions {
             return 0;
         }
     }
+    private static Object null_check(Object value) {
+        if (value != null) {
+            return value;
+        } else {
+            return null;
+        }
+    }
 
     public static Map<String,String> Map_String_String___init__() {
         return new HashMap<String,String>();
@@ -105,6 +112,30 @@ public class Functions {
         list.addAll(another);
     }
     public static int List_int_remove(List<Integer> list, int key) {
+        return list.remove(key);
+    }
+
+
+    public static List<Object> List_any___init__() {
+        return new ArrayList<Object>();
+    }
+    public static Object List_any___get__(List<Object> list, int key) {
+        Object ret = list.get(key);
+        return null_check(ret);
+    }
+    public static void List_any___set__(List<Object> list, int key, Object value) {
+        list.set(key,value);
+    }
+    public static int List_any_size(List<Object> list) {
+        return list.size();
+    }
+    public static void List_any_append(List<Object> list, Object value) {
+        list.add(value);
+    }
+    public static void List_any_extend(List<Object> list, List<Object> another) {
+        list.addAll(another);
+    }
+    public static Object List_any_remove(List<Object> list, int key) {
         return list.remove(key);
     }
 

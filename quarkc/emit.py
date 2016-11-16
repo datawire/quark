@@ -40,20 +40,28 @@ from .emit_format import format
 from .emit_naming import rename
 from .emit_generate import generate
 
+from . import stats
+
 ## Package
 
 @match(Package, Target)
 def emit(pkg, target):
     """ legacy entrypoint for unstructered IR """
-    return emit(reconstruct(pkg), target)
+    with stats.charge("backend-reconstruct"):
+        pkg = reconstruct(pkg)
+    return emit(pkg, target)
 
 @match(Root, Target)
 def emit(pkg, target):
     """ return a sequence of tuples (filename, content) """
-    pkg = transform(pkg, target)
-    target = target.with_root(pkg)
-    rename(pkg, target)
-    return tuple((module.filename, format(module, target))
+    with stats.charge("backend-transform"):
+        pkg = transform(pkg, target)
+    with stats.charge("backend-root"):
+        target = target.with_root(pkg)
+    with stats.charge("backend-rename"):
+        rename(pkg, target)
+    with stats.charge("backend-generate-format"):
+        return tuple((module.filename, format(module, target))
                  for module in generate(pkg, target))
 
 import py.path

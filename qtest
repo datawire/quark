@@ -110,6 +110,8 @@ class Target(object):
             args = ["quark", "-o", self.abs_src, "--%s" % self.lang]
             if not CACHED:
                 args.append("--force")
+            if VERBOSE:
+                args.append("--verbose")
             args.extend(qfiles)
             run(*args)
 

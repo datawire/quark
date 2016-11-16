@@ -18,7 +18,7 @@ from .ir import (
     Param, Var, This, Call, Invoke, Send, Construct, Get,
     Void, Null,
     Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit,
-    Map, List, And, Or
+    Map, List, And, Or, Any
 )
 
 from .emit_target import Target, Python, Java, Go, Ruby, Javascript
@@ -70,6 +70,16 @@ def expr(intt, target):
 def expr(intt, target):
     # XXX: int or long ?
     return "int"
+
+## Any
+
+@match(Any, Go)
+def expr(any, target):
+    return "interface{}"
+
+@match(Any, Java)
+def expr(intt, target):
+    return "Object"
 
 ## Float
 

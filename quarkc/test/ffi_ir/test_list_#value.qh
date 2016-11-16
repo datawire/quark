@@ -1,0 +1,21 @@
+class ListTest#Value {
+    void make() {
+        TestData#Value data = new TestData#Value();
+        List<#value> l = new List<#value>();
+        l.append(data.item0);
+        assertEqual(1, l.size());
+        assertEqual(data.item0, l[0]);
+    }
+}
+
+class TestDataInt {
+    int item0 = 11;
+    int item1 = 22;
+    int item2 = 33;
+}
+
+class TestDataString {
+    String item0 = "11";
+    String item1 = "22";
+    String item2 = "33";
+}

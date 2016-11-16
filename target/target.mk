@@ -15,7 +15,14 @@ clean:
 EMIT_DIR = emit
 QUARK_FLAGS = --force
 
+IR_PATTERN = *.ir
+Q_PATTERN = *.q
+
+TEST_DIR = ../../quarkc/test/ffi_ir
+IR_FILES = $(TEST_DIR)/$(IR_PATTERN)
+Q_FILES = $(TEST_DIR)/$(Q_PATTERN)
+
 emit:
 	mkdir -p $(EMIT_DIR)
-	quark-ir emit -o $(EMIT_DIR) $(EMIT_TARGET) ../../quarkc/test/ffi_ir/*.ir
-	quark -o $(EMIT_DIR) $(EMIT_TARGET) $(QUARK_FLAGS) ../../quarkc/test/ffi_ir/*.q
+	@test "$(IR_FILES)" = "" || { set -x; quark-ir emit -o $(EMIT_DIR) $(EMIT_TARGET) $(IR_FILES); }
+	@test "$(Q_FILES)" = "" || { set -x; quark -o $(EMIT_DIR) $(EMIT_TARGET) $(QUARK_FLAGS) $(Q_FILES); }
