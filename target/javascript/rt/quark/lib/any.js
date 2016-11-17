@@ -9,18 +9,16 @@ function Any_type(a) {
         if (a === null) {
             return 0
         } else if (Array.isArray(a)) {
-            return 5
+            return 2
+        } else if (a instanceof Map) {
+            return 3
         } else {
-            return 6
+            return -1
         }
     } else if (t === "string") {
-        return 3
+        return 1
     } else if (t === "number") {
-        if (Number.isInteger(a)) {
-            return 2
-        } else {
-            return 4
-        }
+        return 1
     } else if (t === "boolean") {
         return 1
     } else {
@@ -30,7 +28,14 @@ function Any_type(a) {
 
 exports.Any_asBool = Any_asBool
 function Any_asBool(a) {
-    if (typeof(a) === "boolean") {
+    let t = typeof(a)
+    if (t === "object") {
+        return false
+    } else if (t === "string") {
+        return a.length > 0
+    } else if (t === "number") {
+        return a != 0
+    } else if (t === "boolean") {
         return a
     } else {
         return false
@@ -39,8 +44,21 @@ function Any_asBool(a) {
 
 exports.Any_asInt = Any_asInt
 function Any_asInt(a) {
-    if (typeof(a) === "number" && Number.isInteger(a)) {
-        return a
+    let t = typeof(a)
+    if (t === "object") {
+        return 0
+    } else if (t === "string") {
+        return 0
+    } else if (t === "number") {
+        if (Number.isInteger(a)) {
+            return a
+        } else if ( a > 0 ) {
+            return Math.floor(a)
+        } else {
+            return -Math.floor(-a)
+        }
+    } else if (t === "boolean") {
+        return a ? 1 : 0
     } else {
         return 0
     }
@@ -48,8 +66,15 @@ function Any_asInt(a) {
 
 exports.Any_asString = Any_asString
 function Any_asString(a) {
-    if (typeof(a) === "string") {
+    let t = typeof(a)
+    if (t === "object") {
+        return ""
+    } else if (t === "string") {
         return a
+    } else if (t === "number") {
+        return a.toString()
+    } else if (t === "boolean") {
+        return a ? "true" : "false"
     } else {
         return ""
     }
@@ -57,10 +82,17 @@ function Any_asString(a) {
 
 exports.Any_asFloat = Any_asFloat
 function Any_asFloat(a) {
-    if (typeof(a) === "number") {
+    let t = typeof(a)
+    if (t === "object") {
+        return 0
+    } else if (t === "string") {
+        return 0
+    } else if (t === "number") {
         return a
+    } else if (t === "boolean") {
+        return a ? 1 : 0
     } else {
-        return 0 // XXX: trouble ....
+        return 0
     }
 }
 
