@@ -2,7 +2,7 @@ from .match import match, choice, many, ntuple
 from .ast import (
     Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param, While, Switch, Case,
     Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List, Break,
-    Continue
+    Continue, Null
 )
 from .symbols import Symbols, name, Self
 
@@ -415,6 +415,10 @@ class Code(object):
         for el in l.elements:
             self.add(ir.Evaluate(self.compile_send(ref, ir.Var(tmp), "append", el)))
         return ir.Var(tmp)
+
+    @match(Null)
+    def compile(self, n):
+        return ir.Null(self.compile(self.types[n]))
 
     @match(Return)
     def compile(self, retr):

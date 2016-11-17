@@ -3,7 +3,7 @@ from .errors import NodeError, InvalidInvocation, InvalidAssignment, UnresolvedT
 from .ast import (
     AST, Expression, Statement, Block, Call, Attr, Function, Method, Type, Import, Class, Assign, Return, ExprStmt,
     TypeParam, If, While, Switch, Case, Declaration, Package, String, Number, Bool, Var, Local, Name, Field, Callable,
-    Definition, List, Break, Continue
+    Definition, List, Break, Continue, Null
 )
 from .symbols import Symbols, name, Self
 from collections import OrderedDict
@@ -217,21 +217,29 @@ class Types(object):
 
     @match(List)
     def do_resolve(self, l):
-        return self.do_resolve_list(l.parent, l)
+        return self.do_resolve_infer(l.parent, l)
 
-    @match(Declaration, List)
-    def do_resolve_list(self, d, _):
+    @match(Null)
+    def do_resolve(self, n):
+        return self.do_resolve_infer(n.parent, n)
+
+    @match(Declaration, choice(List, Null))
+    def do_resolve_infer(self, d, _):
         return self.resolve(d.type)
 
-    @match(List, List)
-    def do_resolve_list(self, l, _):
+    @match(List, choice(List, Null))
+    def do_resolve_infer(self, l, _):
         return self.resolve(l).params[0]
 
-    @match(Call, List)
-    def do_resolve_list(self, c, l):
+    @match(Call, choice(List, Null))
+    def do_resolve_infer(self, c, l):
         expr = self.resolve(c.expr)
         callable = self.node(expr)
-        return callable.arguments[c.args.index(l)]
+        idx = c.args.index(l)
+        assert idx >= 0
+        if isinstance(callable, types.Unresolved):
+            return Unresolvable(callable)
+        return callable.arguments[idx]
 
     @match(Var)
     def do_resolve(self, v):
