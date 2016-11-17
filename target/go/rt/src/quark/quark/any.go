@@ -36,6 +36,8 @@ func Any_asBool(a interface{}) bool {
 		return i
 	case int:
 		return i != 0
+	case string:
+		return len(i) > 0
 	case float32:
 		return i != 0.0
 	case float64:
