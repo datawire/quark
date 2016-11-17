@@ -1,5 +1,7 @@
 'use strict';
 
+exports.unsafe = function(x) { return x }
+
 exports.Any_type = Any_type
 function Any_type(a) {
     let t = typeof(a)

@@ -1,7 +1,11 @@
+interface Foo {}
+
 void test_any_type() {
     Any a;
     List<Any> aListAny;
     List<Any> noListAny;
+
+    Foo noFoo;
 
     bool aBool = true;
     bool noBool;
@@ -14,8 +18,16 @@ void test_any_type() {
     List<int> aListInt = [42];
     List<String> aListString = ["yay"];
 
+    a = unsafe(noFoo);
+    assertEqual(0, a.type());
+    assertEqual(noBool, a.asBool());
+    assertEqual(noInt, a.asInt());
+    assertEqual(noString, a.asString());
+    //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
+    assertEqual(noListAny, a.asList());
+    //assertEqual(null, a.asMap());  // XXX need null for this test
 
-    a = aBool.asAny();
+    a = unsafe(aBool);
     assertEqual(1, a.type());
     assertEqual(aBool, a.asBool());
     assertEqual(noInt, a.asInt());
@@ -24,7 +36,7 @@ void test_any_type() {
     assertEqual(noListAny, a.asList());
     //assertEqual(null, a.asMap());  // XXX need null for this test
 
-    a = aInt.asAny();
+    a = unsafe(aInt);
     assertEqual(2, a.type());
     assertEqual(noBool, a.asBool());
     assertEqual(aInt, a.asInt());
@@ -33,7 +45,7 @@ void test_any_type() {
     assertEqual(noListAny, a.asList());
     //assertEqual(null, a.asMap());  // XXX need null for this test
 
-    a = aString.asAny();
+    a = unsafe(aString);
     assertEqual(3, a.type());
     assertEqual(noBool, a.asBool());
     assertEqual(noInt, a.asInt());
@@ -42,7 +54,7 @@ void test_any_type() {
     assertEqual(noListAny, a.asList());
     //assertEqual(null, a.asMap());  // XXX need null for this test
 
-    //a = aFloat.asAny()
+    //a = unsafe(aFloat)
     //assertEqual(4, a.type());
     //assertEqual(noBool, a.asBool());
     //assertEqual(noInt, a.asInt());
@@ -51,7 +63,7 @@ void test_any_type() {
     //assertEqual(noListAny, a.asList());
     //assertEqual(null, a.asMap());  // XXX need null for this test
 
-    a = aListInt.asAny();
+    a = unsafe(aListInt);
     assertEqual(5, a.type());
     assertEqual(noBool, a.asBool());
     assertEqual(noInt, a.asInt());
@@ -62,7 +74,7 @@ void test_any_type() {
     assertEqual(aListInt[0], aListAny[0].asInt());
     //assertEqual(null, a.asMap());  // XXX need null for this test
 
-    a = aListString.asAny();
+    a = unsafe(aListString);
     assertEqual(5, a.type());
     assertEqual(noBool, a.asBool());
     assertEqual(noInt, a.asInt());

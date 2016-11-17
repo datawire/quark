@@ -2,6 +2,8 @@ package quark
 
 import "fmt"
 
+func Unsafe(a interface{}) interface{} { return a }
+
 func Any_type(a interface{}) int {
 	switch i := a.(type) {
 	case nil:

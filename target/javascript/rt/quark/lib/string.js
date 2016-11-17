@@ -11,5 +11,3 @@ function String_size(a) { return a.length }
 
 exports.String_substring = String_substring
 function String_substring(a,s,e) { return a.substring(s,e) }
-
-exports.String_asAny = function(a) { return a }

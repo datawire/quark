@@ -16,5 +16,3 @@ func List_String_remove(l  *[]string, key int) string {
 }
 func List_String_append(l  *[]string, value string) { *l = append(*l, value) }
 func List_String_extend(l  *[]string, r *[]string) { *l = append(*l, (*r)...) }
-
-func List_String_asAny(l *[]string) interface{} { return l }

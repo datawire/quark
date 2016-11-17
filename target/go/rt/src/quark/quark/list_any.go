@@ -16,5 +16,3 @@ func List_Any_remove(l  *[]interface{}, key int) interface{} {
 }
 func List_Any_append(l  *[]interface{}, value interface{}) { *l = append(*l, value) }
 func List_Any_extend(l  *[]interface{}, r *[]interface{}) { *l = append(*l, (*r)...) }
-
-func List_Any_asAny(l *[]interface{}) interface{} { return l }

@@ -14,5 +14,3 @@ exports.List_Any_size = function(l) { return l.length }
 exports.List_Any_append = function(l, v) { l.push(v) }
 exports.List_Any_extend = function(l, r) { r.forEach(x => l.push(x)) }
 exports.List_Any_remove = function(l, k) { return l.splice(k,1)[0] }
-
-exports.List_Any_asAny = function(l) { return l }
