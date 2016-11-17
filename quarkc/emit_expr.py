@@ -254,6 +254,11 @@ def expr(lit, target):
     # XXX: this is potenitally good enough
     return '"' + lit.value.encode('unicode_escape').replace('"','\\"') + '"'
 
+@match(StringLit, Python)
+def expr(lit, target):
+    # XXX: this is potenitally good enough
+    return 'u"' + lit.value.encode('unicode_escape').replace('"','\\"') + '"'
+
 ## StringLit
 
 @match(BoolLit, choice(Ruby, Java, Go, Javascript))
