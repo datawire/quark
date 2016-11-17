@@ -116,26 +116,26 @@ public class Functions {
     }
 
 
-    public static List<Object> List_any___init__() {
+    public static List<Object> List_Any___init__() {
         return new ArrayList<Object>();
     }
-    public static Object List_any___get__(List<Object> list, int key) {
+    public static Object List_Any___get__(List<Object> list, int key) {
         Object ret = list.get(key);
         return null_check(ret);
     }
-    public static void List_any___set__(List<Object> list, int key, Object value) {
+    public static void List_Any___set__(List<Object> list, int key, Object value) {
         list.set(key,value);
     }
-    public static int List_any_size(List<Object> list) {
+    public static int List_Any_size(List<Object> list) {
         return list.size();
     }
-    public static void List_any_append(List<Object> list, Object value) {
+    public static void List_Any_append(List<Object> list, Object value) {
         list.add(value);
     }
-    public static void List_any_extend(List<Object> list, List<Object> another) {
+    public static void List_Any_extend(List<Object> list, List<Object> another) {
         list.addAll(another);
     }
-    public static Object List_any_remove(List<Object> list, int key) {
+    public static Object List_Any_remove(List<Object> list, int key) {
         return list.remove(key);
     }
 
@@ -161,5 +161,76 @@ public class Functions {
     }
     public static String List_String_remove(List<String> list, int key) {
         return list.remove(key);
+    }
+
+    public static Object unsafe(Object a) { return a; }
+
+    public static int Any_type(Object a) {
+        if (a == null) {
+            return 0;
+        } else if (a instanceof Boolean) {
+            return 1;
+        } else if (a instanceof Integer) {
+            return 2;
+        } else if (a instanceof String) {
+            return 3;
+        } else if (a instanceof Float || a instanceof Double) {
+            return 4;
+        } else if (a instanceof List) {
+            return 5;
+        } else if (a instanceof Map) {
+            return 6;
+        }
+        return -1;
+    }
+
+    public static boolean Any_asBool(Object a) {
+        if (a instanceof Boolean) {
+            return (Boolean)a;
+        } else {
+            return false;
+        }
+    }
+
+    public static int Any_asInt(Object a) {
+        if (a instanceof Integer) {
+            return (Integer)a;
+        } else {
+            return 0;
+        }
+    }
+
+    public static String Any_asString(Object a) {
+        if (a instanceof String) {
+            return (String)a;
+        } else {
+            return "";
+        }
+    }
+
+    public static double Any_asFloat(Object a) {
+        if (a instanceof Double) {
+            return (Double)a;
+        } else if (a instanceof Float) {
+            return (Float)a;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public static List<Object> Any_asList(Object a) {
+        if (a instanceof List) {
+            return (List<Object>)a;
+        } else {
+            return null;
+        }
+    }
+
+    public static Map<Object,Object> Any_asMap(Object a) {
+        if (a instanceof Map) {
+            return (Map<Object,Object>)a;
+        } else {
+            return null;
+        }
     }
 }

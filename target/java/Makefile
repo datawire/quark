@@ -15,7 +15,7 @@ space := $(null) #
 run_test: $(TESTS_JAR) $(EMIT_JAR) $(RT_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
 	java -cp $(subst $(space),:,$^) org.junit.runner.JUnitCore `jar tf $(TESTS_JAR) | grep \\.class | cut -d. -f1 | tr / .`
 
-$(RT_JAR):
+$(RT_JAR): rt/src/main/java/quark/Functions.java
 	mkdir -p emit/build/rt/classes
 	javac -g -sourcepath rt/src/main/java -d emit/build/rt/classes $$(find rt/src/main/java -type f -name '*.java')
 	jar cf $@ -C emit/build/rt/classes .
