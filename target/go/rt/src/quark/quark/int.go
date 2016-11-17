@@ -11,3 +11,4 @@ func Int___le__(a int, b int) bool { return a <= b }
 func Int___gt__(a int, b int) bool { return a > b }
 func Int___lt__(a int, b int) bool { return a < b }
 
+func Int_asAny(a int) interface{} { return a }

@@ -231,12 +231,16 @@ class Bool(NativeType):
 class Any(NativeType):
     pass
 
+# a native type that can represent any scalar in the target (Int, Float, String, Bool)
+class Scalar(NativeType):
+    pass
+
 # a native type for a function accepting an InterfaceType and returning an InterfaceType
 class Callable(NativeType):
     pass
 
 class Map(NativeType):
-    @match(choice(String,Int), NativeType)
+    @match(choice(Bool,String,Int,Float,Scalar), NativeType)
     def __init__(self, key, value):
         self.key = key
         self.value = value
@@ -661,6 +665,7 @@ def makeNull(_):
 
 @match(choice(AbstractType, Any, Callable))
 def makeNull(type):
+    # instantiate via superclass
     return SimpleExpression.__new__(Null, type)
 
 # access a Local or a Param
@@ -810,18 +815,6 @@ class Call(Expression):
     def __repr__(self):
         return self.repr(self.expr, self.args)
 
-class Cast(Expression):
-
-    @match(Name, Expression)
-    def __init__(self, type, expr):
-        self.type = type
-        self.expr = expr
-
-    @property
-    def children(self):
-        yield self.type
-        yield self.expr
-
 # literals
 
 class Literal(SimpleExpression):
@@ -873,7 +866,7 @@ class Local(Declaration, Statement):
     def __init__(self, name, type, expr=None):
         self.type = type
         self.name = name
-        self.expr = expr
+        self.expr = expr or Null(type.copy())
 
     @property
     def children(self):

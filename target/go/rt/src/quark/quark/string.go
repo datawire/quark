@@ -20,3 +20,5 @@ func String_substring(a string, start int, end int) string {
 	}
 	return a[s:e]
 }
+
+func String_asAny(a string) interface{} { return a }

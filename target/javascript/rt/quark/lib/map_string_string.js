@@ -12,3 +12,5 @@ exports.Map_String_String___set__ = function(m,k,v) { m.set(k,v) }
 exports.Map_String_String___get__ = function(m,k) { return check_null(m.get(k)) }
 exports.Map_String_String_size = function(m) { return m.size }
 exports.Map_String_String_keys = function(m) { return Array.from(m.keys()) }
+
+exports.Map_String_String_asAny = function(m) { return m }

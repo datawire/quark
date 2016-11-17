@@ -29,3 +29,5 @@ function int___lt__(a, b) { return a < b }
 
 exports.int___gt__ = int___gt__
 function int___gt__(a, b) { return a > b }
+
+exports.int_asAny = function(a) { return a }

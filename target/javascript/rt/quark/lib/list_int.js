@@ -14,3 +14,5 @@ exports.List_int_size = function(l) { return l.length }
 exports.List_int_append = function(l, v) { l.push(v) }
 exports.List_int_extend = function(l, r) { r.forEach(x => l.push(x)) }
 exports.List_int_remove = function(l, k) { return l.splice(k,1)[0] }
+
+exports.List_int_asAny = function(l) { return l }

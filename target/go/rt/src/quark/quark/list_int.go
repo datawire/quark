@@ -16,3 +16,6 @@ func List_int_remove(l  *[]int, key int) int {
 }
 func List_int_append(l  *[]int, value int) { *l = append(*l, value) }
 func List_int_extend(l  *[]int, r *[]int) { *l = append(*l, (*r)...) }
+
+
+func List_int_asAny(l *[]int) interface{} { return l }

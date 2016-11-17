@@ -148,6 +148,14 @@ class Code(object):
     def mangle_param(self, sym):
         return "String"
 
+    @match("quark.Any")
+    def mangle_param(self, sym):
+        return "Any"
+
+    @match("quark.Scalar")
+    def mangle_param(self, sym):
+        return "Scalar"
+
     @match(basestring)
     def mangle_param(self, sym):
         return sym
@@ -171,6 +179,14 @@ class Code(object):
     @match(types.Ref("quark.int"))
     def compile_bound(self, ref):
         return ir.Int()
+
+    @match(types.Ref("quark.Any"))
+    def compile_bound(self, ref):
+        return ir.Any()
+
+    @match(types.Ref("quark.Scalar"))
+    def compile_bound(self, ref):
+        return ir.Scalar()
 
     @match(types.Ref("quark.bool"))
     def compile_bound(self, ref):

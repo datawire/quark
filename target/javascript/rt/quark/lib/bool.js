@@ -11,3 +11,5 @@ function bool___not__(n) { return !n }
 
 exports.bool___eq__ = bool___eq__
 function bool___eq__(a, b) { return a === b }
+
+exports.bool_asAny = function(a) { return a }

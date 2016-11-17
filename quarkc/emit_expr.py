@@ -18,7 +18,7 @@ from .ir import (
     Param, Var, This, Call, Invoke, Send, Construct, Get,
     Void, Null,
     Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit,
-    Map, List, And, Or, Any
+    Map, List, And, Or, Any, Scalar
 )
 
 from .emit_target import Target, Python, Java, Go, Ruby, Javascript
@@ -78,7 +78,17 @@ def expr(any, target):
     return "interface{}"
 
 @match(Any, Java)
-def expr(intt, target):
+def expr(any, target):
+    return "Object"
+
+## Scalar
+
+@match(Scalar, Go)
+def expr(scalar, target):
+    return "interface{}"
+
+@match(Scalar, Java)
+def expr(scalar, target):
     return "Object"
 
 ## Float
