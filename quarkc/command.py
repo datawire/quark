@@ -94,7 +94,8 @@ def main(args):
 
     pkg = c.compile()
     for tgt in targets:
-        files = emit(pkg, tgt)
+        with stats.charge("emit"):
+            files = emit(pkg, tgt)
         for name, content in files:
             fname = os.path.join(output, name)
             if verbose:

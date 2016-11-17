@@ -29,6 +29,7 @@ class Types(object):
         self.resolved = OrderedDict()
         self.violations = OrderedDict()
         self.refset = None
+        self._assignable = {}
 
     @match(NodeError)
     def add_violation(self, err):
@@ -180,7 +181,10 @@ class Types(object):
 
     @match(AST, types.Ref, types.Ref)
     def validate_ass(self, node, left, right):
-        if not self.types.assignable(left, right):
+        args = (left, right)
+        if args not in self._assignable:
+            self._assignable[args] = self.types.assignable(*args)
+        if not self._assignable[args]:
             self.add_violation(InvalidAssignment(node, left, right))
 
     @match(AST, types.Unresolved, types.Unresolved)
