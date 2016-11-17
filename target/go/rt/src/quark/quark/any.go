@@ -11,18 +11,18 @@ func Any_type(a interface{}) int {
 	case bool:
 		return 1
 	case int:
-		return 2
+		return 1
 	case string:
-		return 3
+		return 1
 	case float32, float64:
-		return 4
+		return 1
 	case []bool, []int, []string, []float32, []float64, []interface{},
 		*[]bool, *[]int, *[]string, *[]float32, *[]float64, *[]interface{}:
-		return 5
+		return 2
 	case map[int]int, map[int]string, map[int]interface{},
 		map[string]int, map[string]string, map[string]interface{},
 		map[interface{}]interface{}, map[interface{}]int, map[interface{}]string :
-		return 6
+		return 3
 	default:
 		_ = i
 		// XXX: use reflection here to detect weirder map types
@@ -34,6 +34,12 @@ func Any_asBool(a interface{}) bool {
 	switch i := a.(type) {
 	case bool:
 		return i
+	case int:
+		return i != 0
+	case float32:
+		return i != 0.0
+	case float64:
+		return i != 0.0
 	default:
 		return false
 	}
@@ -41,8 +47,22 @@ func Any_asBool(a interface{}) bool {
 
 func Any_asInt(a interface{}) int {
 	switch i := a.(type) {
+	case nil:
+		return 0
+	case bool:
+		if i {
+			return 1
+		} else {
+			return 0
+		}
 	case int:
 		return i
+	case string:
+		return 0
+	case float32:
+		return int(i)
+	case float64:
+		return int(i)
 	default:
 		return 0
 	}
@@ -50,8 +70,22 @@ func Any_asInt(a interface{}) int {
 
 func Any_asString(a interface{}) string {
 	switch i := a.(type) {
+	case nil:
+		return ""
+	case bool:
+		if i {
+			return "true"
+		} else {
+			return "false"
+		}
+	case int:
+		return fmt.Sprint(i)
 	case string:
 		return i
+	case float32:
+		return fmt.Sprint(i)
+	case float64:
+		return fmt.Sprint(i)
 	default:
 		return ""
 	}

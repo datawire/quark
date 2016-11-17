@@ -171,51 +171,101 @@ public class Functions {
         } else if (a instanceof Boolean) {
             return 1;
         } else if (a instanceof Integer) {
-            return 2;
+            return 1;
         } else if (a instanceof String) {
-            return 3;
+            return 1;
         } else if (a instanceof Float || a instanceof Double) {
-            return 4;
+            return 1;
         } else if (a instanceof List) {
-            return 5;
+            return 2;
         } else if (a instanceof Map) {
-            return 6;
+            return 3;
         }
         return -1;
     }
 
     public static boolean Any_asBool(Object a) {
-        if (a instanceof Boolean) {
+        if (a == null) {
+            return false;
+        } else if (a instanceof Boolean) {
             return (Boolean)a;
-        } else {
+        } else if (a instanceof Integer) {
+            return ((Integer)a) != 0;
+        } else if (a instanceof String) {
+            return !((String)a).isEmpty();
+        } else if (a instanceof Float) {
+            return ((Float)a) != 0.0;
+        } else if (a instanceof Double) {
+            return ((Double)a) != 0.0;
+        } else if (a instanceof List) {
+            return false;
+        } else if (a instanceof Map) {
             return false;
         }
+        return false;
     }
 
     public static int Any_asInt(Object a) {
-        if (a instanceof Integer) {
-            return (Integer)a;
-        } else {
+        if (a == null) {
+            return 0;
+        } else if (a instanceof Boolean) {
+            return (Boolean)a ? 1 : 0;
+        } else if (a instanceof Integer) {
+            return ((Integer)a);
+        } else if (a instanceof String) {
+            return 0;
+        } else if (a instanceof Float) {
+            return ((Float)a).intValue();
+        } else if (a instanceof Double) {
+            return ((Double)a).intValue();
+        } else if (a instanceof List) {
+            return 0;
+        } else if (a instanceof Map) {
             return 0;
         }
+        return 0;
     }
 
     public static String Any_asString(Object a) {
-        if (a instanceof String) {
+        if (a == null) {
+            return "";
+        } else if (a instanceof Boolean) {
+            return (Boolean)a ? "true" : "false";
+        } else if (a instanceof Integer) {
+            return ((Integer)a).toString();
+        } else if (a instanceof String) {
             return (String)a;
-        } else {
+        } else if (a instanceof Float) {
+            return ((Float)a).toString();
+        } else if (a instanceof Double) {
+            return ((Double)a).toString();
+        } else if (a instanceof List) {
+            return "";
+        } else if (a instanceof Map) {
             return "";
         }
+        return "";
     }
 
     public static double Any_asFloat(Object a) {
-        if (a instanceof Double) {
-            return (Double)a;
+        if (a == null) {
+            return 0.0;
+        } else if (a instanceof Boolean) {
+            return (Boolean)a ? 1.0 : 0.0;
+        } else if (a instanceof Integer) {
+            return ((Integer)a).doubleValue();
+        } else if (a instanceof String) {
+            return 0.0;
         } else if (a instanceof Float) {
-            return (Float)a;
-        } else {
+            return ((Float)a);
+        } else if (a instanceof Double) {
+            return ((Double)a);
+        } else if (a instanceof List) {
+            return 0.0;
+        } else if (a instanceof Map) {
             return 0.0;
         }
+        return 0.0;
     }
 
     public static List<Object> Any_asList(Object a) {
