@@ -17,12 +17,12 @@ from .ir import (IR, Function, Interface, Class, Check, If,
                  While, Block, Evaluate, Local, Assign, Return, Set,
                  Message, Field, Method, Constructor,
                  AssertEqual, AssertNotEqual, Expression,
-                 Null, Break, Continue)
+                 Null, Break, Continue,
+                 TestClass, TestMethod)
 from . import tr
 
 from .emit_target import Target, Python, Ruby, Java, Go, Javascript
 from .emit_expr import expr
-from .emit_ir import TestClass, TestMethod
 
 @match(basestring, IR, Target, opt(basestring))
 def opt_expr(glue, nd, target, default=""):

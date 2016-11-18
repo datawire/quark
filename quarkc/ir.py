@@ -1025,6 +1025,14 @@ class Check(Definition):
         return self.repr(self.name, self.body)
 
 
+class TestClass(Class):
+    """ Marker for container of TestMethods """
+    pass
+
+class TestMethod(Method):
+    """ a method equivalent of a Check """
+    pass
+
 class NativeTestAssertion(Statement):
     @match(Expression, Expression)
     def __init__(self, expected, actual):

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .ir import Method, Class
+from .ir import Method
 
 class Snowflake(str):
     """ Avoid dictionary lookup of reserved identifiers """
@@ -31,15 +31,6 @@ class Snowflake(str):
     def __repr__(self):
         return "%s(%s)" % (self.__class__.__name__, repr(str(self)))
 
-
 class StaticMethod(Method):
     """ Java way of doing functions """
-    pass
-
-class TestMethod(Method):
-    """ target way of doing Checks """
-    pass
-
-class TestClass(Class):
-    """ Marker for container of TestMethods """
     pass

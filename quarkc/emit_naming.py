@@ -14,9 +14,9 @@
 
 from .match import match, choice
 from .tree import walk_dfs
-from .ir import IR, Root, Namespace, Definition, Class
+from .ir import IR, Root, Namespace, Definition, Class, TestClass
 from .emit_target import Target, Ruby, Go
-from .emit_ir import TestClass, Snowflake
+from .emit_ir import Snowflake
 
 
 @match(Root, Target)

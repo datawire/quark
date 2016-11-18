@@ -15,12 +15,12 @@
 from collections import OrderedDict
 from .match import match, many, choice
 from .ir import (Root, Package, Namespace, Definition,
-                 Check, Function, Ref, ExternalPackage)
+                 Check, Function, Ref, ExternalPackage, TestClass)
 from .tree import walk_dfs, isa, split
 from . import tr
 from .emit_target import Target, Go, Ruby, Java, Python, Javascript
 from .emit_code import code
-from .emit_ir import Snowflake, TestClass
+from .emit_ir import Snowflake
 
 
 @match(Root, Target)
