@@ -21,8 +21,10 @@ Options:
   --cached              Use cached AST if it exists
 """
 
-import os, subprocess, shutil, fnmatch, zipfile
+import os, subprocess, shutil, fnmatch, zipfile, sys
 from docopt import docopt
+
+from quarkc import stats
 
 def call(*cmd, **kwargs):
     return subprocess.check_output(cmd)
@@ -58,7 +60,8 @@ def run(*cmd, **kwargs):
     kwargs["env"] = env
     if VERBOSE:
         print "%s%s" % (pfx, " ".join(cmd))
-    code = subprocess.call(cmd, **kwargs)
+    with stats.charge(os.path.basename(cmd[0])):
+        code = subprocess.call(cmd, **kwargs)
     if code != 0:
         raise RunError()
 
@@ -285,7 +288,7 @@ def main(args):
             try:
                 tgt.run()
                 passing.append(name)
-            except RunError, e:
+            except RunError:
                 failing.append(name)
                 if args["--exit"]:
                     break
@@ -297,6 +300,9 @@ def main(args):
             msg += color(RED, "FAIL: %s" % ", ".join(failing))
         banner(BLUE, msg)
 
+    print "\n\n"
+    banner(BLUE, "timing stats")
+    stats.dump(sys.stdout)
     return 1 if failing else 0
 
 def call_main():
