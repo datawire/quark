@@ -573,6 +573,15 @@ def code(constructor, target):
 def code(assrt, target):
     return code_assert(assrt, assrt.expected, assrt.actual, "==", target)
 
+@match(choice(AssertEqual, AssertNotEqual), Null, Expression, basestring, Go)
+def code_assert(assrt, expected, actual, op, target):
+    return tr.Compound("", tr.Block(
+        tr.Comment(repr(assrt)),
+        tr.Simple("actual := {actual}".format(
+            actual = expr(assrt.actual, target))),
+        tr.Compound("if (!(nil {op} actual))".format(op=op), tr.Block(
+            tr.Simple("t__.Error(\"assert(\", nil, \"{op}\", actual, \")\")".format(op=op))))))
+
 @match(choice(AssertEqual, AssertNotEqual), Expression, Expression, basestring, Go)
 def code_assert(assrt, expected, actual, op, target):
     return tr.Compound("", tr.Block(
