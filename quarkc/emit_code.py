@@ -15,7 +15,8 @@
 from .match import match, opt, choice, many
 from .ir import (IR, Function, Interface, Class, Check, If,
                  While, Block, Evaluate, Local, Assign, Return, Set,
-                 Message, Field, Method, Constructor, AssertEqual,
+                 Message, Field, Method, Constructor,
+                 AssertEqual, AssertNotEqual, Expression,
                  Null, Break, Continue)
 from . import tr
 
@@ -570,11 +571,29 @@ def code(constructor, target):
 
 @match(AssertEqual, Go)
 def code(assrt, target):
+    return code_assert(assrt, assrt.expected, assrt.actual, "==", target)
+
+@match(choice(AssertEqual, AssertNotEqual), Null, Expression, basestring, Go)
+def code_assert(assrt, expected, actual, op, target):
     return tr.Compound("", tr.Block(
-        tr.Simple("expected, actual := ({expected}), ({actual})".format(
-            expected = expr(assrt.expected, target),
+        tr.Comment(repr(assrt)),
+        tr.Simple("actual := {actual}".format(
             actual = expr(assrt.actual, target))),
-        tr.Simple("if (expected != actual) { t__.Error(expected, actual) }")))
+        tr.Compound("if (!(nil {op} actual))".format(op=op), tr.Block(
+            tr.Simple("t__.Error(\"assert(\", nil, \"{op}\", actual, \")\")".format(op=op))))))
+
+@match(choice(AssertEqual, AssertNotEqual), Expression, Expression, basestring, Go)
+def code_assert(assrt, expected, actual, op, target):
+    return tr.Compound("", tr.Block(
+        tr.Comment(repr(assrt)),
+        tr.Simple("var expected {type} = {expected}".format(
+            type = "interface{}",
+            expected = expr(assrt.expected, target))),
+        tr.Simple("var actual {type} = {actual}".format(
+            type = "interface{}",
+            actual = expr(assrt.actual, target))),
+        tr.Compound("if (!(expected {op} actual))".format(op=op), tr.Block(
+            tr.Simple("t__.Error(\"assert(\", expected, \"{op}\", actual, \")\")".format(op=op))))))
 
 @match(AssertEqual, Python)
 def code(assrt, target):
@@ -584,7 +603,7 @@ def code(assrt, target):
 
 @match(AssertEqual, Java)
 def code(assrt, target):
-    return tr.Simple("assertEquals(({expected}), ({actual}))".format(
+    return tr.Simple("assertThat(({actual}), equalTo({expected}))".format(
         expected = expr(assrt.expected, target),
         actual = expr(assrt.actual, target)))
 
@@ -597,6 +616,37 @@ def code(assrt, target):
 @match(AssertEqual, Javascript)
 def code(assrt, target):
     return tr.Simple("assert.strictEqual(({expected}), ({actual}))".format(
+        expected = expr(assrt.expected, target),
+        actual = expr(assrt.actual, target)))
+
+
+## AssertNotEqual
+
+@match(AssertNotEqual, Go)
+def code(assrt, target):
+    return code_assert(assrt, assrt.expected, assrt.actual, "!=", target)
+
+@match(AssertNotEqual, Python)
+def code(assrt, target):
+    return tr.Simple("assert ({expected}) != ({actual})".format(
+        expected = expr(assrt.expected, target),
+        actual = expr(assrt.actual, target)))
+
+@match(AssertNotEqual, Java)
+def code(assrt, target):
+    return tr.Simple("assertThat(({actual}), not(equalTo({expected})))".format(
+        expected = expr(assrt.expected, target),
+        actual = expr(assrt.actual, target)))
+
+@match(AssertNotEqual, Ruby)
+def code(assrt, target):
+    return tr.Simple("assert_not_equal(({expected}), ({actual}))".format(
+        expected = expr(assrt.expected, target),
+        actual = expr(assrt.actual, target)))
+
+@match(AssertNotEqual, Javascript)
+def code(assrt, target):
+    return tr.Simple("assert.notStrictEqual(({expected}), ({actual}))".format(
         expected = expr(assrt.expected, target),
         actual = expr(assrt.actual, target)))
 
