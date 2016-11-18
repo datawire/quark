@@ -357,6 +357,11 @@ class Code(object):
         self.asserts += 1
         return ir.AssertEqual(*[self.compile(a) for a in args])
 
+    @match(types.Ref, Function, "assertNotEqual", [many(Expression)])
+    def compile_call(self, ref, dfn, fun, args):
+        self.asserts += 1
+        return ir.AssertNotEqual(*[self.compile(a) for a in args])
+
     @match(types.Ref, Method, Type, [many(Expression)])
     def compile_call(self, ref, cons, type, args):
         return self.compile_call(ref, cons, args)

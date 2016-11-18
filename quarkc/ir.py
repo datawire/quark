@@ -1033,9 +1033,6 @@ class Check(Definition):
 
 
 class NativeTestAssertion(Statement):
-    pass
-
-class AssertEqual(NativeTestAssertion):
     @match(Expression, Expression)
     def __init__(self, expected, actual):
         self.expected = expected
@@ -1049,6 +1046,12 @@ class AssertEqual(NativeTestAssertion):
     def __repr__(self):
         return self.repr(self.expected, self.actual)
 
+
+class AssertEqual(NativeTestAssertion):
+    pass
+
+class AssertNotEqual(NativeTestAssertion):
+    pass
 
 @match(choice(Package, Namespace))
 def restructure(pkg):
