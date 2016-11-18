@@ -27,7 +27,7 @@ Options:
   --ir                  Emit IR
 """
 
-import os, sys
+import os, sys, hashlib
 import cPickle as pickle
 from docopt import docopt
 from .compiler import Compiler
@@ -72,20 +72,32 @@ def main(args):
     if ruby or all: targets.append(Ruby())
     if go or all: targets.append(Go())
 
+    with stats.charge("index"):
+        index = {}
+        for fname in args["<file>"]:
+                with open(fname) as f:
+                    content = f.read()
+                    index[fname] = dict(
+                        content=content,
+                        sha = hashlib.sha1(content).hexdigest())
+
     c = Compiler(verbose=verbose)
     for fname in args["<file>"]:
         cname = "%sp" % fname
         if is_newer(cname, fname) and not args["--force"]:
-            with open(cname) as f:
+            with stats.charge("unpickle"), open(cname) as f:
                 unp = pickle.Unpickler(f)
-                c.load(unp.load())
-        else:
-            with open(fname) as f:
-                ast = c.parse(fname, f.read())
-                if ast:
-                    with open(cname, "write") as fp:
-                        pickler = pickle.Pickler(fp, -1)
-                        pickler.dump(ast)
+                data = unp.load()
+                if isinstance(data, tuple) and len(data) == 2 and data[0] == index[fname]["sha"]:
+                    if verbose:
+                        print "Found valid parse cache %s" % cname
+                    c.load(data[1])
+                    continue
+        ast = c.parse(fname, index[fname]["content"])
+        if ast:
+            with stats.charge("pickle"), open(cname, "write") as fp:
+                pickler = pickle.Pickler(fp, -1)
+                pickler.dump((index[fname]["sha"], ast))
 
     try:
         c.check()
