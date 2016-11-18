@@ -414,7 +414,9 @@ def imports(dfn, target):
     define_imports(dfn, target, imports)
     assert not imports
     # java fully qualify uses
-    yield tr.Simple("import static org.junit.Assert.assertEquals")
+    yield tr.Simple("import static org.junit.Assert.assertThat")
+    yield tr.Simple("import static org.hamcrest.CoreMatchers.not")
+    yield tr.Simple("import static org.hamcrest.CoreMatchers.equalTo")
     yield tr.Simple("import org.junit.Test")
 
 @match(Definition, Go, dict)

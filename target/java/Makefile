@@ -25,7 +25,7 @@ $(EMIT_JAR): $(RT_JAR) $(JUNIT_JAR)
 	javac -g -cp $(subst $(space),:,$^) -sourcepath emit/src/main/java -d emit/build/emit/classes $$(find emit/src/main/java -type f -name '*.java')
 	jar cf $@ -C emit/build/emit/classes .
 
-$(TESTS_JAR): $(EMIT_JAR) $(RT_JAR) $(JUNIT_JAR)
+$(TESTS_JAR): $(EMIT_JAR) $(RT_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
 	mkdir -p emit/build/test/classes
 	javac -g -cp $(subst $(space),:,$^) -sourcepath emit/src/test/java -d emit/build/test/classes $$(find emit/src/test/java -type f -name '*.java')
 	jar cf $@ -C emit/build/test/classes .

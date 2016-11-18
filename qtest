@@ -201,7 +201,7 @@ class Java(Target):
 
         testsources = os.path.join(self.target, "emit/src/test/java")
         testjar = os.path.join(self.build, "tests.jar")
-        self.jbuild(testsources, testjar, emitjar, rtjar, self.junit)
+        self.jbuild(testsources, testjar, emitjar, rtjar, self.junit, self.hamcrest)
 
         return run("java", "-cp",
                    ":".join((testjar, emitjar, rtjar, self.junit, self.hamcrest)),

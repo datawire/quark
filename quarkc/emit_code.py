@@ -584,7 +584,7 @@ def code(assrt, target):
 
 @match(AssertEqual, Java)
 def code(assrt, target):
-    return tr.Simple("assertEquals(({expected}), ({actual}))".format(
+    return tr.Simple("assertThat(({actual}), equalTo({expected}))".format(
         expected = expr(assrt.expected, target),
         actual = expr(assrt.actual, target)))
 
