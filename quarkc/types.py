@@ -3,7 +3,7 @@ from .errors import NodeError, InvalidInvocation, InvalidAssignment, UnresolvedT
 from .ast import (
     AST, Expression, Statement, Block, Call, Attr, Function, Method, Type, Import, Class, Assign, Return, ExprStmt,
     TypeParam, If, While, Switch, Case, Declaration, Package, String, Number, Bool, Var, Local, Name, Field, Callable,
-    Definition, List, Break, Continue, Null
+    Definition, List, Map, Entry, Null, Break, Continue
 )
 from .symbols import Symbols, name, Self
 from collections import OrderedDict
@@ -128,7 +128,7 @@ class Types(object):
     def has_type(self, _):
         return True
 
-    @match(choice(Name, Block, If, While, TypeParam, Switch, Case, Break, Continue))
+    @match(choice(Name, Block, If, While, TypeParam, Switch, Case, Break, Continue, Entry))
     def has_type(self, _):
         return False
 
@@ -219,23 +219,29 @@ class Types(object):
     def do_resolve(self, _):
         return types.Ref("quark.bool")
 
-    @match(List)
+    @match(choice(List, Map, Null))
     def do_resolve(self, l):
         return self.do_resolve_infer(l.parent, l)
 
-    @match(Null)
-    def do_resolve(self, n):
-        return self.do_resolve_infer(n.parent, n)
-
-    @match(Declaration, choice(List, Null))
+    @match(Declaration, choice(List, Map, Null))
     def do_resolve_infer(self, d, _):
         return self.resolve(d.type)
 
-    @match(List, choice(List, Null))
+    @match(List, choice(List, Map, Null))
     def do_resolve_infer(self, l, _):
         return self.resolve(l).params[0]
 
-    @match(Call, choice(List, Null))
+    @match(Entry, choice(List, Map, Null))
+    def do_resolve_infer(self, e, l):
+        map = self.resolve(e.parent)
+        if l == e.key:
+            return map.params[0]
+        elif l == e.value:
+            return map.params[1]
+        else:
+            assert False
+
+    @match(Call, choice(List, Map, Null))
     def do_resolve_infer(self, c, l):
         expr = self.resolve(c.expr)
         callable = self.node(expr)
@@ -245,7 +251,7 @@ class Types(object):
             return Unresolvable(callable)
         return callable.arguments[idx]
 
-    @match(Assign, choice(List, Null))
+    @match(Assign, choice(List, Map, Null))
     def do_resolve_infer(self, ass, l):
         return self.resolve(ass.lhs)
 
