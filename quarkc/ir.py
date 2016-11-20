@@ -815,6 +815,21 @@ class Call(Expression):
     def __repr__(self):
         return self.repr(self.expr, self.args)
 
+class Cast(Expression):
+
+    @match(AbstractType, Expression)
+    def __init__(self, type, expr):
+        self.type = type
+        self.expr = expr
+
+    @property
+    def children(self):
+        yield self.type
+        yield self.expr
+
+    def __repr__(self):
+        return self.repr(self.type, self.expr)
+
 # literals
 
 class Literal(SimpleExpression):
