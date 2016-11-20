@@ -245,6 +245,10 @@ class Types(object):
             return Unresolvable(callable)
         return callable.arguments[idx]
 
+    @match(Assign, choice(List, Null))
+    def do_resolve_infer(self, ass, l):
+        return self.resolve(ass.lhs)
+
     @match(Var)
     def do_resolve(self, v):
         return self.resolve(self.symbols[v])
