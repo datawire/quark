@@ -1,8 +1,8 @@
 from .match import match, choice, many, ntuple
 from .ast import (
     Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param, While, Switch, Case,
-    Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List, Break,
-    Continue, Null
+    Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List, Map, Null,
+    Break, Continue
 )
 from .symbols import Symbols, name, Self
 
@@ -434,6 +434,17 @@ class Code(object):
         self.add(ir.Assign(ir.Var(tmp), self.compile_call(mref, self.symbols[mref.name], [])))
         for el in l.elements:
             self.add(ir.Evaluate(self.compile_send(ref, ir.Var(tmp), "append", el)))
+        return ir.Var(tmp)
+
+    @match(Map)
+    def compile(self, m):
+        ref = self.types[m]
+        tmp = self.temp(self.compile(ref))
+        map = self.symbols[ref.name]
+        mref = types.Ref("%s.%s" % (ref.name, map.name.text), *ref.params)
+        self.add(ir.Assign(ir.Var(tmp), self.compile_call(mref, self.symbols[mref.name], [])))
+        for entry in m.entries:
+            self.add(ir.Evaluate(self.compile_send(ref, ir.Var(tmp), "__set__", self.compile(entry.key), self.compile(entry.value))))
         return ir.Var(tmp)
 
     @match(Null)
