@@ -208,6 +208,10 @@ def code(brk, target):
 def code(brk, target):
     return tr.Simple("continue")
 
+@match(Continue, Ruby)
+def code(brk, target):
+    return tr.Simple("next")
+
 ## Local
 
 @match(Local, choice(Python, Ruby))
