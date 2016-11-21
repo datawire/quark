@@ -188,4 +188,6 @@ namespace quark {
     void assertNotEqual(void a, void b);
 
     Any unsafe(void a);
+
+    void print(void o);
 }

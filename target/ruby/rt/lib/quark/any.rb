@@ -102,6 +102,14 @@ module Quark
     end
   end
 
+  def self.Any_asScalar(a)
+    if a.is_a?(Array) or a.is_a?(Hash)
+      return nil
+    else
+      return a
+    end
+  end
+
   def self.Any_asList(a)
     if a.is_a?(Array)
       return a

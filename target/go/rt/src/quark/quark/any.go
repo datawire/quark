@@ -93,6 +93,18 @@ func Any_asString(a interface{}) string {
 	}
 }
 
+func Any_asScalar(a interface{}) interface{} {
+        switch a.(type) {
+        case bool: return a
+        case int: return a
+        case string: return a
+        case float32: return a
+        case float64: return a
+        default:
+             return nil;
+        }
+}
+
 func Any_asList(a interface{}) *[]interface{} {
 	fmt.Print("===============")
 	switch i := a.(type) {

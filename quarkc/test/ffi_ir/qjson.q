@@ -1,3 +1,23 @@
+void testparse() {
+    Any a = parse("{\x22pi\x22: 3.14, \x22list\x22: [1, 2, 3, 4]}");
+    Map<Scalar,Any> m = a.asMap();
+    assertEqual(2, m.size());
+    Any v = m[unsafe("pi").asScalar()];
+    assertEqual("3.14", v);
+    List<Any> l = m[unsafe("list").asScalar()].asList();
+    assertEqual(4, l.size());
+}
+
+Any parse(String json) {
+    JSONBuilder builder = new JSONBuilder();
+    int consumed = parse_value(json, builder, 0, json.size());
+    if (consumed > 0) {
+        return builder.current.array[0];
+    } else {
+        return unsafe(null);
+    }
+}
+
 interface JSONHandler {
     void enterObject();
     void leaveObject();
@@ -10,6 +30,87 @@ interface JSONHandler {
     void visitFloat(String f);
     void visitBool(bool b);
     void visitNull();
+}
+
+class Frame {
+    String state;
+    String key;
+    Map<String,Any> object;
+    List<Any> array;
+}
+
+// XXX: we don't actually validate that JSONBuilder implements stuff
+class JSONBuilder extends JSONHandler {
+
+    List<Frame> stack;
+    Frame current;
+
+    JSONBuilder() {
+        stack = [];
+        current = new Frame();
+        current.state = "array";
+        current.array = [];
+    }
+
+    void add(Any any) {
+        switch (current.state) {
+        case "key":
+            current.key = any.asString();
+            current.state = "value";
+        case "value":
+            current.object[current.key] = any;
+            current.state = "key";
+        case "array":
+            current.array.append(any);
+        }
+    }
+
+    void enterObject() {
+        stack.append(current);
+        current = new Frame();
+        current.state = "key";
+        current.object = {};
+    }
+
+    void leaveObject() {
+        Any object = unsafe(current.object);
+        current = stack.remove(stack.size() - 1);
+        add(object);
+    }
+
+    void enterArray() {
+        stack.append(current);
+        current = new Frame();
+        current.state = "array";
+        current.array = [];
+    }
+
+    void leaveArray() {
+        Any array = unsafe(current.array);
+        current = stack.remove(stack.size() - 1);
+        add(array);
+    }
+
+    void visitString(String s) {
+        add(unsafe(s));
+    }
+
+    void visitInteger(String n) {
+        add(unsafe(n));
+    }
+
+    void visitFloat(String f) {
+        add(unsafe(f));
+    }
+
+    void visitBool(bool b) {
+        add(unsafe(b));
+    }
+
+    void visitNull() {
+        add(unsafe(null));
+    }
+
 }
 
 int parse_value(String json, JSONHandler handler, int offset, int limit) {

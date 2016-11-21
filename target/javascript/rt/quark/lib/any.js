@@ -96,6 +96,15 @@ function Any_asFloat(a) {
     }
 }
 
+exports.Any_asScalar = Any_asScalar
+function Any_asScalar(a) {
+    if (Array.isArray(a) || typeof(a) === "object" || a instanceof Map) {
+        return null
+    } else {
+        return a
+    }
+}
+
 exports.Any_asList = Any_asList
 function Any_asList(a) {
     if (Array.isArray(a)) {
@@ -107,7 +116,7 @@ function Any_asList(a) {
 
 exports.Any_asMap = Any_asMap
 function Any_asMap(a) {
-    if (type(a) === "object") {
+    if (typeof(a) === "object") {
         if (a instanceof Map) {
             return a
         } else if (a.constructor === Object) {

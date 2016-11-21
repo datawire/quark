@@ -74,6 +74,42 @@ public class Functions {
     }
 
 
+    public static Map<String,Object> Map_String_Any___init__() {
+        return new HashMap<String,Object>();
+    }
+    public static Object Map_String_Any___get__(Map<String,Object> map, String key) {
+        Object ret = map.get(key);
+        return null_check(ret);
+    }
+    public static void Map_String_Any___set__(Map<String,Object> map, String key, Object value) {
+        map.put(key, value);
+    }
+    public static int Map_String_Any_size(Map<String,Object> map) {
+        return map.size();
+    }
+    public static List<String> Map_String_Any_keys(Map<String,Object> map) {
+        return new ArrayList<String>(map.keySet());
+    }
+
+
+    public static Map<Object,Object> Map_Scalar_Any___init__() {
+        return new HashMap<Object,Object>();
+    }
+    public static Object Map_Scalar_Any___get__(Map<Object,Object> map, Object key) {
+        Object ret = map.get(key);
+        return null_check(ret);
+    }
+    public static void Map_Scalar_Any___set__(Map<Object,Object> map, Object key, Object value) {
+        map.put(key, value);
+    }
+    public static int Map_Scalar_Any_size(Map<Object,Object> map) {
+        return map.size();
+    }
+    public static List<Object> Map_Scalar_Any_keys(Map<Object,Object> map) {
+        return new ArrayList<Object>(map.keySet());
+    }
+
+
     public static Map<String,Integer> Map_String_int___init__() {
         return new HashMap<String,Integer>();
     }
@@ -266,6 +302,14 @@ public class Functions {
             return 0.0;
         }
         return 0.0;
+    }
+
+    public static Object Any_asScalar(Object a) {
+        if (a instanceof List || a instanceof Map) {
+            return null;
+        } else {
+            return a;
+        }
     }
 
     public static List<Object> Any_asList(Object a) {

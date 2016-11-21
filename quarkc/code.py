@@ -96,7 +96,7 @@ class Code(object):
             # rebind. In general navigation in typespace is clumsy
             # right now.
             klass = ir.Constructor
-            name = self.mangle(meth.name.text, *self.ref.params)
+            name = self.mangle(meth.parent, meth.name.text, *self.ref.params)
             ret = self.types.node(meth).bind(self.bindings).result
 
         old_asserts = self.asserts # don't reset asserts because Class checks for asserts, too
@@ -131,33 +131,44 @@ class Code(object):
 
     @match(basestring, many(types.Ref))
     def mangle(self, name, *params):
+        dfn = self.symbols[name]
+        return self.mangle(dfn, name, *params)
+
+    @match(Class, basestring, many(types.Ref))
+    def mangle(self, dfn, name, *params):
         ref = types.Ref(name, *params)
         ref = ref.bind(self.bindings)
-        return "_".join([name] + [self.mangle_param(p).replace(".", "_") for p in ref.params])
+        return "_".join([name] + [self.mangle_param(dfn, p).replace(".", "_") for p in ref.params])
 
-    @match(types.Ref)
-    def mangle_param(self, ref):
-        return "_".join([self.mangle_param(ref.name)] + [self.mangle_param(p).replace(".", "_") for p in ref.params])
+    @match(Class, types.Ref)
+    def mangle_param(self, dfn, ref):
+        params = [self.mangle_param(dfn, ref.name)]
+        if not isinstance(dfn, Primitive):
+            params.extend([self.mangle_param(dfn, p).replace(".", "_") for p in ref.params])
+        return "_".join(params)
 
-    @match("quark.int")
-    def mangle_param(self, sym):
+    @match(Class, "quark.int")
+    def mangle_param(self, dfn, sym):
         return "int"
 
-    @match("quark.String")
-    def mangle_param(self, sym):
+    @match(Class, "quark.String")
+    def mangle_param(self, dfn, sym):
         return "String"
 
-    @match("quark.Any")
-    def mangle_param(self, sym):
+    @match(Class, "quark.Any")
+    def mangle_param(self, dfn, sym):
         return "Any"
 
-    @match("quark.Scalar")
-    def mangle_param(self, sym):
+    @match(Class, "quark.Scalar")
+    def mangle_param(self, dfn, sym):
         return "Scalar"
 
-    @match(basestring)
-    def mangle_param(self, sym):
-        return sym
+    @match(Class, basestring)
+    def mangle_param(self, dfn, sym):
+        if isinstance(dfn, Primitive):
+            return "Any"
+        else:
+            return sym
 
     @match(basestring)
     def compile_ref(self, name):
@@ -205,11 +216,19 @@ class Code(object):
 
     @match("quark.List", many(types.Ref))
     def compile_bound(self, name, element):
-        return ir.List(self.compile(element))
+        dfn = self.symbols[element.name]
+        if isinstance(dfn, Primitive) and element.name not in ("quark.List", "quark.Map"):
+            return ir.List(self.compile(element))
+        else:
+            return ir.List(ir.Any())
 
     @match("quark.Map", many(types.Ref))
     def compile_bound(self, name, key, value):
-        return ir.Map(self.compile(key), self.compile(value))
+        dfn = self.symbols[value.name]
+        if isinstance(dfn, Primitive) and value.name not in ("quark.List", "quark.Map"):
+            return ir.Map(self.compile(key), self.compile(value))
+        else:
+            return ir.Map(self.compile(key), ir.Any())
 
     @match(basestring, many(types.Ref))
     def compile_bound(self, name, *params):
@@ -313,7 +332,7 @@ class Code(object):
         t = self.types[expr]
         assert isinstance(t, types.Ref)
         dfn = self.symbols[t.name]
-        return self.compile_call(t, dfn, expr, args)
+        return self.compile_call(t.bind(self.bindings), dfn, expr, args)
 
     @match(types.Ref, Method, Attr, [many(Expression)])
     def compile_call(self, ref, dfn, attr, args):
@@ -340,7 +359,24 @@ class Code(object):
     @match(types.Ref, Primitive, types.Ref, Method, ir.Expression, [many(ir.Expression)])
     def compile_call_primitive(self, ref, objdfn, methref, methdfn, expr, args):
         n = "%s_%s" % (self.mangle(name(objdfn), *ref.params), methdfn.name.text)
-        return ir.Invoke(self.compile_ref(n), expr, *args)
+        return self.cast(ref, ir.Invoke(self.compile_ref(n), expr, *args))
+
+    @match(types.Ref, ir.Expression)
+    def cast(self, ref, expr):
+        callable = self.types.node(ref)
+        dfn = self.symbols[callable.result.name]
+        if self.requires_cast(dfn, callable.result.name):
+            return ir.Cast(self.compile(callable.result), expr)
+        else:
+            return expr
+
+    @match(Primitive, basestring)
+    def requires_cast(self, dfn, name):
+        return name in ("quark.List", "quark.Map")
+
+    @match(Class, basestring)
+    def requires_cast(self, dfn, _):
+        return True
 
     @match(types.Ref, Primitive, types.Ref("quark.bool"), Method, ir.Expression, [many(ir.Expression)])
     def compile_call_primitive(self, ref, objdfn, methref, methdfn, expr, args):

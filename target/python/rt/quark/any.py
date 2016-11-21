@@ -66,6 +66,12 @@ def Any_asString(a):
     else:
         return u""
 
+def Any_asScalar(a):
+    if isinstance(a, (list, tuple, dict)):
+        return None
+    else:
+        return a
+
 def Any_asList(a):
     if isinstance(a, list):
         return a

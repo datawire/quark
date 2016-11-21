@@ -7,3 +7,10 @@ from .list_any import *
 from .list_string import *
 from .map_string_int import *
 from .map_string_string import *
+from .map_string_any import *
+from .map_scalar_any import *
+
+import sys
+
+def print_(o):
+    sys.stdout.write("%s\n" % o);
