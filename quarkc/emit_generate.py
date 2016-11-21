@@ -188,7 +188,7 @@ def generate(parent, ns, target):
 def ffi_namespace(ns, target):
     _, dfns, _ = split(ns.children, isa(Check,TestClass), isa(Definition,Namespace))
     for dfn in dfns:
-        yield tr.Simple("exports.{name} = require(\"{module}\")".format(
+        yield tr.Simple("exports.{name} = require(\"{module}\").impl".format(
             name = target.nameof(dfn),
             module = "/".join(require_path(ns, dfn, target))))
 
@@ -554,7 +554,7 @@ def define_imports(dfn, target, imports):
             ref_dfn_alias = "_".join(module_path(ref_dfn, target))
             imports[ref_module_path] = dict(module = "/".join(ref_module_path),
                                             alias = ref_dfn_alias)
-            ref_target_name = ref_dfn_alias
+            ref_target_name = "%s.impl" % ref_dfn_alias
         else:
             # no need to import at all
             ref_target_name = ref_dfn_target_name

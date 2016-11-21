@@ -136,7 +136,7 @@ def code(fun, target):
                 name=target.nameof(fun.name),
                 params=", ".join(expr(p, target) for p in fun.params)),
             code(fun.body, target)),
-        tr.Simple("module.exports = {name}".format(
+        tr.Simple("module.exports.impl = {name}".format(
                 name=target.nameof(fun.name)))
         ))
 
@@ -311,7 +311,7 @@ def code(iface, target):
                 name = target.nameof(iface.name)),
             tr.Block(
             )),
-        tr.Simple("module.exports = {name}".format(
+        tr.Simple("module.exports.impl = {name}".format(
                 name = target.nameof(iface.name))),
     )) + tuple(code(m, target) for m in iface.methods))
 
@@ -567,7 +567,7 @@ def code(constructor, target):
                 params=", ".join(expr(p, target) for p in constructor.params)),
             code(constructor.body, target)
         ),
-        tr.Simple("module.exports = {name}".format(
+        tr.Simple("module.exports.impl = {name}".format(
             name = clazz)),
         ))
 
