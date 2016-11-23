@@ -239,6 +239,19 @@ class Scalar(NativeType):
 class Callable(NativeType):
     pass
 
+# a representation of a native type in a boxed context, like Integer for java int
+class Boxed(NativeType):
+    @match(NativeType)
+    def __init__(self, type):
+        self.type = type
+
+    @property
+    def children(self):
+        yield self.type
+
+    def __repr__(self):
+        return self.repr(self.type)
+
 class Map(NativeType):
     @match(choice(Bool,String,Int,Float,Scalar), NativeType)
     def __init__(self, key, value):
@@ -1068,6 +1081,67 @@ class AssertEqual(NativeTestAssertion):
 
 class AssertNotEqual(NativeTestAssertion):
     pass
+
+
+# a mapping of replacement keys to target-rendered expressions
+class TemplateContext(IR):
+    @match(many((basestring, choice(AbstractType, Expression))))
+    def __init__(self, *mappings):
+        self.mappings = mappings
+
+    @property
+    def children(self):
+        for name, expr in self.mappings:
+            yield expr
+
+    def __repr__(self):
+        return self.repr(*self.mappings)
+
+# a template text that will have template replacement variables
+# substituted with a target-evaluated TemplateContext. We'll just use
+# string.format facility, so template replacement variables should be
+# encoded as {replaceme}
+
+class TemplateText(IR):
+    @match(basestring, (many(basestring),), basestring)
+    def __init__(self, target, imports, template):
+        self.target = target
+        self.imports = imports
+        self.template = template
+
+    @property
+    def children(self):
+        if False: yield
+
+    def __repr__(self):
+        return self.repr(self.target, self.imports, tree.multiline(self.template))
+
+# a native function instantiated by frontend. The target will
+# substitute the function body with the TemplateText that matches
+# target by name
+class NativeFunction(Definition):
+    @match(Name, AbstractType, many(Param), TemplateContext, many(TemplateText))
+    def __init__(self, name, type, *args):
+        self.name = name
+        self.type = type
+        self.params = [p for p in args if isinstance(p, Param)]
+        self.context = [p for p in args if isinstance(p, TemplateContext)]
+        assert len(self.context) == 1
+        self.context = self.context[0]
+        self.cases = [p for p in args if isinstance(p, TemplateText)]
+
+    @property
+    def children(self):
+        yield self.name
+        yield self.type
+        for p in self.params:
+            yield p
+        yield self.context
+        for c in self.cases:
+            yield c
+
+    def __repr__(self):
+        return self.repr(self.name, self.type, *(self.params + [self.context] + self.cases))
 
 @match(choice(Package, Namespace))
 def restructure(pkg):

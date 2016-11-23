@@ -1,5 +1,6 @@
 from contextlib import contextmanager
 from collections import deque
+from textwrap import dedent
 
 from .match import match, many
 
@@ -11,8 +12,27 @@ class _Indent(object):
     @contextmanager
     def __call__(self):
         self.indent += 1
-        yield self.indent
+        yield " " * self.indent * 2
         self.indent -= 1
+
+_INDENT = _Indent()
+
+class multiline(str):
+    """ A string that reprs as a triple-quoted multiline python string """
+    def __repr__(self):
+        parts = dedent(self).split("\n")
+        if len(parts) == 1:
+            return repr(parts[0])
+        ret = ["'''\\"]
+        with _INDENT() as indent:
+            for part in parts:
+                r = repr('\'"' + part) # force ' repr
+                assert r.startswith('\'\\\'"'), "String repr hack assumptions are wrong"
+                q = r[4:-1] # drop fluff
+                ret.append(indent + q)
+            ret.append(indent + "'''")
+            return "\n".join(ret)
+
 
 # should pull in stuff from types base class here... would enable
 # comparisons and stuff for testing, should possibly use pyrsistent or
@@ -33,14 +53,11 @@ class _Tree(object):
     def children(self):
         assert False, "%s must implement children" % self.__class__
 
-    __INDENT = _Indent()
-
     def repr(self, *args, **kwargs):
-        with self.__INDENT() as i:
+        with _INDENT() as indent:
             sargs = [repr(a) for a in args]
             sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
             if sum(map(len, sargs)) > 60:
-                indent = " " * i * 2
                 first = "\n" + indent
                 sep = ",\n" + indent
             else:
