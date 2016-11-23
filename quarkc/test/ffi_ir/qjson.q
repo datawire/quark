@@ -1,5 +1,5 @@
 void testparse() {
-    Any a = parse("{\x22pi\x22: 3.14, \x22list\x22: [1, 2, 3, 4]}");
+    Any a = parse("{\"pi\": 3.14, \"list\": [1, 2, 3, 4]}");
     Map<Scalar,Any> m = a.asMap();
     assertEqual(2, m.size());
     Any v = m[unsafe("pi").asScalar()];
@@ -123,7 +123,7 @@ int parse_value(String json, JSONHandler handler, int offset, int limit) {
         consumed = parse_object(json, handler, idx, limit);
     case "[":
         consumed = parse_array(json, handler, idx, limit);
-    case "\x22":
+    case "\"":
         consumed = parse_string(json, handler, idx, limit);
     case "-", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
         consumed = parse_number(json, handler, idx, limit);
@@ -141,8 +141,9 @@ int trim_whitespace(String json, int offset, int limit) {
 
     while (idx < limit) {
         switch (json.substring(idx, idx + 1)) {
-        case " ": // whitespace
+        case " ", "\t", "\n", "\r": // whitespace
             idx = idx + 1;
+            continue;
         }
         break;
     }
@@ -247,7 +248,7 @@ int parse_array(String json, JSONHandler handler, int offset, int limit) {
 
 int parse_string(String json, JSONHandler handler, int offset, int limit) {
     int idx = offset;
-    int consumed = expect(json, "\x22", offset, limit);
+    int consumed = expect(json, "\"", offset, limit);
     if (consumed == 0) { return 0; }
     idx = idx + consumed;
 
@@ -255,7 +256,7 @@ int parse_string(String json, JSONHandler handler, int offset, int limit) {
     while (idx < limit) {
         String c = json.substring(idx, idx + 1);
         switch (c) {
-        case "\x22":
+        case "\"":
             // XXX: should decode properly
             handler.visitString(json.substring(start, idx));
             return idx + 1 - offset;
@@ -281,7 +282,7 @@ int parse_number(String json, JSONHandler handler, int offset, int limit) {
             dot = true;
             idx = idx + 1;
             continue;
-        case " ", ",", "]", "}": // whitespace
+        case " ", "\t", "\n", "\r", ",", "]", "}": // whitespace
             String text = json.substring(start, idx);
             if (dot) {
                 handler.visitFloat(text);
@@ -307,7 +308,7 @@ int parse_constant(String json, JSONHandler handler, int offset, int limit) {
         case "t", "r", "u", "e", "f", "a", "l", "s", "e", "n", "u", "l", "l":
             idx = idx + 1;
             continue;
-        case " ", ",", "]", "}":
+        case " ", "\t", "\r", "\n", ",", "]", "}": // whitespace
             break;
         }
         return 0;

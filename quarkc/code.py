@@ -447,8 +447,17 @@ class Code(object):
                 elif next == "n":
                     value += "\n"
                     idx += 2
-                elif next == "\r":
+                elif next == "r":
                     value += "\r"
+                    idx += 2
+                elif next == "t":
+                    value += "\t"
+                    idx += 2
+                elif next == '"':
+                    value += '"'
+                    idx += 2
+                elif next == '\\':
+                    value += '\\'
                     idx += 2
                 else:
                     assert False, "bad string literal: %s" % s.text
