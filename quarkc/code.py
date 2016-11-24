@@ -425,11 +425,11 @@ class Code(object):
     def compile_call_boolop(self, ref, objdfn, methref, methname, expr, args):
         return ir.And(expr, *args)
 
-    @match(types.Ref, Function, Var, [many(Expression)])
+    @match(types.Ref, choice(Macro, Function), Var, [many(Expression)])
     def compile_call(self, ref, dfn, var, args):
         return self.compile_call(ref, dfn, var.name.text, args)
 
-    @match(types.Ref, Function, basestring, [many(Expression)])
+    @match(types.Ref, choice(Macro, Function), basestring, [many(Expression)])
     def compile_call(self, ref, dfn, fun, args):
         return ir.Invoke(self.compile_ref(name(dfn)), *[self.compile(a) for a in args])
 

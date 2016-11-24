@@ -3,6 +3,6 @@ macro void print(Any o) $java{
 };
 
 void test() {
-    print(unsafe(3));
+    print(unsafe("yay, it works!!!"));
     assertEqual(1, 1);
 }
