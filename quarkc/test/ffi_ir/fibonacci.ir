@@ -1,22 +1,54 @@
     Package(
+        NativeFunction(Name("pf:pf.quark.int___eq__"),
+                       Bool(), Param("a", Int()), Param("b", Int()),
+                       TemplateContext(("a", Var("a")),
+                                     ("b", Var("b"))),
+                       TemplateText("java",       (), "return {a} == {b};"),
+                       TemplateText("python",     (),
+                                    """
+                                    if {a} == {b}:
+                                        return True
+                                    return False
+                                    """),
+                       TemplateText("go",         (), "return {a} == {b}"),
+                       TemplateText("ruby",       (), "return {a} == {b}"),
+                       TemplateText("javascript", (), "return {a} == {b}")),
+        NativeFunction(Name("pf:pf.quark.int___add__"),
+                       Int(), Param("a", Int()), Param("b", Int()),
+                       TemplateContext(("a", Var("a")),
+                                     ("b", Var("b"))),
+                       TemplateText("java",       (), "return {a} + {b};"),
+                       TemplateText("python",     (), "return {a} + {b}"),
+                       TemplateText("go",         (), "return {a} + {b}"),
+                       TemplateText("ruby",       (), "return {a} + {b}"),
+                       TemplateText("javascript", (), "return {a} + {b}")),
+        NativeFunction(Name("pf:pf.quark.int___sub__"),
+                       Int(), Param("a", Int()), Param("b", Int()),
+                       TemplateContext(("a", Var("a")),
+                                     ("b", Var("b"))),
+                       TemplateText("java",       (), "return {a} - {b};"),
+                       TemplateText("python",     (), "return {a} - {b}"),
+                       TemplateText("go",         (), "return {a} - {b}"),
+                       TemplateText("ruby",       (), "return {a} - {b}"),
+                       TemplateText("javascript", (), "return {a} - {b}")),
         Function(
             Name("pf:pf.fib"), Int(),
             Param("i", Int()),
             Block(
-                If(Invoke(Ref("quark:quark.int___eq__"), Var("i"), IntLit(0)),
+                If(Invoke(Ref("pf:pf.quark.int___eq__"), Var("i"), IntLit(0)),
                    Block(
                        Return(IntLit(0))),
                    Block(
-                       If(Invoke(Ref("quark:quark.int___eq__"), Var("i"), IntLit(1)),
+                       If(Invoke(Ref("pf:pf.quark.int___eq__"), Var("i"), IntLit(1)),
                           Block(
                               Return(IntLit(1))),
                           Block(
                               Return(Invoke(
-                                  Ref("quark:quark.int___add__"),
+                                  Ref("pf:pf.quark.int___add__"),
                                   Invoke(Ref("pf:pf.fib"),
-                                         Invoke(Ref("quark:quark.int___sub__"), Var("i"), IntLit(1))),
+                                         Invoke(Ref("pf:pf.quark.int___sub__"), Var("i"), IntLit(1))),
                                   Invoke(Ref("pf:pf.fib"),
-                                         Invoke(Ref("quark:quark.int___sub__"), Var("i"), IntLit(2)))
+                                         Invoke(Ref("pf:pf.quark.int___sub__"), Var("i"), IntLit(2)))
                               ))
                           )
                        )
