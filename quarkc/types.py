@@ -3,7 +3,7 @@ from .errors import NodeError, InvalidInvocation, InvalidAssignment, UnresolvedT
 from .ast import (
     AST, Expression, Statement, Block, Call, Attr, Function, Method, Type, Import, Class, Assign, Return, ExprStmt,
     TypeParam, If, While, Switch, Case, Declaration, Package, String, Number, Bool, Var, Local, Name, Field, Callable,
-    Definition, List, Map, Entry, Null, Break, Continue
+    Definition, List, Map, Entry, Null, Break, Continue, Macro, Native, NativeCase, Fixed
 )
 from .symbols import Symbols, name, Self
 from collections import OrderedDict
@@ -62,7 +62,7 @@ class Types(object):
     def unresolved_error(self, n, un):
         return None
 
-    @match(choice(Class, Function, Method, [many(Package, min=1)]))
+    @match(choice(Macro, Class, Function, Method, [many(Package, min=1)]))
     def is_type(self, _):
         return True
 
@@ -84,7 +84,7 @@ class Types(object):
             else:
                 yield d
 
-    @match(Function)
+    @match(choice(Function, Macro))
     def define(self, fun):
         self.types[name(fun)] = self.callable(fun)
 
@@ -123,12 +123,12 @@ class Types(object):
         return types.Ref(self.symbols.qualify(type), *[self.ref(p) for p in params])
 
 
-    @match(choice(Function, Class, Declaration, Package, [many(Package, min=1)], Expression, Type, Local,
+    @match(choice(Macro, Function, Class, Declaration, Package, [many(Package, min=1)], Expression, Type, Local,
                   Return, Assign, ExprStmt, Self))
     def has_type(self, _):
         return True
 
-    @match(choice(Name, Block, If, While, TypeParam, Switch, Case, Break, Continue, Entry))
+    @match(choice(Native, NativeCase, Fixed, Name, Block, If, While, TypeParam, Switch, Case, Break, Continue, Entry))
     def has_type(self, _):
         return False
 
@@ -136,7 +136,7 @@ class Types(object):
     def has_type(self, imp):
         return True if imp.alias else False
 
-    @match(choice(Class, Function, Method, Declaration, Package, Expression, Type, Local, Return, Assign, Import,
+    @match(choice(Macro, Class, Function, Method, Declaration, Package, Expression, Type, Local, Return, Assign, Import,
                   ExprStmt, Self))
     def resolve(self, node):
         if node in self.resolved:
@@ -294,7 +294,7 @@ class Types(object):
         params = type.parameters or ()
         return self.types.resolve(types.Ref(self.symbols.qualify(type), *[self.resolve(p) for p in params]))
 
-    @match(choice(Method, Function))
+    @match(choice(Macro, Method, Function))
     def do_resolve(self, meth):
         if meth.type:
             return self.types.get(self.types[name(meth.parent)], meth.name.text)

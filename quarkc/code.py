@@ -2,7 +2,7 @@ from .match import match, choice, many, ntuple
 from .ast import (
     Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param, While, Switch, Case,
     Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List, Map, Null,
-    Break, Continue
+    Break, Continue, Macro, Native, NativeCase, Fixed
 )
 from .symbols import Symbols, name, Self
 
@@ -32,7 +32,7 @@ class Code(object):
     def is_top(self, dfn):
         return True
 
-    @match(Function)
+    @match(choice(Macro, Function))
     def is_top(self, fun):
         return True if fun.body else False
 
@@ -53,16 +53,46 @@ class Code(object):
         # XXX
         return ir.Package(*definitions)
 
-    @match(Function)
+    @match(choice(Function, Macro))
     def compile(self, fun):
         self.asserts = 0
         sym = name(fun)
         t = self.types[fun.type]
-        args = [self.compile_def(sym), self.compile(t)] + self.compile(fun.params) + [self.compile(fun.body)]
+
+        args = [self.compile_def(sym), self.compile(t)] + self.compile(fun.params)
+        if isinstance(fun, Macro):
+            args += self.compile(fun.body)
+        else:
+            args += [self.compile(fun.body)]
+
         if self.asserts:
             return ir.Check(args[0], *args[2:])
         else:
-            return ir.Function(*args)
+            if isinstance(fun, Macro):
+                return ir.NativeFunction(*args)
+            else:
+                return ir.Function(*args)
+
+    @match(Native)
+    def compile(self, native):
+        mappings = [(name, self.compile(t)) for name, t in self.bindings.items()]
+        for c in native.cases:
+            for cc in c.children:
+                if isinstance(cc, Var):
+                    mappings.append((cc.name.text, self.compile(cc)))
+        return [ir.TemplateContext(*mappings)] + [self.compile(c) for c in native.cases]
+
+    @match(NativeCase)
+    def compile(self, case):
+        return ir.TemplateText(case.name, (), "".join(self.compile_native(c) for c in case.children))
+
+    @match(Fixed)
+    def compile_native(self, fixed):
+        return fixed.text
+
+    @match(Var)
+    def compile_native(self, var):
+        return "{%s}" % var.name.text
 
     @match(Class)
     def compile(self, cls):
