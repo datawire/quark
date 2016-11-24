@@ -434,7 +434,7 @@ class Param(Declaration):
     
 class Function(Definition):
 
-    @match(Name, AbstractType, many(Param), Block)
+    @match(Name, AbstractType, many(Param), choice(Block, lazy("NativeBlock")))
     def __init__(self, name, type, *args):
         self.name = name
         self.type = type
@@ -1119,29 +1119,33 @@ class TemplateText(IR):
 # a native function instantiated by frontend. The target will
 # substitute the function body with the TemplateText that matches
 # target by name
-class NativeFunction(Definition):
+class NativeFunction(Function):
     @match(Name, AbstractType, many(Param), TemplateContext, many(TemplateText))
     def __init__(self, name, type, *args):
-        self.name = name
-        self.type = type
-        self.params = [p for p in args if isinstance(p, Param)]
-        self.context = [p for p in args if isinstance(p, TemplateContext)]
-        assert len(self.context) == 1
-        self.context = self.context[0]
-        self.cases = [p for p in args if isinstance(p, TemplateText)]
+        params = [p for p in args if isinstance(p, Param)]
+        context = [p for p in args if isinstance(p, TemplateContext)]
+        assert len(context) == 1
+        context = context[0]
+        cases = [p for p in args if isinstance(p, TemplateText)]
+        self.__init__(name, type, *(params + [NativeBlock(context, *cases)]))
+
+# a native function block.  The target will
+# substitute the function body with the TemplateText that matches
+# target by name
+class NativeBlock(IR):
+    @match(TemplateContext, many(TemplateText))
+    def __init__(self, context, *cases):
+        self.context = context
+        self.cases = cases
 
     @property
     def children(self):
-        yield self.name
-        yield self.type
-        for p in self.params:
-            yield p
         yield self.context
         for c in self.cases:
             yield c
 
     def __repr__(self):
-        return self.repr(self.name, self.type, *(self.params + [self.context] + self.cases))
+        return self.repr(self.context, *self.cases)
 
 @match(choice(Package, Namespace))
 def restructure(pkg):
