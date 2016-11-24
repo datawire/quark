@@ -16,7 +16,7 @@ from .match import match, opt, choice
 
 from .emit_target import Target, Python, Ruby, Go, Java, Javascript
 
-from .tr import File, Block, Simple, Compound, Comment
+from .tr import File, Block, Simple, Compound, Comment, Box
 
 class Indent(object):
     def __init__(self, indent=4, level=0, postprefix=""):
@@ -55,6 +55,11 @@ def format(stmt, target, indent):
 def format(stmt, target, indent):
     return indent(stmt.stmt, ";")
 
+## Box of text
+
+@match(Box, Target, Indent)
+def format(box, target, indent):
+    return indent(box.box)
 
 ## Block
 

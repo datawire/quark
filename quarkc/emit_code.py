@@ -18,7 +18,8 @@ from .ir import (IR, Function, Interface, Class, Check, If,
                  Message, Field, Method, Constructor,
                  AssertEqual, AssertNotEqual, Expression,
                  Null, Break, Continue,
-                 TestClass, TestMethod)
+                 TestClass, TestMethod,
+                 NativeBlock)
 from . import tr
 
 from .emit_target import Target, Python, Ruby, Java, Go, Javascript
@@ -32,6 +33,22 @@ def opt_expr(glue, nd, target, default=""):
 @match(basestring, None, Target, opt(basestring))
 def opt_expr(glue, nd, target, default=""):
     return default
+
+## native block
+
+@match(NativeBlock, Target)
+def code(block, target):
+    context = dict((k,expr(v,target)) for k,v in block.context.mappings)
+    tgt = target.__class__.__name__.lower()
+    for text in block.cases:
+        if text.target.lower() == tgt:
+            try:
+                return tr.Block(tr.Box(text.template.format(**context)))
+            except KeyError, ke:
+                print("%s not in %s" % (ke, context.keys()))
+    assert False, "Fronted did not supply a valid {target} TextTemplate for {fun}".format(
+        target = tgt, fun = target.q.parent(block).name)
+
 
 ## Function
 

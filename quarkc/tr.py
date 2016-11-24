@@ -1,6 +1,7 @@
 ##
+from textwrap import dedent
 from match import match, many, lazy, choice, opt
-from .tree import _Tree
+from .tree import _Tree, multiline
 
 class TR(_Tree):
     @match()
@@ -75,6 +76,14 @@ class Simple(Statement):
 
     def __repr__(self):
         return self.repr(self.stmt)
+
+class Box(Statement):
+    @match(basestring)
+    def __init__(self, box):
+        self.box = dedent(box)
+
+    def __repr__(self):
+        return self.repr(multiline(self.box))
 
 class Import(Simple):
     pass
