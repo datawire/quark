@@ -59,7 +59,10 @@ def format(stmt, target, indent):
 
 @match(Box, Target, Indent)
 def format(box, target, indent):
-    return indent(box.box)
+    txt = box.box
+    if txt.startswith("\n"):
+        txt = txt[1:]
+    return indent(txt)
 
 ## Block
 
