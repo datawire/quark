@@ -1,6 +1,6 @@
 from .ast import (
     AST, Package, Callable, Class, Declaration, TypeParam, Import, Method, Type, Var, String, Number, Bool, If,
-    While, Name, Function, Interface
+    While, Name, Function, Interface, NativeFunction
 )
 from .ast import coder
 from .match import match, many, choice
@@ -41,7 +41,7 @@ def name(path):
     return ".".join([n.text for n in path])
 
 def definitions():
-    return choice(Function, Class, Interface, Method, Declaration, TypeParam)
+    return choice(NativeFunction, Function, Class, Interface, Method, Declaration, TypeParam)
 
 @match(choice(definitions(), Self))
 def depackage(dfn):

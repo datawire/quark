@@ -23,14 +23,18 @@ class multiline(str):
         parts = dedent(self).split("\n")
         if len(parts) == 1:
             return repr(parts[0])
-        ret = ["'''\\"]
+        if parts[0]:
+            ret = ["'''\\"]
+        else:
+            ret = ["'''"]
+            parts = parts[1:]
         with _INDENT() as indent:
             for part in parts:
                 r = repr('\'"' + part) # force ' repr
                 assert r.startswith('\'\\\'"'), "String repr hack assumptions are wrong"
                 q = r[4:-1] # drop fluff
                 ret.append(indent + q)
-            ret.append(indent + "'''")
+            ret[-1] += "'''"
             return "\n".join(ret)
 
 

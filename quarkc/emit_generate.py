@@ -15,7 +15,8 @@
 from collections import OrderedDict
 from .match import match, many, choice
 from .ir import (Root, Package, Namespace, Definition,
-                 Check, Function, Ref, ExternalPackage, TestClass)
+                 Check, Function, Ref, ExternalPackage, TestClass,
+                 NativeImport)
 from .tree import walk_dfs, isa, split
 from . import tr
 from .emit_target import Target, Go, Ruby, Java, Python, Javascript
@@ -347,7 +348,11 @@ def imports(dfn, target):
     imports = OrderedDict()
     define_imports(dfn, target, imports)
     for key, value in imports.items():
-        yield tr.Simple("import \"{module}\"".format(**value))
+        if value.get("alias"):
+            imp = "import {alias} \"{module}\""
+        else:
+            imp = "import \"{module}\""
+        yield tr.Simple(imp.format(**value))
 
 @match(Namespace, Go)
 def imports(ns, target):
@@ -370,9 +375,8 @@ def imports(dfn, target):
     """ emit needed import statements """
     imports = OrderedDict()
     define_imports(dfn, target, imports)
-    assert not imports
-    # java fully qualify uses
-    if False: yield
+    for key, value in imports.items():
+        yield tr.Simple("import {module}".format(**value))
 
 @match(Definition, Ruby)
 def imports(dfn, target):
@@ -419,6 +423,11 @@ def imports(dfn, target):
     yield tr.Simple("import static org.hamcrest.CoreMatchers.equalTo")
     yield tr.Simple("import org.junit.Test")
 
+def native_imports(dfn, target):
+    for imp in filter(isa(NativeImport), walk_dfs(dfn)):
+        if target.q.parent(imp).target.lower() == target.__class__.__name__.lower():
+            yield imp
+
 @match(Definition, Go, dict)
 def define_imports(dfn, target, imports):
     """For all refs inside definition, calculate required import
@@ -439,6 +448,9 @@ def define_imports(dfn, target, imports):
             ref_target_name = ref_dfn_target_name
         target.define_import(dfn, ref, ref_target_name)
 
+    for imp in native_imports(dfn, target):
+        imports[imp.module] = dict(module = imp.module,
+                                   alias = imp.alias or imp.module.split("/")[-1])
 
 @match(Definition, Python, dict)
 def define_imports(dfn, target, imports):
@@ -467,6 +479,9 @@ def define_imports(dfn, target, imports):
             ref_target_name = ref_dfn_target_name
         target.define_import(dfn, ref, ref_target_name)
 
+    for imp in native_imports(dfn, target):
+        imports[imp.module] = dict(module = imp.module)
+
 @match(Definition, Java, dict)
 def define_imports(dfn, target, imports):
     """For all refs inside definition, calculate required import
@@ -482,6 +497,9 @@ def define_imports(dfn, target, imports):
         else:
             ref_target_name = ".".join(ref_module_path)
         target.define_import(dfn, ref, ref_target_name)
+
+    for imp in native_imports(dfn, target):
+        imports[imp.module] = dict(module = imp.module)
 
 @match(Namespace, Java, dict)
 def define_imports(ns, target, imports):
@@ -519,6 +537,10 @@ def define_imports(dfn, target, imports):
             ref_dfn_target_name = target.nameof(ref_dfn)
             ref_target_name = ref_dfn_target_name
         target.define_import(dfn, ref, ref_target_name)
+
+    for imp in native_imports(dfn, target):
+        imports[imp.module] = dict(require = "require",
+                                   module = imp.module)
 
 @match(Definition, Ruby)
 def module_ffi_name(dfn, target):

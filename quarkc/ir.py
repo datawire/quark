@@ -1083,6 +1083,22 @@ class AssertNotEqual(NativeTestAssertion):
     pass
 
 
+
+# Import of code oustide of quark to quark native functions
+
+class NativeImport(IR):
+    @match(basestring, choice(basestring, None))
+    def __init__(self, module, alias):
+        self.module = module
+        self.alias = alias
+
+    @property
+    def children(self):
+        if False: yield
+
+    def __repr__(self):
+        return self.repr(self.module, self.alias)
+
 # a mapping of replacement keys to target-rendered expressions
 class TemplateContext(IR):
     @match(many((basestring, choice(AbstractType, Expression))))
@@ -1103,7 +1119,7 @@ class TemplateContext(IR):
 # encoded as {replaceme}
 
 class TemplateText(IR):
-    @match(basestring, (many(basestring),), basestring)
+    @match(basestring, (many(NativeImport),), basestring)
     def __init__(self, target, imports, template):
         self.target = target
         self.imports = imports
@@ -1111,7 +1127,8 @@ class TemplateText(IR):
 
     @property
     def children(self):
-        if False: yield
+        for imp in self.imports:
+            yield imp
 
     def __repr__(self):
         return self.repr(self.target, self.imports, tree.multiline(self.template))

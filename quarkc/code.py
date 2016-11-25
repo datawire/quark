@@ -2,7 +2,7 @@ from .match import match, choice, many, ntuple
 from .ast import (
     Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param, While, Switch, Case,
     Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List, Map, Null,
-    Break, Continue
+    Break, Continue, NativeFunction, NativeBlock, Fixed
 )
 from .symbols import Symbols, name, Self
 
@@ -32,7 +32,7 @@ class Code(object):
     def is_top(self, dfn):
         return True
 
-    @match(Function)
+    @match(choice(NativeFunction, Function))
     def is_top(self, fun):
         return True if fun.body else False
 
@@ -53,16 +53,47 @@ class Code(object):
         # XXX
         return ir.Package(*definitions)
 
-    @match(Function)
+    @match(choice(Function, NativeFunction))
     def compile(self, fun):
         self.asserts = 0
-        sym = name(fun)
         t = self.types[fun.type]
-        args = [self.compile_def(sym), self.compile(t)] + self.compile(fun.params) + [self.compile(fun.body)]
+
+        if isinstance(fun, NativeFunction):
+            sym = name(fun).split("::")[1]
+        else:
+            sym = name(fun)
+
+        args = [self.compile_def(sym), self.compile(t)] + self.compile(fun.params)
+        if isinstance(fun, NativeFunction):
+            args += self.compile(fun.body)
+        else:
+            args += [self.compile(fun.body)]
+
         if self.asserts:
             return ir.Check(args[0], *args[2:])
         else:
-            return ir.Function(*args)
+            if isinstance(fun, NativeFunction):
+                return ir.NativeFunction(*args)
+            else:
+                return ir.Function(*args)
+
+    @match(NativeBlock)
+    def compile(self, block):
+        mappings = [(name, self.compile(t)) for name, t in self.bindings.items()]
+        for c in block.children:
+            if isinstance(c, Var):
+                mappings.append((c.name.text, self.compile(c)))
+        return [ir.TemplateContext(*mappings),
+                ir.TemplateText(block.target, tuple(ir.NativeImport(self.unquote(m), a) for m, a in block.imports),
+                                "".join(self.compile_native(c) for c in block.children))]
+
+    @match(Fixed)
+    def compile_native(self, fixed):
+        return fixed.text
+
+    @match(Var)
+    def compile_native(self, var):
+        return "{%s}" % var.name.text
 
     @match(Class)
     def compile(self, cls):
@@ -395,11 +426,11 @@ class Code(object):
     def compile_call_boolop(self, ref, objdfn, methref, methname, expr, args):
         return ir.And(expr, *args)
 
-    @match(types.Ref, Function, Var, [many(Expression)])
+    @match(types.Ref, choice(NativeFunction, Function), Var, [many(Expression)])
     def compile_call(self, ref, dfn, var, args):
         return self.compile_call(ref, dfn, var.name.text, args)
 
-    @match(types.Ref, Function, basestring, [many(Expression)])
+    @match(types.Ref, choice(NativeFunction, Function), basestring, [many(Expression)])
     def compile_call(self, ref, dfn, fun, args):
         return ir.Invoke(self.compile_ref(name(dfn)), *[self.compile(a) for a in args])
 
@@ -435,14 +466,18 @@ class Code(object):
 
     @match(String)
     def compile(self, s):
+        return ir.StringLit(self.unquote(s.text))
+
+    @match(basestring)
+    def unquote(self, s):
         value = ""
         idx = 1
-        while idx < len(s.text) - 1:
-            c = s.text[idx]
-            next = s.text[idx + 1]
+        while idx < len(s) - 1:
+            c = s[idx]
+            next = s[idx + 1]
             if c == "\\":
                 if next == "x":
-                    value += chr(int(s.text[idx+2:idx+4], 16))
+                    value += chr(int(s[idx+2:idx+4], 16))
                     idx += 4
                 elif next == "n":
                     value += "\n"
@@ -460,11 +495,11 @@ class Code(object):
                     value += '\\'
                     idx += 2
                 else:
-                    assert False, "bad string literal: %s" % s.text
+                    assert False, "bad string literal: %s" % s
             else:
                 value += c
                 idx += 1
-        return ir.StringLit(value)
+        return value
 
     @match(Bool)
     def compile(self, b):
