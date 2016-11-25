@@ -16,7 +16,7 @@ import pytest
 
 from quarkc.ir import (
     Name, Function, Int, Param, Return, Invoke, Ref, Local, Package, Var, While, If, Block, Call,
-    Void, Send
+    Void, Send, Doc
 )
 
 NAMES = [
@@ -31,6 +31,14 @@ def test_name(args, package, path):
     n = Name(*args)
     assert n.package == package
     assert n.path == path
+
+
+def test_doc():
+    e = Var("goo")
+    a = Doc("A goo")(e)
+    assert e is a
+    assert len(e.annotations) == 1
+    assert e.annotations[0].doc == "A goo"
 
 LOCALS = [
     (("bar", Ref("pkg:x.foo")), "pkg", ("x", "foo",), "bar"),

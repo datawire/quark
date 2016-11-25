@@ -2,7 +2,7 @@ from contextlib import contextmanager
 from collections import deque
 from textwrap import dedent
 
-from .match import match, many
+from .match import match, many, lazy
 
 
 class _Indent(object):
@@ -34,37 +34,61 @@ class multiline(str):
             return "\n".join(ret)
 
 
+def pretty(node, args, kwargs, annotations):
+    with _INDENT() as indent:
+        if annotations:
+            prefix = repr(annotations[0])
+            sargs = [pretty(node, args, kwargs, annotations[1:])]
+        else:
+            prefix = node.__class__.__name__
+            sargs = [repr(a) for a in args]
+            sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
+        if sum(map(len, sargs)) + len(prefix) > 80:
+            first = "\n" + indent
+            sep = ",\n" + indent
+        else:
+            first = ""
+            sep = ", "
+        return "%s(%s%s)" % (prefix, first, sep.join(sargs))
+
 # should pull in stuff from types base class here... would enable
 # comparisons and stuff for testing, should possibly use pyrsistent or
 # something like that for this stuff, although I want to see how
 # pattern matching would work
 
-class _Tree(object):
-
+class representable(object):
+    @match()
     def __init__(self):
         assert False, "%s is abstract base class" % self.__class__
 
+    @match(lazy("representable"))
     def __ne__(self, other):
         return not self.__eq__(other)
 
     __hash__ = None
+
+    def __repr__(self):
+        assert False, "%s does not implement a proper __repr__. Consider delegating to self.repr()" % self.__class__
+
+class _Tree(representable):
+
+    annotations = ()
 
     @property
     def children(self):
         assert False, "%s must implement children" % self.__class__
 
     def repr(self, *args, **kwargs):
-        with _INDENT() as indent:
-            sargs = [repr(a) for a in args]
-            sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
-            if sum(map(len, sargs)) > 60:
-                first = "\n" + indent
-                sep = ",\n" + indent
-            else:
-                first = ""
-                sep = ", "
-            return "%s(%s%s)" % (self.__class__.__name__, first, sep.join(sargs))
+        return pretty(self, args, kwargs, self.annotations)
 
+class annotation(representable):
+    @match(_Tree)
+    def __call__(self, node):
+        node.annotations = (self, ) + node.annotations
+        return node
+
+    def repr(self, *args, **kwargs):
+        return pretty(self, args, kwargs, ())
 
 
 @match(many(type))

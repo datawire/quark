@@ -31,6 +31,9 @@
                        TemplateText("go",         (), "return {a} - {b}"),
                        TemplateText("ruby",       (), "return {a} - {b}"),
                        TemplateText("javascript", (), "return {a} - {b}")),
+        Doc("""\
+           Returns i-th number of the fibonacci sequence
+           """)(
         Function(
             Name("pf:pf.fib"), Int(),
             Param("i", Int()),
@@ -55,7 +58,7 @@
                    )
                 )
             )
-        ),
+        )),
         Function(
             Name("pf:pf.fib2"), Int(),
             Param("i", Int()),

@@ -21,9 +21,11 @@ from .ir import (IR, Function, Interface, Class, Check, If,
                  TestClass, TestMethod,
                  NativeBlock)
 from . import tr
-
+from .tree import multiline
 from .emit_target import Target, Python, Ruby, Java, Go, Javascript
 from .emit_expr import expr
+
+from .emit_docs import docs
 
 @match(basestring, IR, Target, opt(basestring))
 def opt_expr(glue, nd, target, default=""):
@@ -58,7 +60,9 @@ def code(fun, target):
         "def {name}({params})".format(
             name=target.nameof(fun.name),
             params=", ".join(expr(p, target) for p in fun.params)),
-        code(fun.body, target))
+        code(fun.body, target).push(
+                    tr.Simple(repr(multiline(docs(fun, target)))),
+        ))
 
 @match(Check, Python)
 def code(fun, target):

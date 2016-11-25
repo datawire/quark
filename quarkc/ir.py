@@ -1147,6 +1147,18 @@ class NativeBlock(IR):
     def __repr__(self):
         return self.repr(self.context, *self.cases)
 
+
+class Annotation(tree.annotation):
+    pass
+
+class Doc(Annotation):
+    @match(basestring)
+    def __init__(self, doc):
+        self.doc = doc
+
+    def __repr__(self):
+        return self.repr(tree.multiline(self.doc))
+
 @match(choice(Package, Namespace))
 def restructure(pkg):
     """ Introduce Namespaces into a flat package """
@@ -1213,4 +1225,8 @@ def reconstruct(pkg):
     """ tie together a restructured package and all referenced externals """
     return Root(restructure(pkg), *model_externals(pkg))
 
-__all__ = [n for n,v in globals().items() if IR in getattr(v, "__mro__", [])]
+def exportable(v):
+    mro = getattr(v, "__mro__", ())
+    return (IR in mro) or (Annotation in mro)
+
+__all__ = [n for n,v in globals().items() if exportable(v)]

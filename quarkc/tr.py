@@ -35,6 +35,12 @@ class Block(TR):
     @match(many_tuple(Statement))
     def add(self, *stmts):
         self.stmts += flattened(stmts)
+        return self
+
+    @match(many_tuple(Statement))
+    def push(self, *stmts):
+        self.stmts = flattened(stmts) + self.stmts
+        return self
 
     @property
     def children(self):

@@ -6,7 +6,8 @@ from quarkc.ir import ( IR, Name, Ref, Local, Package, Literal,
                         ClassType,
                         Var, Get, Set, Invoke, Send,
                         This, Null, StringLit, IntLit, FloatLit, BoolLit,
-                        Block, If, While, Evaluate, Break, Continue)
+                        Block, If, While, Evaluate, Break, Continue,
+                        Annotation, Doc)
 
 def nameof(c, default=None):
     if default is None:
@@ -16,7 +17,7 @@ def nameof(c, default=None):
     return (c.__class__.__name__, getattr(c, "name", default))
 
 def check_tree_equal(tree, etree, stack=()):
-    assert isinstance(tree, IR)
+    assert isinstance(tree, (IR, Annotation))
     assert type(tree) is type(etree)
     if not stack:
         stack = (nameof(tree), )
@@ -33,6 +34,13 @@ def check_tree_equal(tree, etree, stack=()):
     elif isinstance(tree, (Declaration, Field, Message, Method, Constructor, Var, Get, Set)):
         assert tree.name == etree.name, "Name mismatch, expected %r got %r for %s" % (
             tree.name, etree.name, stack)
+    stack = stack + (".annotations", )
+    for i, (a, ea) in enumerate(map(None, tree.annotations, etree.annotations)):
+        an = nameof(a, i)
+        ean = nameof(ea, i)
+        assert a is not None, "Unexpected annotation %s, got extra %s" % (stack, ean)
+        assert ea is not None, "Missing annotation %s, missing %s" % (stack, an)
+        assert type(a) is type(ea), "Mismatched child %s, want %s got %s" % (stack, an, ean)
 
 def check_repr(tree):
     r = repr(tree)
@@ -61,6 +69,15 @@ class TestTreeEqual(object):
     def test_mismatched_child(self):
         with pytest.raises(AssertionError):
             check_tree_equal(Block(Return(This())), Block(Return(Null(Int()))))
+
+    def test_missing_annotation(self):
+        with pytest.raises(AssertionError):
+            check_tree_equal(Doc("ha")(Package()), Package())
+
+    def test_extra_annotation(self):
+        with pytest.raises(AssertionError):
+            check_tree_equal(Package(), Doc("ha")(Package()))
+
 
     @pytest.mark.parametrize("ir_f", [
         lambda name: Name("a:b", name),
@@ -122,6 +139,18 @@ class TestTreeEqual(object):
        Return(Null(InterfaceType(Ref("a:b.c")))),
        Return(This())),
     While(BoolLit(True), Block(Break(), Continue())),
+    Doc("""\
+    A documented package
+
+    with a multiline documentation
+
+    annotation""")(Package(
+        Doc("Interface one 1234567890123456789012345678901234567890")(Doc("some more")(Interface(Name("a:b.c")))),
+        Doc("outer more")(Doc("Interface two  1234567890123456789012345678901234567890")(Interface(Name("a:b.c")))),
+        Doc("Interface three  1234567890123456789012345678901234567890")(
+            Doc("Interface three  1234567890123456789012345678901234567890")(
+                Interface(Name("a:b.c")))),
+    )),
     ])
 def test_simple_ir(tree):
     check_repr(tree)
