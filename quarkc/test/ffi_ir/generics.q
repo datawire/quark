@@ -12,6 +12,12 @@ class Box<T> {
 
 }
 
+void box() {
+    Box<int> b = new Box<int>();
+    b.set(3);
+    assertEqual(3, b.get());
+}
+
 class Train<T> {
 
     List<T> cars;
@@ -34,12 +40,6 @@ class Train<T> {
 
 }
 
-void box() {
-    Box<int> b = new Box<int>();
-    b.set(3);
-    assertEqual(3, b.get());
-}
-
 void train() {
     Train<int> t = new Train<int>();
     t.add(1);
@@ -48,4 +48,16 @@ void train() {
     t.add(2);
     assertEqual(1, t.first());
     assertEqual(2, t.last());
+}
+
+<T> T identity(T x) {
+    return x;
+}
+
+void testidentity() {
+    int n = identity(1);
+    String s = identity("one");
+    s = identity(null);
+    assertEqual(1, n);
+    assertEqual("one", s);
 }

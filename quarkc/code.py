@@ -2,7 +2,7 @@ from .match import match, choice, many, ntuple
 from .ast import (
     Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param, While, Switch, Case,
     Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List, Map, Null,
-    Break, Continue, NativeFunction, NativeBlock, Fixed
+    Break, Continue, NativeFunction, NativeBlock, Fixed, Callable
 )
 from .symbols import Symbols, name, Self
 
@@ -63,7 +63,7 @@ class Code(object):
         else:
             sym = name(fun)
 
-        args = [self.compile_def(sym), self.compile(t)] + self.compile(fun.params)
+        args = [self.compile_def(self.mangle(sym, *self.ref.params)), self.compile(t)] + self.compile(fun.params)
         if isinstance(fun, NativeFunction):
             args += self.compile(fun.body)
         else:
@@ -165,36 +165,36 @@ class Code(object):
         dfn = self.symbols[name]
         return self.mangle(dfn, name, *params)
 
-    @match(Class, basestring, many(types.Ref))
+    @match(choice(Class, Callable), basestring, many(types.Ref))
     def mangle(self, dfn, name, *params):
         ref = types.Ref(name, *params)
         ref = ref.bind(self.bindings)
         return "_".join([name] + [self.mangle_param(dfn, p).replace(".", "_") for p in ref.params])
 
-    @match(Class, types.Ref)
+    @match(choice(Class, Callable), types.Ref)
     def mangle_param(self, dfn, ref):
         params = [self.mangle_param(dfn, ref.name)]
         if not isinstance(dfn, Primitive):
             params.extend([self.mangle_param(dfn, p).replace(".", "_") for p in ref.params])
         return "_".join(params)
 
-    @match(Class, "quark.int")
+    @match(choice(Class, Callable), "quark.int")
     def mangle_param(self, dfn, sym):
         return "int"
 
-    @match(Class, "quark.String")
+    @match(choice(Class, Callable), "quark.String")
     def mangle_param(self, dfn, sym):
         return "String"
 
-    @match(Class, "quark.Any")
+    @match(choice(Class, Callable), "quark.Any")
     def mangle_param(self, dfn, sym):
         return "Any"
 
-    @match(Class, "quark.Scalar")
+    @match(choice(Class, Callable), "quark.Scalar")
     def mangle_param(self, dfn, sym):
         return "Scalar"
 
-    @match(Class, basestring)
+    @match(choice(Class, Callable), basestring)
     def mangle_param(self, dfn, sym):
         if isinstance(dfn, Primitive):
             return "Any"
@@ -432,7 +432,7 @@ class Code(object):
 
     @match(types.Ref, choice(NativeFunction, Function), basestring, [many(Expression)])
     def compile_call(self, ref, dfn, fun, args):
-        return ir.Invoke(self.compile_ref(name(dfn)), *[self.compile(a) for a in args])
+        return ir.Invoke(self.compile_ref(ref), *[self.compile(a) for a in args])
 
     @match(types.Ref, Function, "assertEqual", [many(Expression)])
     def compile_call(self, ref, dfn, fun, args):

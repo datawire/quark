@@ -333,8 +333,9 @@ class Package(Definition):
 
 class Callable(Definition):
 
-    def __init__(self, type, name, params, body):
+    def __init__(self, type_params, type, name, params, body):
         Definition.__init__(self)
+        self.type_params = type_params
         self.static = False
         self.type = type
         self.name = name
@@ -345,6 +346,8 @@ class Callable(Definition):
     def children(self):
         for a in self.annotations:
             yield a
+        for tp in self.type_params:
+            yield tp
         yield self.type
         yield self.name
         for p in self.params:
@@ -428,7 +431,7 @@ class Constructor(Method):
     fields=[]
 
     def __init__(self, name, params, body):
-        Method.__init__(self, None, name, params, body)
+        Method.__init__(self, (), None, name, params, body)
 
     def copy(self):
         return self.__class__(copy(self.name), copy(self.params),

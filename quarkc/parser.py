@@ -252,9 +252,10 @@ class Parser:
     def visit_constructor(self, node, (name, lp, parameters, rp, body)):
         return Constructor(name, tuple(parameters), body)
 
-    @g.rule('method = STATIC? type name LPR parameters RPR body')
-    def visit_method(self, node, (static, type, name, lp, parameters, rp, body)):
-        result = Method(type, name, tuple(parameters), body)
+    @g.rule('method = STATIC? type_params? type name LPR parameters RPR body')
+    def visit_method(self, node, (static, opt, type, name, lp, parameters, rp, body)):
+        type_params = opt[0] if opt else []
+        result = Method(type_params, type, name, tuple(parameters), body)
         if static: result.static = True
         return result
 
@@ -302,12 +303,13 @@ class Parser:
     def visit_braces(self, node, (l, stuff, r)):
         return Fixed("{"), stuff, Fixed("}")
 
-    @g.rule('function = type name LPR parameters RPR body')
-    def visit_function(self, node, (type, name, lp, parameters, rp, body)):
+    @g.rule('function = type_params? type name LPR parameters RPR body')
+    def visit_function(self, node, (opt, type, name, lp, parameters, rp, body)):
+        type_params = opt[0] if opt else []
         if isinstance(body, NativeBlock):
-            return NativeFunction(type, name, tuple(parameters), body)
+            return NativeFunction(type_params, type, name, tuple(parameters), body)
         else:
-            return Function(type, name, tuple(parameters), body)
+            return Function(type_params, type, name, tuple(parameters), body)
 
     @g.rule('parameters = (param (COMMA param)*)?')
     def visit_parameters(self, node, children):

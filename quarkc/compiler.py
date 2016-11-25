@@ -48,7 +48,7 @@ class Compiler(object):
     def desugar(self, cls):
         cons = [d for d in cls.definitions if isinstance(d, Method) and not d.type]
         if not cons:
-            default = Method(None, Name(cls.name.text), (), Block([]))
+            default = Method((), None, Name(cls.name.text), (), Block([]))
             cls.definitions.append(default)
             wire(cls, default)
 

@@ -86,7 +86,10 @@ class Types(object):
 
     @match(Function)
     def define(self, fun):
-        self.types[name(fun)] = self.callable(fun)
+        funtype = self.callable(fun)
+        if fun.type_params:
+            funtype = types.Template(*[types.Param(name(p)) for p in fun.type_params] + [funtype])
+        self.types[name(fun)] = funtype
 
     @match(Method)
     def define(self, meth):
@@ -164,7 +167,11 @@ class Types(object):
 
     @match(Return)
     def do_resolve(self, retr):
-        dtype = self.node(get_definition(retr)).result
+        nd = self.node(get_definition(retr))
+        if isinstance(nd, types.Template):
+            dtype = nd.type.result
+        else:
+            dtype = nd.result
         rtype = self.resolve(retr.expr)
         self.validate_ass(retr, dtype, rtype)
         return rtype
@@ -258,7 +265,26 @@ class Types(object):
 
     @match(Var)
     def do_resolve(self, v):
-        return self.resolve(self.symbols[v])
+        dfn = self.symbols[v]
+        ref = self.resolve(dfn)
+        node = self.node(ref)
+        if isinstance(v.parent, Call) and v.parent.expr == v and isinstance(node, types.Template):
+            return self.do_instantiate(node, [self.resolve(a) for a in v.parent.args])
+        else:
+            return self.resolve(self.symbols[v])
+
+    @match(types.Template, [many(choice(types.Ref, types.Unresolved))])
+    def do_instantiate(self, template, args):
+        bindings = {}
+        for p, a in zip(template.type.arguments, args):
+            inferred = self.types.infer(self.node(p), self.node(a))
+            for k, v in inferred.items():
+                if k not in bindings:
+                    bindings[k] = v
+                else:
+                    assert False
+        ref = types.Ref(self.types.unresolve(template).name, *[bindings.get(p.name, p.bound) for p in template.params])
+        return self.types.resolve(ref)
 
     @match(Declaration)
     def do_resolve(self, declaration):
