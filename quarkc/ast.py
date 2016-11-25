@@ -374,11 +374,11 @@ class Callable(Definition):
 class Function(Callable):
     pass
 
-class Macro(Callable):
+class NativeFunction(Callable):
 
     @coder
     def code(self, coder):
-        return "macro %s;" % Callable.code(self, coder)
+        return "%s" % Callable.code(self, coder)
 
 class Class(Definition):
 
@@ -433,20 +433,6 @@ class Constructor(Method):
     def copy(self):
         return self.__class__(copy(self.name), copy(self.params),
                               copy(self.body))
-
-class ConstructorMacro(Macro):
-    def __init__(self, name, params, body):
-        Macro.__init__(self, None, name, params, body)
-
-    def copy(self):
-        return self.__class__(copy(self.name), copy(self.params),
-                              copy(self.body))
-
-class MethodMacro(Macro):
-
-    @coder
-    def code(self, coder):
-        return "macro %s;" % Callable.code(self, coder)
 
 class Interface(Class):
     keyword = "interface"
@@ -852,60 +838,6 @@ class Entry(AST):
     def copy(self):
         return Entry(copy(self.key), copy(self.value))
 
-class Native(Expression):
-
-    def __init__(self, cases):
-        self.cases = cases
-
-    @property
-    def children(self):
-        for c in self.cases:
-            yield c
-
-    @coder
-    def code(self, coder):
-        return "".join([c.code(coder) for c in self.cases])
-
-    def copy(self):
-        return Native(copy(self.cases))
-
-class NativeCase(AST):
-
-    def __init__(self, name, children):
-        self.name = name
-        self.children = children
-
-    @coder
-    def code(self, coder):
-        result = "$%s{" % (self.name or "")
-        for c in self.children:
-            if isinstance(c, Fixed):
-                result += c.code(coder)
-            elif isinstance(c, Var):
-                result += "$%s" % c.code(coder)
-            else:
-                assert False
-        return result + "}"
-
-    def copy(self):
-        return NativeCase(self.name, copy(self.children))
-
-class Fixed(Expression):
-
-    def __init__(self, text):
-        self.text = text
-
-    @property
-    def children(self):
-        return ()
-
-    @coder
-    def code(self, coder):
-        return self.text
-
-    def copy(self):
-        return Fixed(self.text)
-
 class Cast(Expression):
 
     def __init__(self, expr):
@@ -1010,6 +942,52 @@ class Block(AST):
 
     def copy(self):
         return Block(copy(self.statements))
+
+class NativeBlock(AST):
+
+    def __init__(self, target, imports, children):
+        self.target = target
+        self.imports = imports
+        self.children = children
+
+    @coder
+    def code(self, coder):
+        if self.imports:
+            imports = "\n%s\n" % ("\n".join("import %s%s" % (mod, "as %s" % alias if alias else "")
+                                            for mod, alias in self.imports))
+        else:
+            imports = " "
+        return "for %s%s{%s}" % (self.target, imports, self.code_children(coder))
+
+    def code_children(self, coder):
+        result = []
+        for c in self.children:
+            if isinstance(c, Fixed):
+                result.append(c.code(coder))
+            elif isinstance(c, Var):
+                result.append("$%s" % c.code(coder))
+            else:
+                assert False
+        return "".join(result)
+
+    def copy(self):
+        return NativeBlock(self.target, self.imports, copy(self.children))
+
+class Fixed(AST):
+
+    def __init__(self, text):
+        self.text = text
+
+    @property
+    def children(self):
+        return ()
+
+    @coder
+    def code(self, coder):
+        return self.text
+
+    def copy(self):
+        return Fixed(self.text)
 
 class Annotation(AST):
 

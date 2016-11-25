@@ -15,7 +15,7 @@
 import os
 
 from .ast import (
-    Callable, Local, If, Block, Assign, While, Return, ExprStmt, Native, Statement, Expression, Call, Super
+    Callable, Local, If, Block, Assign, While, Return, ExprStmt, Statement, Expression, Call, Super
 )
 from .match import match
 
@@ -57,9 +57,6 @@ def has_return(r): return True
 def has_return(e): return False
 
 @match(type(None))
-def has_return(e): return False
-
-@match(Native)
 def has_return(e): return False
 
 @match(Callable)

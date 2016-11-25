@@ -1087,7 +1087,7 @@ class AssertNotEqual(NativeTestAssertion):
 # Import of code oustide of quark to quark native functions
 
 class NativeImport(IR):
-    @match(basestring, basestring)
+    @match(basestring, choice(basestring, None))
     def __init__(self, module, alias):
         self.module = module
         self.alias = alias

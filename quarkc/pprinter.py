@@ -67,10 +67,9 @@ class PPrinter(object):
         self.first = True
         if isinstance(node, ast.Fixed):
             self.append(repr(node.text))
-        elif isinstance(node, ast.NativeCase):
-            if node.name:
-                self.append(node.name)
-                self.first = False
+        elif isinstance(node, ast.NativeBlock):
+            self.append(node.target)
+            self.first = False
         elif isinstance(node, ast.String):
             self.append(node.text.replace("\n", "\\n"))
         elif hasattr(node, "text"):
@@ -88,10 +87,6 @@ class PPrinter(object):
 
     def leave_AST(self, node):
         self.first = self.stack.pop()[-1]
-        if (isinstance(node, (ast.Expression, ast.Declaration)) and
-            not isinstance(node, (ast.Fixed, ast.Native))):
-            if hasattr(node, "resolved") and node.resolved is not None:
-                self.append(",\n$type=%s" % node.resolved)
         if isinstance(node, ast.File) or not self.stack:
             self.append("\n\n")
         self.append(")")

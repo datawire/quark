@@ -1,42 +1,50 @@
-macro void print(Any o) $java{
+void printany(Any o);
+int pow(int a, int b);
+
+void printany(Any o) for java {
     System.out.println($o);
 }
-$python{
-    import sys
+void printany(Any o) for python
+import "sys"
+{
     sys.stdout.write("%s\n" % o)
 }
-$ruby{
+void printany(Any o) for ruby {
     puts(o)
 }
-$go{
+void printany(Any o) for go
+import "fmt"
+{
     fmt.Println(o)
 }
-$javascript{
+void printany(Any o) for javascript {
     console.log(o)
-};
+}
 
-macro int exp(int a, int b) $java{
+int pow(int a, int b) for java {
     return (int) Math.pow(a, b);
 }
-$javascript{
+int pow(int a, int b) for javascript {
     return Math.pow(a, b);
 }
-$python{
+int pow(int a, int b) for python {
     return a**b
 }
-$ruby{
+int pow(int a, int b) for ruby {
     return a**b
 }
-$go{
-    return Exp(a, b)
-};
+int pow(int a, int b) for go
+import "math"
+{
+    return int(math.Pow(float64(a), float64(b)))
+}
 
-void testprint() {
-    print(unsafe("yay, it works!!!"));
+void testprintany() {
+    printany(unsafe("yay, it works!!!"));
     assertEqual(1, 1);
 }
 
-void testexp() {
-    assertEqual(8, exp(2, 3));
-    print(unsafe("the exponent is: " + unsafe(exp(2, 3)).asString()));
+void testpow() {
+    assertEqual(8, pow(2, 3));
+    printany(unsafe("the result is: " + unsafe(pow(2, 3)).asString()));
 }

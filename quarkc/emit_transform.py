@@ -17,7 +17,7 @@ from .match import match, many, choice
 from .tree import isa, split, walk_dfs
 from .ir import (IR, Root, Package, Namespace, NamespaceName,
                  Name, Definition, ExternalFunction,
-                 Check, Function, Check, Void,
+                 Check, Function, NativeFunction, Check, Void,
                  TestMethod, TestClass)
 
 from .emit_target import Target, Python, Ruby, Java, Go, Javascript
@@ -39,19 +39,35 @@ def transform(pkg, target):
 @match(Namespace, Target)
 def transform(ns, target):
     funs, checks, nss, rest = split(ns.definitions, isa(Function, ExternalFunction), isa(Check), isa(Namespace))
-    funs = transform(ns, funs, target)
+    funs = transform(ns, filter_definitions(funs, target), target)
     checks = transform(ns, checks, target)
     nss = transform(ns, nss, target)
     rest = transform(ns, rest, target)
     return Namespace(transform(ns.name, target), *tuple(chain(nss, funs, checks, rest)))
 
+@match((many(Definition),), Target)
+def filter_definitions(dfns, target):
+    return tuple(d for d in dfns if include_definition(d, target))
+
+@match(Definition, Target)
+def include_definition(dfn, target):
+    return True
+
+@match(NativeFunction, Target)
+def include_definition(fun, target):
+    # XXX: should put this on target
+    tgt = target.__class__.__name__.lower()
+    for c in fun.body.cases:
+        if tgt == c.target.lower():
+            return True
+    return False
 
 @match(Namespace, Go)
 def transform(ns, target):
     """ Flatten the go namespace to toplevel for all Definitions, and test namespace for all Checks """
     checks, defs, _ = split(walk_dfs(ns), isa(Check, TestClass), isa(Definition))
     checks = transform(ns, checks, target)
-    defs = transform(ns, defs, target)
+    defs = transform(ns, filter_definitions(defs, target), target)
     if checks:
         checks = (Namespace(NamespaceName.join(ns.name, Snowflake("test")), *checks),)
     return Namespace(transform(ns.name, target), *(defs + checks))

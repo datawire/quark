@@ -19,12 +19,12 @@ from ast import literal_eval
 
 from .ast import (
     Method, Class, Function, Package, File, Dependency, Interface, Primitive,
-    Macro, Field, Type, TypeParam, Import, Local, ExprStmt,
+    NativeFunction, Field, Type, TypeParam, Import, Local, ExprStmt,
     Assign, If, Return, While, Break, Continue, Var, Call, String, Number,
-    Bool, List, Map, Null, Native, NativeCase, Fixed, Attr, Cast,
+    Bool, List, Map, Null, NativeBlock, Fixed, Attr, Cast,
     Param, Declaration, Super, Name, CompilerVersionSpec, Annotation,
-    Constructor, MethodMacro, Block, Entry, DistUnit, Use, Include,
-    ConstructorMacro, Operator, ArithmeticOperator, Switch, Case
+    Constructor, Block, Entry, DistUnit, Use, Include,
+    Operator, ArithmeticOperator, Switch, Case
 )
 from .grammar import Grammar
 
@@ -54,10 +54,10 @@ def parse_strict_compiler_version_spec(source):
 class Parser:
 
     keywords = ["package", "use", "include", "import", "as", "namespace",
-                "class", "interface", "primitive", "extends", "return",
-                "macro", "new", "null", "if", "else", "while", "super",
-                "true", "false", "break", "continue", "static", "quark",
-                "switch", "case"]
+                "class", "interface", "primitive", "extends", "return", "new",
+                "null", "if", "else", "while", "super", "true", "false",
+                "break", "continue", "static", "quark", "switch", "case",
+                "for"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -179,7 +179,7 @@ class Parser:
     def visit_url(self, node, (pre, url, post)):
         return url
 
-    @g.rule('file_definition = annotation* (package / class / function / macro)')
+    @g.rule('file_definition = annotation* (package / class / function)')
     def visit_file_definition(self, node, (annotations, (dfn,))):
         dfn.annotations = annotations
         return dfn
@@ -201,7 +201,7 @@ class Parser:
         _, name, _, definitions, _ = children
         return Package(name, definitions)
 
-    @g.rule('pkg_definition = annotation* (package / class / function / macro)')
+    @g.rule('pkg_definition = annotation* (package / class / function)')
     def visit_pkg_definition(self, node, (annotations, (dfn,))):
         dfn.annotations = annotations
         return dfn
@@ -232,7 +232,7 @@ class Parser:
     def visit_type_param(self, node, (name, _)):
         return TypeParam(name)
 
-    @g.rule('class_definition = annotation* (field / constructor / method / constructor_macro / method_macro)')
+    @g.rule('class_definition = annotation* (field / constructor / method)')
     def visit_class_definition(self, node, (annotations, (dfn,))):
         dfn.annotations = annotations
         return dfn
@@ -252,34 +252,62 @@ class Parser:
     def visit_constructor(self, node, (name, lp, parameters, rp, body)):
         return Constructor(name, tuple(parameters), body)
 
-    @g.rule('constructor_macro = MACRO name LPR parameters RPR expr SEMI')
-    def visit_constructor_macro(self, node, (m, name, lp, parameters, rp, expr, s)):
-        return ConstructorMacro(name, tuple(parameters), expr)
-
     @g.rule('method = STATIC? type name LPR parameters RPR body')
     def visit_method(self, node, (static, type, name, lp, parameters, rp, body)):
         result = Method(type, name, tuple(parameters), body)
         if static: result.static = True
         return result
 
-    @g.rule('body = block / SEMI')
+    @g.rule('body = block / native_block / SEMI')
     def visit_body(self, node, (child,)):
-        if isinstance(child, Block):
+        if isinstance(child, (Block, NativeBlock)):
             return child
         else:
             return None
 
-    @g.rule('method_macro = MACRO type name LPR parameters RPR expr SEMI')
-    def visit_method_macro(self, node, (macro, type, name, lp, parameters, rp, expr, s)):
-        return MethodMacro(type, name, tuple(parameters), expr)
+    @g.rule('native_block = FOR name_re native_import* _ "{" stuff* "}" _')
+    def visit_native_block(self, node, (kw, target, imports, ws1, lb, stuff, rb, ws2)):
+        flattened = []
+        self.flatten(stuff, flattened)
+        return NativeBlock(target, imports, flattened)
+
+    @g.rule('native_import = IMPORT STRING (AS name_re)?')
+    def visit_native_import(self, node, (_, imp, opt)):
+        if opt:
+            alias = opt[0][-1]
+        else:
+            alias = None
+        return (imp, alias)
+
+    def flatten(self, stuff, result):
+        for s in stuff:
+            if isinstance(s, (Fixed, Var)):
+                result.append(s)
+            else:
+                self.flatten(s, result)
+
+    @g.rule('stuff = fixed / dvar / braces')
+    def visit_stuff(self, node, (stuff,)):
+        return stuff
+
+    @g.rule('fixed = ~"[^{$}]"+')
+    def visit_fixed(self, node, children):
+        return Fixed(node.text)
+
+    @g.rule('dvar = "$" name_re')
+    def visit_dvar(self, node, (_, name)):
+        return Var(Name(name))
+
+    @g.rule('braces = "{" stuff* "}"')
+    def visit_braces(self, node, (l, stuff, r)):
+        return Fixed("{"), stuff, Fixed("}")
 
     @g.rule('function = type name LPR parameters RPR body')
     def visit_function(self, node, (type, name, lp, parameters, rp, body)):
-        return Function(type, name, tuple(parameters), body)
-
-    @g.rule('macro = MACRO type name LPR parameters RPR expr SEMI')
-    def visit_macro(self, node, (macro, type, name, lp, parameters, rp, expr, s)):
-        return Macro(type, name, tuple(parameters), expr)
+        if isinstance(body, NativeBlock):
+            return NativeFunction(type, name, tuple(parameters), body)
+        else:
+            return Function(type, name, tuple(parameters), body)
 
     @g.rule('parameters = (param (COMMA param)*)?')
     def visit_parameters(self, node, children):
@@ -508,7 +536,7 @@ class Parser:
     def visit_exprs(self, node, (first, rest)):
         return [first] + [n[-1] for n in rest]
 
-    @g.rule('atom = literal / paren / super / new / var / native')
+    @g.rule('atom = literal / paren / super / new / var')
     def visit_atom(self, node, (atom,)):
         return atom
 
@@ -615,43 +643,6 @@ class Parser:
     @g.rule('entry = expr COLON expr')
     def visit_entry(self, node, (key, _, value)):
         return Entry(key, value)
-
-    def flatten(self, stuff, result):
-        for s in stuff:
-            if isinstance(s, (Fixed, Var)):
-                result.append(s)
-            else:
-                self.flatten(s, result)
-
-    @g.rule('native = native_case+')
-    def visit_native(self, node, cases):
-        return Native(cases)
-
-    @g.rule('native_case = _ "$" name_re? "{" stuff* "}" _')
-    def visit_native_case(self, node, (ls, d, opt, l, stuff, r, rs)):
-        if opt:
-            name = opt[0]
-        else:
-            name = None
-        flattened = []
-        self.flatten(stuff, flattened)
-        return NativeCase(name, flattened)
-
-    @g.rule('stuff = fixed / dvar / braces')
-    def visit_stuff(self, node, (stuff,)):
-        return stuff
-
-    @g.rule('fixed = ~"[^{$}]"+')
-    def visit_fixed(self, node, children):
-        return Fixed(node.text)
-
-    @g.rule('dvar = "$" name_re')
-    def visit_dvar(self, node, (_, name)):
-        return Var(Name(name))
-
-    @g.rule('braces = "{" stuff* "}"')
-    def visit_braces(self, node, (l, stuff, r)):
-        return Fixed("{"), stuff, Fixed("}")
 
     def visit_(self, node, children):
         return children
