@@ -24,6 +24,9 @@ Options:
   --javascript          Emit JavaScript code.
   --go                  Emit go code.
   --ir                  Emit IR
+
+Environment variables:
+QUARK_CACHE_DIR         Location for IR cache
 """
 
 import os, sys, hashlib, fnmatch
@@ -36,6 +39,9 @@ from .helpers import is_newer
 from .ir import IR
 
 import stats
+
+def cache_dir():
+    return os.path.expanduser(os.environ.get("QUARK_CACHE_DIR", "~/.quark/cache"))
 
 def ensure_dir(fname):
     dir = os.path.dirname(fname)
@@ -114,7 +120,7 @@ def main(args):
                         sha = sha.hexdigest())
                     pkgsum.update(index[fname]["sha"])
         pkgsum = pkgsum.hexdigest()
-        ir_base = os.path.join("/tmp", os.path.basename(args["<file>"][0]) + "-" + pkgsum)
+        ir_base = os.path.join(cache_dir(), os.path.basename(args["<file>"][0]) + "-" + pkgsum)
         ir_name = ir_base + ".ir"
 
     pkg = None
@@ -131,9 +137,9 @@ def main(args):
                 print "Loading IR failed"
                 raise
     else:
-        print "%s the IR cache %s %s %s" % (
+        print "%s the IR cache %s %s" % (
             (args["--force"] and "Ignored" or "Cannot find"),
-            bool(ir_fresh), ir_fresh.explanation, ir_fresh.target)
+            ir_fresh.explanation, ir_fresh.target)
 
     if pkg is None:
         c = Compiler(verbose=verbose)
