@@ -12,6 +12,7 @@ stamp=$(test -f $CACHE_STAMP && cat $CACHE_STAMP || echo xxx)
 if [ "$stamp" != "$csum" ]; then
     rm -fr $CACHE_DIR
     pip wheel --wheel-dir $CACHE_DIR -r requirements.txt
+    pip wheel --wheel-dir $CACHE_DIR -r install-requirements.txt
     echo $csum > $CACHE_STAMP
 fi
 pip install --no-index --find-links=$CACHE_DIR -r requirements.txt
