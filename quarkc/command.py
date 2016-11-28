@@ -1,4 +1,3 @@
-
 """
 Quark compiler.
 
@@ -27,7 +26,7 @@ Options:
   --ir                  Emit IR
 """
 
-import os, sys, hashlib
+import os, sys, hashlib, fnmatch
 import cPickle as pickle
 from docopt import docopt
 from .compiler import Compiler
@@ -49,6 +48,31 @@ def write_ir(fname, pkg):
             f.write("%s\n" % repr(pkg))
         if VERBOSE:
             print "wrote %s" % fname
+
+def code_files():
+    dir = os.path.dirname(__file__)
+    files = os.listdir(dir)
+    return fnmatch.filter(files, "[a-z_]*.py")
+
+def frontend_files():
+    dir = os.path.dirname(__file__)
+    files = code_files()
+    emit = fnmatch.filter(files, "emit*.py")
+    return [os.path.join(dir, f) for f in sorted(set(files)-set(emit))]
+
+def parser_files():
+    dir = os.path.dirname(__file__)
+    files = code_files()
+    parser = ["match.py", "ast.py", "parse.py", "parser.py", "exceptions.py"]
+    assert set(files).issuperset(set(parser)), "Have %s want %s" % (files, parser)
+    return [os.path.join(dir, f) for f in parser]
+
+def signature(files):
+    pkgsum = hashlib.sha1()
+    for fn in files:
+        with open(fn) as f:
+            pkgsum.update(f.read())
+    return pkgsum
 
 def main(args):
     global VERBOSE
@@ -78,13 +102,16 @@ def main(args):
 
     with stats.charge("index"):
         index = {}
-        pkgsum = hashlib.sha1()
+        pkgsum = signature(frontend_files())
+        parsum = signature(parser_files())
         for fname in args["<file>"]:
                 with open(fname) as f:
                     content = f.read()
+                    sha = parsum.copy()
+                    sha.update(content)
                     index[fname] = dict(
                         content=content,
-                        sha = hashlib.sha1(content).hexdigest())
+                        sha = sha.hexdigest())
                     pkgsum.update(index[fname]["sha"])
         pkgsum = pkgsum.hexdigest()
         ir_base = os.path.join("/tmp", os.path.basename(args["<file>"][0]) + "-" + pkgsum)
