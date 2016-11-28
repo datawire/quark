@@ -125,6 +125,10 @@ class Target(object):
     def upcase(self, s):
         return s[:1].capitalize() + s[1:]
 
+    @match(basestring)
+    def varname(self, s):
+        return self.UNKEYWORDS.get(s, s)
+
 
 class Java(Target):
     """

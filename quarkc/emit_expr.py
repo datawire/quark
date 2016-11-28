@@ -18,13 +18,13 @@ from .ir import (
     Param, Var, This, Call, Invoke, Send, Construct, Get,
     Void, Null,
     Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit,
-    Map, List, And, Or, Any, Scalar, Cast
+    Map, List, Boxed, And, Or, Any, Scalar, Cast
 )
 
 from .emit_target import Target, Python, Java, Go, Ruby, Javascript
 
 
-@match(Type, Java)
+@match(Type, choice(Java, Ruby, Python, Javascript))
 def expr(type, target):
     return target.nameof(type.name)
 
@@ -169,31 +169,45 @@ def expr(listt, target):
     return "*[]{value}".format(
         value=expr(listt.value, target))
 
+## Boxed
+
+@match(Boxed, Target)
+def expr(boxed, target):
+    return ""
+
+@match(Boxed, Java)
+def expr(boxed, target):
+    return expr(boxed, boxed.type, target)
+
+@match(Boxed, AbstractType, Java)
+def expr(boxed, type, target):
+    return expr(type, target)
+
+@match(Boxed, Int, Java)
+def expr(boxed, type, target):
+    return "Integer"
+
+@match(Boxed, Go)
+def expr(boxed, target):
+    return expr(boxed.type, target)
+
 ## Param
 
-@match(Param, Python)
+@match(Param, choice(Python, Ruby, Javascript))
 def expr(param, target):
-    return param.name
-
-@match(Param, Ruby)
-def expr(param, target):
-    return param.name
+    return target.varname(param.name)
 
 @match(Param, Java)
 def expr(param, target):
     return "{type} {name}".format(
         type=expr(param.type, target),
-        name=param.name)
+        name=target.varname(param.name))
 
 @match(Param, Go)
 def expr(param, target):
     return "{name} {type}".format(
         type=expr(param.type, target),
-        name=param.name)
-
-@match(Param, Javascript)
-def expr(param, target):
-    return param.name
+        name=target.varname(param.name))
 
 ## Names
 
@@ -210,11 +224,7 @@ def expr(name, target):
 
 @match(Var, Target)
 def expr(var, target):
-    return var.name
-
-@match(Var, Python)
-def expr(var, target):
-    return var.name
+    return target.varname(var.name)
 
 ## This
 

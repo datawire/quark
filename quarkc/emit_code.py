@@ -252,27 +252,27 @@ def code(brk, target):
 @match(Local, choice(Python, Ruby))
 def code(local, target):
     return tr.Simple("{name}{initializer}".format(
-        name=local.name,
+        name=target.varname(local.name),
         initializer=opt_expr(" = ", local.expr or Null(local.type), target)))
 
 @match(Local, Java)
 def code(local, target):
     return tr.Simple("{type} {name}{initializer}".format(
-        name=local.name,
+        name=target.varname(local.name),
         type=expr(local.type, target),
         initializer=opt_expr(" = ", local.expr, target)))
 
 @match(Local, Go)
 def code(local, target):
     return tr.Simple("var {name} {type}{initializer}".format(
-        name=local.name,
+        name=target.varname(local.name),
         type=expr(local.type, target),
         initializer=opt_expr(" = ", local.expr, target)))
 
 @match(Local, Javascript)
 def code(local, target):
     return tr.Simple("let {name}{initializer}".format(
-        name=local.name,
+        name=target.varname(local.name),
         initializer=opt_expr(" = ", local.expr, target)))
 
 ## Assign
@@ -280,7 +280,7 @@ def code(local, target):
 @match(Assign, Target)
 def code(ass, target):
     return tr.Simple("{name} = {value}".format(
-        name=ass.lhs.name,
+        name=target.varname(ass.lhs.name),
         value=expr(ass.rhs, target)))
 
 ## Set
