@@ -3,6 +3,10 @@ dist: trusty
 sudo: false
 group: beta
 
+cache:
+  directory:
+  - $HOME/.quark/cache
+
 install:
 - gem install test-unit
 - pip install --upgrade pip
