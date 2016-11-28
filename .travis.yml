@@ -6,6 +6,8 @@ group: beta
 cache:
   directories:
   - $HOME/.quark/cache
+  - target/javascript/node_modules
+  - target/java/deps
 
 install:
 - gem install test-unit
