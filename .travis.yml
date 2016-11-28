@@ -4,7 +4,7 @@ sudo: false
 group: beta
 
 cache:
-  directory:
+  directories:
   - $HOME/.quark/cache
 
 install:
@@ -16,6 +16,9 @@ install:
 
 script:
 - .travis/test.sh
+
+before_cache:
+- ls -t $HOME/.quark/cache/*.ir | tail -n +2 | xargs -t rm -f
 
 notifications:
   slack:
