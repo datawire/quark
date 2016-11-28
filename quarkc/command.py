@@ -10,6 +10,7 @@ Options:
   -h --help             Show this screen.
   --version             Show version.
   -v --verbose          Show more detail.
+  --stats               Show timing stats.
 
   -o DIR, --output DIR  Target directory for output files. [default: output]
   --force               Ignore any cached intermediate representations.
@@ -197,7 +198,7 @@ def call_main():
     try:
         exit(main(args))
     finally:
-        if args["--verbose"]:
+        if args["--verbose"] or args["--stats"]:
             stats.dump(sys.stderr)
 
 if __name__ == "__main__":

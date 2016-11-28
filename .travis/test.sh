@@ -27,7 +27,7 @@ fi
 #    exit 1
 #fi
 
-if py.test && ./qtest run --cached; then
+if py.test --durations=10 && ./qtest run --stats; then
     echo Tests passed
 else
     ./quarkc/test/compare --batch

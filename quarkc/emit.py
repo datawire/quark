@@ -47,20 +47,20 @@ from . import stats
 @match(Package, Target)
 def emit(pkg, target):
     """ legacy entrypoint for unstructered IR """
-    with stats.charge("backend-reconstruct"):
+    with stats.charge("emit-reconstruct"):
         pkg = reconstruct(pkg)
     return emit(pkg, target)
 
 @match(Root, Target)
 def emit(pkg, target):
     """ return a sequence of tuples (filename, content) """
-    with stats.charge("backend-transform"):
+    with stats.charge("emit-transform"):
         pkg = transform(pkg, target)
-    with stats.charge("backend-root"):
+    with stats.charge("emit-root"):
         target = target.with_root(pkg)
-    with stats.charge("backend-rename"):
+    with stats.charge("emit-rename"):
         rename(pkg, target)
-    with stats.charge("backend-generate-format"):
+    with stats.charge("emit-generate-format"):
         return tuple((module.filename, format(module, target))
                  for module in generate(pkg, target))
 
