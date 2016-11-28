@@ -173,8 +173,7 @@ def main(args):
         write_ir(ir_name, pkg)
 
     for tgt in targets:
-        with stats.charge("emit"):
-            files = emit(pkg, tgt)
+        files = emit(pkg, tgt)
         for name, content in files:
             fname = os.path.join(output, name)
             if verbose:
