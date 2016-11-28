@@ -26,7 +26,7 @@ Options:
   --ir                  Emit IR
 
 Environment variables:
-QUARK_CACHE_DIR         Location for IR cache
+QUARK_CACHE_DIR         Location for IR cache.
 """
 
 import os, sys, hashlib, fnmatch
@@ -125,8 +125,9 @@ def main(args):
 
     pkg = None
 
-    ir_fresh = is_newer(ir_name, *args["<file>"])
-    if bool(ir_fresh) and not args["--force"]:
+    ir_fresh = len(index) == len(args["<file>"])
+    ir_found = os.path.exists(ir_name)
+    if ir_fresh and ir_found and not args["--force"]:
         with stats.charge("load-ir-cache"):
             try:
                 print "Loading IR cache %s" % ir_name
@@ -135,11 +136,11 @@ def main(args):
                     print "Loaded valid %s" % ir_name
             except:
                 print "Loading IR failed"
-                raise
+                pass
     else:
-        print "%s the IR cache %s %s" % (
+        print "%s the IR cache %s" % (
             (args["--force"] and "Ignored" or "Cannot find"),
-            ir_fresh.explanation, ir_fresh.target)
+            ir_fresh and ir_name or "missing input files?")
 
     if pkg is None:
         c = Compiler(verbose=verbose)
