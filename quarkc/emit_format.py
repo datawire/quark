@@ -12,11 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from itertools import chain
+
 from .match import match, opt, choice
 
 from .emit_target import Target, Python, Ruby, Go, Java, Javascript
 
-from .tr import File, Block, Simple, Compound, Comment, Box
+from .tr import File, Block, Simple, Compound, Comment, Box, BoxComment, Statement
 
 class Indent(object):
     def __init__(self, indent=4, level=0, postprefix=""):
@@ -42,8 +44,26 @@ def format(module, target):
 
 @match(Block, Target)
 def format(block, target):
-    return "\n\n".join(format(s, target, Indent()) for s in block.children)
+    stmts = list(block.children)
+    txt = [format(s, target, Indent()) for s in stmts]
+    sep = [toplevel_sep(s[0], s[1], target) for s in map(None, stmts, stmts[1:])]
+    return "".join(chain(*map(None, txt, sep)))
 
+@match(Statement, None, Target)
+def toplevel_sep(l, r, target):
+    return ""
+
+@match(Statement, Statement, Target)
+def toplevel_sep(l, r, target):
+    return "\n\n"
+
+@match(BoxComment, Compound, Target)
+def toplevel_sep(l, r, target):
+    return "\n"
+
+@match(Compound, Simple, Javascript)
+def toplevel_sep(l, r, target):
+    return "\n"
 
 ## Simple statements
 
@@ -68,14 +88,17 @@ def format(box, target, indent):
 
 @match(Block, Target, Indent)
 def format(block, target, indent):
-    return "\n".join([" {"] + [format(s, target, indent.more).rstrip() for s in block.children] + [indent("}%s " % block.extra_close)])
+    return "\n".join([" {"] +
+                     [format(s, target, indent.more).rstrip() for s in block.children] +
+                     [indent("}%s " % block.extra_close)])
 
 @match(Block, Python, Indent)
 def format(block, target, indent):
     return "\n".join(
         [":"] + (
             [format(s, target, indent.more).rstrip() for s in block.children] or
-            [indent.more("pass")]) + [indent("")])
+            [indent.more("pass")]) +
+        [indent("")])
 
 @match(Block, Ruby, Indent)
 def format(block, target, indent):
@@ -112,3 +135,9 @@ def format(comment, target, indent):
 @match(Comment, choice(Java, Go, Javascript), Indent)
 def format(comment, target, indent):
     return indent.commented("// ")(comment.comment)
+
+@match(BoxComment, choice(Java, Go, Javascript), Indent)
+def format(comment, target, indent):
+    return "\n".join((indent.commented("/**")(""),
+                      indent.commented(" * ")(comment.comment),
+                      indent.commented(" */")("")))

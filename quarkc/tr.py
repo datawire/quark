@@ -19,6 +19,14 @@ class Comment(Statement):
     def __repr__(self):
         return self.repr(self.comment)
 
+class BoxComment(Comment):
+    @match(basestring)
+    def __init__(self, box):
+        self.comment = dedent(box)
+
+    def __repr__(self):
+        return self.repr(multiline(self.comment))
+
 def flattened(stmts):
     return sum((s if isinstance(s, tuple) else (s,) for s in stmts), ())
 

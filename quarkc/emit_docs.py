@@ -12,14 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .match import match
-from .ir import (Definition, Doc)
+from .match import match, choice
+from .ir import (Definition, Doc, Constructor, Method, Message)
 
 from .tree import split, isa
-from .emit_target import Target
+from .emit_target import Target, Javascript
 
 
-@match(Definition, Target)
+def documentable(): return choice(Definition, Method, Message)
+
+
+@match(documentable(), Target)
 def docs(fun, target):
     docs, _ = split(fun.annotations, isa(Doc))
     return "\n".join(doc.doc for doc in docs)
+
+
+@match(Constructor, Javascript)
+def docs(fun, target):
+    docs, _ = split(fun.annotations, isa(Doc))
+    clazz = target.q.parent(fun)
+    clsdocs, _ = split(clazz.annotations, isa(Doc))
+
+    return "\n".join(doc.doc for doc in (
+        clsdocs + (Doc(""),) +
+        docs + (Doc("\n@constructor"),)))
