@@ -151,7 +151,10 @@ class Go(Target):
 
     def run(self, patterns):
         self.gen(patterns)
-        return run_in(self.abs_src, "go", "test", "./...", env={"GOPATH": self.path("emit", "rt")})
+        args = [self.abs_src, "go", "test"]
+        if VERBOSE: args.append("-v")
+        args.append("./...")
+        return run_in(*args, env={"GOPATH": self.path("emit", "rt")})
 
 class Ruby(Target):
 
