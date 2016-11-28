@@ -248,7 +248,7 @@ class Parser:
             result.static = True
         return result
 
-    @g.rule('constructor = name LPR parameters RPR block')
+    @g.rule('constructor = name LPR parameters RPR body')
     def visit_constructor(self, node, (name, lp, parameters, rp, body)):
         return Constructor(name, tuple(parameters), body)
 
