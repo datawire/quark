@@ -1,6 +1,6 @@
 from .match import match, choice, many, opt
 from .ast import (
-    AST, File, Package, Callable, Class, Declaration, TypeParam, Import, NativeFunction
+    AST, File, Package, Callable, Class, Declaration, TypeParam, Import, NativeBlock
 )
 from .parser import Parser
 from .exceptions import ParseError
@@ -57,13 +57,16 @@ def scope_name(n, text):
 def scopes(n):
     n.scopes = n.parent.scopes
 
-@match(choice(Package, Callable, Class, Declaration, TypeParam))
+@match(choice(Package, Class, Declaration, TypeParam))
 def scopes(s):
     s.scopes = (scope_name(s.parent, s.name.text),) + s.parent.scopes
 
-@match(NativeFunction)
+@match(Callable)
 def scopes(s):
-    s.scopes = (("%s::%s" % (s.body.target, scope_name(s.parent, s.name.text))),) + s.parent.scopes
+    if isinstance(s.body, NativeBlock):
+        s.scopes = (("%s::%s" % (s.body.target, scope_name(s.parent, s.name.text))),) + s.parent.scopes
+    else:
+        s.scopes = (scope_name(s.parent, s.name.text),) + s.parent.scopes
 
 @match(Import)
 def scopes(s):
