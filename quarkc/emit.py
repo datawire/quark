@@ -31,8 +31,7 @@ Options:
 """
 
 from .match import match
-from .ir import (IR, Root, Package,
-                 )
+from .ir import (IR, Root, Package)
 from .ir import reconstruct
 from .emit_target import Target, Go, Ruby, Java, Python, Javascript
 from .emit_transform import transform
