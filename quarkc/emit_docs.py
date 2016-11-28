@@ -27,6 +27,11 @@ def docs(fun, target):
     docs, _ = split(fun.annotations, isa(Doc))
     return "\n".join(doc.doc for doc in docs)
 
+@match(documentable(), Java)
+def docs(fun, target):
+    docs, _ = split(fun.annotations, isa(Doc))
+    return "\n".join(doc.doc for doc in docs).replace("<","&lt;").replace(">","&gt;")
+
 
 @match(Constructor, Javascript)
 def docs(fun, target):
