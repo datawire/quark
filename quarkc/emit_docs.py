@@ -16,7 +16,7 @@ from .match import match, choice
 from .ir import (Definition, Doc, Constructor, Method, Message)
 
 from .tree import split, isa
-from .emit_target import Target, Javascript
+from .emit_target import Target, Javascript, Java
 
 
 def documentable(): return choice(Definition, Method, Message)
