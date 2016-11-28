@@ -19,7 +19,7 @@ from .ir import (IR, Function, Interface, Class, Check, If,
                  AssertEqual, AssertNotEqual, Expression,
                  Null, Break, Continue,
                  TestClass, TestMethod,
-                 NativeBlock, Definition)
+                 NativeBlock)
 from . import tr
 from .tree import multiline
 from .emit_target import Target, Python, Ruby, Java, Go, Javascript
