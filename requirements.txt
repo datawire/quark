@@ -16,3 +16,5 @@ sphinx
 flake8<3.0.0
 pylint
 parsimonious
+# packages needed for target python testing
+six
