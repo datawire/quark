@@ -4,7 +4,7 @@
 Quark test runner.
 
 Usage:
-  qtest [options] run [ -x ] [ --cached ] [ (--java | --python | --python3 | --javascript | --ruby | --go )... | --all ] [ <pattern>... ]
+  qtest [options] run [ -x ] [ --cached | --ignore-cache ] [ (--java | --python | --python3 | --javascript | --ruby | --go )... | --all ] [ <pattern>... ]
   qtest [options] clean
   qtest -h | --help
   qtest --version
@@ -18,7 +18,8 @@ Options:
   --version             Show version.
   -v --verbose          Show more output.
   -x, --exit            Exit on first error.
-  --cached              Use cached AST if it exists
+  --cached              Use cached AST if it exists [default]
+  --ignore-cache        Force full quark recompile
 """
 
 import os, subprocess, shutil, fnmatch, zipfile, sys
@@ -33,7 +34,7 @@ DIR = os.path.abspath(os.path.dirname(__file__))
 CWD = os.getcwd()
 HEIGHT, WIDTH = [int(s) for s in call("stty", "size").split()]
 VERBOSE = 0
-CACHED = 0
+CACHED = 1
 
 def glob(dir, pattern):
     result = []
@@ -289,6 +290,8 @@ def main(args):
     global CACHED
     if args["--cached"]:
         CACHED = 1
+    if args["--ignore-cache"]:
+        CACHED = 0
 
 
     java = args["--java"]
