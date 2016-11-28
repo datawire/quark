@@ -33,7 +33,8 @@ def docs(fun, target):
     return ("\n".join(
         doc.doc for doc in docs)
             .replace("<", "&lt;")
-            .replace(">", "&gt;"))
+            .replace(">", "&gt;")
+    )
 
 
 @match(Constructor, Javascript)
