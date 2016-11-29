@@ -278,6 +278,19 @@ class List(NativeType):
     def __repr__(self):
         return self.repr(self.value)
 
+class Primitive(NativeType):
+    @match(many(lazy("NativeBlock"), min=1))
+    def __init__(self, *blocks):
+        self.blocks = blocks
+
+    @property
+    def children(self):
+        for b in self.blocks:
+            yield b
+
+    def __repr__(self):
+        return self.repr(*self.blocks)
+
 class Declaration(IR):
 
     @match(basestring, AbstractType)

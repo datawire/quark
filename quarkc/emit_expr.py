@@ -18,7 +18,7 @@ from .ir import (
     Param, Var, This, Call, Invoke, Send, Construct, Get,
     Void, Null,
     Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit,
-    Map, List, Boxed, And, Or, Any, Scalar, Cast
+    Map, List, Primitive, Boxed, And, Or, Any, Scalar, Cast
 )
 
 from .emit_target import Target, Python, Java, Go, Ruby, Javascript
@@ -168,6 +168,16 @@ def expr(listt, type, target):
 def expr(listt, target):
     return "*[]{value}".format(
         value=expr(listt.value, target))
+
+@match(Primitive, Target)
+def expr(prim, target):
+    tgt = target.__class__.__name__.lower()
+    for block in prim.blocks:
+        context = dict((k,expr(v,target)) for k,v in block.context.mappings)
+        for text in block.cases:
+            if text.target.lower() == tgt:
+                return text.template.format(**context)
+    assert False, "yay balmers peak!!!"
 
 ## Boxed
 
