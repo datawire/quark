@@ -48,8 +48,9 @@ def code(block, target):
                 return tr.Block(tr.Box(text.template.format(**context)))
             except KeyError, ke:
                 print("%s not in %s" % (ke, context.keys()))
-    assert False, "Frontend did not supply a valid {target} TextTemplate for {fun}".format(
-        target = tgt, fun = target.q.parent(block).name)
+    assert False, "Frontend did not supply a valid {target} TextTemplate for {fun}. Have only {other}".format(
+        target = tgt, fun = target.q.parent(block).name,
+        other = [t.target for t in block.cases])
 
 ## documentation
 

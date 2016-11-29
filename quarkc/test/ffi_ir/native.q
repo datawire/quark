@@ -87,7 +87,7 @@ imaginary imaginary___init__(int n) for javascript {
 
 void testimaginary() {
     imaginary x = new imaginary(3);
-    assertEqual(3, x);
+    assertEqual(1 + 2, x);
 }
 
 primitive List<T>

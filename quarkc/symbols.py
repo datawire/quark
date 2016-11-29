@@ -46,6 +46,20 @@ class Boxed(AST):
     def children(self):
         return ()
 
+class Nulled(AST):
+
+    @match(TypeParam)
+    def __init__(self, type):
+        self.type = type
+
+    @property
+    def name(self):
+        return self.type.name
+
+    @property
+    def children(self):
+        return ()
+
 @match(choice(Package, Callable, Class, Declaration, TypeParam, Import))
 def name(n):
     return n.scopes[0]
@@ -114,6 +128,9 @@ class Symbols(object):
                 b = Boxed(p)
                 wire(cls, b)
                 self.define("%s_boxed" % name(p), b)
+                n = Nulled(p)
+                wire(cls, n)
+                self.define("%s_nulled" % name(p), n)
 
     @match(AST)
     def define_implicit(self, _):
@@ -126,11 +143,11 @@ class Symbols(object):
         else:
             assert False
 
-    @match(basestring, choice(definitions(), Package, Import, Self, Boxed))
+    @match(basestring, choice(definitions(), Package, Import, Self, Boxed, Nulled))
     def define(self, name, dfn):
         self.define(name, dfn, self.definitions.get(name, None))
 
-    @match(basestring, choice(definitions(), Import, Self, Boxed), None)
+    @match(basestring, choice(definitions(), Import, Self, Boxed, Nulled), None)
     def define(self, name, dfn, prev):
         self.definitions[name] = dfn
 

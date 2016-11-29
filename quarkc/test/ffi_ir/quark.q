@@ -7,6 +7,9 @@ namespace quark {
         bool __not__();
         bool __or__(bool b);
         bool __and__(bool b);
+
+        bool __eq__(bool b) for java { return $self == $b; }
+        bool __not__() for java { return !$self; }
     }
 
     primitive int {
@@ -20,6 +23,18 @@ namespace quark {
         bool __le__(int other);
         bool __gt__(int other);
         bool __lt__(int other);
+
+        int __add__(int other) for java { return $self + $other; }
+        int __sub__(int other) for java { return $self - $other; }
+        int __neg__() for java { return -$self; }
+        int __mul__(int other) for java { return $self * $other; }
+        bool __eq__(int other) for java { return $self == $other; }
+        bool __ne__(int other) for java { return $self != $other; }
+        bool __ge__(int other) for java { return $self >= $other; }
+        bool __le__(int other) for java { return $self <= $other; }
+        bool __gt__(int other) for java { return $self > $other; }
+        bool __lt__(int other) for java { return $self < $other; }
+
     }
 
     /*
@@ -101,6 +116,119 @@ namespace quark {
          * XXX: TBD
          */
         // mumble_mumble asInterface(); // returns mumble_mumble iff type() returned 7
+
+
+
+        int type() for java  import "java.util.List" import "java.util.Map" {
+                Object a = $self;
+                if (a == null) {
+                    return 0;
+                } else if (a instanceof Boolean) {
+                    return 1;
+                } else if (a instanceof Integer) {
+                    return 1;
+                } else if (a instanceof String) {
+                    return 1;
+                } else if (a instanceof Float || a instanceof Double) {
+                    return 1;
+                } else if (a instanceof List) {
+                    return 2;
+                } else if (a instanceof Map) {
+                    return 3;
+                }
+                return -1;
+            }
+
+        bool asBool() for java  import "java.util.List" import "java.util.Map" {
+                Object a = $self;
+                if (a == null) {
+                    return false;
+                } else if (a instanceof Boolean) {
+                    return (Boolean)a;
+                } else if (a instanceof Integer) {
+                    return ((Integer)a) != 0;
+                } else if (a instanceof String) {
+                    return !((String)a).isEmpty();
+                } else if (a instanceof Float) {
+                    return ((Float)a) != 0.0;
+                } else if (a instanceof Double) {
+                    return ((Double)a) != 0.0;
+                } else if (a instanceof List) {
+                    return false;
+                } else if (a instanceof Map) {
+                    return false;
+                }
+                return false;
+            }
+
+        int asInt() for java  import "java.util.List" import "java.util.Map" {
+                Object a = $self;
+                if (a == null) {
+                    return 0;
+                } else if (a instanceof Boolean) {
+                    return (Boolean)a ? 1 : 0;
+                } else if (a instanceof Integer) {
+                    return ((Integer)a);
+                } else if (a instanceof String) {
+                    return 0;
+                } else if (a instanceof Float) {
+                    return ((Float)a).intValue();
+                } else if (a instanceof Double) {
+                    return ((Double)a).intValue();
+                } else if (a instanceof List) {
+                    return 0;
+                } else if (a instanceof Map) {
+                    return 0;
+                }
+                return 0;
+            }
+
+        String asString() for java import "java.util.List" import "java.util.Map" {
+                Object a = $self;
+                if (a == null) {
+                    return "";
+                } else if (a instanceof Boolean) {
+                    return (Boolean)a ? "true" : "false";
+                } else if (a instanceof Integer) {
+                    return ((Integer)a).toString();
+                } else if (a instanceof String) {
+                    return (String)a;
+                } else if (a instanceof Float) {
+                    return ((Float)a).toString();
+                } else if (a instanceof Double) {
+                    return ((Double)a).toString();
+                } else if (a instanceof List) {
+                    return "";
+                } else if (a instanceof Map) {
+                    return "";
+                }
+                return "";
+            }
+        Scalar asScalar() for java {
+                Object a = $self;
+                if (a instanceof Boolean) {
+                    return a;
+                } else if (a instanceof Integer) {
+                    return a;
+                } else if (a instanceof String) {
+                    return a;
+                } else if (a instanceof Float) {
+                    return a;
+                } else if (a instanceof Double) {
+                    return a;
+                }
+                return null;
+            }
+        List<Any> asList() for java  import "java.util.List" {
+                Object a = $self;
+
+                if (a instanceof List) {
+                    return (List<Object>)a;
+                } else {
+                    return null;
+                }
+            }
+
     }
 
     primitive Scalar {
@@ -162,9 +290,18 @@ namespace quark {
         bool __eq__(String other);
         int size();
         String substring(int start, int end);
+
+        String __add__(String other) for java { return $self + $other; }
+        bool __eq__(String other) for java { return $self == $other; }
+        int size() for java { return $self.length(); }
+        String substring(int start, int end) for java {
+                int l = $self.length();
+                return $self.substring($start, $end < l ? $end : l);
+            }
     }
 
     primitive Map<K,V> {
+        Map<K,V> __init__();
         void __set__(K key, V value);
         V __get__(K key);
         List<K> keys();
@@ -175,13 +312,45 @@ namespace quark {
     }
 
     primitive List<T> {
+        List<T> __init__();
         void __set__(int index, T value);
         T __get__(int index);
         int size();
         void append(T element);
         void extend(List<T> other);
         T remove(int index);
-        bool index(T element);
+        //bool index(T element);
+
+        List<T> __init__() for java import "java.util.List" import "java.util.ArrayList" {
+                return new ArrayList<$T>();
+            }
+        void __set__(int index, T value) for java import "java.util.List" import "java.util.ArrayList" {
+                $self.set($index,$value);
+            }
+        T __get__(int index) for java import "java.util.List" import "java.util.ArrayList" {
+                $T_boxed el = $self.get($index);
+                if ( el != null ) {
+                    return el;
+                }
+                return $T_nulled;
+            }
+        int size() for java import "java.util.List" import "java.util.ArrayList" {
+                return $self.size();
+            }
+        void append(T element) for java import "java.util.List" import "java.util.ArrayList" {
+                $self.add($element);
+            }
+        void extend(List<T> other) for java import "java.util.List" import "java.util.ArrayList" {
+                $self.addAll($other);
+            }
+        T remove(int index) for java import "java.util.List" import "java.util.ArrayList" {
+                $T_boxed el = $self.remove($index);
+                if ( el != null ) {
+                    return el;
+                }
+                return $T_nulled;
+            }
+
     }
 
     void assertEqual(void a, void b);
@@ -190,4 +359,9 @@ namespace quark {
     Any unsafe(void a);
 
     void print(void o);
+
+    Any unsafe(void a) for java { return $a; }
+
+    void print(void o) for java { System.out.println($o); }
+
 }

@@ -5,7 +5,7 @@ from .ast import (
     TypeParam, If, While, Switch, Case, Declaration, Package, String, Number, Bool, Var, Local, Name, Field, Callable,
     Definition, List, Map, Entry, Null, Break, Continue, NativeFunction, NativeBlock, Fixed
 )
-from .symbols import Symbols, name, Self, Boxed
+from .symbols import Symbols, name, Self, Boxed, Nulled
 from collections import OrderedDict
 
 import errors
@@ -126,7 +126,7 @@ class Types(object):
 
 
     @match(choice(NativeFunction, Function, Class, Declaration, Package, [many(Package, min=1)], Expression, Type, Local,
-                  Return, Assign, ExprStmt, Self, Boxed))
+                  Return, Assign, ExprStmt, Self, Boxed, Nulled))
     def has_type(self, _):
         return True
 
@@ -139,7 +139,7 @@ class Types(object):
         return True if imp.alias else False
 
     @match(choice(NativeFunction, Class, Function, Method, Declaration, Package, Expression, Type, Local, Return,
-                  Assign, Import, ExprStmt, Self, Boxed, TypeParam))
+                  Assign, Import, ExprStmt, Self, Boxed, Nulled, TypeParam))
     def resolve(self, node):
         if node in self.resolved:
             return self.resolved[node]
@@ -335,7 +335,7 @@ class Types(object):
     def do_resolve(self, s):
         return self.resolve(s.klass)
 
-    @match(Boxed)
+    @match(choice(Boxed, Nulled))
     def do_resolve(self, b):
         return self.resolve(b.type)
 

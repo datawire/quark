@@ -443,8 +443,15 @@ class Block(Code):
         return self.repr(*[s for s in self.statements if not isinstance(s, FieldInitialize)])
 
 class Param(Declaration):
-    pass
-    
+    @match(basestring, Void)
+    def __init__(self, name, type):
+        """XXX: until frontend decides what is the story on assignability to
+        Any and so we use void parameters as an interim hack
+
+        """
+        self.name = name
+        self.type = Any()
+
 class Function(Definition):
 
     @match(Name, AbstractType, many(Param), choice(Block, lazy("NativeBlock")))

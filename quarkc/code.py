@@ -4,7 +4,7 @@ from .ast import (
     Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List, Map, Null,
     Break, Continue, NativeFunction, NativeBlock, Fixed, TypeParam
 )
-from .symbols import Symbols, name, Self, Boxed
+from .symbols import Symbols, name, Self, Boxed, Nulled
 
 import tree
 
@@ -94,7 +94,7 @@ class Code(object):
 
     @match(Fixed)
     def compile_native(self, fixed):
-        return fixed.text
+        return fixed.text.replace("{","{{").replace("}","}}")
 
     @match(Var)
     def compile_native(self, var):
@@ -218,7 +218,7 @@ class Code(object):
     @match(Class, basestring)
     def mangle_param(self, dfn, sym):
         if isinstance(dfn, Primitive):
-            return "Any"
+            return sym
         else:
             return sym
 
@@ -591,6 +591,14 @@ class Code(object):
         t = self.compile(self.types[b].bind(self.bindings))
         if isinstance(t, ir.NativeType):
             return ir.Boxed(t)
+        else:
+            return t
+
+    @match(Nulled, Var)
+    def compile_var(self, b, v):
+        t = self.compile(self.types[b].bind(self.bindings))
+        if isinstance(t, ir.NativeType):
+            return ir.Null(t)
         else:
             return t
 
