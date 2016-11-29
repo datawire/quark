@@ -9,6 +9,7 @@ cache:
   - $HOME/.quark/wheel-cache
   - target/javascript/node_modules
   - target/java/deps
+  - target/python/.tox
 
 install:
 - gem install test-unit
@@ -21,6 +22,7 @@ script:
 
 before_cache:
 - ls -t $HOME/.quark/cache/*.ir | tail -n +2 | xargs -t rm -f
+- rm -f target/python/.tox/*/*.log
 
 notifications:
   slack:
