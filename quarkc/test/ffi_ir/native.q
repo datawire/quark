@@ -50,6 +50,11 @@ void testpow() {
 }
 
 primitive imaginary
+for java {int}
+for go {int}
+for python {int}
+for ruby {Integer}
+for javascript {}
 {
 
     imaginary(int n);
@@ -85,7 +90,10 @@ void testimaginary() {
     assertEqual(3, x);
 }
 
-primitive List<T> {
+primitive List<T>
+for java import "java.util.List" {List<$T_boxed>}
+for go {*[]$T}
+{
 
     List<T> __init__();
 

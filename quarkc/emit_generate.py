@@ -416,7 +416,8 @@ def imports(dfn, target):
     """ emit needed import statements """
     imports = OrderedDict()
     define_imports(dfn, target, imports)
-    assert not imports
+    for key, value in imports.items():
+        yield tr.Simple("import {module}".format(**value))
     # java fully qualify uses
     yield tr.Simple("import static org.junit.Assert.assertThat")
     yield tr.Simple("import static org.hamcrest.CoreMatchers.not")

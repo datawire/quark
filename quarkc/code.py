@@ -283,16 +283,23 @@ class Code(object):
             return ir.Map(self.compile(key), ir.Any())
 
     @match(basestring, many(types.Ref))
-    def compile_bound(self, name, *params):
-        dfn = self.symbols[name]
+    def compile_bound(self, nam, *params):
+        dfn = self.symbols[nam]
         if isinstance(dfn, Interface):
-            return ir.InterfaceType(self.compile_ref(self.mangle(name, *params)))
+            return ir.InterfaceType(self.compile_ref(self.mangle(nam, *params)))
         elif isinstance(dfn, Primitive):
-            if dfn.name.text == "List":
-                return ir.List(self.compile(params[0]))
-            return ir.Int()
+            # XXX
+            bindings = {}
+            for p, v in zip(dfn.parameters, params):
+                bindings[name(p)] = v
+            old = (self.ref, self.bindings)
+            self.ref = types.Ref(nam, *params)
+            self.bindings = bindings
+            result = ir.Primitive(*[ir.NativeBlock(*self.compile(m)) for m in dfn.mappings])
+            self.ref, self.bindings = old
+            return result
         else:
-            return ir.ClassType(self.compile_ref(self.mangle(name, *params)))
+            return ir.ClassType(self.compile_ref(self.mangle(nam, *params)))
 
     @match(Type)
     def compile(self, t):
