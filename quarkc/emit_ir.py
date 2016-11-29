@@ -12,10 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""This module contains IR nodes that are not part of the API between
+frontend and backend
+
+"""
+
 from .ir import Method
 
 class Snowflake(str):
-    """ Avoid dictionary lookup of reserved identifiers """
+    """Avoid dictionary lookup of reserved identifiers 
+
+    For example, to model quark free functions the Java target creates
+    a "Functions" class with static methods in it. To prevent quark
+    classes named Functions to interfere with the generated class, two
+    steps are necessary for each special name:
+
+    - The special name should be tagged with the Snowflake
+
+    - The special name should be put on the list of target reserved
+      words
+
+    """
     def split(self, sep):
         return (self,)
 

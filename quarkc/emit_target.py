@@ -18,6 +18,10 @@ from .ir import (Root, Definition, Namespace, NamespaceName, Name, Ref)
 from .tree import Query, isa, walk_dfs
 
 class NameQuery(Query):
+    """A tree.Query with additional support for fast lookup of
+    ir.Definitions by ir.Ref
+
+    """
     definition_memory = None
     @match(Ref)
     def definition(self, ref):
@@ -30,6 +34,28 @@ class NameQuery(Query):
         return self.definition_memory[ref]
 
 class Target(object):
+
+    """Target language abstraction.
+
+    This class serves two purposes by being passed around all emit
+    pipeline:
+
+    - It serves as a dispatch discriminator. Concrete languages should
+      subclass it.
+
+    - It contains all the mutable state needed by the emit
+      phase.
+
+    Mutable state is currently limited to three areas:
+
+    - Symbol name translation. Each ir.Name should be assigned a target name
+
+    - Import name translation. Each ir.Ref should be assigned a target
+      name. Refs are scoped by the ir.Definition they appear in.
+
+    - ir tree queries. Target privides access to a NameQuery instance
+      initialized with the ir.Root of the current emit() invocation
+    """
 
     @match()
     def __init__(self):
