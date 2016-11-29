@@ -1168,6 +1168,20 @@ class NativeBlock(IR):
         self.context = context
         self.cases = cases
 
+    @match(basestring, (many(NativeImport),), (many(choice(basestring, Expression, AbstractType)),))
+    def __init__(self, target, imports, content):
+        context = []
+        template = []
+        for el in content:
+            if isinstance(el, IR):
+                key = "{k%dy}" % len(context)
+                context.append((key[1:-1], el))
+                template.append(key)
+            else:
+                template.append(el)
+        self.context = TemplateContext(*context)
+        self.cases = (TemplateText(target, imports, "".join(template)), )
+
     @property
     def children(self):
         yield self.context
