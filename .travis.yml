@@ -22,7 +22,7 @@ script:
 
 before_cache:
 - ls -t $HOME/.quark/cache/*.ir | tail -n +2 | xargs -t rm -f
-- rm -f target/python/.tox/*/*.log
+- rm -f target/python/.tox/*/log/*.log
 
 notifications:
   slack:
