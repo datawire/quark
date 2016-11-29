@@ -37,17 +37,17 @@ def charge(tag):
     return STATS[tag]
 
 def dump(out, width=100):
-    total = sum(stat.elapsed for stat in STATS.values())
     key_width = max(map(len, STATS))
     elapsed_width = max(len("%5.3f" % stat.elapsed) for stat in STATS.values())
     count_width = max(len(str(stat.count)) for stat in STATS.values())
     hist_width = width - (key_width + 3 + elapsed_width + 3 + count_width + 2)
     if hist_width < 10:
         hist_width = 0
+    scale = hist_width / (max(stat.elapsed for stat in STATS.values()) or 999999)
     for k in sorted(STATS):
         stat = STATS[k]
         if hist_width:
-            hist = " |" + "#" * int(hist_width * stat.elapsed / total)
+            hist = " |" + "#" * int(scale * stat.elapsed)
         else:
             hist = ""
         out.write("{0:{key_width}} = {1:{elapsed_width}.3f} / {2:{count_width}}{3}\n".format(
