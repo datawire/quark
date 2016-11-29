@@ -440,6 +440,20 @@ class Interface(Class):
 class Primitive(Class):
     keyword = "primitive"
 
+    @property
+    def children(self):
+        for a in self.annotations:
+            yield a
+        yield self.name
+        for p in self.parameters:
+            yield p
+        for b in self.bases:
+            yield b
+        for d in self.definitions:
+            yield d
+        for m in self.mappings:
+            yield m
+
 ## Declarations
 
 class Declaration(AST):

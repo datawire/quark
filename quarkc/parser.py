@@ -206,8 +206,8 @@ class Parser:
         dfn.annotations = annotations
         return dfn
 
-    @g.rule('class = (CLASS / INTERFACE / PRIMITIVE) name type_params? ( EXTENDS types )? LBR class_definition* RBR')
-    def visit_class(self, node, ((kw,), name, params, extends, l, definitions, r)):
+    @g.rule('class = (CLASS / INTERFACE / PRIMITIVE) name type_params? ( EXTENDS types )? native_block* LBR class_definition* RBR')
+    def visit_class(self, node, ((kw,), name, params, extends, mappings, l, definitions, r)):
         if params:
             params = params[0]
         else:
@@ -222,7 +222,9 @@ class Parser:
         elif kw == "interface":
             return Interface(name, params, bases, definitions)
         else:
-            return Primitive(name, params, bases, definitions)
+            prim = Primitive(name, params, bases, definitions)
+            prim.mappings = mappings
+            return prim
 
     @g.rule('type_params = LA type_param (COMMA type_param)* RA')
     def visit_type_params(self, node, (l, first, rest, r)):
