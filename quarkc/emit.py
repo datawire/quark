@@ -45,14 +45,49 @@ from . import stats
 
 @match(Package, Target)
 def emit(pkg, target):
-    """ legacy entrypoint for unstructered IR """
+    """entrypoint for unstructered IR
+
+    Frontend produces a flat representation of the IR where a package
+    contains all the Definitions.
+
+    most targets have a concept of a structured namespace so the definitions
+    are restructured into a tree of Namespaces
+
+    There is also a [ever more legacy] support for instantiating
+    ExternalPackages to explicitly model the unresolved Refs that
+    frontend uses as implicit FFI imports
+
+    """
     with stats.charge("emit-reconstruct"):
         pkg = reconstruct(pkg)
     return emit(pkg, target)
 
 @match(Root, Target)
 def emit(pkg, target):
-    """ return a sequence of tuples (filename, content) """
+    """Convert the structured IR into target code.
+
+    The process is split into a few stages:
+
+    transform - structural changes to the IR are made (Functions in
+        java are mapped to static methods; nested go namespaces are
+        flattened, ...
+
+    root - a query structure is created on top of IR so that ancestors
+        and siblings can be efficiently queried. The query structure
+        is tucked inside the target
+
+    rename - public symbols are renamed (Classes in ruby are upcased;
+        Definition names in nested namespaces are mangled for Go, ...)
+
+    generate - converts the IR representation to TR representation.
+        The TR representation is a very simple structured code text
+        representation
+
+    format - converts the TR representation to a string
+
+    returns a sequence of tuples (filename, content)
+
+    """
     with stats.charge("emit-transform"):
         pkg = transform(pkg, target)
     with stats.charge("emit-root"):
