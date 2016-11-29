@@ -5,7 +5,7 @@ from .ast import (
     TypeParam, If, While, Switch, Case, Declaration, Package, String, Number, Bool, Var, Local, Name, Field, Callable,
     Definition, List, Map, Entry, Null, Break, Continue, NativeFunction, NativeBlock, Fixed
 )
-from .symbols import Symbols, name, Self
+from .symbols import Symbols, name, Self, Boxed
 from collections import OrderedDict
 
 import errors
@@ -72,7 +72,8 @@ class Types(object):
 
     @match(Class)
     def define(self, cls):
-        clstype = types.Object(*[self.field(d, cls.parameters) for d in self.fields(cls)])
+        clstype = types.Object(*[self.field(d, cls.parameters) for d in self.fields(cls)
+                                 if not (isinstance(d, Callable) and isinstance(d.body, NativeBlock))])
         if cls.parameters:
             clstype = types.Template(*[types.Param(name(p)) for p in cls.parameters] + [clstype])
         self.types[name(cls)] = clstype
@@ -125,7 +126,7 @@ class Types(object):
 
 
     @match(choice(NativeFunction, Function, Class, Declaration, Package, [many(Package, min=1)], Expression, Type, Local,
-                  Return, Assign, ExprStmt, Self))
+                  Return, Assign, ExprStmt, Self, Boxed))
     def has_type(self, _):
         return True
 
@@ -138,7 +139,7 @@ class Types(object):
         return True if imp.alias else False
 
     @match(choice(NativeFunction, Class, Function, Method, Declaration, Package, Expression, Type, Local, Return,
-                  Assign, Import, ExprStmt, Self))
+                  Assign, Import, ExprStmt, Self, Boxed, TypeParam))
     def resolve(self, node):
         if node in self.resolved:
             return self.resolved[node]
@@ -161,6 +162,10 @@ class Types(object):
     def resolve(self, pkgs):
         return self.resolve(pkgs[0])
 
+
+    @match(TypeParam)
+    def do_resolve(self, p):
+        return self.types[name(p)]
 
     @match(Return)
     def do_resolve(self, retr):
@@ -329,6 +334,10 @@ class Types(object):
     @match(Self)
     def do_resolve(self, s):
         return self.resolve(s.klass)
+
+    @match(Boxed)
+    def do_resolve(self, b):
+        return self.resolve(b.type)
 
     @match(AST)
     def __getitem__(self, node):

@@ -1,6 +1,6 @@
 from .ast import (
     AST, Package, Callable, Class, Declaration, TypeParam, Import, Method, Type, Var, String, Number, Bool, If,
-    While, Name, Function, Interface, NativeFunction
+    While, Name, Function, Interface, NativeFunction, NativeBlock, Primitive
 )
 from .ast import coder
 from .match import match, many, choice
@@ -31,6 +31,20 @@ class Self(AST):
     @coder
     def code(self, coder):
         return "self"
+
+class Boxed(AST):
+
+    @match(TypeParam)
+    def __init__(self, type):
+        self.type = type
+
+    @property
+    def name(self):
+        return self.type.name
+
+    @property
+    def children(self):
+        return ()
 
 @match(choice(Package, Callable, Class, Declaration, TypeParam, Import))
 def name(n):
@@ -88,10 +102,18 @@ class Symbols(object):
 
     @match(Method)
     def define_implicit(self, meth):
-        if meth.body and meth.body.statements:
+        if isinstance(meth.body, NativeBlock) or (meth.body and meth.body.statements):
             s = Self(meth.parent)
             wire(meth, s)
             self.define("%s.self" % name(meth), s)
+
+    @match(Primitive)
+    def define_implicit(self, cls):
+        if cls.parameters:
+            for p in cls.parameters:
+                b = Boxed(p)
+                wire(cls, b)
+                self.define("%s_boxed" % name(p), b)
 
     @match(AST)
     def define_implicit(self, _):
@@ -104,11 +126,11 @@ class Symbols(object):
         else:
             assert False
 
-    @match(basestring, choice(definitions(), Package, Import, Self))
+    @match(basestring, choice(definitions(), Package, Import, Self, Boxed))
     def define(self, name, dfn):
         self.define(name, dfn, self.definitions.get(name, None))
 
-    @match(basestring, choice(definitions(), Import, Self), None)
+    @match(basestring, choice(definitions(), Import, Self, Boxed), None)
     def define(self, name, dfn, prev):
         self.definitions[name] = dfn
 

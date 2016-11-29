@@ -2,9 +2,9 @@ from .match import match, choice, many, ntuple
 from .ast import (
     Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param, While, Switch, Case,
     Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List, Map, Null,
-    Break, Continue, NativeFunction, NativeBlock, Fixed
+    Break, Continue, NativeFunction, NativeBlock, Fixed, TypeParam
 )
-from .symbols import Symbols, name, Self
+from .symbols import Symbols, name, Self, Boxed
 
 import tree
 
@@ -28,7 +28,7 @@ class Code(object):
         self.counter = 0
         self.stack = []
 
-    @match(choice(Interface, Class))
+    @match(choice(Class))
     def is_top(self, dfn):
         return True
 
@@ -36,7 +36,11 @@ class Code(object):
     def is_top(self, fun):
         return True if fun.body else False
 
-    @match(choice(AST, [Package], Primitive, Method))
+    @match(Method)
+    def is_top(self, meth):
+        return True if meth.body and isinstance(meth.body, NativeBlock) else False
+
+    @match(choice(AST, [Package], Primitive))
     def is_top(self, dfn):
         return False
 
@@ -46,7 +50,7 @@ class Code(object):
         for sym, nd in self.symbols.definitions.items():
             if not self.is_top(nd): continue
 
-            for ref, bindings in self.types.instantiations(nd):
+            for ref, bindings in self.types.instantiations(nd.parent if isinstance(nd, Method) else nd):
                 self.ref = ref
                 self.bindings = bindings
                 definitions.append(self.compile(nd))
@@ -80,6 +84,7 @@ class Code(object):
     @match(NativeBlock)
     def compile(self, block):
         mappings = [(name, self.compile(t)) for name, t in self.bindings.items()]
+
         for c in block.children:
             if isinstance(c, Var):
                 mappings.append((c.name.text, self.compile(c)))
@@ -117,9 +122,20 @@ class Code(object):
     @match(Method)
     def compile(self, meth):
         if meth.type:
-            klass = ir.Method
-            name = meth.name.text
-            ret = self.types[meth.type]
+            if isinstance(meth.body, NativeBlock):
+                klass = ir.NativeFunction
+                nam = self.compile_def(self.mangle(name(meth.parent), *self.ref.params) + "_" + meth.name.text)
+                ret = self.types.node(meth).bind(self.bindings).result
+                if meth.name.text == "__init__":
+                    extra = []
+                else:
+                    extra = [ir.Param("self", self.compile(self.ref))]
+                    extra[0].asdf = "fdsa"
+            else:
+                klass = ir.Method
+                nam = meth.name.text
+                ret = self.types[meth.type]
+                extra = []
         else:
             # XXX: this would benefit from a way to navigate from a
             # method to its object in typespace, because we don't have
@@ -127,11 +143,16 @@ class Code(object):
             # rebind. In general navigation in typespace is clumsy
             # right now.
             klass = ir.Constructor
-            name = self.mangle(meth.parent, meth.name.text, *self.ref.params)
+            nam = self.mangle(meth.parent, meth.name.text, *self.ref.params)
             ret = self.types.node(meth).bind(self.bindings).result
+            extra = []
 
         old_asserts = self.asserts # don't reset asserts because Class checks for asserts, too
-        args = (name, self.compile(ret)) + tuple(self.compile(meth.params) + [self.compile(meth.body)])
+        args = [nam, self.compile(ret)] + extra + self.compile(meth.params)
+        if isinstance(meth.body, NativeBlock):
+            args.extend(self.compile(meth.body))
+        else:
+            args += [self.compile(meth.body)]
         if self.asserts != old_asserts:
             klass = ir.TestMethod
 
@@ -266,6 +287,10 @@ class Code(object):
         dfn = self.symbols[name]
         if isinstance(dfn, Interface):
             return ir.InterfaceType(self.compile_ref(self.mangle(name, *params)))
+        elif isinstance(dfn, Primitive):
+            if dfn.name.text == "List":
+                return ir.List(self.compile(params[0]))
+            return ir.Int()
         else:
             return ir.ClassType(self.compile_ref(self.mangle(name, *params)))
 
@@ -549,7 +574,22 @@ class Code(object):
 
     @match(Self, Var)
     def compile_var(self, s, v):
-        return ir.This()
+        if isinstance(s.klass, Primitive):
+            return ir.Var("self")
+        else:
+            return ir.This()
+
+    @match(Boxed, Var)
+    def compile_var(self, b, v):
+        t = self.compile(self.types[b].bind(self.bindings))
+        if isinstance(t, ir.NativeType):
+            return ir.Boxed(t)
+        else:
+            return t
+
+    @match(TypeParam, Var)
+    def compile_var(self, p, v):
+        return self.compile(self.types[p].bind(self.bindings))
 
     @match(Assign)
     def compile(self, ass):

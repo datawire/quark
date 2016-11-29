@@ -48,3 +48,155 @@ void testpow() {
     assertEqual(8, pow(2, 3));
     printany(unsafe("the result is: " + unsafe(pow(2, 3)).asString()));
 }
+
+primitive imaginary
+{
+
+    imaginary(int n);
+
+    bool __eq__(imaginary o);
+
+    bool __ne__(imaginary o);
+
+    imaginary __add__(imaginary o);
+
+}
+
+imaginary imaginary___init__(int n);
+
+imaginary imaginary___init__(int n) for go {
+    return n;
+}
+imaginary imaginary___init__(int n) for ruby {
+    return n
+}
+imaginary imaginary___init__(int n) for python {
+    return n
+}
+imaginary imaginary___init__(int n) for java {
+    return n;
+}
+imaginary imaginary___init__(int n) for javascript {
+    return n
+}
+
+void testimaginary() {
+    imaginary x = new imaginary(3);
+    assertEqual(3, x);
+}
+
+primitive List<T> {
+
+    List<T> __init__();
+
+    List<T> __init__() for go {
+        var arr []$T = make([]$T,0,10)
+	return &arr
+    }
+
+    List<T> __init__() for java {
+        return new java.util.ArrayList<$T_boxed>();
+    }
+
+    List<T> __init__() for ruby {
+        return []
+    }
+
+    List<T> __init__() for python {
+        return []
+    }
+
+    List<T> __init__() for javascript {
+        return []
+    }
+
+    void append(T item);
+
+    void append(T item) for go {
+        *$self = append(*$self, $item)
+    }
+
+    void append(T item) for java {
+        $self.add($item);
+    }
+
+    void append(T item) for ruby {
+        $self.push($item)
+    }
+
+    void append(T item) for python {
+        $self.append($item)
+    }
+
+    void append(T item) for javascript {
+        $self.push($item)
+    }
+
+    T __get__(int index);
+
+    T __get__(int index) for go {
+        return (*$self)[index]
+    }
+
+    T __get__(int index) for java {
+        return $self.get(index);
+    }
+
+    void __get__(int index) for ruby {
+        return $self[$index]
+    }
+
+    void __get__(int index) for python {
+        return $self[$index]
+    }
+
+    void __get__(int index) for javascript {
+        return $self[$index]
+    }
+
+    int size();
+
+    int size() for go {
+        return len(*$self)
+    }
+
+    int size() for java {
+        return $self.size();
+    }
+
+    int size() for ruby {
+        return $self.size()
+    }
+
+    int size() for python {
+        return len($self)
+    }
+
+    int size() for javascript {
+        return $self.length
+    }
+}
+
+void testlist() {
+    List<int> li = [];
+    List<String> ls = [];
+    assertEqual(0, li.size());
+    assertEqual(0, ls.size());
+    li.append(3);
+    ls.append("pi");
+    assertEqual(1, li.size());
+    assertEqual(1, ls.size());
+    assertEqual(3, li[0]);
+    assertEqual("pi", ls[0]);
+    printany(unsafe("--"));
+    printany(unsafe(ls[0]));
+    printany(unsafe("--"));
+    printany(unsafe(li[0]));
+}
+
+class Foo {}
+
+void testlistfoo() {
+    List<Foo> foos = [new Foo()];
+    assertEqual(1, foos.size());
+}

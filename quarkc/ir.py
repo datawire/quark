@@ -267,7 +267,7 @@ class Map(NativeType):
         return self.repr(self.key, self.value)
 
 class List(NativeType):
-    @match(NativeType)
+    @match(AbstractType)
     def __init__(self, value):
         self.value = value
 
