@@ -55,7 +55,7 @@
                          Local("s", InterfaceType(Ref("minimal:mdk.api.Session")),
                                Construct(Ref("minimal:mdk.impl.Session"),
                                          (This(), Var("id")))),
-                         If(Invoke(Ref("quark:quark.object___ne__"), Get(This(), "plugin"), Null(InterfaceType(Ref("minimal:mdk.api.Plugin")))),
+                         If(Invoke(Ref("minimal:minimal.quark.object___ne__"), Get(This(), "plugin"), Null(InterfaceType(Ref("minimal:mdk.api.Plugin")))),
                             Block(
                                 Send(Get(This(), "plugin"), "onSession", (Var("s"), ))
                             ),
@@ -85,10 +85,32 @@
                               Set(This(), "id", Var("id")),
                           )),
               Method("log", Void(), Param("msg", String()),
-                     Block(Invoke(Ref("quark:quark.print"), Var("msg")))),
+                     Block(Invoke(Ref("minimal:minimal.quark.print"), Var("msg")))),
               Method("externalize", String(),
                      Block(Return(StringLit("id"))))
               ),
         Function(Name("minimal:mdk.helpers.uuid"), String(),
-                 Block(Return(StringLit("u-u-i-d"))))
+                 Block(Return(StringLit("u-u-i-d")))),
+        NativeFunction(Name("minimal:minimal.quark.object___ne__"),
+                       Bool(), Param("a", Any()), Param("b", Any()),
+                       TemplateContext(("a", Var("a")),
+                                     ("b", Var("b"))),
+                       TemplateText("java",       (), "return {a} != {b};"),
+                       TemplateText("python",     (),
+                                    """
+                                    if {a} != {b}:
+                                        return True
+                                    return False
+                                    """),
+                       TemplateText("go",         (), "return {a} != {b}"),
+                       TemplateText("ruby",       (), "return {a} != {b}"),
+                       TemplateText("javascript", (), "return {a} != {b}")),
+        NativeFunction(Name("minimal:minimal.quark.print"),
+                       Void(), Param("a", Any()),
+                       TemplateContext(("a", Var("a"))),
+                       TemplateText("java",       (), "System.out.println(a);"),
+                       TemplateText("python",     (), "print(a)"),
+                       TemplateText("go",         (NativeImport("fmt", "fmt"),), "fmt.Println(a)"),
+                       TemplateText("ruby",       (), "puts a"),
+                       TemplateText("javascript", (), "console.log(a)")),
     )
