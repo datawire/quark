@@ -657,6 +657,44 @@ namespace quark {
                 $self.clear();
             }
 
+        Map<K,V> __init__() for go {
+                return make(map[$K]$V);
+            }
+        void __set__(K key, V value) for go {
+                $self[$key] = $value;
+            }
+        V __get__(K key) for go {
+                return $self[$key];
+            }
+        List<K> keys() for go {
+                var keys []$K;
+                for k := range $self {
+                        keys = append(keys, k);
+                    }
+                return &keys;
+            }
+        V remove(K key) for go {
+                defer delete($self, $key);
+                return $self[$key];
+            }
+        bool contains(K key) for go {
+                _, ret := $self[$key];
+                return ret;
+            }
+        void update(Map<K,V> other) for go {
+                for k,v := range $other {
+                        $self[k] = v;
+                    }
+            }
+        int size() for go {
+                return len($self);
+            }
+        void clear() for go {
+                for k := range $self {
+                        delete($self, k)
+                    }
+            }
+
     }
 
     primitive List<T>
@@ -703,6 +741,33 @@ namespace quark {
                 return $T_nulled;
             }
 
+
+        List<T> __init__() for go {
+                var arr []$T = make([]$T, 0, 10);
+                return &arr;
+            }
+        void __set__(int index, T value) for go {
+                (*$self)[$index] = $value;
+            }
+        T __get__(int index) for go {
+                return (*$self)[$index];
+            }
+        int size() for go {
+                return len(*$self);
+            }
+        void append(T element) for go{
+                *$self = append(*$self, $element);
+            }
+        void extend(List<T> other) for go {
+                *$self = append(*$self, (*$other)...);
+            }
+        T remove(int index) for go {
+            ret := (*$self)[$index];
+            copy((*$self)[$index:], (*$self)[$index+1:]);
+            *$self = (*$self)[:len(*$self)-1];
+            return ret;
+        }
+
     }
 
     void assertEqual(void a, void b);
@@ -716,8 +781,8 @@ namespace quark {
 
     void print(void o) for java { System.out.println($o); }
 
-    // XXX: this is just so minimal_q.ir will compile, the body seems questionable
-    bool object___ne__(void left, void right);
-    bool object___ne__(void left, void right) for java { return $left == $right; }
+    Any unsafe(void a) for go { return $a; }
+
+    void print(void o) for go import "fmt" { fmt.Println($o); }
 
 }
