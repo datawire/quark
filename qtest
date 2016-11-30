@@ -245,7 +245,7 @@ class Javascript(Target):
     def run(self, patterns):
         self.gen(patterns)
         self.npm_install("mocha")
-        return run_in(os.path.join(self.target, self.src), "../node_modules/.bin/mocha", env={"NODE_PATH": self.path("emit", "rt")})
+        return run_in(os.path.join(self.target, self.src), "../node_modules/.bin/mocha", env={"NODE_PATH": self.path("emit")})
 
     def npm_install(self, pkg):
         node_modules = os.path.join(self.target, "node_modules")
