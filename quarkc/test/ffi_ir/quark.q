@@ -10,6 +10,8 @@ namespace quark {
 
         bool __eq__(bool b) for java { return $self == $b; }
         bool __not__() for java { return !$self; }
+        bool __or__(bool b) for java { return $self || $b; }
+        bool __and__(bool b) for java { return $self && $b; }
     }
 
     primitive int {
@@ -221,11 +223,18 @@ namespace quark {
             }
         List<Any> asList() for java  import "java.util.List" {
                 Object a = $self;
-
                 if (a instanceof List) {
                     @SuppressWarnings("unchecked")
                     List<Object> ret = (List<Object>)a;
                     return ret;
+                } else {
+                    return null;
+                }
+            }
+        Map<Scalar,Any> asMap() for java import "java.util.Map" {
+                Object a = $self;
+                if (a instanceof Map) {
+                    return (Map<Object,Object>)a;
                 } else {
                     return null;
                 }
@@ -294,7 +303,7 @@ namespace quark {
         String substring(int start, int end);
 
         String __add__(String other) for java { return $self + $other; }
-        bool __eq__(String other) for java { return $self == $other; }
+        bool __eq__(String other) for java { return $self.equals($other); }
         int size() for java { return $self.length(); }
         String substring(int start, int end) for java {
                 int l = $self.length();
@@ -302,7 +311,9 @@ namespace quark {
             }
     }
 
-    primitive Map<K,V> {
+    primitive Map<K,V>
+    for java import "java.util.Map" {Map<$K_boxed,$V_boxed>}
+    {
         Map<K,V> __init__();
         void __set__(K key, V value);
         V __get__(K key);
@@ -352,7 +363,10 @@ namespace quark {
 
     }
 
-    primitive List<T> {
+    primitive List<T>
+    for java import "java.util.List" {List<$T_boxed>}
+    for go {*[]$T}
+    {
         List<T> __init__();
         void __set__(int index, T value);
         T __get__(int index);
@@ -370,10 +384,11 @@ namespace quark {
             }
         T __get__(int index) for java import "java.util.List" {
                 $T_boxed el = $self.get($index);
-                if ( el != null ) {
+                if ( el == null ) {
+                    return $T_nulled;
+                } else {
                     return el;
                 }
-                return $T_nulled;
             }
         int size() for java import "java.util.List" import "java.util.ArrayList" {
                 return $self.size();
@@ -404,5 +419,9 @@ namespace quark {
     Any unsafe(void a) for java { return $a; }
 
     void print(void o) for java { System.out.println($o); }
+
+    // XXX: this is just so minimal_q.ir will compile, the body seems questionable
+    bool object___ne__(void left, void right);
+    bool object___ne__(void left, void right) for java { return $left == $right; }
 
 }
