@@ -194,10 +194,8 @@ class Code(object):
 
     @match(Class, types.Ref)
     def mangle_param(self, dfn, ref):
-        params = [self.mangle_param(dfn, ref.name)]
-        if not isinstance(dfn, Primitive):
-            params.extend([self.mangle_param(dfn, p).replace(".", "_") for p in ref.params])
-        return "_".join(params)
+        return "_".join([self.mangle_param(dfn, ref.name)] +
+                        [self.mangle_param(dfn, p).replace(".", "_") for p in ref.params])
 
     @match(Class, "quark.int")
     def mangle_param(self, dfn, sym):
@@ -214,6 +212,14 @@ class Code(object):
     @match(Class, "quark.Scalar")
     def mangle_param(self, dfn, sym):
         return "Scalar"
+
+    @match(Class, "quark.List")
+    def mangle_param(self, dfn, sym):
+        return "List"
+
+    @match(Class, "quark.Map")
+    def mangle_param(self, dfn, sym):
+        return "Map"
 
     @match(Class, basestring)
     def mangle_param(self, dfn, sym):
@@ -265,22 +271,6 @@ class Code(object):
     @match(types.Ref)
     def compile_bound(self, ref):
         return self.compile_bound(ref.name, *ref.params)
-
-    @match("quark.List", many(types.Ref))
-    def compile_bound(self, name, element):
-        dfn = self.symbols[element.name]
-        if isinstance(dfn, Primitive) and element.name not in ("quark.List", "quark.Map"):
-            return ir.List(self.compile(element))
-        else:
-            return ir.List(ir.Any())
-
-    @match("quark.Map", many(types.Ref))
-    def compile_bound(self, name, key, value):
-        dfn = self.symbols[value.name]
-        if isinstance(dfn, Primitive) and value.name not in ("quark.List", "quark.Map"):
-            return ir.Map(self.compile(key), self.compile(value))
-        else:
-            return ir.Map(self.compile(key), ir.Any())
 
     @match(basestring, many(types.Ref))
     def compile_bound(self, nam, *params):
@@ -597,10 +587,7 @@ class Code(object):
     @match(Nulled, Var)
     def compile_var(self, b, v):
         t = self.compile(self.types[b].bind(self.bindings))
-        if isinstance(t, ir.NativeType):
-            return ir.Null(t)
-        else:
-            return t
+        return ir.Null(t)
 
     @match(TypeParam, Var)
     def compile_var(self, p, v):
