@@ -40,12 +40,15 @@ def opt_expr(glue, nd, target, default=""):
 
 @match(NativeBlock, Target)
 def code(block, target):
-    context = dict((k,expr(v,target)) for k,v in block.context.mappings)
+    def format(text):
+        lazy = set(t.split("}")[0] for t in text.replace("{{","").replace("}}","").split("{")[1:])
+        context = dict((k,expr(v,target)) for k,v in block.context.mappings if k in lazy)
+        return text.format(**context)
     tgt = target.__class__.__name__.lower()
     for text in block.cases:
         if text.target.lower() == tgt:
             try:
-                return tr.Block(tr.Box(text.template.format(**context)))
+                return tr.Block(tr.Box(format(text.template)))
             except KeyError, ke:
                 print("%s not in %s" % (ke, context.keys()))
     assert False, "Frontend did not supply a valid {target} TextTemplate for {fun}. Have only {other}".format(
