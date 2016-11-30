@@ -230,14 +230,11 @@ class Code(object):
 
     @match(basestring)
     def compile_ref(self, name):
-        if name.startswith("quark."):
-            return ir.Ref("quark", name)
-        else:
-            return ir.Ref("pkg", name)
+        return ir.Ref("pkg:pkg", name)
 
     @match(basestring)
     def compile_def(self, name):
-        return ir.Name("pkg", name)
+        return ir.Name("pkg:pkg", name)
 
     @match(types.Ref)
     def compile(self, ref):
