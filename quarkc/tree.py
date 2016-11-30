@@ -47,17 +47,22 @@ def pretty(node, args, kwargs, annotations):
         if annotations:
             prefix = repr(annotations[0])
             sargs = [pretty(node, args, kwargs, annotations[1:])]
+            pargs = []
         else:
             prefix = node.__class__.__name__
             sargs = [repr(a) for a in args]
-            sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
-        if sum(map(len, sargs)) + len(prefix) > 80:
-            first = "\n" + indent
+            pargs = ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
+        if sum(map(len, sargs+pargs)) + len(prefix) > 80:
             sep = ",\n" + indent
+            if len(sargs) > 42: # python eval has a 255 argument limit 
+                first = "*(\n" + indent
+                sargs[-1] += ")"
+            else:
+                first = "\n" + indent
         else:
             first = ""
             sep = ", "
-        return "%s(%s%s)" % (prefix, first, sep.join(sargs))
+        return "%s(%s%s)" % (prefix, first, sep.join(sargs+pargs))
 
 # XXX: this comment can go, iiuc
 # should pull in stuff from types base class here... would enable
