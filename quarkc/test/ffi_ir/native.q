@@ -1,25 +1,4 @@
-void printany(Any o);
 int pow(int a, int b);
-
-void printany(Any o) for java {
-    System.out.println($o);
-}
-void printany(Any o) for python
-import "sys"
-{
-    sys.stdout.write("%s\n" % o)
-}
-void printany(Any o) for ruby {
-    puts(o)
-}
-void printany(Any o) for go
-import "fmt"
-{
-    fmt.Println(o)
-}
-void printany(Any o) for javascript {
-    console.log(o)
-}
 
 int pow(int a, int b) for java {
     return (int) Math.pow(a, b);
@@ -40,13 +19,13 @@ import "math"
 }
 
 void testprintany() {
-    printany(unsafe("yay, it works!!!"));
+    print(unsafe("yay, it works!!!"));
     assertEqual(1, 1);
 }
 
 void testpow() {
     assertEqual(8, pow(2, 3));
-    printany(unsafe("the result is: " + unsafe(pow(2, 3)).asString()));
+    print(unsafe("the result is: " + unsafe(pow(2, 3)).asString()));
 }
 
 primitive imaginary
@@ -90,100 +69,6 @@ void testimaginary() {
     assertEqual(1 + 2, x);
 }
 
-primitive List<T>
-for java import "java.util.List" {List<$T_boxed>}
-for go {*[]$T}
-{
-
-    List<T> __init__();
-
-    List<T> __init__() for go {
-        var arr []$T = make([]$T,0,10)
-	return &arr
-    }
-
-    List<T> __init__() for java {
-        return new java.util.ArrayList<$T_boxed>();
-    }
-
-    List<T> __init__() for ruby {
-        return []
-    }
-
-    List<T> __init__() for python {
-        return []
-    }
-
-    List<T> __init__() for javascript {
-        return []
-    }
-
-    void append(T item);
-
-    void append(T item) for go {
-        *$self = append(*$self, $item)
-    }
-
-    void append(T item) for java {
-        $self.add($item);
-    }
-
-    void append(T item) for ruby {
-        $self.push($item)
-    }
-
-    void append(T item) for python {
-        $self.append($item)
-    }
-
-    void append(T item) for javascript {
-        $self.push($item)
-    }
-
-    T __get__(int index);
-
-    T __get__(int index) for go {
-        return (*$self)[index]
-    }
-
-    T __get__(int index) for java {
-        return $self.get(index);
-    }
-
-    void __get__(int index) for ruby {
-        return $self[$index]
-    }
-
-    void __get__(int index) for python {
-        return $self[$index]
-    }
-
-    void __get__(int index) for javascript {
-        return $self[$index]
-    }
-
-    int size();
-
-    int size() for go {
-        return len(*$self)
-    }
-
-    int size() for java {
-        return $self.size();
-    }
-
-    int size() for ruby {
-        return $self.size()
-    }
-
-    int size() for python {
-        return len($self)
-    }
-
-    int size() for javascript {
-        return $self.length
-    }
-}
 
 void testlist() {
     List<int> li = [];
@@ -196,10 +81,10 @@ void testlist() {
     assertEqual(1, ls.size());
     assertEqual(3, li[0]);
     assertEqual("pi", ls[0]);
-    printany(unsafe("--"));
-    printany(unsafe(ls[0]));
-    printany(unsafe("--"));
-    printany(unsafe(li[0]));
+    print(unsafe("--"));
+    print(unsafe(ls[0]));
+    print(unsafe("--"));
+    print(unsafe(li[0]));
 }
 
 class Foo {}
@@ -207,4 +92,73 @@ class Foo {}
 void testlistfoo() {
     List<Foo> foos = [new Foo()];
     assertEqual(1, foos.size());
+}
+
+
+void testint_null() {
+    int nuffin; // quark vars should initialize to nil value
+    assertEqual(nuffin, 0);
+}
+
+void testint__eq__() {
+    assertEqual(true, 0 == 0);
+    assertEqual(false, 0 == 1);
+    assertEqual(false, 1 == 0);
+    assertEqual(true, 1 == 1);
+}
+
+void testint__ne__() {
+    assertEqual(false, 0 != 0);
+    assertEqual(true, 0 != 1);
+    assertEqual(true, 1 != 0);
+    assertEqual(false, 1 != 1);
+}
+
+void testint__add__() {
+    assertEqual(0, 0 + 0);
+    assertEqual(1, 0 + 1);
+    assertEqual(1, 1 + 0);
+    assertEqual(2, 1 + 1);
+    assertEqual(42, 23 + 19);
+}
+
+void testint__sub__() {
+    assertEqual(0, 0 - 0);
+    assertEqual(-1, 0 - 1);
+    assertEqual(1, 1 - 0);
+    assertEqual(0, 1 - 1);
+    assertEqual(42, 64 - 22);
+}
+
+void testint__neg__() {
+    int zero = 0;
+    assertEqual(0, -zero);
+    int one = 1;
+    assertEqual(-1, -one);
+    int neg = -1;
+    assertEqual(1, -neg);
+}
+
+void testint__ge__() {
+    assertEqual(true, 0 >= 0);
+    assertEqual(true, 1 >= 0);
+    assertEqual(false, 0 >= 1);
+}
+
+void testint__le__() {
+    assertEqual(true, 0 <= 0);
+    assertEqual(false, 1 <= 0);
+    assertEqual(true, 0 <= 1);
+}
+
+void testint__gt__() {
+    assertEqual(false, 0 > 0);
+    assertEqual(true, 1 > 0);
+    assertEqual(false, 0 > 1);
+}
+
+void testint__lt__() {
+    assertEqual(false, 0 < 0);
+    assertEqual(false, 1 < 0);
+    assertEqual(true, 0 < 1);
 }
