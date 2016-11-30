@@ -181,6 +181,114 @@ void string_equals() {
 
 }
 
+
+Any weirdo();
+Any weirdo() for java { return new Object(); }
+Any weirdo() for go { return make(chan int, 100) }
+Any weirdo() for javascript { return Buffer("wtf"); }
+Any weirdo() for ruby { return BasicObject.new }
+Any weirdo() for python { return (None for i in []) }
+
+interface EmptyItf {}
+class Something extends EmptyItf {}
+class Rainbow {
+    bool yes() { return true; }
+    bool no() { return false; }
+    int zero() { return 0; }
+    int seven() { return 7; }
+    String emptyStr() { return ""; }
+    String haha() { return "haha"; }
+    List<int> emptyListInt() { List<int> ret = new List<int>(); return ret; }
+    List<int> oneListInt() { List<int> ret = [11]; return ret; }
+    Map<int,int> emptyMapIntInt() { Map<int,int> ret = new Map<int,int>(); return ret; }
+    Map<int,int> oneMapIntInt() { Map<int,int> ret = {11:22}; return ret; }
+    EmptyItf zilch() { EmptyItf ret = null; return ret; }
+    EmptyItf something() { EmptyItf ret = new Something(); return ret; }
+    Any polkadots() { return weirdo(); }
+}
+
+class AnyTest {
+    void test_true() {
+        Any a = unsafe(new Rainbow().yes());
+        assertEqual(1, a.type());
+        assertEqual(true, a.asBool());
+        assertEqual(1, a.asInt());
+        assertEqual("true", a.asString());
+        assertEqual(null, a.asList());
+        assertEqual(null, a.asMap());
+    }
+    void test_false() {
+        Any a = unsafe(new Rainbow().no());
+        assertEqual(1, a.type());
+        assertEqual(false, a.asBool());
+        assertEqual(0, a.asInt());
+        assertEqual("false", a.asString());
+        assertEqual(null, a.asList());
+        assertEqual(null, a.asMap());
+    }
+    void test_zero() {
+        Any a = unsafe(new Rainbow().zero());
+        assertEqual(1, a.type());
+        assertEqual(false, a.asBool());
+        assertEqual(0, a.asInt());
+        assertEqual("0", a.asString());
+        assertEqual(null, a.asList());
+        assertEqual(null, a.asMap());
+    }
+    void test_seven() {
+        Any a = unsafe(new Rainbow().seven());
+        assertEqual(1, a.type());
+        assertEqual(true, a.asBool());
+        assertEqual(7, a.asInt());
+        assertEqual("7", a.asString());
+        assertEqual(null, a.asList());
+        assertEqual(null, a.asMap());
+    }
+    void test_emptyStr() {
+        Any a = unsafe(new Rainbow().emptyStr());
+        assertEqual(1, a.type());
+        assertEqual(false, a.asBool());
+        assertEqual(0, a.asInt());
+        assertEqual("", a.asString());
+        assertEqual(null, a.asList());
+        assertEqual(null, a.asMap());
+    }
+    void test_haha() {
+        Any a = unsafe(new Rainbow().haha());
+        assertEqual(1, a.type());
+        assertEqual(true, a.asBool());
+        assertEqual(0, a.asInt());
+        assertEqual("haha", a.asString());
+        assertEqual(null, a.asList());
+        assertEqual(null, a.asMap());
+    }
+    void test_emptyListInt() {
+        Any a = unsafe(new Rainbow().emptyListInt());
+        assertEqual(2, a.type());
+        assertEqual(false, a.asBool());
+        assertEqual(0, a.asInt());
+        assertEqual("", a.asString());
+        assertNotEqual(null, a.asList());
+        assertEqual(null, a.asMap());
+        List<Any> l = a.asList();
+        assertEqual(0, l.size());
+    }
+    void test_oneListInt() {
+        Any a = unsafe(new Rainbow().oneListInt());
+        assertEqual(2, a.type());
+        assertEqual(false, a.asBool());
+        assertEqual(0, a.asInt());
+        assertEqual("", a.asString());
+        assertNotEqual(null, a.asList());
+        assertEqual(null, a.asMap());
+        List<Any> l = a.asList();
+        assertEqual(1, l.size());
+        assertEqual(1, l[0].type());
+        assertEqual(11, l[0].asInt());
+        assertEqual("11", l[0].asString());
+    }
+}
+
 void map_string_string_getset() {
     Map<String,String> m = new Map<String,String>();
     m["asdf"] = "fdsa";
