@@ -104,6 +104,9 @@ class _Name(IR):
     def __repr__(self):
         return self.repr(self.package, *self.path)
 
+    def __str__(self):
+        return ":".join((self.package, ) + (self.path and (".".join(self.path),)))
+
     @property
     def namespace(self):
         return NamespaceName(self.package, *self.path[:-1])
@@ -1225,7 +1228,7 @@ def restructure(pkg):
     prefix = pkg.name.path
     children = []
     def keyfunc(dfn):
-        assert pkg.name.package == dfn.name.package
+        assert pkg.name.package == dfn.name.package, "unexpected package %s %s" % (pkg.name, dfn.name)
         assert prefix == dfn.name.path[:len(prefix)]
         return dfn.name.path[:len(prefix)+1]
     for k, g in groupby(sorted(pkg.definitions, key=keyfunc), keyfunc):

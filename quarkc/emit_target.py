@@ -31,6 +31,9 @@ class NameQuery(Query):
             root = tuple(self.ancestors(ref))[-1]
             for name in filter(isa(Name), walk_dfs(root)):
                 self.definition_memory[name] = self.parent(name)
+        assert ref in self.definition_memory, "No definition for Ref %s%s%s" % (
+            str(ref), "\n   Have:\n      ",
+            ",\n      ".join(map(str,sorted(self.definition_memory.keys()))))
         return self.definition_memory[ref]
 
 class Target(object):
