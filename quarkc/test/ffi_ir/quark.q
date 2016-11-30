@@ -223,7 +223,9 @@ namespace quark {
                 Object a = $self;
 
                 if (a instanceof List) {
-                    return (List<Object>)a;
+                    @SuppressWarnings("unchecked")
+                    List<Object> ret = (List<Object>)a;
+                    return ret;
                 } else {
                     return null;
                 }
@@ -309,6 +311,45 @@ namespace quark {
         bool contains(K key);
         void update(Map<K,V> other);
         int size();
+        void clear();
+
+
+        Map<K,V> __init__() for java import "java.util.Map" import "java.util.HashMap" {
+                return new HashMap<$K_boxed,$V_boxed>();
+            }
+        void __set__(K key, V value) for java import "java.util.Map" {
+                $self.put($key, $value);
+            }
+        V __get__(K key) for java import "java.util.Map" {
+                $V_boxed value = $self.get($key);
+                if (value != null) {
+                    return value;
+                }
+                return $V_nulled;
+            }
+        List<K> keys() for java import "java.util.Map" import "java.util.ArrayList" {
+                return new ArrayList<$K_boxed>($self.keySet());
+            }
+        V remove(K key) for java import "java.util.Map" {
+                $V_boxed value = $self.remove($key);
+                if (value != null) {
+                    return value;
+                }
+                return $V_nulled;
+            }
+        bool contains(K key) for java import "java.util.Map" {
+                return $self.containsKey($key);
+            }
+        void update(Map<K,V> other) for java import "java.util.Map" {
+                $self.putAll($other);
+            }
+        int size() for java import "java.util.Map" {
+                return $self.size();
+            }
+        void clear() for java import "java.util.Map" {
+                $self.clear();
+            }
+
     }
 
     primitive List<T> {
@@ -322,12 +363,12 @@ namespace quark {
         //bool index(T element);
 
         List<T> __init__() for java import "java.util.List" import "java.util.ArrayList" {
-                return new ArrayList<$T>();
+                return new ArrayList<$T_boxed>();
             }
-        void __set__(int index, T value) for java import "java.util.List" import "java.util.ArrayList" {
+        void __set__(int index, T value) for java import "java.util.List" {
                 $self.set($index,$value);
             }
-        T __get__(int index) for java import "java.util.List" import "java.util.ArrayList" {
+        T __get__(int index) for java import "java.util.List" {
                 $T_boxed el = $self.get($index);
                 if ( el != null ) {
                     return el;
@@ -337,13 +378,13 @@ namespace quark {
         int size() for java import "java.util.List" import "java.util.ArrayList" {
                 return $self.size();
             }
-        void append(T element) for java import "java.util.List" import "java.util.ArrayList" {
+        void append(T element) for java import "java.util.List" {
                 $self.add($element);
             }
-        void extend(List<T> other) for java import "java.util.List" import "java.util.ArrayList" {
+        void extend(List<T> other) for java import "java.util.List" {
                 $self.addAll($other);
             }
-        T remove(int index) for java import "java.util.List" import "java.util.ArrayList" {
+        T remove(int index) for java import "java.util.List" {
                 $T_boxed el = $self.remove($index);
                 if ( el != null ) {
                     return el;
