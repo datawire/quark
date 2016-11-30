@@ -19,9 +19,9 @@ from quarkc.emit import transform, emit
 from quarkc.ir import reconstruct
 from quarkc.emit_target import Go, Python, Java, Ruby, Javascript
 
-from .sample_ir import fibonacci_ir, minimal_ir, native_int, native_map_string_int, native_map_string_string
+from .sample_ir import fibonacci_ir, minimal_ir
 
-samples = [fibonacci_ir, minimal_ir, native_int, native_map_string_string, native_map_string_int]
+samples = [fibonacci_ir, minimal_ir]
 
 targets = [Javascript, Go, Python, Java, Ruby]
 

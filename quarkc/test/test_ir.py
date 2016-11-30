@@ -110,10 +110,10 @@ def test_emit():
 
 
 from .sample_ir import (
-    fibonacci_ir, minimal_ir, native_int, native_map_string_string, native_map_string_int
+    fibonacci_ir, minimal_ir
 )
 
-samples = [fibonacci_ir, minimal_ir, native_int, native_map_string_string, native_map_string_int]
+samples = [fibonacci_ir, minimal_ir]
 from quarkc.ir import restructure, model_externals, reconstruct
 
 @pytest.mark.parametrize("sample", samples, ids=[s.func_name for s in samples])
