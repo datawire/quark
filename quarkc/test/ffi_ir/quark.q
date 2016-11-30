@@ -27,6 +27,11 @@ namespace quark {
         bool __not__() for ruby { return (not $self) }
         bool __or__(bool b) for ruby { return ($self or $b) }
         bool __and__(bool b) for ruby { return ($self and $b) }
+
+        bool __eq__(bool b) for javascript { return $self == $b }
+        bool __not__() for javascript { return (! $self) }
+        bool __or__(bool b) for javascript { return ($self || $b) }
+        bool __and__(bool b) for javascript { return ($self && $b) }
     }
 
     primitive int {
@@ -84,6 +89,17 @@ namespace quark {
         bool __le__(int other) for ruby { return $self <= $other }
         bool __gt__(int other) for ruby { return $self > $other }
         bool __lt__(int other) for ruby { return $self < $other }
+
+        int __add__(int other) for javascript { return $self + $other }
+        int __sub__(int other) for javascript { return $self - $other }
+        int __neg__() for javascript { return -$self }
+        int __mul__(int other) for javascript { return $self * $other }
+        bool __eq__(int other) for javascript { return $self === $other }
+        bool __ne__(int other) for javascript { return $self !== $other }
+        bool __ge__(int other) for javascript { return $self >= $other }
+        bool __le__(int other) for javascript { return $self <= $other }
+        bool __gt__(int other) for javascript { return $self > $other }
+        bool __lt__(int other) for javascript { return $self < $other }
 
     }
 
@@ -722,6 +738,115 @@ namespace quark {
 
 
 
+        int type() for javascript {
+                let a = $self;
+                let t = typeof(a);
+                if (t === "object") {
+                    if (a === null) {
+                        return 0;
+                    } else if (Array.isArray(a)) {
+                        return 2;
+                    } else if (a instanceof Map) {
+                        return 3;
+                    } else {
+                        return -1;
+                    }
+                } else if (t === "string") {
+                    return 1;
+                } else if (t === "number") {
+                    return 1;
+                } else if (t === "boolean") {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        bool asBool() for javascript {
+                let a = $self;
+                let t = typeof(a);
+                if (t === "object") {
+                    return false;
+                } else if (t === "string") {
+                    return a.length > 0;
+                } else if (t === "number") {
+                    return a != 0;
+                } else if (t === "boolean") {
+                    return a;
+                } else {
+                    return false;
+                }
+            }
+        int asInt() for javascript {
+                let a = $self;
+                let t = typeof(a);
+                if (t === "object") {
+                    return 0;
+                } else if (t === "string") {
+                    return 0;
+                } else if (t === "number") {
+                    if (Number.isInteger(a)) {
+                        return a;
+                    } else if ( a > 0 ) {
+                        return Math.floor(a);
+                    } else {
+                        return -Math.floor(-a);
+                    }
+                } else if (t === "boolean") {
+                    return a ? 1 : 0;
+                } else {
+                    return 0;
+                }
+            }
+        String asString() for javascript {
+                let a = $self;
+                let t = typeof(a);
+                if (t === "object") {
+                    return "";
+                } else if (t === "string") {
+                    return a;
+                } else if (t === "number") {
+                    return a.toString();
+                } else if (t === "boolean") {
+                    return a ? "true" : "false";
+                } else {
+                    return "";
+                }
+            }
+        Scalar asScalar() for javascript {
+                let a = $self;
+                if (Array.isArray(a) || typeof(a) === "object" || a instanceof Map) {
+                    return null;
+                } else {
+                    return a;
+                }
+            }
+        List<Any> asList() for javascript {
+                let a = $self;
+                if (Array.isArray(a)) {
+                    return a;
+                } else {
+                    return null;
+                }
+            }
+        Map<Scalar,Any> asMap() for javascript {
+                let a = $self;
+                if (typeof(a) === "object") {
+                    if (a instanceof Map) {
+                        return a;
+                    } else if (a.constructor === Object) {
+                        ret = new Map();
+                        Object.getOwnPropertyNames(a).forEach(function(k) {
+                                ret[k] = a[k];
+                            });
+                        return ret;
+                    } else {
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
+            }
+
     }
 
     primitive Scalar {
@@ -824,6 +949,12 @@ namespace quark {
         String substring(int start, int end) for ruby {
                 return $self.slice($start, $end - $start)
             }
+
+        String __add__(String other) for javascript { return $self + $other }
+        bool __eq__(String other) for javascript { return $self === $other }
+        int size() for javascript { return $self.length }
+        String substring(int start, int end) for javascript { return $self.substring($start, $end) }
+
 
     }
 
@@ -987,6 +1118,42 @@ namespace quark {
             }
 
 
+        Map<K,V> __init__() for javascript {
+                return new Map();
+            }
+        void __set__(K key, V value) for javascript { $self.set($key, $value) }
+        V __get__(K key) for javascript {
+                let el = $self.get($key);
+                if (el !== undefined && el !== null) {
+                    return el;
+                }
+                return $V_nulled;
+            }
+        List<K> keys() for javascript {
+                return Array.from($self.keys());
+            }
+        V remove(K key) for javascript {
+                let el = $self.get($key);
+                $self.delete($key);
+                if (el !== undefined && el !== null) {
+                    return el;
+                }
+                return $V_nulled;
+            }
+        bool contains(K key) for javascript {
+                return $self.has($key);
+            }
+        void update(Map<K,V> other) for javascript {
+                $other.forEach(v,k => $self.set(k,v));
+            }
+        int size() for javascript {
+                return $self.size;
+            }
+        void clear() for javascript {
+                $self.clear();
+            }
+
+
     }
 
     primitive List<T>
@@ -1106,7 +1273,29 @@ namespace quark {
         T remove(int index) for ruby {
                 $self.delete_at($index)
             }
-        
+
+
+        List<T> __init__() for javascript {
+                return [];
+            }
+        void __set__(int index, T value) for javascript {
+                $self[$index] = $value;
+            }
+        T __get__(int index) for javascript {
+                return $self[$index];
+            }
+        int size() for javascript {
+                return $self.length;
+            }
+        void append(T element) for javascript {
+                return $self.push($element);
+            }
+        void extend(List<T> other) for javascript {
+                $other.forEach(x => $self.push(x));
+            }
+        T remove(int index) for javascript {
+                return $self.splice($index, 1)[0]
+            }
     }
 
     void assertEqual(void a, void b);
@@ -1135,5 +1324,10 @@ namespace quark {
     Any unsafe(void a) for ruby { return $a }
 
     void print(void o) for ruby { puts $o }
+
+
+    Any unsafe(void a) for javascript { return $a }
+
+    void print(void o) for javascript { console.log($o) }
 
 }
