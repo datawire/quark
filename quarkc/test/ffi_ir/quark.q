@@ -17,6 +17,11 @@ namespace quark {
         bool __not__() for go { return !$self; }
         bool __or__(bool b) for go { return $self || $b; }
         bool __and__(bool b) for go { return $self && $b; }
+
+        bool __eq__(bool b) for python { return $self == $b; }
+        bool __not__() for python { return not $self; }
+        bool __or__(bool b) for python { return $self or $b; }
+        bool __and__(bool b) for python { return $self and $b; }
     }
 
     primitive int {
@@ -52,6 +57,17 @@ namespace quark {
         bool __le__(int other) for go { return $self <= $other; }
         bool __gt__(int other) for go { return $self > $other; }
         bool __lt__(int other) for go { return $self < $other; }
+
+        int __add__(int other) for python { return $self + $other; }
+        int __sub__(int other) for python { return $self - $other; }
+        int __neg__() for python { return -$self; }
+        int __mul__(int other) for python { return $self * $other; }
+        bool __eq__(int other) for python { return $self == $other; }
+        bool __ne__(int other) for python { return $self != $other; }
+        bool __ge__(int other) for python { return $self >= $other; }
+        bool __le__(int other) for python { return $self <= $other; }
+        bool __gt__(int other) for python { return $self > $other; }
+        bool __lt__(int other) for python { return $self < $other; }
 
     }
 
@@ -496,22 +512,95 @@ namespace quark {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
+        int type() for python import "six" {
+            a = $self
+            if a is None:
+                return 0
+            elif isinstance(a, (list, tuple)):
+                return 2
+            elif isinstance(a, dict):
+                return 3
+            elif isinstance(a, six.text_type):
+                return 1
+            elif a is True or a is False:
+                # order wrt int check is important. bool isinstance int
+                return 1
+            elif isinstance(a, six.integer_types):
+                return 1
+            elif isinstance(a, float):
+                return 1
+            else:
+                return -1
+            }
+        bool asBool() for python import "six" {
+            a = $self
+            if a is None:
+                return False
+            elif isinstance(a, six.text_type):
+                return bool(a)
+            elif a is True or a is False:
+                # order wrt int check is important. bool isinstance int
+                return a
+            elif isinstance(a, six.integer_types):
+                return bool(a)
+            elif isinstance(a, float):
+                return bool(a)
+            else:
+                return False
+            }
+        int asInt() for python import "six" {
+            a = $self
+            if a is None:
+                return 0
+            elif isinstance(a, six.text_type):
+                return 0
+            elif a is True or a is False:
+                return int(a)
+            elif isinstance(a, six.integer_types):
+                return a
+            elif isinstance(a, float):
+                return int(a)
+            else:
+                return 0
+            }
+        String asString() for python import "six" {
+            a = $self
+            if a is None:
+                return u""
+            elif isinstance(a, six.text_type):
+                return a
+            elif a is True or a is False:
+                return a and u"true" or u"false"
+            elif isinstance(a, six.integer_types):
+                return six.text_type(a)
+            elif isinstance(a, float):
+                return six.text_type(a)
+            else:
+                return u""
+            }
+        Scalar asScalar() for python import "six" {
+            a = $self
+            if isinstance(a, (list, tuple, dict)):
+                return None
+            else:
+                return a
+            }
+        List<Any> asList() for python import "six" {
+            a = $self
+            if isinstance(a, list):
+                return a
+            elif isinstance(a, tuple):
+                return list(a)
+            else:
+                return None
+            }
+        Map<Scalar,Any> asMap() for python import "six" {
+            a = $self
+            if isinstance(a, dict):
+                return a
+            else:
+                return None
+            }
     }
 
     primitive Scalar {
@@ -603,6 +692,10 @@ namespace quark {
 	return $self[s:e]
             }
 
+        String __add__(String other) for python { return $self + $other }
+        bool __eq__(String other) for python { return $self == $other }
+        int size() for python { return len($self) }
+        String substring(int start, int end) for python { return $self[$start:$end] }
 
     }
 
@@ -691,10 +784,44 @@ namespace quark {
             }
         void clear() for go {
                 for k := range $self {
-                        delete($self, k)
+                        delete($self, k);
                     }
             }
 
+
+        Map<K,V> __init__() for python {
+                return dict()
+            }
+        void __set__(K key, V value) for python {
+                $self[$key] = $value
+            }
+        V __get__(K key) for python {
+                el = $self.get($key)
+                if el is not None:
+                    return el
+                return $V_nulled
+            }
+        List<K> keys() for python {
+                return list($self.keys())
+            }
+        V remove(K key) for python {
+                el = $self.pop($key)
+                if el is not None:
+                    return el
+                return $V_nulled
+            }
+        bool contains(K key) for python {
+                return $key in $self
+            }
+        void update(Map<K,V> other) for python {
+                $self.update($other)
+            }
+        int size() for python {
+                return len($self)
+            }
+        void clear() for python {
+                $self.clear()
+            }
     }
 
     primitive List<T>
@@ -768,6 +895,32 @@ namespace quark {
             return ret;
         }
 
+
+        List<T> __init__() for python {
+                return []
+            }
+        void __set__(int index, T value) for python {
+                $self[$index] = $value
+            }
+        T __get__(int index) for python {
+                return $self[$index]
+            }
+        int size() for python {
+                return len($self)
+            }
+        void append(T element) for python {
+                $self.append($element)
+            }
+        void extend(List<T> other) for python {
+                $self.extend($other)
+            }
+        T remove(int index) for python {
+                ret = $self[$index]
+                $self[$index:] = $self[$index+1:]
+                return ret
+            }
+
+        
     }
 
     void assertEqual(void a, void b);
@@ -777,12 +930,19 @@ namespace quark {
 
     void print(void o);
 
+
     Any unsafe(void a) for java { return $a; }
 
     void print(void o) for java { System.out.println($o); }
 
+
     Any unsafe(void a) for go { return $a; }
 
     void print(void o) for go import "fmt" { fmt.Println($o); }
+
+
+    Any unsafe(void a) for python { return $a }
+
+    void print(void o) for python { print($o) }
 
 }
