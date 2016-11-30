@@ -1,13 +1,11 @@
-// XXX: quark should initialize locals to a (typed) null value (IR defines null for native types as a value, e.g. empty string for String)
-//void initialized_locals() {
-//    int i;
-//    assertEqual(0, i);
-//    String s;
-//    assertEqual("", s);
-//    bool b;
-//    bool XXX_false = 1 == 2;
-//    assertEqual(XXX_false, b); // XXX: false kills compiler
-//}
+void initialized_locals() {
+    int i;
+    assertEqual(0, i);
+    String s;
+    assertEqual("", s);
+    bool b;
+    assertEqual(false, b);
+}
 
 class SideEffect {
     List<String> log;
