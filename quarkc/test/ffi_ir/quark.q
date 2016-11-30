@@ -22,6 +22,11 @@ namespace quark {
         bool __not__() for python { return not $self; }
         bool __or__(bool b) for python { return $self or $b; }
         bool __and__(bool b) for python { return $self and $b; }
+
+        bool __eq__(bool b) for ruby { return $self == $b }
+        bool __not__() for ruby { return (not $self) }
+        bool __or__(bool b) for ruby { return ($self or $b) }
+        bool __and__(bool b) for ruby { return ($self and $b) }
     }
 
     primitive int {
@@ -68,6 +73,17 @@ namespace quark {
         bool __le__(int other) for python { return $self <= $other; }
         bool __gt__(int other) for python { return $self > $other; }
         bool __lt__(int other) for python { return $self < $other; }
+
+        int __add__(int other) for ruby { return $self + $other }
+        int __sub__(int other) for ruby { return $self - $other }
+        int __neg__() for ruby { return -$self }
+        int __mul__(int other) for ruby { return $self * $other }
+        bool __eq__(int other) for ruby { return $self == $other }
+        bool __ne__(int other) for ruby { return $self != $other }
+        bool __ge__(int other) for ruby { return $self >= $other }
+        bool __le__(int other) for ruby { return $self <= $other }
+        bool __gt__(int other) for ruby { return $self > $other }
+        bool __lt__(int other) for ruby { return $self < $other }
 
     }
 
@@ -601,6 +617,111 @@ namespace quark {
             else:
                 return None
             }
+
+
+        int type() for ruby {
+            a = $self
+            if a.nil?
+              return 0
+            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
+              return 1
+            elsif a.is_a?(Fixnum)
+              return 1
+            elsif a.is_a?(String)
+              return 1
+            elsif a.is_a?(Float)
+              return 1
+            elsif a.is_a?(Array)
+              return 2
+            elsif a.is_a?(Hash)
+              return 3
+            else
+              return -1
+            end
+            }
+        bool asBool() for ruby {
+            a = $self
+            if a.nil?
+              return false
+            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
+              return a
+            elsif a.is_a?(Fixnum)
+              return a != 0
+            elsif a.is_a?(String)
+              return not(a.empty?)
+            elsif a.is_a?(Float)
+              return a != 0.0
+            else
+              return false
+            end
+            }
+        int asInt() for ruby {
+            a = $self
+            if a.nil?
+              return 0
+            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
+              if a
+                return 1
+              else
+                return 0
+              end
+            elsif a.is_a?(Fixnum)
+              return a
+            elsif a.is_a?(String)
+              return 0
+            elsif a.is_a?(Float)
+              return a.to_i
+            else
+              return 0
+            end
+            }
+        String asString() for ruby {
+            a = $self
+            if a.nil?
+              return ""
+            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
+              if a
+                return "true"
+              else
+                return "false"
+              end
+            elsif a.is_a?(Fixnum)
+              return a.to_s
+            elsif a.is_a?(String)
+              return a
+            elsif a.is_a?(Float)
+              return a.to_s
+            else
+              return ""
+            end
+            }
+        Scalar asScalar() for ruby {
+            a = $self
+            if a.is_a?(Array) or a.is_a?(Hash)
+              return nil
+            else
+              return a
+            end
+            }
+        List<Any> asList() for ruby {
+            a = $self
+            if a.is_a?(Array)
+              return a
+            else
+              return nil
+            end
+            }
+        Map<Scalar,Any> asMap() for ruby {
+            a = $self
+            if a.is_a?(Hash)
+              return a
+            else
+              return nil
+            end
+            }
+
+
+
     }
 
     primitive Scalar {
@@ -696,6 +817,13 @@ namespace quark {
         bool __eq__(String other) for python { return $self == $other }
         int size() for python { return len($self) }
         String substring(int start, int end) for python { return $self[$start:$end] }
+
+        String __add__(String other) for ruby { return $self + $other }
+        bool __eq__(String other) for ruby { return $self == $other }
+        int size() for ruby { return $self.size }
+        String substring(int start, int end) for ruby {
+                return $self.slice($start, $end - $start)
+            }
 
     }
 
@@ -822,6 +950,43 @@ namespace quark {
         void clear() for python {
                 $self.clear()
             }
+
+        Map<K,V> __init__() for ruby {
+                map = {}
+                map.default = $V_nulled
+                map
+            }
+        void __set__(K key, V value) for ruby {
+                $self[$key] = $value
+                nil
+            }
+        V __get__(K key) for ruby {
+                $self[$key]
+            }
+        List<K> keys() for ruby {
+                $self.keys
+            }
+        V remove(K key) for ruby {
+                el = $self.delete($key);
+                if not el.nil?
+                  return el
+                end
+                return $V_nulled
+            }
+        bool contains(K key) for ruby {
+                $self.has_key?($key)
+            }
+        void update(Map<K,V> other) for ruby {
+                $self.merge!($other)
+            }
+        int size() for ruby {
+                $self.length
+            }
+        void clear() for ruby {
+                $self.clear
+            }
+
+
     }
 
     primitive List<T>
@@ -920,6 +1085,27 @@ namespace quark {
                 return ret
             }
 
+        List<T> __init__() for ruby {
+                []
+            }
+        void __set__(int index, T value) for ruby {
+                $self[$index] = $value
+            }
+        T __get__(int index) for ruby {
+                $self[$index]
+            }
+        int size() for ruby {
+                $self.length
+            }
+        void append(T element) for ruby {
+                $self.push($element)
+            }
+        void extend(List<T> other) for ruby {
+                $self.push(*$other)
+            }
+        T remove(int index) for ruby {
+                $self.delete_at($index)
+            }
         
     }
 
@@ -944,5 +1130,10 @@ namespace quark {
     Any unsafe(void a) for python { return $a }
 
     void print(void o) for python { print($o) }
+
+
+    Any unsafe(void a) for ruby { return $a }
+
+    void print(void o) for ruby { puts $o }
 
 }
