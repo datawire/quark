@@ -177,7 +177,7 @@ def expr(prim, target):
         for text in block.cases:
             if text.target.lower() == tgt:
                 return text.template.format(**context)
-    assert False, "yay balmers peak!!!"
+    assert False, "yay balmers peak!!! %r" % prim
 
 ## Boxed
 
