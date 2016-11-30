@@ -2,55 +2,55 @@
         Check(
             Name("native_Map_String_String:native_map.String_String.make"),
             Block(
-                Local("map_", Map(String(), String()), Invoke(Ref("quark:quark.Map_String_String___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.Map_String_String___set__"), Var("map_"), StringLit("abra"), StringLit("cadabra"))),
-                AssertEqual(StringLit("cadabra"), Invoke(Ref("quark:quark.Map_String_String___get__"), Var("map_"), StringLit("abra")))
+                Local("map_", Map(String(), String()), Invoke(Ref("pkg:pkg.quark.Map_String_String___init__"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.Map_String_String___set__"), Var("map_"), StringLit("abra"), StringLit("cadabra"))),
+                AssertEqual(StringLit("cadabra"), Invoke(Ref("pkg:pkg.quark.Map_String_String___get__"), Var("map_"), StringLit("abra")))
             )
         ),
         Check(
             Name("native_Map_String_String:native_map.String_String.no_key_null"),
             Block(
-                Local("map_", Map(String(), String()), Invoke(Ref("quark:quark.Map_String_String___init__"))),
-                AssertEqual(Null(String()), Invoke(Ref("quark:quark.Map_String_String___get__"), Var("map_"), StringLit("abra")))
+                Local("map_", Map(String(), String()), Invoke(Ref("pkg:pkg.quark.Map_String_String___init__"))),
+                AssertEqual(Null(String()), Invoke(Ref("pkg:pkg.quark.Map_String_String___get__"), Var("map_"), StringLit("abra")))
             )
         ),
         Check(
             Name("native_Map_String_String:native_map.String_String.size_empty"),
             Block(
-                Local("map_", Map(String(), String()), Invoke(Ref("quark:quark.Map_String_String___init__"))),
-                AssertEqual(IntLit(0), Invoke(Ref("quark:quark.Map_String_String_size"), Var("map_")))
+                Local("map_", Map(String(), String()), Invoke(Ref("pkg:pkg.quark.Map_String_String___init__"))),
+                AssertEqual(IntLit(0), Invoke(Ref("pkg:pkg.quark.Map_String_String_size"), Var("map_")))
             )
         ),
         Check(
             Name("native_Map_String_String:native_map.String_String.keys_empty"),
             Block(
-                Local("map_", Map(String(), String()), Invoke(Ref("quark:quark.Map_String_String___init__"))),
+                Local("map_", Map(String(), String()), Invoke(Ref("pkg:pkg.quark.Map_String_String___init__"))),
                 AssertEqual(IntLit(0),
-                            Invoke(Ref("quark:quark.List_String_size"),
-                                   Invoke(Ref("quark:quark.Map_String_String_keys"),
+                            Invoke(Ref("pkg:pkg.quark.List_String_size"),
+                                   Invoke(Ref("pkg:pkg.quark.Map_String_String_keys"),
                                           Var("map_"))))
             )
         ),
         Check(
             Name("native_Map_String_String:native_map.String_String.size_five"),
             Block(
-                Local("map_", Map(String(), String()), Invoke(Ref("quark:quark.Map_String_String___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.Map_String_String___set__"), Var("map_"), StringLit("one"), StringLit("cadabra"))),
-                Evaluate(Invoke(Ref("quark:quark.Map_String_String___set__"), Var("map_"), StringLit("two"), StringLit("cadabra"))),
-                Evaluate(Invoke(Ref("quark:quark.Map_String_String___set__"), Var("map_"), StringLit("three"), StringLit("cadabra"))),
-                Evaluate(Invoke(Ref("quark:quark.Map_String_String___set__"), Var("map_"), StringLit("four"), StringLit("cadabra"))),
-                Evaluate(Invoke(Ref("quark:quark.Map_String_String___set__"), Var("map_"), StringLit("five"), StringLit("cadabra"))),
-                AssertEqual(IntLit(5), Invoke(Ref("quark:quark.Map_String_String_size"), Var("map_")))
+                Local("map_", Map(String(), String()), Invoke(Ref("pkg:pkg.quark.Map_String_String___init__"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.Map_String_String___set__"), Var("map_"), StringLit("one"), StringLit("cadabra"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.Map_String_String___set__"), Var("map_"), StringLit("two"), StringLit("cadabra"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.Map_String_String___set__"), Var("map_"), StringLit("three"), StringLit("cadabra"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.Map_String_String___set__"), Var("map_"), StringLit("four"), StringLit("cadabra"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.Map_String_String___set__"), Var("map_"), StringLit("five"), StringLit("cadabra"))),
+                AssertEqual(IntLit(5), Invoke(Ref("pkg:pkg.quark.Map_String_String_size"), Var("map_")))
             )
         ),
         Check(
             Name("native_Map_String_String:native_map.String_String.keys_one"),
             Block(
-                Local("map_", Map(String(), String()), Invoke(Ref("quark:quark.Map_String_String___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.Map_String_String___set__"), Var("map_"), StringLit("one"), StringLit("eins"))),
-                Local("keys_", List(String()), Invoke(Ref("quark:quark.Map_String_String_keys"), Var("map_"))),
-                AssertEqual(IntLit(1), Invoke(Ref("quark:quark.List_String_size"), Var("keys_"))),
-                AssertEqual(StringLit("one"), Invoke(Ref("quark:quark.List_String___get__"), Var("keys_"), IntLit(0))),
+                Local("map_", Map(String(), String()), Invoke(Ref("pkg:pkg.quark.Map_String_String___init__"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.Map_String_String___set__"), Var("map_"), StringLit("one"), StringLit("eins"))),
+                Local("keys_", List(String()), Invoke(Ref("pkg:pkg.quark.Map_String_String_keys"), Var("map_"))),
+                AssertEqual(IntLit(1), Invoke(Ref("pkg:pkg.quark.List_String_size"), Var("keys_"))),
+                AssertEqual(StringLit("one"), Invoke(Ref("pkg:pkg.quark.List_String___get__"), Var("keys_"), IntLit(0))),
             )
         ),
     )

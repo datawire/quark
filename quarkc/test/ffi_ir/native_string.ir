@@ -3,109 +3,109 @@
             Name("native_string:native_string.eq_null_e_T"),
             Block(
                 Local("nuffin", String(), Null(String())),
-                AssertEqual(BoolLit(True), Invoke(Ref("quark:quark.String___eq__"), Var("nuffin"), StringLit("")))
+                AssertEqual(BoolLit(True), Invoke(Ref("pkg:pkg.quark.String___eq__"), Var("nuffin"), StringLit("")))
             )
         ),
         Check(
             Name("native_string:native_string.eq_e_e_T"),
             Block(
-                AssertEqual(BoolLit(True), Invoke(Ref("quark:quark.String___eq__"), StringLit(""), StringLit("")))
+                AssertEqual(BoolLit(True), Invoke(Ref("pkg:pkg.quark.String___eq__"), StringLit(""), StringLit("")))
             )
         ),
         Check(
             Name("native_string:native_string.eq_e_x_F"),
             Block(
-                AssertEqual(BoolLit(False), Invoke(Ref("quark:quark.String___eq__"), StringLit(""), StringLit("x")))
+                AssertEqual(BoolLit(False), Invoke(Ref("pkg:pkg.quark.String___eq__"), StringLit(""), StringLit("x")))
             )
         ),
         Check(
             Name("native_string:native_string.eq_x_e_F"),
             Block(
-                AssertEqual(BoolLit(False), Invoke(Ref("quark:quark.String___eq__"), StringLit("x"), StringLit("")))
+                AssertEqual(BoolLit(False), Invoke(Ref("pkg:pkg.quark.String___eq__"), StringLit("x"), StringLit("")))
             )
         ),
         Check(
             Name("native_string:native_string.eq_x_x_T"),
             Block(
-                AssertEqual(BoolLit(True), Invoke(Ref("quark:quark.String___eq__"), StringLit("x"), StringLit("x")))
+                AssertEqual(BoolLit(True), Invoke(Ref("pkg:pkg.quark.String___eq__"), StringLit("x"), StringLit("x")))
             )
         ),
         Check(
             Name("native_string:native_string.add_e_e_e"),
             Block(
-                AssertEqual(StringLit(""), Invoke(Ref("quark:quark.String___add__"), StringLit(""), StringLit("")))
+                AssertEqual(StringLit(""), Invoke(Ref("pkg:pkg.quark.String___add__"), StringLit(""), StringLit("")))
             )
         ),
         Check(
             Name("native_string:native_string.add_e_x_x"),
             Block(
-                AssertEqual(StringLit("x"), Invoke(Ref("quark:quark.String___add__"), StringLit(""), StringLit("x")))
+                AssertEqual(StringLit("x"), Invoke(Ref("pkg:pkg.quark.String___add__"), StringLit(""), StringLit("x")))
             )
         ),
         Check(
             Name("native_string:native_string.add_x_e_x"),
             Block(
-                AssertEqual(StringLit("x"), Invoke(Ref("quark:quark.String___add__"), StringLit("x"), StringLit("")))
+                AssertEqual(StringLit("x"), Invoke(Ref("pkg:pkg.quark.String___add__"), StringLit("x"), StringLit("")))
             )
         ),
         Check(
             Name("native_string:native_string.add_x_y_xy"),
             Block(
-                AssertEqual(StringLit("xy"), Invoke(Ref("quark:quark.String___add__"), StringLit("x"), StringLit("y")))
+                AssertEqual(StringLit("xy"), Invoke(Ref("pkg:pkg.quark.String___add__"), StringLit("x"), StringLit("y")))
             )
         ),
         Check(
             Name("native_string:native_string.size_e_0"),
             Block(
-                AssertEqual(IntLit(0), Invoke(Ref("quark:quark.String_size"), StringLit("")))
+                AssertEqual(IntLit(0), Invoke(Ref("pkg:pkg.quark.String_size"), StringLit("")))
             )
         ),
         Check(
             Name("native_string:native_string.size_x_1"),
             Block(
-                AssertEqual(IntLit(1), Invoke(Ref("quark:quark.String_size"), StringLit("x")))
+                AssertEqual(IntLit(1), Invoke(Ref("pkg:pkg.quark.String_size"), StringLit("x")))
             )
         ),
         Check(
             Name("native_string:native_string.size_quark_5"),
             Block(
-                AssertEqual(IntLit(5), Invoke(Ref("quark:quark.String_size"), StringLit("quark")))
+                AssertEqual(IntLit(5), Invoke(Ref("pkg:pkg.quark.String_size"), StringLit("quark")))
             )
         ),
         Check(
             Name("native_string:native_string.substring_e_0_0_e"),
             Block(
-                AssertEqual(StringLit(""), Invoke(Ref("quark:quark.String_substring"), StringLit(""), IntLit(0), IntLit(0)))
+                AssertEqual(StringLit(""), Invoke(Ref("pkg:pkg.quark.String_substring"), StringLit(""), IntLit(0), IntLit(0)))
             )
         ),
         Check(
             Name("native_string:native_string.substring_quark_0_0_e"),
             Block(
-                AssertEqual(StringLit(""), Invoke(Ref("quark:quark.String_substring"), StringLit("quark"), IntLit(0), IntLit(0)))
+                AssertEqual(StringLit(""), Invoke(Ref("pkg:pkg.quark.String_substring"), StringLit("quark"), IntLit(0), IntLit(0)))
             )
         ),
         Check(
             Name("native_string:native_string.substring_quark_0_1_q"),
             Block(
-                AssertEqual(StringLit("q"), Invoke(Ref("quark:quark.String_substring"), StringLit("quark"), IntLit(0), IntLit(1)))
+                AssertEqual(StringLit("q"), Invoke(Ref("pkg:pkg.quark.String_substring"), StringLit("quark"), IntLit(0), IntLit(1)))
             )
         ),
         Check(
             Name("native_string:native_string.substring_quark_1_2_u"),
             Block(
-                AssertEqual(StringLit("u"), Invoke(Ref("quark:quark.String_substring"), StringLit("quark"), IntLit(1), IntLit(2)))
+                AssertEqual(StringLit("u"), Invoke(Ref("pkg:pkg.quark.String_substring"), StringLit("quark"), IntLit(1), IntLit(2)))
             )
         ),
         Check(
             Name("native_string:native_string.substring_quark_2_4_ar"),
             Block(
-                AssertEqual(StringLit("ar"), Invoke(Ref("quark:quark.String_substring"), StringLit("quark"), IntLit(2), IntLit(4)))
+                AssertEqual(StringLit("ar"), Invoke(Ref("pkg:pkg.quark.String_substring"), StringLit("quark"), IntLit(2), IntLit(4)))
             )
         ),
         Check(
             Name("native_string:native_string.substring_quark_3_6_rk"),
             Block(
-                AssertEqual(StringLit("rk"), Invoke(Ref("quark:quark.String_substring"), StringLit("quark"), IntLit(3), IntLit(6)))
+                AssertEqual(StringLit("rk"), Invoke(Ref("pkg:pkg.quark.String_substring"), StringLit("quark"), IntLit(3), IntLit(6)))
             )
         ),
 )

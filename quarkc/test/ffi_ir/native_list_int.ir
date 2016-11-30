@@ -2,86 +2,86 @@
         Check(
             Name("native_List_int:native_list.int_.make"),
             Block(
-                Local("list_", List(Int()), Invoke(Ref("quark:quark.List_int___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Local("list_", List(Int()), Invoke(Ref("pkg:pkg.quark.List_int___init__"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(42))),
                 AssertEqual(IntLit(42),
-                            Invoke(Ref("quark:quark.List_int___get__"),
+                            Invoke(Ref("pkg:pkg.quark.List_int___get__"),
                                    Var("list_"), IntLit(0)))
             )
         ),
         Check(
             Name("native_List_int:native_list.int_.set"),
             Block(
-                Local("list_", List(Int()), Invoke(Ref("quark:quark.List_int___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Local("list_", List(Int()), Invoke(Ref("pkg:pkg.quark.List_int___init__"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(4))),
-                Evaluate(Invoke(Ref("quark:quark.List_int___set__"),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int___set__"),
                                 Var("list_"), IntLit(0), IntLit(42))),
                 AssertEqual(IntLit(42),
-                            Invoke(Ref("quark:quark.List_int___get__"),
+                            Invoke(Ref("pkg:pkg.quark.List_int___get__"),
                                    Var("list_"), IntLit(0)))
             )
         ),
 #        Check(
 #            Name("native_List_int:native_list.int_.empty_null"),
 #            Block(
-#                Local("list_", List(Int()), Invoke(Ref("quark:quark.List_int___init__"))),
+#                Local("list_", List(Int()), Invoke(Ref("pkg:pkg.quark.List_int___init__"))),
 #                AssertEqual(Null(Int()),
-#                            Invoke(Ref("quark:quark.List_int___get__"),
+#                            Invoke(Ref("pkg:pkg.quark.List_int___get__"),
 #                                   Var("list_"), IntLit(3)))
 #            )
 #        ),
         Check(
             Name("native_List_int:native_list.int_.size_empty"),
             Block(
-                Local("list_", List(Int()), Invoke(Ref("quark:quark.List_int___init__"))),
-                AssertEqual(IntLit(0), Invoke(Ref("quark:quark.List_int_size"), Var("list_")))
+                Local("list_", List(Int()), Invoke(Ref("pkg:pkg.quark.List_int___init__"))),
+                AssertEqual(IntLit(0), Invoke(Ref("pkg:pkg.quark.List_int_size"), Var("list_")))
             )
         ),
         Check(
             Name("native_List_int:native_list.int_.size_five"),
             Block(
-                Local("list_", List(Int()), Invoke(Ref("quark:quark.List_int___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Local("list_", List(Int()), Invoke(Ref("pkg:pkg.quark.List_int___init__"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(11))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(22))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(33))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(44))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(55))),
-                AssertEqual(IntLit(5), Invoke(Ref("quark:quark.List_int_size"), Var("list_")))
+                AssertEqual(IntLit(5), Invoke(Ref("pkg:pkg.quark.List_int_size"), Var("list_")))
             )
         ),
         Check(
             Name("native_List_int:native_list.int_.extend"),
             Block(
-                Local("list_", List(Int()), Invoke(Ref("quark:quark.List_int___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Local("list_", List(Int()), Invoke(Ref("pkg:pkg.quark.List_int___init__"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(11))),
-                Local("another", List(Int()), Invoke(Ref("quark:quark.List_int___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_extend"), Var("another"), Var("list_"))),
-                AssertEqual(IntLit(1), Invoke(Ref("quark:quark.List_int_size"), Var("another"))),
-                AssertEqual(IntLit(11), Invoke(Ref("quark:quark.List_int___get__"), Var("another"), IntLit(0)))
+                Local("another", List(Int()), Invoke(Ref("pkg:pkg.quark.List_int___init__"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_extend"), Var("another"), Var("list_"))),
+                AssertEqual(IntLit(1), Invoke(Ref("pkg:pkg.quark.List_int_size"), Var("another"))),
+                AssertEqual(IntLit(11), Invoke(Ref("pkg:pkg.quark.List_int___get__"), Var("another"), IntLit(0)))
             )
         ),
         Check(
             Name("native_List_int:native_list.int_.remove"),
             Block(
-                Local("list_", List(Int()), Invoke(Ref("quark:quark.List_int___init__"))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Local("list_", List(Int()), Invoke(Ref("pkg:pkg.quark.List_int___init__"))),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(11))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(22))),
-                Evaluate(Invoke(Ref("quark:quark.List_int_append"),
+                Evaluate(Invoke(Ref("pkg:pkg.quark.List_int_append"),
                                 Var("list_"), IntLit(33))),
-                Local("act", Int(), Invoke(Ref("quark:quark.List_int_remove"), Var("list_"), IntLit(1))),
-                AssertEqual(IntLit(2), Invoke(Ref("quark:quark.List_int_size"), Var("list_"))),
-                AssertEqual(IntLit(11), Invoke(Ref("quark:quark.List_int___get__"), Var("list_"), IntLit(0))),
-                AssertEqual(IntLit(33), Invoke(Ref("quark:quark.List_int___get__"), Var("list_"), IntLit(1))),
+                Local("act", Int(), Invoke(Ref("pkg:pkg.quark.List_int_remove"), Var("list_"), IntLit(1))),
+                AssertEqual(IntLit(2), Invoke(Ref("pkg:pkg.quark.List_int_size"), Var("list_"))),
+                AssertEqual(IntLit(11), Invoke(Ref("pkg:pkg.quark.List_int___get__"), Var("list_"), IntLit(0))),
+                AssertEqual(IntLit(33), Invoke(Ref("pkg:pkg.quark.List_int___get__"), Var("list_"), IntLit(1))),
                 AssertEqual(IntLit(22), Var("act"))
             )
         )
