@@ -43,14 +43,14 @@ def code(block, target):
     def format(text):
         lazy = set(t.split("}")[0] for t in text.replace("{{","").replace("}}","").split("{")[1:])
         context = dict((k,expr(v,target)) for k,v in block.context.mappings if k in lazy)
-        return text.format(**context)
+        try:
+            return text.format(**context)
+        except KeyError, ke:
+                print("%s not in %s" % (ke, context.keys()))
     tgt = target.__class__.__name__.lower()
     for text in block.cases:
         if text.target.lower() == tgt:
-            try:
-                return tr.Block(tr.Box(format(text.template)))
-            except KeyError, ke:
-                print("%s not in %s" % (ke, context.keys()))
+            return tr.Block(tr.Box(format(text.template)))
     assert False, "Frontend did not supply a valid {target} TextTemplate for {fun}. Have only {other}".format(
         target = tgt, fun = target.q.parent(block).name,
         other = [t.target for t in block.cases])
