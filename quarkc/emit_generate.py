@@ -187,11 +187,15 @@ def generate(parent, ns, target):
 
 @match(Namespace, Javascript)
 def ffi_namespace(ns, target):
-    _, dfns, _ = split(ns.children, isa(Check,TestClass), isa(Definition,Namespace))
+    _, dfns, nss, _ = split(ns.children, isa(Check,TestClass), isa(Definition), isa(Namespace))
     for dfn in dfns:
         yield tr.Simple("exports.{name} = require(\"{module}\").impl".format(
             name = target.nameof(dfn),
             module = "/".join(require_path(ns, dfn, target))))
+    for nns in nss:
+        yield tr.Simple("exports.{name} = require(\"{module}\")".format(
+            name = target.nameof(nns),
+            module = "/".join(require_path(ns, nns, target))))
 
 @match(choice(Namespace, Definition), choice(Namespace, Definition), Javascript)
 def require_path(dfn, ref_dfn, target):
