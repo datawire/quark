@@ -65,3 +65,17 @@ all quark primitives that deal with boxed types should handle a `null`
 boxed reference and convert it to the defined nulled value
 
 quark.q could use a nicer syntax for null-value of unboxed scalar
+
+
+Callables
+---------
+
+callables remain untouched and partially undefined.
+- fixed type signatures?
+- need syntax for custom type signatures?
+
+
+Reflection
+----------
+
+we lost reflection on the way, do we need it at all if we support Callables
