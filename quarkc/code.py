@@ -597,10 +597,7 @@ class Code(object):
     @match(Nulled, Var)
     def compile_var(self, b, v):
         t = self.compile(self.types[b].bind(self.bindings))
-        if isinstance(t, ir.NativeType):
-            return ir.Null(t)
-        else:
-            return t
+        return ir.Null(t)
 
     @match(TypeParam, Var)
     def compile_var(self, p, v):
