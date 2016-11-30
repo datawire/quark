@@ -287,6 +287,33 @@ class AnyTest {
         assertEqual(11, l[0].asInt());
         assertEqual("11", l[0].asString());
     }
+    void test_emptyMapIntInt() {
+        Any a = unsafe(new Rainbow().emptyMapIntInt());
+        assertEqual(3, a.type());
+        assertEqual(false, a.asBool());
+        assertEqual(0, a.asInt());
+        assertEqual("", a.asString());
+        assertEqual(null, a.asList());
+        assertNotEqual(null, a.asMap());
+        Map<Scalar,Any> m = a.asMap();
+        assertEqual(0, m.size());
+    }
+    void test_oneMapIntInt() {
+        Any a = unsafe(new Rainbow().oneMapIntInt());
+        assertEqual(3, a.type());
+        assertEqual(false, a.asBool());
+        assertEqual(0, a.asInt());
+        assertEqual("", a.asString());
+        assertEqual(null, a.asList());
+        assertNotEqual(null, a.asMap());
+        Map<Scalar,Any> m = a.asMap();
+        assertEqual(1, m.size());
+        List<Scalar> mk = m.keys();
+        assertEqual(1, mk.size());
+        assertEqual(11, mk[0]);
+        assertEqual(22, m[mk[0]]); // XXX: usability issue, how to conveniently address Map<Scalar,Any>
+        // assertEqual(22, m[11]); // XXX: this unfortunately doesn't work.
+    }
 }
 
 void map_string_string_getset() {
