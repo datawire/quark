@@ -184,6 +184,15 @@ def main(args):
             pkg = Checksum(pkgsum)(pkg) # annotate package with checksum
             write_ir(ir_name, pkg)
 
+    if ir:
+        ir_base += "-reconstruct"
+        pkg = reconstruct(pkg)
+        write_ir(ir_base + ".ir", pkg)
+        ir_base += "-transform"
+        for tgt in targets:
+            ext = "-%s.ir" % tgt.__class__.__name__
+            write_ir(ir_base + ext, transform(pkg, tgt))
+
     for tgt in targets:
         files = emit(pkg, tgt)
         for name, content in files:
@@ -193,15 +202,6 @@ def main(args):
             ensure_dir(fname)
             with open(fname, "write") as f:
                 f.write(content)
-
-    if ir:
-        ir_base += "-reconstruct"
-        pkg = reconstruct(pkg)
-        write_ir(ir_base + ".ir", pkg)
-        ir_base += "-transform"
-        for tgt in targets:
-            ext = "-%s.ir" % tgt.__class__.__name__
-            write_ir(ir_base + ext, transform(pkg, tgt))
 
 
 def call_main():
