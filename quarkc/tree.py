@@ -92,6 +92,10 @@ class _Tree(representable):
     annotations = ()
     """ Each tree node can be annotated with one or more annotations """
 
+    @match(type)
+    def annotated_with(self, annotation_klass):
+        return tuple(a for a in self.annotations if isinstance(a, annotation_klass))
+
     @property
     def children(self):
         assert False, "%s must implement children" % self.__class__

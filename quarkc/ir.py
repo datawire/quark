@@ -1210,6 +1210,15 @@ class Doc(Annotation):
     def __repr__(self):
         return self.repr(tree.multiline(self.doc))
 
+
+class Checksum(Annotation):
+    @match(basestring)
+    def __init__(self, checksum):
+        self.checksum = checksum
+
+    def __repr__(self):
+        return self.repr(self.checksum)
+
 @match(choice(Package, Namespace))
 def restructure(pkg):
     """ Introduce Namespaces into a flat package """

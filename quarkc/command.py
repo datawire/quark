@@ -37,7 +37,7 @@ from .compiler import Compiler
 from .exceptions import QuarkError
 from .emit import emit, Java, Python, Ruby, Go, Javascript, transform, reconstruct
 from .helpers import is_newer
-from .ir import IR
+from .ir import IR, Checksum
 
 import stats
 
@@ -121,7 +121,7 @@ def main(args):
                         sha = sha.hexdigest())
                     pkgsum.update(index[fname]["sha"])
         pkgsum = pkgsum.hexdigest()
-        ir_base = os.path.join(cache_dir(), os.path.basename(args["<file>"][0]) + "-" + pkgsum)
+        ir_base = os.path.join(cache_dir(), os.path.basename(args["<file>"][0]))
         ir_name = ir_base + ".ir"
 
     pkg = None
@@ -129,14 +129,24 @@ def main(args):
     ir_fresh = len(index) == len(args["<file>"])
     ir_found = os.path.exists(ir_name)
     if ir_fresh and ir_found and not args["--force"]:
-        with stats.charge("load-ir-cache"):
+        with stats.charge("ir-cache-load"):
             try:
                 print "Loading IR cache %s" % ir_name
-                pkg = IR.load_path(ir_name)
-                if verbose:
-                    print "Loaded valid %s" % ir_name
+                tmp_pkg = IR.load_path(ir_name)
+                c = tmp_pkg.annotated_with(Checksum)
+                checksum = c and c[0].checksum or "--annotation-not-found--"
+                if checksum == pkgsum:
+                    pkg = tmp_pkg
+                    if verbose:
+                        print "Loaded valid %s" % ir_name
+                else:
+                    if verbose:
+                        print "Ignoring stale IR cache %s got %s expected %s" % (
+                            ir_name, checksum, pkgsum)
             except:
                 print "Loading IR failed"
+                import traceback
+                traceback.print_exc()
                 pass
     else:
         print "%s the IR cache %s" % (
@@ -170,7 +180,9 @@ def main(args):
             return e
 
         pkg = c.compile()
-        write_ir(ir_name, pkg)
+        with stats.charge("ir-cache-save"):
+            pkg = Checksum(pkgsum)(pkg) # annotate package with checksum
+            write_ir(ir_name, pkg)
 
     for tgt in targets:
         files = emit(pkg, tgt)
