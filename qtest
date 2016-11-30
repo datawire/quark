@@ -154,7 +154,7 @@ class Go(Target):
         args = [self.abs_src, "go", "test"]
         if VERBOSE: args.append("-v")
         args.append("./...")
-        return run_in(*args, env={"GOPATH": self.path("emit", "rt")})
+        return run_in(*args, env={"GOPATH": self.path("emit")})
 
 class Ruby(Target):
 
@@ -220,20 +220,16 @@ class Java(Target):
         ensure_fetch(self.junit, "http://central.maven.org/maven2/junit/junit/4.12/junit-4.12.jar")
         ensure_fetch(self.hamcrest, "http://central.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar")
 
-        rtsources = os.path.join(self.target, "rt/src/main/java")
-        rtjar = os.path.join(self.build, "rt.jar")
-        self.jbuild(rtsources, rtjar)
-
         emitsources = os.path.join(self.target, "emit/src/main/java")
         emitjar = os.path.join(self.build, "emit.jar")
-        self.jbuild(emitsources, emitjar, rtjar)
+        self.jbuild(emitsources, emitjar)
 
         testsources = os.path.join(self.target, "emit/src/test/java")
         testjar = os.path.join(self.build, "tests.jar")
-        self.jbuild(testsources, testjar, emitjar, rtjar, self.junit, self.hamcrest)
+        self.jbuild(testsources, testjar, emitjar, self.junit, self.hamcrest)
 
         return run("java", "-cp",
-                   ":".join((testjar, emitjar, rtjar, self.junit, self.hamcrest)),
+                   ":".join((testjar, emitjar, self.junit, self.hamcrest)),
                    "org.junit.runner.JUnitCore",
                    *self.jtests(testjar))
 
