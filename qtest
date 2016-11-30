@@ -19,6 +19,7 @@ Options:
   -v --verbose          Show more output.
   -x, --exit            Exit on first error.
   --stats               Report quark stats
+  --ir                  Dump also quark IR
   --cached              Use cached AST if it exists [default]
   --ignore-cache        Force full quark recompile
 """
@@ -36,6 +37,7 @@ CWD = os.getcwd()
 HEIGHT, WIDTH = [int(s) for s in call("stty", "size").split()]
 VERBOSE = 0
 STATS = 0
+IR = 0
 CACHED = 1
 
 def glob(dir, pattern):
@@ -138,6 +140,8 @@ class Target(object):
                 args.append("--verbose")
             if STATS:
                 args.append("--stats")
+            if IR:
+                args.append("--ir")
             args.extend(qfiles)
             run(*args)
 
@@ -293,6 +297,10 @@ def main(args):
     global STATS
     if args["--stats"]:
         STATS = 1
+
+    global IR
+    if args["--ir"]:
+        IR = 1
 
     global CACHED
     if args["--cached"]:
