@@ -170,7 +170,7 @@ class Ruby(Target):
         with open(os.path.join(self.target, "emit/test/ts.rb"), "write") as f:
             for ts in glob(self.target, 'emit/test/ts_*.rb'):
                 f.write("require_relative '%s'\n" % ts)
-        return run_in(self.target, "ruby", "-I", self.path("rt/lib", "emit/lib", "emit/test"), "emit/test/ts.rb")
+        return run_in(self.target, "ruby", "-I", self.path("emit/lib", "emit/test"), "emit/test/ts.rb")
 
 class Python(Target):
 
