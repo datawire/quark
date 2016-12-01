@@ -205,27 +205,6 @@ namespace quark {
                 return -1;
             }
 
-        bool asBool() for java  import "java.util.List" import "java.util.Map" {
-                Object a = $self;
-                if (a == null) {
-                    return false;
-                } else if (a instanceof Boolean) {
-                    return (Boolean)a;
-                } else if (a instanceof Integer) {
-                    return ((Integer)a) != 0;
-                } else if (a instanceof String) {
-                    return !((String)a).isEmpty();
-                } else if (a instanceof Float) {
-                    return ((Float)a) != 0.0;
-                } else if (a instanceof Double) {
-                    return ((Double)a) != 0.0;
-                } else if (a instanceof List) {
-                    return false;
-                } else if (a instanceof Map) {
-                    return false;
-                }
-                return false;
-            }
 
         int asInt() for java  import "java.util.List" import "java.util.Map" {
                 Object a = $self;
@@ -270,6 +249,7 @@ namespace quark {
                 }
                 return "";
             }
+
         Scalar asScalar() for java {
                 Object a = $self;
                 if (a instanceof Boolean) {
@@ -285,6 +265,7 @@ namespace quark {
                 }
                 return null;
             }
+
         List<Any> asList() for java  import "java.util.List" {
                 Object a = $self;
                 if (a instanceof List) {
@@ -295,6 +276,7 @@ namespace quark {
                     return null;
                 }
             }
+
         Map<Scalar,Any> asMap() for java import "java.util.Map" {
                 Object a = $self;
                 if (a instanceof Map) {
@@ -332,24 +314,6 @@ namespace quark {
 		_ = i
 		// XXX: use reflection here to detect weirder map types
 		return -1
-	}
-            }
-
-        bool asBool() for go {
-                a := $self
-	switch i := a.(type) {
-	case bool:
-		return i
-	case int:
-		return i != 0
-	case string:
-		return len(i) > 0
-	case float32:
-		return i != 0.0
-	case float64:
-		return i != 0.0
-	default:
-		return false
 	}
             }
 
@@ -566,22 +530,6 @@ namespace quark {
             else:
                 return -1
             }
-        bool asBool() for python import "six" {
-            a = $self
-            if a is None:
-                return False
-            elif isinstance(a, six.text_type):
-                return bool(a)
-            elif a is True or a is False:
-                # order wrt int check is important. bool isinstance int
-                return a
-            elif isinstance(a, six.integer_types):
-                return bool(a)
-            elif isinstance(a, float):
-                return bool(a)
-            else:
-                return False
-            }
         int asInt() for python import "six" {
             a = $self
             if a is None:
@@ -655,22 +603,6 @@ namespace quark {
               return 3
             else
               return -1
-            end
-            }
-        bool asBool() for ruby {
-            a = $self
-            if a.nil?
-              return false
-            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
-              return a
-            elsif a.is_a?(Fixnum)
-              return a != 0
-            elsif a.is_a?(String)
-              return not(a.empty?)
-            elsif a.is_a?(Float)
-              return a != 0.0
-            else
-              return false
             end
             }
         int asInt() for ruby {
@@ -763,21 +695,6 @@ namespace quark {
                     return -1;
                 }
             }
-        bool asBool() for javascript {
-                let a = $self;
-                let t = typeof(a);
-                if (t === "object") {
-                    return false;
-                } else if (t === "string") {
-                    return a.length > 0;
-                } else if (t === "number") {
-                    return a != 0;
-                } else if (t === "boolean") {
-                    return a;
-                } else {
-                    return false;
-                }
-            }
         int asInt() for javascript {
                 let a = $self;
                 let t = typeof(a);
@@ -853,6 +770,13 @@ namespace quark {
 
     }
 
+    /**
+     * Knowing how quark primtitive static dispatch works allows
+     * creating a cross-target quark implementation of a primitive
+     * method. Imagine it says Any::asBool
+     */
+    bool Any_asBool(Any a) { return a.asScalar().asBool(); }
+
     primitive Scalar {
         /*
          * Returns type of the value contained
@@ -905,6 +829,93 @@ namespace quark {
  
         //float asFloat();                  // returns float iff type() returned 4
         //bool isFloat()
+        bool asBool() for java  import "java.util.List" import "java.util.Map" {
+                Object a = $self;
+                if (a == null) {
+                    return false;
+                } else if (a instanceof Boolean) {
+                    return (Boolean)a;
+                } else if (a instanceof Integer) {
+                    return ((Integer)a) != 0;
+                } else if (a instanceof String) {
+                    return !((String)a).isEmpty();
+                } else if (a instanceof Float) {
+                    return ((Float)a) != 0.0;
+                } else if (a instanceof Double) {
+                    return ((Double)a) != 0.0;
+                } else if (a instanceof List) {
+                    return false;
+                } else if (a instanceof Map) {
+                    return false;
+                }
+                return false;
+            }
+
+        bool asBool() for go {
+                a := $self
+	switch i := a.(type) {
+	case bool:
+		return i
+	case int:
+		return i != 0
+	case string:
+		return len(i) > 0
+	case float32:
+		return i != 0.0
+	case float64:
+		return i != 0.0
+	default:
+		return false
+	}
+            }
+
+        bool asBool() for python import "six" {
+            a = $self
+            if a is None:
+                return False
+            elif isinstance(a, six.text_type):
+                return bool(a)
+            elif a is True or a is False:
+                # order wrt int check is important. bool isinstance int
+                return a
+            elif isinstance(a, six.integer_types):
+                return bool(a)
+            elif isinstance(a, float):
+                return bool(a)
+            else:
+                return False
+            }
+        bool asBool() for ruby {
+            a = $self
+            if a.nil?
+              return false
+            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
+              return a
+            elsif a.is_a?(Fixnum)
+              return a != 0
+            elsif a.is_a?(String)
+              return not(a.empty?)
+            elsif a.is_a?(Float)
+              return a != 0.0
+            else
+              return false
+            end
+            }
+        bool asBool() for javascript {
+                let a = $self;
+                let t = typeof(a);
+                if (t === "object") {
+                    return false;
+                } else if (t === "string") {
+                    return a.length > 0;
+                } else if (t === "number") {
+                    return a != 0;
+                } else if (t === "boolean") {
+                    return a;
+                } else {
+                    return false;
+                }
+            }
     }
 
     primitive String {
