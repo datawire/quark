@@ -1,3 +1,12 @@
+/*
+@Doc(""" compute the <n>th number in the Fibonacci sequence
+
+         :param: n - which one to return.
+         :returns: the number
+
+         :warning:  should not be called with negative number
+""")
+*/
 int fib(int n) {
     if (n == 0) {
         return 0;

@@ -149,7 +149,7 @@ Callables
 callables remain untouched and partially undefined.
 - fixed type signatures?
 - need syntax for custom type signatures?
-
+- an easy syntax to convert instance methods to callables (bound methods)
 
 Reflection
 ----------
@@ -170,6 +170,51 @@ Native Type Expression
 
 Native type expressions are currently (ab)using `ir.NativeBlock`.
 Consider adding a separate ir node that is more explicit.
+
+Code Documentation
+------------------
+
+frontend does not handle `@Doc` quark annotations yet
+
+backend generates `ir.Doc` annotations for all targets but with no
+real support for target-specific markup. Each target has some own
+documentation markup to help render formatting, code references and
+similar. Currently only `<` and `>` are escaped for javadoc.
+
+
+Target specific markup could be generated if some kind of markup is
+defined and parsed from quark documentation strings and suitable IR
+defined for it. Frontend needs to be involved in this process as it
+needs to at minimum translate quark symbol references to IR references
+
+For example:
+
+    @Doc("""Constructs a :class:`Foo` with all the bling""")
+    Foo dazzling() { ... }
+
+Could generate a potenital IR:
+
+    Doc("""Constructs a """, ClassType(Ref("pkg:pgk.module.Foo")),
+        " with all the bling)(
+      Function(Name(....
+
+
+Which could then generate java with javadoc:
+
+    ```java
+    /**
+     * Constructs a {@link pkg.module.Foo} with all the bling
+     */
+    Foo dazzling() { ...
+    ```
+
+And python with sphinx docs:
+
+    ```python
+    def dazzling():
+        """Constructs a :py:class:`pkg.module.Foo` with all the bling"""
+        ...
+    ```
 
 Sourcemaps
 ----------
