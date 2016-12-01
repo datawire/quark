@@ -212,50 +212,6 @@ namespace quark {
             }
 
 
-        int asInt() for java  import "java.util.List" import "java.util.Map" {
-                Object a = $self;
-                if (a == null) {
-                    return 0;
-                } else if (a instanceof Boolean) {
-                    return (Boolean)a ? 1 : 0;
-                } else if (a instanceof Integer) {
-                    return ((Integer)a);
-                } else if (a instanceof String) {
-                    return 0;
-                } else if (a instanceof Float) {
-                    return ((Float)a).intValue();
-                } else if (a instanceof Double) {
-                    return ((Double)a).intValue();
-                } else if (a instanceof List) {
-                    return 0;
-                } else if (a instanceof Map) {
-                    return 0;
-                }
-                return 0;
-            }
-
-        String asString() for java import "java.util.List" import "java.util.Map" {
-                Object a = $self;
-                if (a == null) {
-                    return "";
-                } else if (a instanceof Boolean) {
-                    return (Boolean)a ? "true" : "false";
-                } else if (a instanceof Integer) {
-                    return ((Integer)a).toString();
-                } else if (a instanceof String) {
-                    return (String)a;
-                } else if (a instanceof Float) {
-                    return ((Float)a).toString();
-                } else if (a instanceof Double) {
-                    return ((Double)a).toString();
-                } else if (a instanceof List) {
-                    return "";
-                } else if (a instanceof Map) {
-                    return "";
-                }
-                return "";
-            }
-
         Scalar asScalar() for java {
                 Object a = $self;
                 if (a instanceof Boolean) {
@@ -297,223 +253,184 @@ namespace quark {
 
 
         int type() for go {
-                a := $self
-	switch i := a.(type) {
-	case nil:
-		return 0
-	case bool:
-		return 1
-	case int:
-		return 1
-	case string:
-		return 1
-	case float32, float64:
-		return 1
-	case []bool, []int, []string, []float32, []float64, []interface{},
-		*[]bool, *[]int, *[]string, *[]float32, *[]float64, *[]interface{}:
-		return 2
-	case map[int]int, map[int]string, map[int]interface{},
-		map[string]int, map[string]string, map[string]interface{},
-		map[interface{}]interface{}, map[interface{}]int, map[interface{}]string :
-		return 3
-	default:
-		_ = i
-		// XXX: use reflection here to detect weirder map types
-		return -1
-	}
-            }
-
-        int asInt() for go {
-                a := $self
-	switch i := a.(type) {
-	case nil:
-		return 0
-	case bool:
-		if i {
-			return 1
-		} else {
-			return 0
-		}
-	case int:
-		return i
-	case string:
-		return 0
-	case float32:
-		return int(i)
-	case float64:
-		return int(i)
-	default:
-		return 0
-	}
-}
-
-        String asString() for go import "fmt" {
-                a := $self
-	switch i := a.(type) {
-	case nil:
-		return ""
-	case bool:
-		if i {
-			return "true"
-		} else {
-			return "false"
-		}
-	case int:
-		return fmt.Sprint(i)
-	case string:
-		return i
-	case float32:
-		return fmt.Sprint(i)
-	case float64:
-		return fmt.Sprint(i)
-	default:
-		return ""
-	}
+                a := $self;
+                switch i := a.(type) {
+                    case nil: return 0
+                    case bool: return 1
+                    case int: return 1
+                    case string: return 1
+                    case float32, float64: return 1
+                    case []bool, []int, []string, []float32, []float64, []interface{},
+                    *[]bool, *[]int, *[]string, *[]float32, *[]float64, *[]interface{}: {
+                        return 2
+                    }
+                    case map[int]int, map[int]string, map[int]interface{},
+                    map[string]int, map[string]string, map[string]interface{},
+                    map[interface{}]interface{}, map[interface{}]int, map[interface{}]string : {
+                        return 3
+                    }
+                    default: {
+                        _ = i
+                        // XXX: use reflection here to detect weirder map types
+                        return -1
+                    }
+                    }
             }
 
         Scalar asScalar() for go {
-                 a := $self
-        switch a.(type) {
-        case bool: return a
-        case int: return a
-        case string: return a
-        case float32: return a
-        case float64: return a
-        default:
-             return nil;
-        }
+                a := $self;
+                switch a.(type) {
+                    case bool: return a
+                    case int: return a
+                    case string: return a
+                    case float32: return a
+                    case float64: return a
+                    default: return nil;
+                    }
             }
 
         List<Any> asList() for go {
-                a := $self
-	switch i := a.(type) {
-	case []bool:
-		ret := make([]interface{},len(i),len(i))
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return &ret
-	case []int:
-		ret := make([]interface{},len(i),len(i))
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return &ret
-	case []string:
-		ret := make([]interface{},len(i),len(i))
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return &ret
-	case []float32:
-		ret := make([]interface{},len(i),len(i))
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return &ret
-	case []float64:
-		ret := make([]interface{},len(i),len(i))
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return &ret
-	case *[]bool:
-		ret := make([]interface{},len(*i),len(*i))
-		for k,v := range(*i) {
-			ret[k] = v
-		}
-		return &ret
-	case *[]int:
-		ret := make([]interface{},len(*i),len(*i))
-		for k,v := range(*i) {
-			ret[k] = v
-		}
-		return &ret
-	case *[]string:
-		ret := make([]interface{},len(*i),len(*i))
-		for k,v := range(*i) {
-			ret[k] = v
-		}
-		return &ret
-	case *[]float32:
-		ret := make([]interface{},len(*i),len(*i))
-		for k,v := range(*i) {
-			ret[k] = v
-		}
-		return &ret
-	case *[]float64:
-		ret := make([]interface{},len(*i),len(*i))
-		for k,v := range(*i) {
-			ret[k] = v
-		}
-		return &ret
-	case []interface{}:
-		return &i
-	case *[]interface{}:
-		return i
-	default:
-		return nil
-	}
+                a := $self;
+                switch i := a.(type) {
+                    case []bool: {
+                            ret := make([]interface{},len(i),len(i))
+                            for k,v := range(i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case []int: {
+                            ret := make([]interface{},len(i),len(i))
+                            for k,v := range(i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case []string: {
+                            ret := make([]interface{},len(i),len(i))
+                            for k,v := range(i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case []float32: {
+                            ret := make([]interface{},len(i),len(i))
+                            for k,v := range(i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case []float64: {
+                            ret := make([]interface{},len(i),len(i))
+                            for k,v := range(i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case *[]bool: {
+                            ret := make([]interface{},len(*i),len(*i))
+                            for k,v := range(*i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case *[]int: {
+                            ret := make([]interface{},len(*i),len(*i))
+                            for k,v := range(*i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case *[]string: {
+                            ret := make([]interface{},len(*i),len(*i))
+                            for k,v := range(*i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case *[]float32: {
+                            ret := make([]interface{},len(*i),len(*i))
+                            for k,v := range(*i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case *[]float64: {
+                            ret := make([]interface{},len(*i),len(*i))
+                            for k,v := range(*i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case []interface{}: return &i
+                    case *[]interface{}: return i
+                    default: return nil
+                    }
             }
 
         Map<Scalar,Any> asMap() for go {
                 a := $self
-	switch i := a.(type) {
-	case map[int]int:
-		ret := make(map[interface{}]interface{})
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return ret
-	case map[int]string:
-		ret := make(map[interface{}]interface{})
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return ret
-	case map[interface{}]int:
-		ret := make(map[interface{}]interface{})
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return ret
-	case map[interface{}]string:
-		ret := make(map[interface{}]interface{})
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return ret
-	case map[int]interface{}:
-		ret := make(map[interface{}]interface{})
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return ret
-	case map[string]int:
-		ret := make(map[interface{}]interface{})
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return ret
-	case map[string]string:
-		ret := make(map[interface{}]interface{})
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return ret
-	case map[string]interface{}:
-		ret := make(map[interface{}]interface{})
-		for k,v := range(i) {
-			ret[k] = v
-		}
-		return ret
-	case map[interface{}]interface{}:
-		return i
-	}
-	return nil
+                switch i := a.(type) {
+                    case map[int]int: {
+                            ret := make(map[interface{}]interface{})
+                            for k,v := range(i) {
+                                    ret[k] = v
+                                }
+                            return ret
+                    }
+                    case map[int]string: {
+                            ret := make(map[interface{}]interface{})
+                            for k,v := range(i) {
+                                    ret[k] = v
+                                }
+                            return ret
+                    }
+                    case map[interface{}]int: {
+                            ret := make(map[interface{}]interface{})
+                            for k,v := range(i) {
+                                    ret[k] = v
+                                }
+                            return ret
+                    }
+                    case map[interface{}]string: {
+                            ret := make(map[interface{}]interface{})
+                            for k,v := range(i) {
+                                    ret[k] = v
+                                }
+                            return ret
+                    }
+                    case map[int]interface{}: {
+                        ret := make(map[interface{}]interface{})
+                        for k,v := range(i) {
+                                ret[k] = v
+                            }
+                        return ret
+                    }
+                    case map[string]int: {
+                        ret := make(map[interface{}]interface{})
+                        for k,v := range(i) {
+                                ret[k] = v
+                            }
+                        return ret
+                    }
+                    case map[string]string: {
+                        ret := make(map[interface{}]interface{})
+                        for k,v := range(i) {
+                                ret[k] = v
+                            }
+                        return ret
+                    }
+                    case map[string]interface{}: {
+                        ret := make(map[interface{}]interface{})
+                        for k,v := range(i) {
+                                ret[k] = v
+                            }
+                        return ret
+                    }
+                    case map[interface{}]interface{}: return i;
+                    }
+                return nil;
             }
-
-
 
 
         int type() for python import "six" {
@@ -536,36 +453,7 @@ namespace quark {
             else:
                 return -1
             }
-        int asInt() for python import "six" {
-            a = $self
-            if a is None:
-                return 0
-            elif isinstance(a, six.text_type):
-                return 0
-            elif a is True or a is False:
-                return int(a)
-            elif isinstance(a, six.integer_types):
-                return a
-            elif isinstance(a, float):
-                return int(a)
-            else:
-                return 0
-            }
-        String asString() for python import "six" {
-            a = $self
-            if a is None:
-                return u""
-            elif isinstance(a, six.text_type):
-                return a
-            elif a is True or a is False:
-                return a and u"true" or u"false"
-            elif isinstance(a, six.integer_types):
-                return six.text_type(a)
-            elif isinstance(a, float):
-                return six.text_type(a)
-            else:
-                return u""
-            }
+
         Scalar asScalar() for python import "six" {
             a = $self
             if isinstance(a, (list, tuple, dict)):
@@ -573,6 +461,7 @@ namespace quark {
             else:
                 return a
             }
+
         List<Any> asList() for python import "six" {
             a = $self
             if isinstance(a, list):
@@ -582,6 +471,7 @@ namespace quark {
             else:
                 return None
             }
+
         Map<Scalar,Any> asMap() for python import "six" {
             a = $self
             if isinstance(a, dict):
@@ -611,46 +501,7 @@ namespace quark {
               return -1
             end
             }
-        int asInt() for ruby {
-            a = $self
-            if a.nil?
-              return 0
-            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
-              if a
-                return 1
-              else
-                return 0
-              end
-            elsif a.is_a?(Fixnum)
-              return a
-            elsif a.is_a?(String)
-              return 0
-            elsif a.is_a?(Float)
-              return a.to_i
-            else
-              return 0
-            end
-            }
-        String asString() for ruby {
-            a = $self
-            if a.nil?
-              return ""
-            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
-              if a
-                return "true"
-              else
-                return "false"
-              end
-            elsif a.is_a?(Fixnum)
-              return a.to_s
-            elsif a.is_a?(String)
-              return a
-            elsif a.is_a?(Float)
-              return a.to_s
-            else
-              return ""
-            end
-            }
+
         Scalar asScalar() for ruby {
             a = $self
             if a.is_a?(Array) or a.is_a?(Hash)
@@ -659,6 +510,7 @@ namespace quark {
               return a
             end
             }
+
         List<Any> asList() for ruby {
             a = $self
             if a.is_a?(Array)
@@ -667,6 +519,7 @@ namespace quark {
               return nil
             end
             }
+
         Map<Scalar,Any> asMap() for ruby {
             a = $self
             if a.is_a?(Hash)
@@ -675,7 +528,6 @@ namespace quark {
               return nil
             end
             }
-
 
 
         int type() for javascript {
@@ -701,42 +553,7 @@ namespace quark {
                     return -1;
                 }
             }
-        int asInt() for javascript {
-                let a = $self;
-                let t = typeof(a);
-                if (t === "object") {
-                    return 0;
-                } else if (t === "string") {
-                    return 0;
-                } else if (t === "number") {
-                    if (Number.isInteger(a)) {
-                        return a;
-                    } else if ( a > 0 ) {
-                        return Math.floor(a);
-                    } else {
-                        return -Math.floor(-a);
-                    }
-                } else if (t === "boolean") {
-                    return a ? 1 : 0;
-                } else {
-                    return 0;
-                }
-            }
-        String asString() for javascript {
-                let a = $self;
-                let t = typeof(a);
-                if (t === "object") {
-                    return "";
-                } else if (t === "string") {
-                    return a;
-                } else if (t === "number") {
-                    return a.toString();
-                } else if (t === "boolean") {
-                    return a ? "true" : "false";
-                } else {
-                    return "";
-                }
-            }
+
         Scalar asScalar() for javascript {
                 let a = $self;
                 if (Array.isArray(a) || typeof(a) === "object" || a instanceof Map) {
@@ -745,6 +562,7 @@ namespace quark {
                     return a;
                 }
             }
+
         List<Any> asList() for javascript {
                 let a = $self;
                 if (Array.isArray(a)) {
@@ -753,6 +571,7 @@ namespace quark {
                     return null;
                 }
             }
+
         Map<Scalar,Any> asMap() for javascript {
                 let a = $self;
                 if (typeof(a) === "object") {
@@ -781,7 +600,9 @@ namespace quark {
      * creating a cross-target quark implementation of a primitive
      * method. Imagine it says Any::asBool
      */
-    bool Any_asBool(Any a) { return a.asScalar().asBool(); }
+    bool   Any_asBool(Any a)   { return a.asScalar().asBool(); }
+    int    Any_asInt(Any a)    { return a.asScalar().asInt(); }
+    String Any_asString(Any a) { return a.asScalar().asString(); }
 
     primitive Scalar {
         /*
@@ -857,23 +678,101 @@ namespace quark {
                 return false;
             }
 
-        bool asBool() for go {
-                a := $self
-	switch i := a.(type) {
-	case bool:
-		return i
-	case int:
-		return i != 0
-	case string:
-		return len(i) > 0
-	case float32:
-		return i != 0.0
-	case float64:
-		return i != 0.0
-	default:
-		return false
-	}
+        int asInt() for java  import "java.util.List" import "java.util.Map" {
+                Object a = $self;
+                if (a == null) {
+                    return 0;
+                } else if (a instanceof Boolean) {
+                    return (Boolean)a ? 1 : 0;
+                } else if (a instanceof Integer) {
+                    return ((Integer)a);
+                } else if (a instanceof String) {
+                    return 0;
+                } else if (a instanceof Float) {
+                    return ((Float)a).intValue();
+                } else if (a instanceof Double) {
+                    return ((Double)a).intValue();
+                } else if (a instanceof List) {
+                    return 0;
+                } else if (a instanceof Map) {
+                    return 0;
+                }
+                return 0;
             }
+
+        String asString() for java import "java.util.List" import "java.util.Map" {
+                Object a = $self;
+                if (a == null) {
+                    return "";
+                } else if (a instanceof Boolean) {
+                    return (Boolean)a ? "true" : "false";
+                } else if (a instanceof Integer) {
+                    return ((Integer)a).toString();
+                } else if (a instanceof String) {
+                    return (String)a;
+                } else if (a instanceof Float) {
+                    return ((Float)a).toString();
+                } else if (a instanceof Double) {
+                    return ((Double)a).toString();
+                } else if (a instanceof List) {
+                    return "";
+                } else if (a instanceof Map) {
+                    return "";
+                }
+                return "";
+            }
+
+
+        bool asBool() for go {
+                a := $self;
+                switch i := a.(type) {
+                    case bool: return i;
+                    case int: return i != 0;
+                    case string: return len(i) > 0;
+                    case float32: return i != 0.0;
+                    case float64: return i != 0.0;
+                    default: return false;
+                    }
+            }
+
+        int asInt() for go {
+                a := $self;
+                switch i := a.(type) {
+                    case nil: return 0;
+                    case bool: {
+                        if i {
+                              return 1;
+                        } else {
+                              return 0;
+                        }
+                    }
+                    case int: return i;
+                    case string: return 0;
+                    case float32: return int(i);
+                    case float64: return int(i);
+                    default: return 0;
+                    }
+            }
+
+        String asString() for go import "fmt" {
+                a := $self;
+                switch i := a.(type) {
+                    case nil: return "";
+                    case bool: {
+                         if i {
+                                 return "true";
+                         } else {
+                             return "false";
+                         }
+                    }
+                    case int: return fmt.Sprint(i);
+                    case string: return i;
+                    case float32: return fmt.Sprint(i);
+                    case float64: return fmt.Sprint(i);
+                    default: return "";
+                    }
+            }
+
 
         bool asBool() for python import "six" {
             a = $self
@@ -891,6 +790,39 @@ namespace quark {
             else:
                 return False
             }
+
+        int asInt() for python import "six" {
+            a = $self
+            if a is None:
+                return 0
+            elif isinstance(a, six.text_type):
+                return 0
+            elif a is True or a is False:
+                return int(a)
+            elif isinstance(a, six.integer_types):
+                return a
+            elif isinstance(a, float):
+                return int(a)
+            else:
+                return 0
+            }
+
+        String asString() for python import "six" {
+            a = $self
+            if a is None:
+                return u""
+            elif isinstance(a, six.text_type):
+                return a
+            elif a is True or a is False:
+                return a and u"true" or u"false"
+            elif isinstance(a, six.integer_types):
+                return six.text_type(a)
+            elif isinstance(a, float):
+                return six.text_type(a)
+            else:
+                return u""
+            }
+
         bool asBool() for ruby {
             a = $self
             if a.nil?
@@ -907,6 +839,49 @@ namespace quark {
               return false
             end
             }
+
+        int asInt() for ruby {
+            a = $self
+            if a.nil?
+              return 0
+            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
+              if a
+                return 1
+              else
+                return 0
+              end
+            elsif a.is_a?(Fixnum)
+              return a
+            elsif a.is_a?(String)
+              return 0
+            elsif a.is_a?(Float)
+              return a.to_i
+            else
+              return 0
+            end
+            }
+
+        String asString() for ruby {
+            a = $self
+            if a.nil?
+              return ""
+            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
+              if a
+                return "true"
+              else
+                return "false"
+              end
+            elsif a.is_a?(Fixnum)
+              return a.to_s
+            elsif a.is_a?(String)
+              return a
+            elsif a.is_a?(Float)
+              return a.to_s
+            else
+              return ""
+            end
+            }
+
         bool asBool() for javascript {
                 let a = $self;
                 let t = typeof(a);
@@ -920,6 +895,44 @@ namespace quark {
                     return a;
                 } else {
                     return false;
+                }
+            }
+
+        int asInt() for javascript {
+                let a = $self;
+                let t = typeof(a);
+                if (t === "object") {
+                    return 0;
+                } else if (t === "string") {
+                    return 0;
+                } else if (t === "number") {
+                    if (Number.isInteger(a)) {
+                        return a;
+                    } else if ( a > 0 ) {
+                        return Math.floor(a);
+                    } else {
+                        return -Math.floor(-a);
+                    }
+                } else if (t === "boolean") {
+                    return a ? 1 : 0;
+                } else {
+                    return 0;
+                }
+            }
+
+        String asString() for javascript {
+                let a = $self;
+                let t = typeof(a);
+                if (t === "object") {
+                    return "";
+                } else if (t === "string") {
+                    return a;
+                } else if (t === "number") {
+                    return a.toString();
+                } else if (t === "boolean") {
+                    return a ? "true" : "false";
+                } else {
+                    return "";
                 }
             }
     }
