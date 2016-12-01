@@ -457,10 +457,17 @@ namespace quark {
 
         Scalar asScalar() for python import "six" {
             a = $self
-            if isinstance(a, (list, tuple, dict)):
-                return None
-            else:
+            if isinstance(a, six.text_type):
                 return a
+            elif a is True or a is False:
+                # order wrt int check is important. bool isinstance int
+                return a
+            elif isinstance(a, six.integer_types):
+                return a
+            elif isinstance(a, float):
+                return 1
+            else:
+                return None
             }
 
         List<Any> asList() for python import "six" {
@@ -505,10 +512,18 @@ namespace quark {
 
         Scalar asScalar() for ruby {
             a = $self
-            if a.is_a?(Array) or a.is_a?(Hash)
+            if a.nil?
               return nil
-            else
+            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
               return a
+            elsif a.is_a?(Fixnum)
+              return a
+            elsif a.is_a?(String)
+              return a
+            elsif a.is_a?(Float)
+              return a
+            else
+              return nil
             end
             }
 
@@ -557,10 +572,15 @@ namespace quark {
 
         Scalar asScalar() for javascript {
                 let a = $self;
-                if (Array.isArray(a) || typeof(a) === "object" || a instanceof Map) {
-                    return null;
-                } else {
+                let t = typeof(a);
+                if (t === "string") {
                     return a;
+                } else if (t === "number") {
+                    return a;
+                } else if (t === "boolean") {
+                    return a;
+                } else {
+                    return null;
                 }
             }
 
