@@ -2,9 +2,9 @@ void testparse() {
     Any a = parse("{\"pi\": 3.14, \"list\": [1, 2, 3, 4]}");
     Map<Scalar,Any> m = a.asMap();
     assertEqual(2, m.size());
-    Any v = m[unsafe("pi").asScalar()];
+    Any v = m["pi"];
     assertEqual("3.14", v);
-    List<Any> l = m[unsafe("list").asScalar()].asList();
+    List<Any> l = m["list"].asList();
     assertEqual(4, l.size());
 }
 
@@ -14,7 +14,7 @@ Any parse(String json) {
     if (consumed > 0) {
         return builder.current.array[0];
     } else {
-        return unsafe(null);
+        return null;
     }
 }
 

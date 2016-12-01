@@ -2,10 +2,10 @@ from quarkc.compiler import Compiler
 from quarkc.match import match, choice, many
 from quarkc.ast import (
     AST, Package, Declaration, Local, Param, Class, Function, PrimitiveLiteral, If, While, Block, Assign, ExprStmt,
-    Return, Call, Attr, Var, TypeParam
+    Return, Call, Attr, Var, TypeParam, List, Map, Null
 )
 from quarkc.parse import traversal
-from quarkc.symbols import Self
+from quarkc.symbols import Self, Boxed, Nulled
 from quarkc.errors import InvalidInvocation, InvalidAssignment
 from quarkc import typespace as types
 
@@ -165,9 +165,13 @@ def typesig(c, r):
 def typesig(c, stmt):
     return vcheck(c, stmt, typesig(c, stmt.expr))
 
-@match(Compiler, choice(Call, Attr, Var, Self))
+@match(Compiler, choice(Call, Attr, Var, Self, List, Map, Null))
 def typesig(c, nd):
     return vcheck(c, nd, typesig(c.types[nd]))
+
+@match(Compiler, choice(Boxed, Nulled))
+def typesig(c, nd):
+    return None
 
 def check(name, content, expected):
     c = Compiler()
@@ -292,6 +296,8 @@ def check_violation(code, signature):
             primitive String {
                 String substring(int start, int len);
             }
+           primitive List<T> {}
+           primitive Map<K,V> {}
         }
     """
     prolog_sig = {
@@ -305,7 +311,14 @@ def check_violation(code, signature):
         'quark.String.String': (CALLABLE, 'quark.String'),
         'quark.String.substring': ((CALLABLE, 'quark.String', 'quark.int', 'quark.int'),
                                    (DECLARE, 'start', 'quark.int'),
-                                   (DECLARE, 'len', 'quark.int'))
+                                   (DECLARE, 'len', 'quark.int')),
+        'quark.List.List': (TEMPLATE,
+                            'quark.List.T',
+                            (CALLABLE, 'quark.List<quark.List.T>')),
+        'quark.Map.Map': (TEMPLATE,
+                          'quark.Map.K',
+                          'quark.Map.V',
+                          (CALLABLE, 'quark.Map<quark.Map.K, quark.Map.V>'))
     }
     signature.update(prolog_sig)
     check("f", prolog + code, signature)
@@ -392,3 +405,36 @@ def test_conversion():
             'f.foo': ((CALLABLE, 'quark.void'), (DECLARE, 'x', 'f.X', 'f.Y'))
         }
     )
+
+def test_infer_return_list():
+    check_violation(
+        """
+        List<int> foo() {
+            return [];
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.List<quark.int>'), (RETURN, 'quark.List<quark.int>'))
+        })
+
+def test_infer_return_map():
+    check_violation(
+        """
+        Map<String,int> foo() {
+            return {};
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.Map<quark.String, quark.int>'), (RETURN, 'quark.Map<quark.String, quark.int>'))
+        })
+
+def test_infer_return_null():
+    check_violation(
+        """
+        String foo() {
+            return null;
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.String'), (RETURN, 'quark.String'))
+        })

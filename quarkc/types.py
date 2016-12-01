@@ -275,6 +275,11 @@ class Types(object):
     def do_resolve_infer(self, ass, l):
         return self.resolve(ass.lhs)
 
+    @match(Return, choice(List, Map, Null))
+    def do_resolve_infer(self, retr, l):
+        node = self.node(self.resolve(get_definition(retr)))
+        return node.result
+
     @match(Var)
     def do_resolve(self, v):
         return self.resolve(self.symbols[v])
