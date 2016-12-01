@@ -1,6 +1,6 @@
 import pytest
 from quarkc.ir import ( IR, Name, Ref, Local, Package, Literal,
-                        Declaration, Field, Message, Method,
+                        PublicDeclaration, Declaration, Field, Message, Method,
                         Construct, Constructor, Function, Class, Interface,
                         Void, Int, Float, String, Bool, Return, Type, InterfaceType,
                         ClassType,
@@ -107,7 +107,7 @@ class TestTreeEqual(object):
 @pytest.mark.parametrize("tree", [
     Package(), Name('a', 'b', 'c'), Type('a:b.c'),
     ClassType('a:b.c'), InterfaceType('a:b.c'),
-    Void(), Int(), Float(), String(), Bool(), Declaration('a', Void()),
+    Void(), Int(), Float(), String(), Bool(), PublicDeclaration('a', Void()),
     Package(Function(Name('a:b.c'), Void(), Block()),
             Function(Name('a:b.d'), Void(), Block())),
     Interface(Name('a:b.c')),

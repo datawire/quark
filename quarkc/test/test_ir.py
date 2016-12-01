@@ -16,7 +16,7 @@ import pytest
 
 from quarkc.ir import (
     Name, Function, Int, Param, Return, Invoke, Ref, Local, Package, Var, While, If, Block, Call,
-    Void, Send, Doc
+    Void, Send, Doc, LocalName
 )
 
 NAMES = [
@@ -52,7 +52,7 @@ def test_local(args, package, path, name):
     l = Local(*args)
     assert l.type.name.package == package
     assert l.type.name.path == path
-    assert l.name == name
+    assert l.name == LocalName(name)
 
 def test_package():
     p1 = Package(Function(Name("p1:n.fun"),
