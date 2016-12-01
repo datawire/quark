@@ -8,6 +8,9 @@ namespace quark {
         bool __or__(bool b);
         bool __and__(bool b);
 
+        Any to_quark_Any();
+        Scalar to_quark_Scalar();
+
         bool __eq__(bool b) for java { return $self == $b; }
         bool __not__() for java { return !$self; }
         bool __or__(bool b) for java { return $self || $b; }
@@ -34,6 +37,9 @@ namespace quark {
         bool __and__(bool b) for javascript { return ($self && $b) }
     }
 
+    Any bool_to_quark_Any(bool b) { return unsafe(b); }
+    Scalar bool_to_quark_Scalar(bool b) { return unsafe(b).asScalar(); }
+
     primitive int {
         int __add__(int other);
         int __sub__(int other);
@@ -47,6 +53,7 @@ namespace quark {
         bool __lt__(int other);
 
         Any to_quark_Any();
+        Scalar to_quark_Scalar();
 
         int __add__(int other) for java { return $self + $other; }
         int __sub__(int other) for java { return $self - $other; }
@@ -107,6 +114,10 @@ namespace quark {
 
     Any int_to_quark_Any(int self) {
         return unsafe(self);
+    }
+
+    Scalar int_to_quark_Scalar(int self) {
+        return unsafe(self).asScalar();
     }
 
     /*
@@ -1101,10 +1112,12 @@ namespace quark {
         String substring(int start, int end) for javascript { return $self.substring($start, $end) }
 
         Any to_quark_Any();
+        Scalar to_quark_Scalar();
 
     }
 
     Any String_to_quark_Any(String s) { return unsafe(s); }
+    Scalar String_to_quark_Scalar(String s) { return unsafe(s).asScalar(); }
 
     primitive Map<K,V>
     for java import "java.util.Map" {Map<$K_boxed,$V_boxed>}
@@ -1124,9 +1137,11 @@ namespace quark {
         Map<K,V> __init__() for java import "java.util.Map" import "java.util.HashMap" {
                 return new HashMap<$K_boxed,$V_boxed>();
             }
+
         void __set__(K key, V value) for java import "java.util.Map" {
                 $self.put($key, $value);
             }
+
         V __get__(K key) for java import "java.util.Map" {
                 $V_boxed value = $self.get($key);
                 if (value != null) {
@@ -1134,9 +1149,11 @@ namespace quark {
                 }
                 return $V_nulled;
             }
+
         List<K> keys() for java import "java.util.Map" import "java.util.ArrayList" {
                 return new ArrayList<$K_boxed>($self.keySet());
             }
+
         V remove(K key) for java import "java.util.Map" {
                 $V_boxed value = $self.remove($key);
                 if (value != null) {
@@ -1144,15 +1161,19 @@ namespace quark {
                 }
                 return $V_nulled;
             }
+
         bool contains(K key) for java import "java.util.Map" {
                 return $self.containsKey($key);
             }
+
         void update(Map<K,V> other) for java import "java.util.Map" {
                 $self.putAll($other);
             }
+
         int size() for java import "java.util.Map" {
                 return $self.size();
             }
+
         void clear() for java import "java.util.Map" {
                 $self.clear();
             }
@@ -1160,12 +1181,15 @@ namespace quark {
         Map<K,V> __init__() for go {
                 return make(map[$K]$V);
             }
+
         void __set__(K key, V value) for go {
                 $self[$key] = $value;
             }
+
         V __get__(K key) for go {
                 return $self[$key];
             }
+
         List<K> keys() for go {
                 var keys []$K;
                 for k := range $self {
@@ -1173,22 +1197,27 @@ namespace quark {
                     }
                 return &keys;
             }
+
         V remove(K key) for go {
                 defer delete($self, $key);
                 return $self[$key];
             }
+
         bool contains(K key) for go {
                 _, ret := $self[$key];
                 return ret;
             }
+
         void update(Map<K,V> other) for go {
                 for k,v := range $other {
                         $self[k] = v;
                     }
             }
+
         int size() for go {
                 return len($self);
             }
+
         void clear() for go {
                 for k := range $self {
                         delete($self, k);
@@ -1199,33 +1228,41 @@ namespace quark {
         Map<K,V> __init__() for python {
                 return dict()
             }
+
         void __set__(K key, V value) for python {
                 $self[$key] = $value
             }
+
         V __get__(K key) for python {
                 el = $self.get($key, None)
                 if el is not None:
                     return el
                 return $V_nulled
             }
+
         List<K> keys() for python {
                 return list($self.keys())
             }
+
         V remove(K key) for python {
                 el = $self.pop($key, None)
                 if el is not None:
                     return el
                 return $V_nulled
             }
+
         bool contains(K key) for python {
                 return $key in $self
             }
+
         void update(Map<K,V> other) for python {
                 $self.update($other)
             }
+
         int size() for python {
                 return len($self)
             }
+
         void clear() for python {
                 $self.clear()
             }
@@ -1235,16 +1272,20 @@ namespace quark {
                 map.default = $V_nulled
                 map
             }
+
         void __set__(K key, V value) for ruby {
                 $self[$key] = $value
                 nil
             }
+
         V __get__(K key) for ruby {
                 $self[$key]
             }
+
         List<K> keys() for ruby {
                 $self.keys
             }
+
         V remove(K key) for ruby {
                 el = $self.delete($key);
                 if not el.nil?
@@ -1252,15 +1293,19 @@ namespace quark {
                 end
                 return $V_nulled
             }
+
         bool contains(K key) for ruby {
                 $self.has_key?($key)
             }
+
         void update(Map<K,V> other) for ruby {
                 $self.merge!($other)
             }
+
         int size() for ruby {
                 $self.length
             }
+
         void clear() for ruby {
                 $self.clear
             }
@@ -1269,7 +1314,11 @@ namespace quark {
         Map<K,V> __init__() for javascript {
                 return new Map();
             }
-        void __set__(K key, V value) for javascript { $self.set($key, $value) }
+
+        void __set__(K key, V value) for javascript {
+                $self.set($key, $value);
+            }
+
         V __get__(K key) for javascript {
                 let el = $self.get($key);
                 if (el !== undefined && el !== null) {
@@ -1277,9 +1326,11 @@ namespace quark {
                 }
                 return $V_nulled;
             }
+
         List<K> keys() for javascript {
                 return Array.from($self.keys());
             }
+
         V remove(K key) for javascript {
                 let el = $self.get($key);
                 $self.delete($key);
@@ -1288,15 +1339,19 @@ namespace quark {
                 }
                 return $V_nulled;
             }
+
         bool contains(K key) for javascript {
                 return $self.has($key);
             }
+
         void update(Map<K,V> other) for javascript {
                 $other.forEach((v,k) => $self.set(k,v));
             }
+
         int size() for javascript {
                 return $self.size;
             }
+
         void clear() for javascript {
                 $self.clear();
             }
@@ -1320,9 +1375,11 @@ namespace quark {
         List<T> __init__() for java import "java.util.List" import "java.util.ArrayList" {
                 return new ArrayList<$T_boxed>();
             }
+
         void __set__(int index, T value) for java import "java.util.List" {
                 $self.set($index,$value);
             }
+
         T __get__(int index) for java import "java.util.List" {
                 $T_boxed el = $self.get($index);
                 if ( el == null ) {
@@ -1331,15 +1388,19 @@ namespace quark {
                     return el;
                 }
             }
+
         int size() for java import "java.util.List" import "java.util.ArrayList" {
                 return $self.size();
             }
+
         void append(T element) for java import "java.util.List" {
                 $self.add($element);
             }
+
         void extend(List<T> other) for java import "java.util.List" {
                 $self.addAll($other);
             }
+
         T remove(int index) for java import "java.util.List" {
                 $T_boxed el = $self.remove($index);
                 if ( el != null ) {
@@ -1353,21 +1414,27 @@ namespace quark {
                 var arr []$T = make([]$T, 0, 10);
                 return &arr;
             }
+
         void __set__(int index, T value) for go {
                 (*$self)[$index] = $value;
             }
+
         T __get__(int index) for go {
                 return (*$self)[$index];
             }
+
         int size() for go {
                 return len(*$self);
             }
+
         void append(T element) for go{
                 *$self = append(*$self, $element);
             }
+
         void extend(List<T> other) for go {
                 *$self = append(*$self, (*$other)...);
             }
+
         T remove(int index) for go {
             ret := (*$self)[$index];
             copy((*$self)[$index:], (*$self)[$index+1:]);
@@ -1379,21 +1446,27 @@ namespace quark {
         List<T> __init__() for python {
                 return []
             }
+
         void __set__(int index, T value) for python {
                 $self[$index] = $value
             }
+
         T __get__(int index) for python {
                 return $self[$index]
             }
+
         int size() for python {
                 return len($self)
             }
+
         void append(T element) for python {
                 $self.append($element)
             }
+
         void extend(List<T> other) for python {
                 $self.extend($other)
             }
+
         T remove(int index) for python {
                 ret = $self[$index]
                 $self[$index:] = $self[$index+1:]
@@ -1403,21 +1476,27 @@ namespace quark {
         List<T> __init__() for ruby {
                 []
             }
+
         void __set__(int index, T value) for ruby {
                 $self[$index] = $value
             }
+
         T __get__(int index) for ruby {
                 $self[$index]
             }
+
         int size() for ruby {
                 $self.length
             }
+
         void append(T element) for ruby {
                 $self.push($element)
             }
+
         void extend(List<T> other) for ruby {
                 $self.push(*$other)
             }
+
         T remove(int index) for ruby {
                 $self.delete_at($index)
             }
@@ -1426,21 +1505,27 @@ namespace quark {
         List<T> __init__() for javascript {
                 return [];
             }
+
         void __set__(int index, T value) for javascript {
                 $self[$index] = $value;
             }
+
         T __get__(int index) for javascript {
                 return $self[$index];
             }
+
         int size() for javascript {
                 return $self.length;
             }
+
         void append(T element) for javascript {
                 return $self.push($element);
             }
+
         void extend(List<T> other) for javascript {
                 $other.forEach(x => $self.push(x));
             }
+
         T remove(int index) for javascript {
                 return $self.splice($index, 1)[0]
             }

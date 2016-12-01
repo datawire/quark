@@ -4,16 +4,6 @@ Rough spots on the crust
 Any
 ---
 
-### generic map access ###
-
-`Any.asMap()` returns `Map<Scalar,Any>`. Quark scalars are not
-directly assignable to Scalar so one cannot easly traverse such maps
-with literal keys.
-
-    anAny.asMap()[11]
-
-complains.
-
 ### Quark interface types ###
 
 `Any` does not have an API (or a story for targets at all, for that

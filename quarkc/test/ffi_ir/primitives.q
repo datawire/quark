@@ -336,8 +336,8 @@ class AnyTest {
         List<Scalar> mk = m.keys();
         assertEqual(1, mk.size());
         assertEqual(11, mk[0]);
-        assertEqual(22, m[mk[0]]); // XXX: usability issue, how to conveniently address Map<Scalar,Any>
-        // assertEqual(22, m[11]); // XXX: this unfortunately doesn't work.
+        assertEqual(22, m[mk[0]]);
+        assertEqual(22, m[11]);
     }
     void zilch() {
         Any a = unsafe(new Rainbow().zilch());
