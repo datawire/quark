@@ -46,6 +46,8 @@ namespace quark {
         bool __gt__(int other);
         bool __lt__(int other);
 
+        Any to_quark_Any();
+
         int __add__(int other) for java { return $self + $other; }
         int __sub__(int other) for java { return $self - $other; }
         int __neg__() for java { return -$self; }
@@ -101,6 +103,10 @@ namespace quark {
         bool __gt__(int other) for javascript { return $self > $other }
         bool __lt__(int other) for javascript { return $self < $other }
 
+    }
+
+    Any int_to_quark_Any(int self) {
+        return unsafe(self);
     }
 
     /*
@@ -959,8 +965,11 @@ namespace quark {
         int size() for javascript { return $self.length }
         String substring(int start, int end) for javascript { return $self.substring($start, $end) }
 
+        Any to_quark_Any();
 
     }
+
+    Any String_to_quark_Any(String s) { return unsafe(s); }
 
     primitive Map<K,V>
     for java import "java.util.Map" {Map<$K_boxed,$V_boxed>}
