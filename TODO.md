@@ -198,7 +198,7 @@ Could generate a potenital IR:
 
 ```
     Doc("""Constructs a """, ClassType(Ref("pkg:pgk.module.Foo")),
-        " with all the bling)(
+        """ with all the bling""")(
       Function(Name(....
 ```
 
