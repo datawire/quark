@@ -119,6 +119,17 @@ And python with sphinx docs:
         ...
 ```
 
+
+quark method name mangling
+--------------------------
+
+Quark currently does nothing with method names, it just lets them through.
+It should avoid target keywords, and also work around target-specific details, like:
+- double underscore methods are renamed by python
+- underscore methods cannot be public in go
+
+
+
 Rough spots inside dough
 ========================
 
