@@ -298,7 +298,9 @@ namespace quark {
         Map<Scalar,Any> asMap() for java import "java.util.Map" {
                 Object a = $self;
                 if (a instanceof Map) {
-                    return (Map<Object,Object>)a;
+                    @SuppressWarnings("unchecked")
+                    Map<Object,Object> ret = (Map<Object,Object>)a;
+                    return ret;
                 } else {
                     return null;
                 }
@@ -833,6 +835,8 @@ namespace quark {
                 if (typeof(a) === "object") {
                     if (a instanceof Map) {
                         return a;
+                    } else if(a === null ) {
+                        return null;
                     } else if (a.constructor === Object) {
                         ret = new Map();
                         Object.getOwnPropertyNames(a).forEach(function(k) {
@@ -1055,7 +1059,7 @@ namespace quark {
                 $self[$key] = $value
             }
         V __get__(K key) for python {
-                el = $self.get($key)
+                el = $self.get($key, None)
                 if el is not None:
                     return el
                 return $V_nulled
@@ -1064,7 +1068,7 @@ namespace quark {
                 return list($self.keys())
             }
         V remove(K key) for python {
-                el = $self.pop($key)
+                el = $self.pop($key, None)
                 if el is not None:
                     return el
                 return $V_nulled
@@ -1144,7 +1148,7 @@ namespace quark {
                 return $self.has($key);
             }
         void update(Map<K,V> other) for javascript {
-                $other.forEach(v,k => $self.set(k,v));
+                $other.forEach((v,k) => $self.set(k,v));
             }
         int size() for javascript {
                 return $self.size;
