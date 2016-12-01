@@ -145,6 +145,49 @@ class PackageName(_Name):
 class Name(_Name):
     pass
 
+
+@total_ordering
+class _ScopedName(IR):
+    @match(basestring)
+    def __init__(self, name):
+        self.name = name
+
+    @property
+    def children(self):
+        if False: yield
+
+    def __repr__(self):
+        return self.repr(self.name)
+
+    @match(lazy("_ScopedName"))
+    def __eq__(self, other):
+        return self.name == other.name
+
+    @match(lazy("_ScopedName"))
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    @match(lazy("_ScopedName"))
+    def __lt__(self, other):
+        return self.name < other.name
+
+    @match(lazy("_ScopedName"))
+    def __gt__(self, other):
+        return self.name > other.name
+
+    def __hash__(self):
+        return hash(self.name)
+
+    def __str__(self):
+        return self.name
+
+
+class ScopedName(_ScopedName):
+    pass
+
+class LocalName(_ScopedName):
+    pass
+
 # A reference to a Definition
 # The target must know how to import a Ref both across
 # packages and from other namespaces within the same package. Does
@@ -296,11 +339,6 @@ class Primitive(NativeType):
 
 class Declaration(IR):
 
-    @match(basestring, AbstractType)
-    def __init__(self, name, type):
-        self.name = name
-        self.type = type
-
     @match(basestring, Ref)
     def __init__(self, name, type):
         self.__init__(name, Type(type))
@@ -311,6 +349,7 @@ class Declaration(IR):
 
     @property
     def children(self):
+        yield self.name
         yield self.type
 
     def collisions(self, names):
@@ -321,6 +360,29 @@ class Declaration(IR):
 
     def __repr__(self):
         return self.repr(self.name, self.type)
+
+class LocalDeclaration(Declaration):
+
+    @match(LocalName, AbstractType)
+    def __init__(self, name, type):
+        self.name = name
+        self.type = type
+
+    @match(basestring, AbstractType)
+    def __init__(self, name, type):
+        self.__init__(LocalName(name), type)
+
+
+class PublicDeclaration(Declaration):
+
+    @match(ScopedName, AbstractType)
+    def __init__(self, name, type):
+        self.name = name
+        self.type = type
+
+    @match(basestring, AbstractType)
+    def __init__(self, name, type):
+        self.__init__(ScopedName(name), type)
 
 # A class, interface, or function.
 class Definition(IR):
@@ -445,8 +507,8 @@ class Block(Code):
     def __repr__(self):
         return self.repr(*[s for s in self.statements if not isinstance(s, FieldInitialize)])
 
-class Param(Declaration):
-    @match(basestring, Void)
+class Param(LocalDeclaration):
+    @match(LocalName, Void)
     def __init__(self, name, type):
         """XXX: until frontend decides what is the story on assignability to
         Any and so we use void parameters as an interim hack
@@ -483,39 +545,52 @@ class Function(Definition):
     def __repr__(self):
         return self.repr(self.name, self.type, *(self.params + (self.body,)))
 
-class Field(IR):
+class Field(PublicDeclaration):
 
-    @match(basestring, AbstractType, opt(lazy('Null')))
+    @match(ScopedName, AbstractType, opt(lazy('Null')))
     def __init__(self, name, type, initializer=None):
         self.type = type
         self.name = name
         self.initializer = initializer or Null(type.copy())
 
+    @match(basestring, AbstractType, lazy('Null'))
+    def __init__(self, name, type, initializer):
+        self.__init__(ScopedName(name), type, initializer)
+
+    @match(basestring, AbstractType)
+    def __init__(self, name, type):
+        self.__init__(ScopedName(name), type)
+
     # XXX: poor-man private constructor :)
-    @match("private", basestring, NativeType, lazy('Literal'))
+    @match("private", ScopedName, NativeType, lazy('Literal'))
     def __init__(self, _, name, type, initializer):
         self.type = type
         self.name = name
         self.initializer = initializer
 
-    @match(basestring, Bool, opt(lazy('BoolLit')))
+    @match(ScopedName, Bool, opt(lazy('BoolLit')))
     def __init__(self, name, type, initializer=None):
         self.__init__("private", name, type, Null(type))
 
-    @match(basestring, Int, opt(lazy('IntLit')))
+    @match(ScopedName, Int, opt(lazy('IntLit')))
     def __init__(self, name, type, initializer=None):
         self.__init__("private", name, type, Null(type))
 
-    @match(basestring, String, opt(lazy('StringLit')))
+    @match(ScopedName, String, opt(lazy('StringLit')))
     def __init__(self, name, type, initializer=None):
         self.__init__("private", name, type, Null(type))
 
-    @match(basestring, Float, opt(lazy('FloatLit')))
+    @match(ScopedName, Float, opt(lazy('FloatLit')))
     def __init__(self, name, type, initializer=None):
         self.__init__("private", name, type, Null(type))
+
+    @match(basestring, choice(Bool,Int,String,Float), opt(lazy('Literal')))
+    def __init__(self, name, type, initializer=None):
+        self.__init__("private", ScopedName(name), type, Null(type))
 
     @property
     def children(self):
+        yield self.name
         yield self.type
         yield self.initializer
 
@@ -524,16 +599,21 @@ class Field(IR):
 
 
 
-class Message(Declaration):
+class Message(PublicDeclaration):
 
-    @match(basestring, AbstractType, many(Param))
+    @match(ScopedName, AbstractType, many(Param))
     def __init__(self, name, type, *args):
         self.name = name
         self.type = type
         self.params = args[:]
 
+    @match(basestring, AbstractType, many(Param))
+    def __init__(self, name, type, *args):
+        self.__init__(ScopedName(name), type, *args)
+
     @property
     def children(self):
+        yield self.name
         yield self.type
         for p in self.params:
             yield p
@@ -541,52 +621,41 @@ class Message(Declaration):
     def __repr__(self):
         return self.repr(self.name, self.type, *self.params)
 
-class Annotation(IR):
-    @match(basestring)
-    def __init__(self, annotation):
-        self.annotation = annotation
-
-    @property
-    def children(self):
-        if False: yield
-
-    def __repr__(self):
-        return self.repr(self.annotation)
-
 class Method(IR):
 
-    @match(basestring, AbstractType, many(Param), Block)
+    @match(ScopedName, AbstractType, many(Param), Block)
     def __init__(self, name, type, *args):
-        self.__init__(name, (), type, *args)
-
-    @match(basestring, (many(Annotation),), AbstractType, many(Param), Block)
-    def __init__(self, name, annotations, type, *args):
         self.name = name
-        self.annotations = annotations
         self.type = type
         self.params = args[:-1]
         self.body = args[-1]
 
+    @match(basestring, AbstractType, many(Param), Block)
+    def __init__(self, name, type, *args):
+        self.__init__(ScopedName(name), type, *args)
+
     @property
     def children(self):
+        yield self.name
         yield self.type
-        for a in self.annotations:
-            yield a
         for p in self.params:
             yield p
         yield self.body
 
     def __repr__(self):
-        return self.repr(self.name, self.annotations, self.type, *(self.params + (self.body,)))
+        return self.repr(self.name, self.type, *(self.params + (self.body,)))
 
 class Constructor(Method):
-    @match(basestring, ClassType, many(Param), Block)
+    @match(ScopedName, ClassType, many(Param), Block)
     def __init__(self, name, type, *args):
         self.name = name
-        self.annotations = ()
         self.type = type
         self.params = args[:-1]
         self.body = args[-1]
+
+    @match(basestring, ClassType, many(Param), Block)
+    def __init__(self, name, type, *args):
+        self.__init__(ScopedName(name), type, *args)
 
 
 # Note that there is no concept of inheritence here, just
@@ -707,13 +776,17 @@ def makeNull(type):
 # access a Local or a Param
 class Var(SimpleExpression):
 
-    @match(basestring)
+    @match(LocalName)
     def __init__(self, name):
         self.name = name
 
+    @match(basestring)
+    def __init__(self, name):
+        self.__init__(LocalName(name))
+
     @property
     def children(self):
-        if False: yield
+        yield self.name
 
     def __repr__(self):
         return self.repr(self.name)
@@ -748,14 +821,19 @@ class Or(Expression):
 # access a Field or a Method
 class Get(Expression):
 
-    @match(Expression, basestring)
+    @match(Expression, ScopedName)
     def __init__(self, expr, name):
         self.expr = expr
         self.name = name
 
+    @match(Expression, basestring)
+    def __init__(self, expr, name):
+        self.__init__(expr, ScopedName(name))
+
     @property
     def children(self):
         yield self.expr
+        yield self.name
 
     def __repr__(self):
         return self.repr(self.expr, self.name)
@@ -763,15 +841,20 @@ class Get(Expression):
 # mutate a Field
 class Set(Statement):
 
-    @match(Expression, basestring, Expression)
+    @match(Expression, ScopedName, Expression)
     def __init__(self, expr, name, value):
         self.expr = expr
         self.name = name
         self.value = value
 
+    @match(Expression, basestring, Expression)
+    def __init__(self, expr, name, value):
+        self.__init__(expr, ScopedName(name), value)
+
     @property
     def children(self):
         yield self.expr
+        yield self.name
         yield self.value
 
     def __repr__(self):
@@ -802,15 +885,20 @@ class Invoke(Expression):
 # Invokes a method on an object
 class Send(Expression):
 
-    @match(Expression, basestring, (many(Expression),))
+    @match(Expression, ScopedName, (many(Expression),))
     def __init__(self, expr, name, args):
         self.expr = expr
         self.name = name
         self.args = args
 
+    @match(Expression, basestring, (many(Expression),))
+    def __init__(self, expr, name, args):
+        self.__init__(expr, ScopedName(name), args)
+
     @property
     def children(self):
         yield self.expr
+        yield self.name
         for a in self.args:
             yield a
 
@@ -912,15 +1000,21 @@ class BoolLit(Literal):
 
 # statements
 
-class Local(Declaration, Statement):
-    @match(basestring, AbstractType, opt(Expression))
+class Local(LocalDeclaration, Statement):
+
+    @match(LocalName, AbstractType, opt(Expression))
     def __init__(self, name, type, expr=None):
         self.type = type
         self.name = name
         self.expr = expr or Null(type.copy())
 
+    @match(basestring, AbstractType, opt(Expression))
+    def __init__(self, name, type, expr=None):
+        self.__init__(LocalName(name), type, expr=expr)
+
     @property
     def children(self):
+        yield self.name
         yield self.type
         if self.expr:
             yield self.expr

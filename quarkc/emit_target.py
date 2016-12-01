@@ -14,7 +14,7 @@
 
 from collections import OrderedDict
 from .match import match, choice, lazy
-from .ir import (Root, Definition, Namespace, NamespaceName, Name, Ref)
+from .ir import (Root, Definition, Namespace, NamespaceName, Name, Ref, ScopedName, LocalName)
 from .tree import Query, isa, walk_dfs
 
 class NameQuery(Query):
@@ -128,9 +128,16 @@ class Target(object):
     def upcase(self, s):
         return s[:1].capitalize() + s[1:]
 
-    @match(basestring)
+    @match(ScopedName)
+    def upcase(self, s):
+        n = s.name
+        if n[:1] == "_":
+            n = "underscore" + n
+        return self.upcase(n)
+
+    @match(choice(ScopedName,LocalName))
     def varname(self, s):
-        return self.UNKEYWORDS.get(s, s)
+        return self.UNKEYWORDS.get(s.name, s.name)
 
 
 class Java(Target):
