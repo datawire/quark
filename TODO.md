@@ -119,6 +119,29 @@ It should avoid target keywords, and also work around target-specific details, l
 - underscore methods cannot be public in go
 
 
+primitive native type name aliasing
+-----------------------------------
+
+When primitive maps it's type with a native type expression the type
+use introduces additional name being imported in the generated target
+file. The imported name may conflict with emitted names.
+
+```
+    primitive foo
+        for java import "org.burgle.gargle.Foo" {Foo}
+        for go import "gargle" {gargle.Foo}
+    {
+      ...
+    }
+
+    class Foo {
+        foo bar;  // issue in Java due to import
+    }
+
+    void bla(foo gargle) { // issue in Go due to import
+    }
+```
+
 
 Rough spots inside dough
 ========================

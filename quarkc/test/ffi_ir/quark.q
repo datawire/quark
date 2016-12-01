@@ -1,7 +1,92 @@
 namespace quark {
 
+    /**
+     * Quark type system and runtime support for it.
+     *
+     * The magic building blocks:
+     *
+     * A `primitive` is always dispatched statically. Methods are
+     * converted to free functions with name as `primitive_method`
+     * with additional first parameter.
+     *
+     * As a consequence it's possible to declare a method on a
+     * primitive and then define it as a free function with the
+     * appropriate name. Useful for mixing native and quark operations
+     * on a primitive.q
+     *
+     * Target type expression can be specified for each primitive, see
+     * List<T> for an example
+     *
+     *     primitive foo
+     *         for java {org.burgle.gargle.Foo}
+     *         for go import "gargle" as quarked_gargle {quarked_gargle.Foo}
+     *
+     *
+     * All `primtive` methods and free functions have to be declared and implemented
+     * separately for each target. The syntax for this is:
+     *
+     *     // declaration
+     *     void bar(int x);
+     *
+     *     // definition can name parameters separately
+     *     void bar(int x_parameter) for python import "sys" {
+     *
+     *          # Content of the block is emitted verbatim. all text
+     *          # till matching curly brace is collected. Imports are
+     *          # emitted just for this definition. Quark expression
+     *          # expansion is available with dollar prefixed symbols
+     *          # for example:
+     *
+     *          sys.stdout.write(hex($x_parameter))
+     *
+     *     }
+     *
+     *
+     * Templated primtives can also evaluate type parameter
+     * expressions in the target definition and in native type
+     * expressions. Each type expression has two additional forms
+     * available. For a type parameter `T` its native type expression
+     * is `$T` and the two additional forms are `$T_boxed` for a boxed
+     * type of a primitive and `$T_nulled` for the value of a
+     * primitive when it's boxed value is `null`.
+     *
+     * For example `primtive Foo<T>` instantiated as `Foo<bool>` would
+     * in java target have the following expansions: `$T` would expand
+     * to `boolean`, `$T_boxed` would expand to `Boolean`, and
+     * `$T_nulled` would expand to `false`.
+     *
+     * Arithmetic operators used in quark get mapped to python-style
+     * method invocations on the primitive which in turn map to static
+     * dispatch function calls; `__add__` for `+` and so on, see below
+     * for examples.
+     *
+     * Type conversion. Quark allows automatic type conversion between
+     * primitives if the source primitive defines a method with
+     * signature and name: `TargetType to_qualified_TargetType()`. See
+     * `bool#to_quark_Any()` and friends for examples
+     */
+
+    /**
+     * Quark `void` is a strange thing -- one can actually define
+     * variables of type void. All quark types are assignable to a
+     * `void` variable or parameter.
+     *
+     * There is a primitive `Any unsafe(void x)` that tricks quark
+     * into allowing anything to be converted to an `Any`
+     *
+     * There exists a hack in the IR that transforms `ir.Void`
+     * parameters to functions into `ir.Any` parameters which
+     * effectively makes them be `Object` on the target.
+     *
+     */
     primitive void {}
 
+    /**
+     * Bool is pretty much what one would expect.
+     * It supports short-circuit evaluation
+     *
+     * Bool is a scalar. Unitialized bool variables are `false`
+     */
     primitive bool {
         bool __eq__(bool b);
         bool __not__();
