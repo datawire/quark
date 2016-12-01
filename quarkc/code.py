@@ -357,7 +357,7 @@ class Code(object):
     def compile_case(self, ref, temp, expr):
         return self.compile_send(ref, ir.Var(temp), "__eq__", expr)
 
-    @match(types.Ref, ir.Expression, basestring, many(Expression))
+    @match(types.Ref, ir.Expression, basestring, many(Expression, min=1))
     def compile_send(self, ref, expr, name, *args):
         return self.compile_send(ref, expr, name, *[self.compile(a) for a in args])
 
@@ -375,7 +375,19 @@ class Code(object):
 
     @match(Call)
     def compile(self, call):
-        return self.compile_call(call.expr, call.args)
+        return self.convert(call, self.compile_call(call.expr, call.args))
+
+    # this needs to be called on the result of compiling all expressions
+    @match(Expression, ir.Expression)
+    def convert(self, expr, compiled):
+        if expr in self.types.conversions:
+            return self.compile_send(self.types[expr], compiled, self.types.conversions[expr])
+        else:
+            return compiled
+
+    @match(Expression, choice(ir.AbstractType, ir.AssertEqual, ir.AssertNotEqual))
+    def convert(self, _, compiled):
+        return compiled
 
     @match(choice(Expression, Type), [many(Expression)])
     def compile_call(self, expr, args):
@@ -460,15 +472,15 @@ class Code(object):
 
     @match(Attr)
     def compile(self, attr):
-        return ir.Get(self.compile(attr.expr), attr.attr.text)
+        return self.convert(attr, ir.Get(self.compile(attr.expr), attr.attr.text))
 
     @match(Number)
     def compile(self, n):
-        return ir.IntLit(int(n.text))
+        return self.convert(n, ir.IntLit(int(n.text)))
 
     @match(String)
     def compile(self, s):
-        return ir.StringLit(self.unquote(s.text))
+        return self.convert(s, ir.StringLit(self.unquote(s.text)))
 
     @match(basestring)
     def unquote(self, s):
@@ -505,7 +517,7 @@ class Code(object):
 
     @match(Bool)
     def compile(self, b):
-        return ir.BoolLit(b.text == "true")
+        return self.convert(b, ir.BoolLit(b.text == "true"))
 
     @match(List)
     def compile(self, l):
@@ -516,7 +528,7 @@ class Code(object):
         self.add(ir.Assign(ir.Var(tmp), self.compile_call(mref, self.symbols[mref.name], [])))
         for el in l.elements:
             self.add(ir.Evaluate(self.compile_send(ref, ir.Var(tmp), "append", el)))
-        return ir.Var(tmp)
+        return self.convert(l, ir.Var(tmp))
 
     @match(Map)
     def compile(self, m):
@@ -527,11 +539,11 @@ class Code(object):
         self.add(ir.Assign(ir.Var(tmp), self.compile_call(mref, self.symbols[mref.name], [])))
         for entry in m.entries:
             self.add(ir.Evaluate(self.compile_send(ref, ir.Var(tmp), "__set__", self.compile(entry.key), self.compile(entry.value))))
-        return ir.Var(tmp)
+        return self.convert(m, ir.Var(tmp))
 
     @match(Null)
     def compile(self, n):
-        return ir.Null(self.compile(self.types[n]))
+        return self.convert(n, ir.Null(self.compile(self.types[n])))
 
     @match(Return)
     def compile(self, retr):
@@ -539,7 +551,7 @@ class Code(object):
 
     @match(Var)
     def compile(self, var):
-        return self.compile_var(self.symbols[var], var)
+        return self.convert(var, self.compile_var(self.symbols[var], var))
 
     @match(choice(Param, Declaration), Var)
     def compile_var(self, p, v):

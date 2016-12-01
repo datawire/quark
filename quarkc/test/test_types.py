@@ -279,7 +279,6 @@ def test_templated_fields():
                         (DECLARE, 'h', 'f.D<f.X>', 'f.D<f.X>'))
           })
 
-
 def check_violation(code, signature):
     prolog = """
         namespace quark {
@@ -369,5 +368,27 @@ def test_bool_violation():
             'f.foo': ((CALLABLE, 'quark.void'),
                       (VIOLATION, ('quark.bool', 'quark.void'), (IF, 'quark.void', ())),
                       (VIOLATION, ('quark.bool', 'quark.void'), (WHILE, 'quark.void', ())))
+        }
+    )
+
+def test_conversion():
+    check_violation(
+        """
+        class X {
+            String field;
+        }
+        class Y {
+            X to_f_X();
+        }
+        void foo() {
+            X x = new Y();
+        }
+        """,
+        {
+            'f.X.X': (CALLABLE, 'f.X'),
+            'f.X.field': (DECLARE, 'field', 'quark.String'),
+            'f.Y.Y': (CALLABLE, 'f.Y'),
+            'f.Y.to_f_X': (CALLABLE, 'f.X'),
+            'f.foo': ((CALLABLE, 'quark.void'), (DECLARE, 'x', 'f.X', 'f.Y'))
         }
     )

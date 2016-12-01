@@ -30,6 +30,7 @@ class Types(object):
         self.violations = OrderedDict()
         self.refset = None
         self._assignable = {}
+        self.conversions = {}
 
     @match(NodeError)
     def add_violation(self, err):
@@ -152,7 +153,7 @@ class Types(object):
     # XXX: should validation be a separate phase?
     @match(choice(If, While), Expression, types.Ref)
     def validate_bool(self, p, n, r):
-        self.validate_ass(p, types.Ref('quark.bool'), r)
+        self.validate_ass(p, types.Ref('quark.bool'), r, n)
 
     @match(AST, AST, choice(types.Ref, types.Unresolved))
     def validate_bool(self, p, n, r):
@@ -171,7 +172,7 @@ class Types(object):
     def do_resolve(self, retr):
         dtype = self.node(get_definition(retr)).result
         rtype = self.resolve(retr.expr)
-        self.validate_ass(retr, dtype, rtype)
+        self.validate_ass(retr, dtype, rtype, retr.expr)
         return rtype
 
     @match(Local)
@@ -182,26 +183,39 @@ class Types(object):
     def do_resolve(self, ass):
         left = self.resolve(ass.lhs)
         right = self.resolve(ass.rhs)
-        self.validate_ass(ass, left, right)
+        self.validate_ass(ass, left, right, ass.rhs)
         return left
 
-    @match(AST, types.Ref, types.Ref)
-    def validate_ass(self, node, left, right):
+    @match(AST, types.Ref, types.Ref, AST)
+    def validate_ass(self, node, left, right, expr):
         args = (left, right)
         if args not in self._assignable:
-            self._assignable[args] = self.types.assignable(*args)
+            self._assignable[args] = self.types.assignable(*args) or self.compatible(expr, *args)
         if not self._assignable[args]:
             self.add_violation(InvalidAssignment(node, left, right))
 
-    @match(AST, types.Unresolved, types.Unresolved)
+    @match(AST, types.Ref, types.Ref)
+    def compatible(self, expr, left, right):
+        node = self.node(right)
+        if isinstance(node, types.Object):
+            # XXX: should validate signature of coersion better, also
+            # should think about type params, either have a templated
+            # method or just make them illegal
+            hook = "to_%s" % left.name.replace(".", "_")
+            if hook in node.byname:
+                self.conversions[expr] = hook
+                return True
+        return False
+
+    @match(AST, types.Unresolved, types.Unresolved, AST)
     def validate_ass(self, *x):
         pass
 
-    @match(AST, types.Ref, types.Unresolved)
+    @match(AST, types.Ref, types.Unresolved, AST)
     def validate_ass(self, *x):
         pass
 
-    @match(AST, types.Unresolved, types.Ref)
+    @match(AST, types.Unresolved, types.Ref, AST)
     def validate_ass(self, *x):
         pass
 
@@ -270,7 +284,7 @@ class Types(object):
         left = self.resolve(declaration.type)
         if declaration.value:
             right = self.resolve(declaration.value)
-            self.validate_ass(declaration, left, right)
+            self.validate_ass(declaration, left, right, declaration.value)
         return left
 
     @match(Package)
@@ -318,7 +332,7 @@ class Types(object):
     def validate_call(self, c, expr, *args):
         if len(expr.arguments) == len(args):
             for n, p, a in zip(c.args, expr.arguments, args):
-                self.validate_ass(n, p, a)
+                self.validate_ass(n, p, a, n)
         else:
             self.add_violation(InvalidInvocation(c, self.types.unresolve(expr), len(expr.arguments), len(args)))
 
