@@ -125,6 +125,7 @@ namespace quark {
          * 2 - list
          * 3 - map
          * XXX - interface ?
+         * -1 - object not representable in quark
          */
         int type();
 
@@ -609,8 +610,9 @@ namespace quark {
          * Returns type of the value contained
          * 0 - null
          * 1 - bool
-         * 2 - number
+         * 2 - number -- returned for int and float as some targets do not distinguish
          * 3 - string
+         * -1 for anything else 
          */
         int type();
 
@@ -656,6 +658,23 @@ namespace quark {
  
         //float asFloat();                  // returns float iff type() returned 4
         //bool isFloat()
+
+
+
+        int type() for java {
+                Object a = $self;
+                if (a == null) {
+                    return 0;
+                } else if (a instanceof Boolean) {
+                    return 1;
+                } else if (a instanceof Integer) {
+                    return 2;
+                } else if (a instanceof String) {
+                    return 3;
+                }
+                return -1;
+            }
+
         bool asBool() for java  import "java.util.List" import "java.util.Map" {
                 Object a = $self;
                 if (a == null) {
@@ -723,6 +742,20 @@ namespace quark {
             }
 
 
+        int type() for go {
+                a := $self;
+                switch i := a.(type) {
+                    case nil: return 0
+                    case bool: return 1
+                    case int: return 2
+                    case string: return 3
+                    default: {
+                        _ = i
+                        return -1
+                    }
+                    }
+            }
+
         bool asBool() for go {
                 a := $self;
                 switch i := a.(type) {
@@ -774,6 +807,27 @@ namespace quark {
             }
 
 
+        int type() for python import "six" {
+            a = $self
+            if a is None:
+                return 0
+            elif isinstance(a, (list, tuple)):
+                return -1
+            elif isinstance(a, dict):
+                return -1
+            elif isinstance(a, six.text_type):
+                return 3
+            elif a is True or a is False:
+                # order wrt int check is important. bool isinstance int
+                return 1
+            elif isinstance(a, six.integer_types):
+                return 2
+            elif isinstance(a, float):
+                return 2
+            else:
+                return -1
+            }
+
         bool asBool() for python import "six" {
             a = $self
             if a is None:
@@ -821,6 +875,23 @@ namespace quark {
                 return six.text_type(a)
             else:
                 return u""
+            }
+
+        int type() for ruby {
+            a = $self
+            if a.nil?
+              return 0
+            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
+              return 1
+            elsif a.is_a?(Fixnum)
+              return 2
+            elsif a.is_a?(String)
+              return 3
+            elsif a.is_a?(Float)
+              return 2
+            else
+              return -1
+            end
             }
 
         bool asBool() for ruby {
@@ -880,6 +951,26 @@ namespace quark {
             else
               return ""
             end
+            }
+
+        int type() for javascript {
+                let a = $self;
+                let t = typeof(a);
+                if (t === "object") {
+                    if (a === null) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
+                } else if (t === "string") {
+                    return 3;
+                } else if (t === "number") {
+                    return 2;
+                } else if (t === "boolean") {
+                    return 1;
+                } else {
+                    return -1;
+                }
             }
 
         bool asBool() for javascript {

@@ -229,6 +229,7 @@ class AnyTest {
         assertEqual(true, a.asBool());
         assertEqual(1, a.asInt());
         assertEqual("true", a.asString());
+        assertEqual(1, a.asScalar().type());
         assertEqual(null, a.asList());
         assertEqual(null, a.asMap());
     }
@@ -238,6 +239,7 @@ class AnyTest {
         assertEqual(false, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("false", a.asString());
+        assertEqual(1, a.asScalar().type());
         assertEqual(null, a.asList());
         assertEqual(null, a.asMap());
     }
@@ -247,6 +249,7 @@ class AnyTest {
         assertEqual(false, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("0", a.asString());
+        assertEqual(2, a.asScalar().type());
         assertEqual(null, a.asList());
         assertEqual(null, a.asMap());
     }
@@ -256,6 +259,7 @@ class AnyTest {
         assertEqual(true, a.asBool());
         assertEqual(7, a.asInt());
         assertEqual("7", a.asString());
+        assertEqual(2, a.asScalar().type());
         assertEqual(null, a.asList());
         assertEqual(null, a.asMap());
     }
@@ -265,6 +269,7 @@ class AnyTest {
         assertEqual(false, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("", a.asString());
+        assertEqual(3, a.asScalar().type());
         assertEqual(null, a.asList());
         assertEqual(null, a.asMap());
     }
@@ -274,6 +279,7 @@ class AnyTest {
         assertEqual(true, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("haha", a.asString());
+        assertEqual(3, a.asScalar().type());
         assertEqual(null, a.asList());
         assertEqual(null, a.asMap());
     }
@@ -283,6 +289,7 @@ class AnyTest {
         assertEqual(false, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("", a.asString());
+        assertEqual(0, a.asScalar().type());
         assertNotEqual(null, a.asList());
         assertEqual(null, a.asMap());
         List<Any> l = a.asList();
@@ -294,6 +301,7 @@ class AnyTest {
         assertEqual(false, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("", a.asString());
+        assertEqual(0, a.asScalar().type());
         assertNotEqual(null, a.asList());
         assertEqual(null, a.asMap());
         List<Any> l = a.asList();
@@ -308,6 +316,7 @@ class AnyTest {
         assertEqual(false, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("", a.asString());
+        assertEqual(0, a.asScalar().type());
         assertEqual(null, a.asList());
         assertNotEqual(null, a.asMap());
         Map<Scalar,Any> m = a.asMap();
@@ -319,6 +328,7 @@ class AnyTest {
         assertEqual(false, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("", a.asString());
+        assertEqual(0, a.asScalar().type());
         assertEqual(null, a.asList());
         assertNotEqual(null, a.asMap());
         Map<Scalar,Any> m = a.asMap();
@@ -335,6 +345,7 @@ class AnyTest {
         assertEqual(false, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("", a.asString());
+        assertEqual(0, a.asScalar().type());
         assertEqual(null, a.asList());
         assertEqual(null, a.asMap());
     }
@@ -353,6 +364,7 @@ class AnyTest {
         assertEqual(false, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("", a.asString());
+        assertEqual(0, a.asScalar().type());
         assertEqual(null, a.asList());
         assertEqual(null, a.asMap());
     }
