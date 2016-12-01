@@ -25,7 +25,7 @@ void test_any_type() {
     assertEqual(noString, a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    //assertEqual(null, a.asMap());  // XXX need null for this test
+    assertEqual(null, a.asMap());
 
     a = unsafe(aBool);
     assertEqual(1, a.type());
@@ -34,7 +34,7 @@ void test_any_type() {
     assertEqual("true", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    //assertEqual(null, a.asMap());  // XXX need null for this test
+    assertEqual(null, a.asMap());
 
     a = unsafe(noBool);
     assertEqual(1, a.type());
@@ -43,7 +43,7 @@ void test_any_type() {
     assertEqual("false", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    //assertEqual(null, a.asMap());  // XXX need null for this test
+    assertEqual(null, a.asMap());
 
     a = unsafe(aInt);
     assertEqual(1, a.type());
@@ -52,7 +52,7 @@ void test_any_type() {
     assertEqual("42", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    //assertEqual(null, a.asMap());  // XXX need null for this test
+    assertEqual(null, a.asMap());
 
     a = unsafe(noInt);
     assertEqual(1, a.type());
@@ -61,7 +61,7 @@ void test_any_type() {
     assertEqual("0", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    //assertEqual(null, a.asMap());  // XXX need null for this test
+    assertEqual(null, a.asMap());
 
     a = unsafe(aString);
     assertEqual(1, a.type());
@@ -70,7 +70,7 @@ void test_any_type() {
     assertEqual(aString, a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    //assertEqual(null, a.asMap());  // XXX need null for this test
+    assertEqual(null, a.asMap());
 
     a = unsafe(noString);
     assertEqual(1, a.type());
@@ -79,7 +79,7 @@ void test_any_type() {
     assertEqual(noString, a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    //assertEqual(null, a.asMap());  // XXX need null for this test
+    assertEqual(null, a.asMap());
 
     //a = unsafe(aFloat)
     //assertEqual(1, a.type());
@@ -88,7 +88,7 @@ void test_any_type() {
     //assertEqual(noString, a.asString());
     //assertEqual(aFloat, a.asFloat()); // XXX need float for this test
     //assertEqual(noListAny, a.asList());
-    //assertEqual(null, a.asMap());  // XXX need null for this test
+    assertEqual(null, a.asMap());
 
     a = unsafe(aListInt);
     assertEqual(2, a.type());
@@ -99,7 +99,7 @@ void test_any_type() {
     aListAny = a.asList();
     assertEqual(1, aListAny.size());
     assertEqual(aListInt[0], aListAny[0].asInt());
-    //assertEqual(null, a.asMap());  // XXX need null for this test
+    assertEqual(null, a.asMap());
 
     a = unsafe(aListString);
     assertEqual(2, a.type());
@@ -110,5 +110,5 @@ void test_any_type() {
     aListAny = a.asList();
     assertEqual(1, aListAny.size());
     assertEqual(aListString[0], aListAny[0].asString());
-    //assertEqual(null, a.asMap());  // XXX need null for this test
+    assertEqual(null, a.asMap());
 }
