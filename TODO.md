@@ -189,32 +189,35 @@ needs to at minimum translate quark symbol references to IR references
 
 For example:
 
+```
     @Doc("""Constructs a :class:`Foo` with all the bling""")
     Foo dazzling() { ... }
+```
 
 Could generate a potenital IR:
 
+```
     Doc("""Constructs a """, ClassType(Ref("pkg:pgk.module.Foo")),
         " with all the bling)(
       Function(Name(....
-
+```
 
 Which could then generate java with javadoc:
 
-    ```java
+```java
     /**
      * Constructs a {@link pkg.module.Foo} with all the bling
      */
     Foo dazzling() { ...
-    ```
+```
 
 And python with sphinx docs:
 
-    ```python
+```python
     def dazzling():
         """Constructs a :py:class:`pkg.module.Foo` with all the bling"""
         ...
-    ```
+```
 
 Sourcemaps
 ----------
