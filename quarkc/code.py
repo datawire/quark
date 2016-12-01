@@ -409,24 +409,7 @@ class Code(object):
     @match(types.Ref, Primitive, types.Ref, Method, ir.Expression, [many(ir.Expression)])
     def compile_call_primitive(self, ref, objdfn, methref, methdfn, expr, args):
         n = "%s_%s" % (self.mangle(name(objdfn), *ref.params), methdfn.name.text)
-        return self.cast(ref, ir.Invoke(self.compile_ref(n), expr, *args))
-
-    @match(types.Ref, ir.Expression)
-    def cast(self, ref, expr):
-        callable = self.types.node(ref)
-        dfn = self.symbols[callable.result.name]
-        if self.requires_cast(dfn, callable.result.name):
-            return ir.Cast(self.compile(callable.result), expr)
-        else:
-            return expr
-
-    @match(Primitive, basestring)
-    def requires_cast(self, dfn, name):
-        return name in ("quark.List", "quark.Map")
-
-    @match(Class, basestring)
-    def requires_cast(self, dfn, _):
-        return True
+        return ir.Invoke(self.compile_ref(n), expr, *args)
 
     @match(types.Ref, Primitive, types.Ref("quark.bool"), Method, ir.Expression, [many(ir.Expression)])
     def compile_call_primitive(self, ref, objdfn, methref, methdfn, expr, args):
