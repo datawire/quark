@@ -155,14 +155,15 @@ def code(fun, target):
 def code(fun, target):
     return tr.Compound(
         "func TestQ_{name}(t__ *testing.T)".format(
-            name=target.upcase(fun.name.path[-1])),
+            name=target.upcase("_".join(fun.name.path[1:]))),
         code(fun.body, target)
     )
 
 @match(TestMethod, Go)
 def code(fun, target):
     return tr.Compound(
-        "func TestQ_{name}(t__ *testing.T)".format(
+        "func TestQ_{klass}_{name}(t__ *testing.T)".format(
+            klass=target.nameof(target.q.parent(fun)),
             name=target.upcase(fun.name)),
         code(fun.body, target)
     )
