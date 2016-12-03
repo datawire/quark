@@ -8,21 +8,49 @@ from .symbols import Symbols, name, Self, Boxed, Nulled
 
 import tree
 
-import ir, types
+import ir, types, typespace
+
+class View(object):
+
+    def __init__(self, prototypes, bindings):
+        self.prototypes = prototypes
+        self.bindings = bindings
+        self.conversions = self.prototypes.conversions
+
+    def __getitem__(self, node):
+        ref = self.prototypes[node]
+        tnode = self.prototypes.node(ref)
+        return self.bind(ref, tnode)
+
+    @match(types.Ref, typespace.Template)
+    def bind(self, ref, tnode):
+        ref = types.Ref(ref.name, *(types.Ref(p.name) for p in tnode.params))
+        return ref.bind(self.bindings)
+
+    @match(types.Ref, typespace.Type)
+    def bind(self, ref, _):
+        return ref.bind(self.bindings)
+
+    @match(types.Ref)
+    def node(self, ref):
+        return self.prototypes.node(ref)
+
+    @match(AST)
+    def node(self, node):
+        return self.node(self[node])
 
 class Code(object):
 
     @match(Symbols, types.Types)
     def __init__(self, symbols, types):
         self.symbols = symbols
-        self.types = types
+        self.prototypes = types
 
         # Generic types are implemented as templates. This means we
         # run code generation for every unique instantiation of a
-        # generic type, and these variables hold the unique reference
-        # and associated type bindings for the current iteration.
-        self.ref = None
-        self.bindings = None
+        # generic type. The types field holds a view into typespace
+        # for each of these unique instantiations.
+        self.types = None
 
         self.asserts = 0
         self.counter = 0
@@ -50,9 +78,8 @@ class Code(object):
         for sym, nd in self.symbols.definitions.items():
             if not self.is_top(nd): continue
 
-            for ref, bindings in self.types.instantiations(nd.parent if isinstance(nd, Method) else nd):
-                self.ref = ref
-                self.bindings = bindings
+            for ref, bindings in self.prototypes.instantiations(nd.parent if isinstance(nd, Method) else nd):
+                self.types = View(self.prototypes, bindings)
                 definitions.append(self.compile(nd))
         # XXX
         return ir.Package(*definitions)
@@ -83,7 +110,7 @@ class Code(object):
 
     @match(NativeBlock)
     def compile(self, block):
-        mappings = [(name, self.compile(t)) for name, t in self.bindings.items()]
+        mappings = []
 
         for c in block.children:
             if isinstance(c, Var):
@@ -103,7 +130,7 @@ class Code(object):
     @match(Class)
     def compile(self, cls):
         self.asserts = 0
-        args = tuple([self.compile_def(self.mangle(self.ref))]
+        args = tuple([self.compile_def(self.mangle(self.types[cls]))]
                      + [self.compile(d) for d in cls.bases + cls.definitions])
         if self.asserts:
             klazz = ir.TestClass
@@ -124,13 +151,12 @@ class Code(object):
         if meth.type:
             if isinstance(meth.body, NativeBlock):
                 klass = ir.NativeFunction
-                nam = self.compile_def(self.mangle(name(meth.parent), *self.ref.params) + "_" + meth.name.text)
-                ret = self.types.node(meth).bind(self.bindings).result
+                nam = self.compile_def(self.mangle(self.types[meth.parent]) + "_" + meth.name.text)
+                ret = self.types.node(meth).result
                 if meth.name.text == "__init__":
                     extra = []
                 else:
-                    extra = [ir.Param("self", self.compile(self.ref))]
-                    extra[0].asdf = "fdsa"
+                    extra = [ir.Param("self", self.compile(self.types[meth.parent]))]
             else:
                 klass = ir.Method
                 nam = meth.name.text
@@ -143,8 +169,8 @@ class Code(object):
             # rebind. In general navigation in typespace is clumsy
             # right now.
             klass = ir.Constructor
-            nam = self.mangle(meth.parent, meth.name.text, *self.ref.params)
-            ret = self.types.node(meth).bind(self.bindings).result
+            nam = self.mangle(meth.parent, meth.name.text, *self.types[meth.parent].params)
+            ret = self.types.node(meth).result
             extra = []
 
         old_asserts = self.asserts # don't reset asserts because Class checks for asserts, too
@@ -160,7 +186,7 @@ class Code(object):
 
     @match(Interface)
     def compile(self, iface):
-        return ir.Interface(self.compile_def(self.mangle(self.ref)),
+        return ir.Interface(self.compile_def(self.mangle(self.types[iface])),
                             *[self.compile_interface(d) for d in iface.definitions])
 
     @match(Method)
@@ -175,7 +201,7 @@ class Code(object):
 
     @match(types.Ref, basestring)
     def compile_ref(self, ref, suffix):
-        return self.compile_ref(self.mangle(ref.bind(self.bindings)) + suffix)
+        return self.compile_ref(self.mangle(ref) + suffix)
 
     @match(types.Ref)
     def mangle(self, ref):
@@ -188,9 +214,7 @@ class Code(object):
 
     @match(Class, basestring, many(types.Ref))
     def mangle(self, dfn, name, *params):
-        ref = types.Ref(name, *params)
-        ref = ref.bind(self.bindings)
-        return "_".join([name] + [self.mangle_param(dfn, p).replace(".", "_") for p in ref.params])
+        return "_".join([name] + [self.mangle_param(dfn, p).replace(".", "_") for p in params])
 
     @match(Class, types.Ref)
     def mangle_param(self, dfn, ref):
@@ -238,8 +262,7 @@ class Code(object):
 
     @match(types.Ref)
     def compile(self, ref):
-        bound = ref.bind(self.bindings)
-        return self.compile_bound(bound)
+        return self.compile_bound(ref)
 
     @match(types.Ref("quark.int"))
     def compile_bound(self, ref):
@@ -279,11 +302,10 @@ class Code(object):
             bindings = {}
             for p, v in zip(dfn.parameters, params):
                 bindings[name(p)] = v
-            old = (self.ref, self.bindings)
-            self.ref = types.Ref(nam, *params)
-            self.bindings = bindings
+            old = self.types
+            self.types = View(self.prototypes, bindings)
             result = ir.Primitive(*[ir.NativeBlock(*self.compile(m)) for m in dfn.mappings])
-            self.ref, self.bindings = old
+            self.types = old
             return result
         else:
             return ir.ClassType(self.compile_ref(self.mangle(nam, *params)))
@@ -363,7 +385,7 @@ class Code(object):
 
     @match(types.Ref, ir.Expression, basestring, many(ir.Expression))
     def compile_send(self, ref, expr, name, *args):
-        mref = self.types.types.unresolve(self.types.types.get(ref, name))
+        mref = self.types.node(ref).byname[name].type
         cls = self.symbols[ref.name]
         meth = self.symbols[mref.name]
         return self.compile_call_method(mref, cls, meth, expr, list(args))
@@ -394,7 +416,7 @@ class Code(object):
         t = self.types[expr]
         assert isinstance(t, types.Ref)
         dfn = self.symbols[t.name]
-        return self.compile_call(t.bind(self.bindings), dfn, expr, args)
+        return self.compile_call(t, dfn, expr, args)
 
     @match(types.Ref, Method, Attr, [many(Expression)])
     def compile_call(self, ref, dfn, attr, args):
@@ -416,7 +438,7 @@ class Code(object):
 
     @match(types.Ref, Primitive, Method, ir.Expression, [many(ir.Expression)])
     def compile_call_method(self, ref, objdfn, methdfn, expr, args):
-        return self.compile_call_primitive(ref, objdfn, self.types[objdfn].bind(self.bindings), methdfn, expr, args)
+        return self.compile_call_primitive(ref, objdfn, self.types[objdfn], methdfn, expr, args)
 
     @match(types.Ref, Primitive, types.Ref, Method, ir.Expression, [many(ir.Expression)])
     def compile_call_primitive(self, ref, objdfn, methref, methdfn, expr, args):
@@ -570,7 +592,7 @@ class Code(object):
 
     @match(Boxed, Var)
     def compile_var(self, b, v):
-        t = self.compile(self.types[b].bind(self.bindings))
+        t = self.compile(self.types[b])
         if isinstance(t, ir.NativeType):
             return ir.Boxed(t)
         else:
@@ -578,12 +600,12 @@ class Code(object):
 
     @match(Nulled, Var)
     def compile_var(self, b, v):
-        t = self.compile(self.types[b].bind(self.bindings))
+        t = self.compile(self.types[b])
         return ir.Null(t)
 
     @match(TypeParam, Var)
     def compile_var(self, p, v):
-        return self.compile(self.types[p].bind(self.bindings))
+        return self.compile(self.types[p])
 
     @match(Assign)
     def compile(self, ass):
