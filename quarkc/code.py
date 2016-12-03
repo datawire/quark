@@ -163,13 +163,8 @@ class Code(object):
                 ret = self.types[meth.type]
                 extra = []
         else:
-            # XXX: this would benefit from a way to navigate from a
-            # method to its object in typespace, because we don't have
-            # that, we need to navigate in the AST and then explicitly
-            # rebind. In general navigation in typespace is clumsy
-            # right now.
             klass = ir.Constructor
-            nam = self.mangle(meth.parent, meth.name.text, *self.types[meth.parent].params)
+            nam = self.mangle(meth.name.text, *self.types[meth.parent].params)
             ret = self.types.node(meth).result
             extra = []
 
@@ -209,48 +204,40 @@ class Code(object):
 
     @match(basestring, many(types.Ref))
     def mangle(self, name, *params):
-        dfn = self.symbols[name]
-        return self.mangle(dfn, name, *params)
+        return "_".join([name] + [self.mangle_param(p).replace(".", "_") for p in params])
 
-    @match(Class, basestring, many(types.Ref))
-    def mangle(self, dfn, name, *params):
-        return "_".join([name] + [self.mangle_param(dfn, p).replace(".", "_") for p in params])
+    @match(types.Ref)
+    def mangle_param(self, ref):
+        return "_".join([self.mangle_param(ref.name)] +
+                        [self.mangle_param(p).replace(".", "_") for p in ref.params])
 
-    @match(Class, types.Ref)
-    def mangle_param(self, dfn, ref):
-        return "_".join([self.mangle_param(dfn, ref.name)] +
-                        [self.mangle_param(dfn, p).replace(".", "_") for p in ref.params])
-
-    @match(Class, "quark.int")
-    def mangle_param(self, dfn, sym):
+    @match("quark.int")
+    def mangle_param(self, sym):
         return "int"
 
-    @match(Class, "quark.String")
-    def mangle_param(self, dfn, sym):
+    @match("quark.String")
+    def mangle_param(self, sym):
         return "String"
 
-    @match(Class, "quark.Any")
-    def mangle_param(self, dfn, sym):
+    @match("quark.Any")
+    def mangle_param(self, sym):
         return "Any"
 
-    @match(Class, "quark.Scalar")
-    def mangle_param(self, dfn, sym):
+    @match("quark.Scalar")
+    def mangle_param(self, sym):
         return "Scalar"
 
-    @match(Class, "quark.List")
-    def mangle_param(self, dfn, sym):
+    @match("quark.List")
+    def mangle_param(self, sym):
         return "List"
 
-    @match(Class, "quark.Map")
-    def mangle_param(self, dfn, sym):
+    @match("quark.Map")
+    def mangle_param(self, sym):
         return "Map"
 
-    @match(Class, basestring)
-    def mangle_param(self, dfn, sym):
-        if isinstance(dfn, Primitive):
-            return sym
-        else:
-            return sym
+    @match(basestring)
+    def mangle_param(self, sym):
+        return sym
 
     @match(basestring)
     def compile_ref(self, name):
@@ -260,40 +247,36 @@ class Code(object):
     def compile_def(self, name):
         return ir.Name("pkg:pkg", name)
 
-    @match(types.Ref)
-    def compile(self, ref):
-        return self.compile_bound(ref)
-
     @match(types.Ref("quark.int"))
-    def compile_bound(self, ref):
+    def compile(self, ref):
         return ir.Int()
 
     @match(types.Ref("quark.Any"))
-    def compile_bound(self, ref):
+    def compile(self, ref):
         return ir.Any()
 
     @match(types.Ref("quark.Scalar"))
-    def compile_bound(self, ref):
+    def compile(self, ref):
         return ir.Scalar()
 
     @match(types.Ref("quark.bool"))
-    def compile_bound(self, ref):
+    def compile(self, ref):
         return ir.Bool()
 
     @match(types.Ref("quark.String"))
-    def compile_bound(self, ref):
+    def compile(self, ref):
         return ir.String()
 
     @match(types.Ref("quark.void"))
-    def compile_bound(self, ref):
+    def compile(self, ref):
         return ir.Void()
 
     @match(types.Ref)
-    def compile_bound(self, ref):
-        return self.compile_bound(ref.name, *ref.params)
+    def compile(self, ref):
+        return self.compile(ref.name, *ref.params)
 
     @match(basestring, many(types.Ref))
-    def compile_bound(self, nam, *params):
+    def compile(self, nam, *params):
         dfn = self.symbols[nam]
         if isinstance(dfn, Interface):
             return ir.InterfaceType(self.compile_ref(self.mangle(nam, *params)))
