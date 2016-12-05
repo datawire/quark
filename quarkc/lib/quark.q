@@ -130,6 +130,7 @@ namespace quark {
         int __sub__(int other);
         int __neg__();
         int __mul__(int other);
+        int __div__(int other);
         bool __eq__(int other);
         bool __ne__(int other);
         bool __ge__(int other);
@@ -144,6 +145,7 @@ namespace quark {
         int __sub__(int other) for java { return $self - $other; }
         int __neg__() for java { return -$self; }
         int __mul__(int other) for java { return $self * $other; }
+        int __div__(int other) for java { return ~((~($self)) / ($other)); }
         bool __eq__(int other) for java { return $self == $other; }
         bool __ne__(int other) for java { return $self != $other; }
         bool __ge__(int other) for java { return $self >= $other; }
@@ -155,6 +157,7 @@ namespace quark {
         int __sub__(int other) for go { return $self - $other; }
         int __neg__() for go { return -$self; }
         int __mul__(int other) for go { return $self * $other; }
+        int __div__(int other) for go { return $self / $other; }
         bool __eq__(int other) for go { return $self == $other; }
         bool __ne__(int other) for go { return $self != $other; }
         bool __ge__(int other) for go { return $self >= $other; }
@@ -166,6 +169,7 @@ namespace quark {
         int __sub__(int other) for python { return $self - $other; }
         int __neg__() for python { return -$self; }
         int __mul__(int other) for python { return $self * $other; }
+        int __div__(int other) for python { return $self // $other; }
         bool __eq__(int other) for python { return $self == $other; }
         bool __ne__(int other) for python { return $self != $other; }
         bool __ge__(int other) for python { return $self >= $other; }
@@ -177,6 +181,7 @@ namespace quark {
         int __sub__(int other) for ruby { return $self - $other }
         int __neg__() for ruby { return -$self }
         int __mul__(int other) for ruby { return $self * $other }
+        int __div__(int other) for ruby { return $self / $other }
         bool __eq__(int other) for ruby { return $self == $other }
         bool __ne__(int other) for ruby { return $self != $other }
         bool __ge__(int other) for ruby { return $self >= $other }
@@ -188,6 +193,7 @@ namespace quark {
         int __sub__(int other) for javascript { return $self - $other }
         int __neg__() for javascript { return -$self }
         int __mul__(int other) for javascript { return $self * $other }
+        int __div__(int other) for javascript { return Math.floor($self / $other) }
         bool __eq__(int other) for javascript { return $self === $other }
         bool __ne__(int other) for javascript { return $self !== $other }
         bool __ge__(int other) for javascript { return $self >= $other }
@@ -212,6 +218,7 @@ namespace quark {
         float __sub__(float other);
         float __neg__();
         float __mul__(float other);
+        float __div__(float other);
         bool __eq__(float other);
         bool __ne__(float other);
         bool __ge__(float other);
@@ -228,6 +235,7 @@ namespace quark {
         // have -0.0 ever:
         float __neg__() for java { return -$self + 0.0; }
         float __mul__(float other) for java { return $self * $other; }
+        float __div__(float other) for java { return $self / $other; }
         bool __eq__(float other) for java { return $self == $other; }
         bool __ne__(float other) for java { return $self != $other; }
         bool __ge__(float other) for java { return $self >= $other; }
@@ -239,6 +247,7 @@ namespace quark {
         float __sub__(float other) for go { return $self - $other; }
         float __neg__() for go { return -$self; }
         float __mul__(float other) for go { return $self * $other; }
+        float __div__(float other) for go { return $self / $other; }
         bool __eq__(float other) for go { return $self == $other; }
         bool __ne__(float other) for go { return $self != $other; }
         bool __ge__(float other) for go { return $self >= $other; }
@@ -250,6 +259,7 @@ namespace quark {
         float __sub__(float other) for python { return $self - $other; }
         float __neg__() for python { return -$self; }
         float __mul__(float other) for python { return $self * $other; }
+        float __div__(float other) for python { return $self / $other; }
         bool __eq__(float other) for python { return $self == $other; }
         bool __ne__(float other) for python { return $self != $other; }
         bool __ge__(float other) for python { return $self >= $other; }
@@ -261,6 +271,7 @@ namespace quark {
         float __sub__(float other) for ruby { return $self - $other }
         float __neg__() for ruby { return -$self }
         float __mul__(float other) for ruby { return $self * $other }
+        float __div__(float other) for ruby { return $self / $other }
         bool __eq__(float other) for ruby { return $self == $other }
         bool __ne__(float other) for ruby { return $self != $other }
         bool __ge__(float other) for ruby { return $self >= $other }
@@ -272,6 +283,7 @@ namespace quark {
         float __sub__(float other) for javascript { return $self - $other }
         float __neg__() for javascript { return -$self }
         float __mul__(float other) for javascript { return $self * $other }
+        float __div__(float other) for javascript { return $self / $other }
         bool __eq__(float other) for javascript { return $self === $other }
         bool __ne__(float other) for javascript { return $self !== $other }
         bool __ge__(float other) for javascript { return $self >= $other }

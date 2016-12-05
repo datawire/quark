@@ -96,6 +96,12 @@ class IntegerTest {
         assertEqual(4, a*b);
     }
 
+    void division() {
+        int a = 7;
+        assertEqual(a / 2, 3);
+        assertEqual(8 / 2, 4);
+        assertEqual(-5 / 2, -3);
+    }
 
     void literal_equal() {
         assertEqual(true, 0 == 0);
@@ -221,6 +227,11 @@ class FloatTest {
         assertEqual(-1.0, -one);
         float neg = -1.0;
         assertEqual(1.0, -neg);
+    }
+
+    void division() {
+        float a = 5.0;
+        assertEqual(a / 2.0, 2.5);
     }
 
     void ge() {
