@@ -207,6 +207,7 @@ namespace quark {
 
     primitive float {
         int floor();
+
         float __add__(float other);
         float __sub__(float other);
         float __neg__();
@@ -276,6 +277,10 @@ namespace quark {
         bool __gt__(float other) for javascript { return $self > $other }
         bool __lt__(float other) for javascript { return $self < $other }
 
+    }
+
+    int float_floor(float self) {
+        return self.to_quark_Scalar().asInt();
     }
 
     Any float_to_quark_Any(float self) {
@@ -634,7 +639,7 @@ namespace quark {
             elif isinstance(a, six.integer_types):
                 return a
             elif isinstance(a, float):
-                return 1
+                return a
             else:
                 return None
             }
