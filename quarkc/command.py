@@ -84,7 +84,51 @@ def signature(files):
             pkgsum.update(f.read())
     return pkgsum
 
+from traceback import format_list, extract_tb
+import inspect
+
+def filter_match(tb):
+    return [frame for frame in extract_tb(tb) if not frame[0].endswith("match.py")]
+
+def flatten(args):
+    for o in args:
+        if isinstance(o, basestring):
+            yield o
+        else:
+            for a in flatten(o):
+                yield a
+
+def candidates(arginfo):
+    locals = arginfo.locals
+    for a in flatten(arginfo.args):
+        yield arginfo.locals[a]
+    if arginfo.varargs:
+        for v in locals[arginfo.varargs]:
+            yield v
+    if arginfo.keywords:
+        for v in locals[arginfo.keywords].values():
+            yield v
+
+def excepthook(type, value, tb):
+    locations = []
+    current = tb
+    while current:
+        arginfo = inspect.getargvalues(current.tb_frame)
+        for obj in candidates(arginfo):
+            if obj not in locations and hasattr(obj, "location"):
+                locations.append(obj)
+        current = current.tb_next
+
+    sys.stderr.write("%s%s: %s\n" % ("".join(format_list(filter_match(tb))), type.__name__, value))
+
+    if locations:
+        pretty = ["    %s: %s.%s\n" % (l.location, l.__class__.__module__, l.__class__.__name__) for l in locations]
+        sys.stderr.write("The compiler was inspecting the following locations when this error occurred:\n%s" % \
+                         "".join(pretty))
+
 def main(args):
+    sys.excepthook = excepthook
+
     global VERBOSE
     verbose = 0
     if args["--verbose"]:
