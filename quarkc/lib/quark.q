@@ -205,13 +205,86 @@ namespace quark {
         return unsafe(self).asScalar();
     }
 
-    /*
     primitive float {
-        bool __eq__(float other);
-
         int floor();
+        float __add__(float other);
+        float __sub__(float other);
+        float __neg__();
+        float __mul__(float other);
+        bool __eq__(float other);
+        bool __ne__(float other);
+        bool __ge__(float other);
+        bool __le__(float other);
+        bool __gt__(float other);
+        bool __lt__(float other);
+
+        Any to_quark_Any();
+        Scalar to_quark_Scalar();
+
+        float __add__(float other) for java { return $self + $other; }
+        float __sub__(float other) for java { return $self - $other; }
+        float __neg__() for java { return -$self; }
+        float __mul__(float other) for java { return $self * $other; }
+        bool __eq__(float other) for java { return $self == $other; }
+        bool __ne__(float other) for java { return $self != $other; }
+        bool __ge__(float other) for java { return $self >= $other; }
+        bool __le__(float other) for java { return $self <= $other; }
+        bool __gt__(float other) for java { return $self > $other; }
+        bool __lt__(float other) for java { return $self < $other; }
+
+        float __add__(float other) for go { return $self + $other; }
+        float __sub__(float other) for go { return $self - $other; }
+        float __neg__() for go { return -$self; }
+        float __mul__(float other) for go { return $self * $other; }
+        bool __eq__(float other) for go { return $self == $other; }
+        bool __ne__(float other) for go { return $self != $other; }
+        bool __ge__(float other) for go { return $self >= $other; }
+        bool __le__(float other) for go { return $self <= $other; }
+        bool __gt__(float other) for go { return $self > $other; }
+        bool __lt__(float other) for go { return $self < $other; }
+
+        float __add__(float other) for python { return $self + $other; }
+        float __sub__(float other) for python { return $self - $other; }
+        float __neg__() for python { return -$self; }
+        float __mul__(float other) for python { return $self * $other; }
+        bool __eq__(float other) for python { return $self == $other; }
+        bool __ne__(float other) for python { return $self != $other; }
+        bool __ge__(float other) for python { return $self >= $other; }
+        bool __le__(float other) for python { return $self <= $other; }
+        bool __gt__(float other) for python { return $self > $other; }
+        bool __lt__(float other) for python { return $self < $other; }
+
+        float __add__(float other) for ruby { return $self + $other }
+        float __sub__(float other) for ruby { return $self - $other }
+        float __neg__() for ruby { return -$self }
+        float __mul__(float other) for ruby { return $self * $other }
+        bool __eq__(float other) for ruby { return $self == $other }
+        bool __ne__(float other) for ruby { return $self != $other }
+        bool __ge__(float other) for ruby { return $self >= $other }
+        bool __le__(float other) for ruby { return $self <= $other }
+        bool __gt__(float other) for ruby { return $self > $other }
+        bool __lt__(float other) for ruby { return $self < $other }
+
+        float __add__(float other) for javascript { return $self + $other }
+        float __sub__(float other) for javascript { return $self - $other }
+        float __neg__() for javascript { return -$self }
+        float __mul__(float other) for javascript { return $self * $other }
+        bool __eq__(float other) for javascript { return $self === $other }
+        bool __ne__(float other) for javascript { return $self !== $other }
+        bool __ge__(float other) for javascript { return $self >= $other }
+        bool __le__(float other) for javascript { return $self <= $other }
+        bool __gt__(float other) for javascript { return $self > $other }
+        bool __lt__(float other) for javascript { return $self < $other }
+
     }
-    */
+
+    Any float_to_quark_Any(float self) {
+        return unsafe(self);
+    }
+
+    Scalar float_to_quark_Scalar(float self) {
+        return unsafe(self).asScalar();
+    }
 
     primitive Any {
         /*

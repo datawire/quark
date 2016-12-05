@@ -162,6 +162,97 @@ class IntegerTest {
 
 }
 
+class FloatTest {
+
+    void addition() {
+        float a = 0.0;
+        assertEqual(1.0, a+1.0);
+    }
+
+    void subtraction() {
+        float a = 0.0;
+        assertEqual(-1.0, a-1.0);
+    }
+
+    void multiplication() {
+        float a = 2.0;
+        float b = 2.0;
+        assertEqual(4.0, a*b);
+        float c = 1.5;
+        assertEqual(3.0, a*c);
+    }
+
+
+    void literal_equal() {
+        assertEqual(true, 0.0 == 0.0);
+        assertEqual(false, 0.0 == 1.0);
+        assertEqual(false, 1.0 == 0.0);
+        assertEqual(true, 1.0 == 1.0);
+    }
+
+    void literal_inequal() {
+        assertEqual(false, 0.0 != 0.0);
+        assertEqual(true, 0.0 != 1.0);
+        assertEqual(true, 1.0 != 0.0);
+        assertEqual(false, 1.0 != 1.0);
+    }
+
+    void literal_addition() {
+        assertEqual(0.0, 0.0 + 0.0);
+        assertEqual(1.0, 0.0 + 1.0);
+        assertEqual(1.0, 1.0 + 0.0);
+        assertEqual(2.0, 1.0 + 1.0);
+        assertEqual(42.0, 23.0 + 19.0);
+        assertEqual(42.5, 42.0 + 0.5);
+    }
+
+    void literal_subtract() {
+        assertEqual(0.0, 0.0 - 0.0);
+        assertEqual(-1.0, 0.0 - 1.0);
+        assertEqual(1.0, 1.0 - 0.0);
+        assertEqual(0.0, 1.0 - 1.0);
+        assertEqual(42.0, 64.0 - 22.0);
+    }
+
+    void negation() {
+        float zero = 0.0;
+        assertEqual(0.0, -zero);
+        float one = 1.0;
+        assertEqual(-1.0, -one);
+        float neg = -1.0;
+        assertEqual(1.0, -neg);
+    }
+
+    void ge() {
+        assertEqual(true, 0.0 >= 0.0);
+        assertEqual(true, 1.0 >= 0.0);
+        assertEqual(false, 0.0 >= 1.0);
+    }
+
+    void le() {
+        assertEqual(true, 0.0 <= 0.0);
+        assertEqual(false, 1.0 <= 0.0);
+        assertEqual(true, 0.0 <= 1.0);
+    }
+
+    void gt() {
+        assertEqual(false, 0.0 > 0.0);
+        assertEqual(true, 1.0 > 0.0);
+        assertEqual(false, 0.0 > 1.0);
+    }
+
+    void lt() {
+        assertEqual(false, 0.0 < 0.0);
+        assertEqual(false, 1.0 < 0.0);
+        assertEqual(true, 0.0 < 1.0);
+    }
+
+    void floor() {
+        float a = 2.5;
+        assertEqual(2, a.floor());
+    }
+}
+
 
 class StringTest {
     void concat() {
