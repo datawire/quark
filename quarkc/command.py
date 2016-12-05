@@ -229,9 +229,6 @@ def main(args):
             pkg = c.compile()
         except QuarkError, e:
             return e
-        except:
-            print >> sys.stderr, c.errors.format()
-            raise
 
         with stats.charge("ir-cache-save"):
             pkg = Checksum(pkgsum)(pkg) # annotate package with checksum

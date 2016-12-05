@@ -66,11 +66,7 @@ class Compiler(object):
             for file in self.files:
                 for node in traversal(file):
                     if self.symbols.is_definition(node):
-                        try:
-                            self.symbols.define(node)
-                        except:
-                            self.errors.add("Error at " + node.location)
-                            raise
+                        self.symbols.define(node)
 
         # resolve symbols
         with stats.charge("resolve-symbols"):
