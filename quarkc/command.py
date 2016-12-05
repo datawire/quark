@@ -41,6 +41,9 @@ from .ir import IR, Checksum
 
 import stats
 
+def quark_lib():
+    return os.path.expanduser(os.environ.get("QUARK_LIB", os.path.join(os.path.dirname(__file__), "lib/quark.q")))
+
 def cache_dir():
     return os.path.expanduser(os.environ.get("QUARK_CACHE_DIR", "~/.quark/cache"))
 
@@ -107,11 +110,14 @@ def main(args):
     if ruby or all: targets.append(Ruby())
     if go or all: targets.append(Go())
 
+    input_files = args["<file>"]
+    input_files.append(quark_lib())
+
     with stats.charge("index"):
         index = {}
         pkgsum = signature(frontend_files())
         parsum = signature(parser_files())
-        for fname in args["<file>"]:
+        for fname in input_files:
                 with open(fname) as f:
                     content = f.read()
                     sha = parsum.copy()
@@ -121,12 +127,12 @@ def main(args):
                         sha = sha.hexdigest())
                     pkgsum.update(index[fname]["sha"])
         pkgsum = pkgsum.hexdigest()
-        ir_base = os.path.join(cache_dir(), os.path.basename(args["<file>"][0]))
+        ir_base = os.path.join(cache_dir(), os.path.basename(input_files[0]))
         ir_name = ir_base + ".ir"
 
     pkg = None
 
-    ir_fresh = len(index) == len(args["<file>"])
+    ir_fresh = len(index) == len(input_files)
     ir_found = os.path.exists(ir_name)
     if ir_fresh and ir_found and not args["--force"]:
         with stats.charge("ir-cache-load"):
@@ -155,7 +161,7 @@ def main(args):
 
     if pkg is None:
         c = Compiler(verbose=verbose)
-        for fname in args["<file>"]:
+        for fname in input_files:
             cname = "%sp" % fname
             if is_newer(cname, fname) and not args["--force"]:
                 with stats.charge("unpickle"), open(cname) as f:
