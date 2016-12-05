@@ -182,10 +182,13 @@ def main(args):
             print "Compiling...."
         try:
             c.check()
+            pkg = c.compile()
         except QuarkError, e:
             return e
+        except:
+            print >> sys.stderr, c.errors.format()
+            raise
 
-        pkg = c.compile()
         with stats.charge("ir-cache-save"):
             pkg = Checksum(pkgsum)(pkg) # annotate package with checksum
             write_ir(ir_name, pkg)
