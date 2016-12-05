@@ -124,10 +124,10 @@ class Target(object):
 
     def gen(self, patterns):
         ensure_clean(self.abs_src)
-        irfiles = included(glob(DIR, "quarkc/test/ffi_ir/*.ir"), patterns)
+        irfiles = included(glob(DIR, "quarkc/test/e2e/*.ir"), patterns)
         if irfiles:
             run("quark-ir", "emit", "-o", self.abs_src, "--%s" % self.lang, *irfiles)
-        unfiltered = glob(DIR, "quarkc/test/ffi_ir/*.q")
+        unfiltered = glob(DIR, "quarkc/test/e2e/*.q")
         if patterns:
             qfiles = included(unfiltered, patterns + ["/quark.q"])
         else:
