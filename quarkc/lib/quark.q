@@ -808,7 +808,7 @@ namespace quark {
         /*
          * returns bool value based on the value contained
          * null - false
-         * bool - it's value
+         * bool - its value
          * int - false for 0, true for all other values
          * string - false for "", true for all other values
          * float - false for 0, true for all other values
@@ -819,9 +819,9 @@ namespace quark {
          * returns int value based on the value contained
          * null - 0
          * bool - 0 for false, 1 for true
-         * int - it's value
+         * int - its value as float
          * string - 0
-         * float - it's value as float.floor()
+         * float - its value as float.floor()
          */
         int asInt();
 
@@ -833,22 +833,37 @@ namespace quark {
          * string - false
          * float - true if value == value.floor()
          */
-        bool isInt();
+        //bool isInt();
 
         /*
          * returns string value based on the value contained
          * null - empty string
          * bool - "false" for false, "true" for true
          * int - decimal representation of int value
-         * string - it's value
+         * string - its value
          * float - decimal representation of float value
          */
         String asString();
- 
-        //float asFloat();                  // returns float iff type() returned 4
+
+        /*
+         * returns int value based on the value contained
+         * null - 0.0
+         * bool - 0.0 for false, 1.0 for true
+         * int - its value as float
+         * string - 0.0
+         * float - its value
+         */
+        float asFloat();
+
+        /*
+         * returns true if value can be losslesly converted to float, false otherwise
+         * null - false
+         * bool - true
+         * int - true
+         * string - false
+         * float - true
+         */
         //bool isFloat()
-
-
 
         int type() for java {
                 Object a = $self;
@@ -857,6 +872,10 @@ namespace quark {
                 } else if (a instanceof Boolean) {
                     return 1;
                 } else if (a instanceof Integer) {
+                    return 2;
+                } else if (a instanceof Float) {
+                    return 2;
+                } else if (a instanceof Doube) {
                     return 2;
                 } else if (a instanceof String) {
                     return 3;
@@ -892,20 +911,38 @@ namespace quark {
                     return 0;
                 } else if (a instanceof Boolean) {
                     return (Boolean)a ? 1 : 0;
-                } else if (a instanceof Integer) {
-                    return ((Integer)a);
+                } else if (a instanceof Float) {
+                    return (int)Math.floor((Float)a);
+                } else if (a instanceof Double) {
+                    return (int)Math.floor((Double)a);
+                } else if (a instanceof Number) {
+                    return ((Number)a).intValue();
                 } else if (a instanceof String) {
                     return 0;
-                } else if (a instanceof Float) {
-                    return ((Float)a).intValue();
-                } else if (a instanceof Double) {
-                    return ((Double)a).intValue();
                 } else if (a instanceof List) {
                     return 0;
                 } else if (a instanceof Map) {
                     return 0;
                 }
                 return 0;
+            }
+
+        float asFloat() for java  import "java.util.List" import "java.util.Map" {
+                Object a = $self;
+                if (a == null) {
+                    return 0.0;
+                } else if (a instanceof Boolean) {
+                    return (Boolean)a ? 1.0 : 0.0;
+                } else if (a instanceof Number) {
+                    return ((Number)a).doubleValue();
+                } else if (a instanceof String) {
+                    return 0.0;
+                } else if (a instanceof List) {
+                    return 0.0;
+                } else if (a instanceof Map) {
+                    return 0.0;
+                }
+                return 0.0;
             }
 
         String asString() for java import "java.util.List" import "java.util.Map" {
@@ -937,6 +974,8 @@ namespace quark {
                     case nil: return 0
                     case bool: return 1
                     case int: return 2
+                    case float32: return 2
+                    case float64: return 2
                     case string: return 3
                     default: {
                         _ = i
@@ -973,6 +1012,25 @@ namespace quark {
                     case float32: return int(i);
                     case float64: return int(i);
                     default: return 0;
+                    }
+            }
+
+        float asFloat() for go {
+                a := $self;
+                switch i := a.(type) {
+                    case nil: return 0.0;
+                    case bool: {
+                        if i {
+                              return 1.0;
+                        } else {
+                              return 0.0;
+                        }
+                    }
+                    case int: return float64(i);
+                    case string: return 0;
+                    case float32: return float64(i);
+                    case float64: return i;
+                    default: return 0.0;
                     }
             }
 
@@ -1050,6 +1108,22 @@ namespace quark {
                 return 0
             }
 
+        float asFloat() for python import "six" {
+            a = $self
+            if a is None:
+                return 0.0
+            elif isinstance(a, six.text_type):
+                return 0.0
+            elif a is True or a is False:
+                return float(a)
+            elif isinstance(a, six.integer_types):
+                return float(a)
+            elif isinstance(a, float):
+                return a
+            else:
+                return 0.0
+            }
+
         String asString() for python import "six" {
             a = $self
             if a is None:
@@ -1118,6 +1192,27 @@ namespace quark {
               return a.to_i
             else
               return 0
+            end
+            }
+
+        float asFloat() for ruby {
+            a = $self
+            if a.nil?
+              return 0.0
+            elsif a.is_a?(TrueClass) or a.is_a?(FalseClass)
+              if a
+                return 1.0
+              else
+                return 0.0
+              end
+            elsif a.is_a?(Fixnum)
+              return a.to_f
+            elsif a.is_a?(String)
+              return 0.0
+            elsif a.is_a?(Float)
+              return a
+            else
+              return 0.0
             end
             }
 
@@ -1193,6 +1288,22 @@ namespace quark {
                     } else {
                         return -Math.floor(-a);
                     }
+                } else if (t === "boolean") {
+                    return a ? 1 : 0;
+                } else {
+                    return 0;
+                }
+            }
+
+        float asFloat() for javascript {
+                let a = $self;
+                let t = typeof(a);
+                if (t === "object") {
+                    return 0;
+                } else if (t === "string") {
+                    return 0;
+                } else if (t === "number") {
+                    return a;
                 } else if (t === "boolean") {
                     return a ? 1 : 0;
                 } else {
