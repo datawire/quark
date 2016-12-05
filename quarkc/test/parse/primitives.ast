@@ -1,0 +1,17 @@
+File(CompilerVersionSpec(),
+
+ Package(Name(primitives),
+
+  Function(Type(Name(function)), Name(doit), Block(
+    Local(
+     Declaration(Type(Name(int)), Name(i), Number(1))),
+    Assign(Var(Name(i)), Call(Attr(Number(1), Name(__neg__)))),
+    Local(
+     Declaration(Type(Name(float)), Name(f), Number(1.0))),
+    Assign(Var(Name(f)), Call(Attr(Number(1.0), Name(__neg__)))),
+    Local(
+     Declaration(Type(Name(String)), Name(s), String("abc"))),
+    Local(
+     Declaration(Type(Name(bool)), Name(a), Bool(true))),
+    Assign(Var(Name(a)), Bool(false)))))
+)
