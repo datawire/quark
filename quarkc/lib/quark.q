@@ -880,7 +880,7 @@ namespace quark {
                     return 2;
                 } else if (a instanceof Float) {
                     return 2;
-                } else if (a instanceof Doube) {
+                } else if (a instanceof Double) {
                     return 2;
                 } else if (a instanceof String) {
                     return 3;
