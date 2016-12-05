@@ -224,7 +224,9 @@ namespace quark {
 
         float __add__(float other) for java { return $self + $other; }
         float __sub__(float other) for java { return $self - $other; }
-        float __neg__() for java { return -$self; }
+        // Double(0.0).equals(Double(-0.0)) is false in Java so just try not to
+        // have -0.0 ever:
+        float __neg__() for java { return -$self + 0.0; }
         float __mul__(float other) for java { return $self * $other; }
         bool __eq__(float other) for java { return $self == $other; }
         bool __ne__(float other) for java { return $self != $other; }
