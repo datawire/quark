@@ -5,6 +5,7 @@ from .ast import (
     Break, Continue, NativeFunction, NativeBlock, Fixed, TypeParam
 )
 from .symbols import Symbols, name, Self, Boxed, Nulled
+from .exceptions import CompileError
 
 import tree
 
@@ -287,7 +288,10 @@ class Code(object):
                 bindings[name(p)] = v
             old = self.types
             self.types = View(self.prototypes, bindings)
-            result = ir.Primitive(*[ir.NativeBlock(*self.compile(m)) for m in dfn.mappings])
+            args = [ir.NativeBlock(*self.compile(m)) for m in dfn.mappings]
+            if not args:
+                raise CompileError("%s: missing type mappings" % dfn.location)
+            result = ir.Primitive(*args)
             self.types = old
             return result
         else:
