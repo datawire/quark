@@ -3,7 +3,6 @@
 set -e
 
 cwd=$(pwd)
-cd $(dirname "$0")/..
 
 set -x
 
@@ -27,7 +26,7 @@ fi
 #    exit 1
 #fi
 
-if py.test --durations=10 && quark-test run --stats; then
+if py.test --durations=10 && quark-test run --stats quarkc/test/e2e/*.q quarkc/test/e2e/*.ir; then
     echo Tests passed
 else
     ./quarkc/test/compare --batch

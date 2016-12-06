@@ -4,12 +4,14 @@
 Quark test runner.
 
 Usage:
-  qtest [options] run [ -x ] [--stats] [ --cached | --ignore-cache ] [ (--java | --python | --python3 | --javascript | --ruby | --go )... | --all ] [ <pattern>... ]
-  qtest [options] clean
-  qtest -h | --help
-  qtest --version
+  quark-test [options] run [ -x ] [--stats] [ --cached | --ignore-cache ] [ (--java | --python | --python3 | --javascript | --ruby | --go )... | --all ] <files>...
+  quark-test [options] clean
+  quark-test -h | --help
+  quark-test --version
 
-Commans:
+Files can be either Quark files (something.q) or IR files (something.ir).
+
+Commands:
   clean
   run
 
@@ -32,7 +34,6 @@ from quarkc import stats
 def call(*cmd, **kwargs):
     return subprocess.check_output(cmd)
 
-DIR = os.path.abspath(os.path.dirname(__file__))
 CWD = os.getcwd()
 HEIGHT, WIDTH = [int(s) for s in call("stty", "size").split()]
 VERBOSE = 0
@@ -56,7 +57,7 @@ def run(*cmd, **kwargs):
     cwd = kwargs.get("cwd", CWD)
     if cwd != CWD:
         common = os.path.commonprefix((cwd, CWD))
-        pfx = "CWD=...%s " % cwd[len(common):]
+        pfx = "CWD=./{} ".format(os.path.join(".", cwd[len(common):]))
     else:
         pfx = ""
     env = {}
@@ -97,23 +98,11 @@ def path(base, *elements):
     return ":".join([os.path.join(base, e) for e in elements])
 
 
-def included(files, patterns):
-    if not patterns:
-        return files
-
-    result = []
-    for f in files:
-        for p in patterns:
-            if fnmatch.fnmatch(f, "*%s*" % p):
-                result.append(f)
-                break
-    return result
-
 class Target(object):
 
     @property
     def target(self):
-        return os.path.join(DIR, "target/%s" % self.lang)
+        return os.path.join(CWD, "target/%s" % self.lang)
 
     @property
     def abs_src(self):
@@ -122,16 +111,12 @@ class Target(object):
     def path(self, *elements):
         return path(self.target, *elements)
 
-    def gen(self, patterns):
+    def gen(self, files):
         ensure_clean(self.abs_src)
-        irfiles = included(glob(DIR, "quarkc/test/e2e/*.ir"), patterns)
+        irfiles = list(f for f in files if f.endswith(".ir"))
         if irfiles:
             run("quark-ir", "emit", "-o", self.abs_src, "--%s" % self.lang, *irfiles)
-        unfiltered = glob(DIR, "quarkc/test/e2e/*.q")
-        if patterns:
-            qfiles = included(unfiltered, patterns + ["/quark.q"])
-        else:
-            qfiles = unfiltered
+        qfiles = list(f for f in files if f.endswith(".q"))
         if qfiles:
             args = ["quark", "-o", self.abs_src, "--%s" % self.lang]
             if not CACHED:
@@ -337,7 +322,7 @@ def main(args):
             name = tgt.__class__.__name__
             banner(BLUE, color(WHITE, name))
             try:
-                tgt.run(args["<pattern>"])
+                tgt.run(args["<files>"])
                 passing.append(name)
             except RunError:
                 failing.append(name)
