@@ -232,8 +232,11 @@ class Types(object):
         return types.Ref("quark.String")
 
     @match(Number)
-    def do_resolve(self, _):
-        return types.Ref("quark.int")
+    def do_resolve(self, number):
+        if number.is_float():
+            return types.Ref("quark.float")
+        else:
+            return types.Ref("quark.int")
 
     @match(Bool)
     def do_resolve(self, _):

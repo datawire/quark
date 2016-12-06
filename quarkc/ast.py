@@ -791,8 +791,12 @@ class Bool(PrimitiveLiteral):
 class Null(PrimitiveLiteral):
     pass
 
+
 class Number(PrimitiveLiteral):
-    pass
+    def is_float(self):
+        """Return whether the literal looks like a float or not."""
+        return "." in self.text
+
 
 class String(PrimitiveLiteral):
     @coder

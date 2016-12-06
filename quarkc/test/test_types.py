@@ -1,3 +1,6 @@
+"""
+Tests for quarkc.types.
+"""
 from quarkc.compiler import Compiler
 from quarkc.match import match, choice, many
 from quarkc.ast import (
@@ -192,11 +195,17 @@ def test_check():
             int __sub__(int i);
             bool __lt__(int i);
         }
+        interface float {}
     }
     void foo(void a) {
         int b;
         void c = foo(a);
         foo(b);
+    }
+
+    float floaty(float a) {
+        float b = 1.0;
+        return a;
     }
 
     int fib(int n) {
@@ -225,6 +234,10 @@ def test_check():
                   (DECLARE, 'b', 'quark.int'),
                   (DECLARE, 'c', 'quark.void', 'quark.void'),
                   'quark.void'),
+     'asdf.floaty': ((CALLABLE, 'quark.float', 'quark.float'),
+                     (DECLARE, 'a', 'quark.float'),
+                     (DECLARE, 'b', 'quark.float', 'quark.float'),
+                     (RETURN, 'quark.float')),
      'asdf.fib': ((CALLABLE, 'quark.int', 'quark.int'),
                   (DECLARE, 'n', 'quark.int'),
                   (IF, 'quark.bool',

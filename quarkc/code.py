@@ -252,6 +252,10 @@ class Code(object):
     def compile(self, ref):
         return ir.Int()
 
+    @match(types.Ref("quark.float"))
+    def compile(self, ref):
+        return ir.Float()
+
     @match(types.Ref("quark.Any"))
     def compile(self, ref):
         return ir.Any()
@@ -485,7 +489,10 @@ class Code(object):
 
     @match(Number)
     def compile(self, n):
-        return self.convert(n, ir.IntLit(int(n.text)))
+        if n.is_float():
+            return self.convert(n, ir.FloatLit(float(n.text)))
+        else:
+            return self.convert(n, ir.IntLit(int(n.text)))
 
     @match(String)
     def compile(self, s):

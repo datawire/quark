@@ -192,7 +192,7 @@ class Symbols(object):
 
     @match(Number)
     def do_resolve(self, n):
-        if "." in n.text:
+        if n.is_float():
             self.qualify(n, "float")
         else:
             self.qualify(n, "int")

@@ -6,6 +6,10 @@ void intlits() {
     assertEqual(2, 1+1);
 }
 
+void floatlits() {
+    assertEqual(3.0, 1.5+1.5);
+}
+
 void stringlits() {
     assertEqual("two", "t" + "wo");
 }

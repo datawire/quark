@@ -1,0 +1,12 @@
+quark *;
+package primitives {
+    function doit() {
+        int i = 1;
+        i = ((1).__neg__)();
+        float f = 1.0;
+        f = ((1.0).__neg__)();
+        String s = "abc";
+        bool a = true;
+        a = false;
+    }
+}

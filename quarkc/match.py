@@ -440,6 +440,7 @@ class _BoundDispatcher(object):
         except MatchError, e:
             raise TypeError("%s.%s() %s" % (self.clazz.__name__, self.dispatcher.name, e))
 
+
 class _Dispatcher(object):
 
     def __init__(self, name):
