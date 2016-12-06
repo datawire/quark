@@ -112,12 +112,14 @@ def candidates(arginfo):
 
 def excepthook(type, value, tb):
     locations = []
+    location_ids = set()
     current = tb
     while current:
         arginfo = inspect.getargvalues(current.tb_frame)
         for obj in candidates(arginfo):
-            if obj not in locations and hasattr(obj, "location"):
+            if id(obj) not in location_ids and getattr(obj, "location", None):
                 locations.append(obj)
+                location_ids.add(id(obj))
         current = current.tb_next
 
     sys.stderr.write("%s%s: %s\n" % ("".join(format_list(filter_match(tb))), type.__name__, value))
