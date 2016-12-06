@@ -1218,7 +1218,7 @@ class NativeImport(IR):
 
 # a mapping of replacement keys to target-rendered expressions
 class TemplateContext(IR):
-    @match(many((basestring, choice(AbstractType, Expression))))
+    @match(many((basestring, choice(AbstractType, Expression, Ref))))
     def __init__(self, *mappings):
         self.mappings = mappings
 

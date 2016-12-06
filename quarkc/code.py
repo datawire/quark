@@ -398,7 +398,8 @@ class Code(object):
         else:
             return compiled
 
-    @match(Expression, choice(ir.AbstractType, ir.AssertEqual, ir.AssertNotEqual))
+    @match(Expression, choice(ir.AbstractType, ir.AssertEqual,
+                              ir.AssertNotEqual, ir.Ref))
     def convert(self, _, compiled):
         return compiled
 
@@ -600,6 +601,10 @@ class Code(object):
     @match(TypeParam, Var)
     def compile_var(self, p, v):
         return self.compile(self.types[p])
+
+    @match(Function, Var)
+    def compile_var(self, f, v):
+        return self.compile_ref(self.types[f])
 
     @match(Assign)
     def compile(self, ass):
