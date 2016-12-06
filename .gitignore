@@ -72,3 +72,6 @@ docs/replace-test-copy.html
 # Virtualenv
 venv
 .venv
+
+# Quark output
+output/

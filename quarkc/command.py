@@ -12,6 +12,7 @@ Options:
   -v --verbose          Show more detail.
   --stats               Show timing stats.
 
+  --package-name PKG_NAME  The name name of the package to generate. [default: pkg]
   -o DIR, --output DIR  Target directory for output files. [default: output]
   --force               Ignore any cached intermediate representations.
 
@@ -204,7 +205,7 @@ def main(args):
             ir_fresh and ir_name or "missing input files?")
 
     if pkg is None:
-        c = Compiler(verbose=verbose)
+        c = Compiler(package_name=args["--package-name"], verbose=verbose)
         for fname in input_files:
             cname = "%sp" % fname
             if is_newer(cname, fname) and not args["--force"]:
