@@ -1363,7 +1363,15 @@ namespace quark {
         bool __eq__(String other);
         int size();
         String substring(int start, int end);
-
+        String strip();
+        bool startsWith(String other);
+        bool endsWith(String other);
+        int find(String other);
+        String replace(String from, String to);
+        String join(List<String> parts);
+        List<String> split(String sep);
+        String toUpper();
+        String toLower();
 
         String __add__(String other) for java { return $self + $other; }
         bool __eq__(String other) for java { return $self.equals($other); }
@@ -1372,6 +1380,32 @@ namespace quark {
                 int l = $self.length();
                 return $self.substring($start, $end < l ? $end : l);
             }
+        String strip() for java { return ($self).trim(); }
+        bool startsWith(String other) for java { return Boolean.valueOf(($self).startsWith($other)); }
+        bool endsWith(String other) for java { return Boolean.valueOf(($self).endsWith($other)); }
+        int find(String other) for java { return ($self).indexOf($other); }
+        String replace(String from, String to) for java import "java.util.regex.Pattern" {
+                return ($self).replaceFirst(Pattern.quote($from), ($to));
+            }
+        List<String> split(String sep) for java import "java.util.ArrayList"
+                                                import "java.util.Arrays"
+                                                import "java.util.regex.Pattern" {
+                return new ArrayList<String>(Arrays.asList(($self).split(Pattern.quote($sep), -1))); }
+        String join(List<String> parts) for java {
+                StringBuilder b = new StringBuilder();
+                boolean first = true;
+                for (String part : $parts) {
+                    if (first) {
+                        first = false;
+                    } else {
+                        b.append($self);
+                    }
+                    b.append(part);
+                }
+                return b.toString();
+            }
+        String toUpper() for java { return ($self).toUpperCase(); }
+        String toLower() for java { return ($self).toLowerCase(); }
 
 
         String __add__(String other) for go { return $self + $other }
@@ -1397,6 +1431,15 @@ namespace quark {
         bool __eq__(String other) for python { return $self == $other }
         int size() for python { return len($self) }
         String substring(int start, int end) for python { return $self[$start:$end] }
+        String strip() for python { return ($self).strip() }
+        bool startsWith(String other) for python { return ($self).startswith($other) }
+        bool endsWith(String other) for python { return ($self).endswith($other) }
+        int find(String other) for python { return ($self).find($other) }
+        String replace(String from, String to) for python { return ($self).replace(($from), ($to), 1) }
+        List<String> split(String sep) for python { return ($self).split($sep) }
+        String join(List<String> parts) for python { return ($self).join($parts) }
+        String toUpper() for python { return ($self).upper() }
+        String toLower() for python { return ($self).lower() }
 
         String __add__(String other) for ruby { return $self + $other }
         bool __eq__(String other) for ruby { return $self == $other }
@@ -1404,11 +1447,30 @@ namespace quark {
         String substring(int start, int end) for ruby {
                 return $self.slice($start, $end - $start)
             }
+        String strip() for ruby { return ($self).strip }
+        bool startsWith(String other) for ruby { return ($self).start_with?($other) }
+        bool endsWith(String other) for ruby { return ($self).end_with?($other) }
+        int find(String other) for ruby { return (($self).index($other) or -1) }
+        String replace(String from, String to) for ruby { return ($self).sub(($from), ($to)) }
+        List<String> split(String sep) for ruby { return ::DatawireQuarkCore.split($self, $sep) }
+        String join(List<String> parts) for ruby { return ($parts).join($self) }
+        String toUpper() for ruby { return ($self).upcase }
+        String toLower() for ruby { return ($self).downcase }
 
         String __add__(String other) for javascript { return $self + $other }
         bool __eq__(String other) for javascript { return $self === $other }
         int size() for javascript { return $self.length }
         String substring(int start, int end) for javascript { return $self.substring($start, $end) }
+
+        String strip() for javascript { ($self).trim() }
+        bool startsWith(String other) for javascript { return (($self).indexOf($other)===0)}
+        bool endsWith(String other) for javascript { return (($self).indexOf(($other), ($self).length - ($other).length) !== -1)}
+        int find(String other) for javascript { return ($self).indexOf($other)}
+        String replace(String from, String to) for javascript { return ($self).replace(($from), ($to))}
+        List<String> split(String sep) for javascript { return ($self).split($sep)}
+        String join(List<String> parts) for javascript { return ($parts).join($self)}
+        String toUpper() for javascript { return ($self).toUpperCase()}
+        String toLower() for javascript { return ($self).toLowerCase()}
 
         Any to_quark_Any();
         Scalar to_quark_Scalar();
