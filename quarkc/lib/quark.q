@@ -145,7 +145,12 @@ namespace quark {
         int __sub__(int other) for java { return $self - $other; }
         int __neg__() for java { return -$self; }
         int __mul__(int other) for java { return $self * $other; }
-        int __div__(int other) for java { return ~((~($self)) / ($other)); }
+        int __div__(int other) for java {
+                if ($self >= 0)
+                    return $self / $other;
+                else
+                    return ~(~($self) / $other);
+            }
         bool __eq__(int other) for java { return $self == $other; }
         bool __ne__(int other) for java { return $self != $other; }
         bool __ge__(int other) for java { return $self >= $other; }
@@ -157,7 +162,13 @@ namespace quark {
         int __sub__(int other) for go { return $self - $other; }
         int __neg__() for go { return -$self; }
         int __mul__(int other) for go { return $self * $other; }
-        int __div__(int other) for go { return $self / $other; }
+        int __div__(int other) for go {
+                if ($self >= 0) {
+                    return $self / $other;
+                } else {
+                    return ^(^($self) / $other);
+                }
+            }
         bool __eq__(int other) for go { return $self == $other; }
         bool __ne__(int other) for go { return $self != $other; }
         bool __ge__(int other) for go { return $self >= $other; }
