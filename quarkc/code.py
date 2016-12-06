@@ -67,7 +67,7 @@ class Code(object):
 
     @match(Method)
     def is_top(self, meth):
-        return True if meth.body and isinstance(meth.body, NativeBlock) else False
+        return meth.type != None if meth.body and isinstance(meth.parent, Primitive) else False
 
     @match(choice(AST, [Package], Primitive))
     def is_top(self, dfn):
@@ -149,20 +149,22 @@ class Code(object):
 
     @match(Method)
     def compile(self, meth):
-        if meth.type:
+        if isinstance(meth.parent, Primitive):
             if isinstance(meth.body, NativeBlock):
                 klass = ir.NativeFunction
-                nam = self.compile_def(self.mangle(self.types[meth.parent]) + "_" + meth.name.text)
-                ret = self.types.node(meth).result
-                if meth.name.text == "__init__":
-                    extra = []
-                else:
-                    extra = [ir.Param("self", self.compile(self.types[meth.parent]))]
             else:
-                klass = ir.Method
-                nam = meth.name.text
-                ret = self.types[meth.type]
+                klass = ir.Function
+            nam = self.compile_def(self.mangle(self.types[meth.parent]) + "_" + meth.name.text)
+            ret = self.types.node(meth).result
+            if meth.name.text == "__init__":
                 extra = []
+            else:
+                extra = [ir.Param("self", self.compile(self.types[meth.parent]))]
+        elif meth.type:
+            klass = ir.Method
+            nam = meth.name.text
+            ret = self.types[meth.type]
+            extra = []
         else:
             klass = ir.Constructor
             nam = self.mangle(meth.name.text, *self.types[meth.parent].params)

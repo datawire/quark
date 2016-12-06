@@ -44,6 +44,10 @@ for javascript {}
 
     imaginary __add__(imaginary o);
 
+    int foo() {
+        return 3;
+    }
+
 }
 
 imaginary imaginary___init__(int n);
@@ -67,6 +71,11 @@ imaginary imaginary___init__(int n) for javascript {
 void testimaginary() {
     imaginary x = new imaginary(3);
     assertEqual(1 + 2, x);
+}
+
+void test_quark_method_of_primitive() {
+    imaginary x = new imaginary(3);
+    assertEqual(3, x.foo());
 }
 
 
