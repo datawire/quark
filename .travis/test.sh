@@ -27,7 +27,7 @@ fi
 #    exit 1
 #fi
 
-if py.test --durations=10 && ./qtest run --stats; then
+if py.test --durations=10 && quark-test run --stats; then
     echo Tests passed
 else
     ./quarkc/test/compare --batch
