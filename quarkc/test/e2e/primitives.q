@@ -94,6 +94,7 @@ class IntegerTest {
         int a = 2;
         int b = 2;
         assertEqual(4, a*b);
+        assertEqual(-12, -3*4);
     }
 
     void division() {
@@ -101,6 +102,11 @@ class IntegerTest {
         assertEqual(a / 2, 3);
         assertEqual(8 / 2, 4);
         assertEqual(-5 / 2, -3);
+        assertEqual(-8 / 2, -4);
+        assertEqual(-5 / 2, -3);
+        assertEqual(-8 / 2, -4);
+        assertEqual(0 / 2, 0);
+        assertEqual(9 / 3, 3);
     }
 
     void literal_equal() {
