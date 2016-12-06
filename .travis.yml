@@ -18,7 +18,7 @@ install:
 - pip install --no-index --find-links=~/.quark/wheel-cache .
 
 script:
-- .travis/test.sh
+- ./test.sh
 
 before_cache:
 - ls -t $HOME/.quark/cache/*.ir | tail -n +2 | xargs -t rm -f
