@@ -439,11 +439,6 @@ class _BoundDispatcher(object):
                 return compiled.apply(self.object, *args, **kwargs)
         except MatchError, e:
             raise TypeError("%s.%s() %s" % (self.clazz.__name__, self.dispatcher.name, e))
-        except:
-            for arg in args:
-                if hasattr(arg, "location"):
-                    print("Error may be related to " + arg.location)
-            raise
 
 
 class _Dispatcher(object):
