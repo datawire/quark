@@ -238,6 +238,8 @@ class FloatTest {
     void division() {
         float a = 5.0;
         assertEqual(a / 2.0, 2.5);
+        assertEqual(a / -2.0, -2.5);
+        assertEqual(-a / 2.0, -2.5);
     }
 
     void ge() {
