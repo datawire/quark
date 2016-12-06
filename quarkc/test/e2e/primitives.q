@@ -304,6 +304,83 @@ class StringTest {
         assertEqual(false, "abc" == "def");
     }
 
+    void upper_lower() {
+        assertEqual("asdf", "AsDf".toLower());
+        assertEqual("ASDF", "AsDf".toUpper());
+    }
+
+    void strip() {
+        assertEqual("Abc".strip(), "Abc");
+        assertEqual("Abc ".strip(), "Abc");
+        assertEqual(" Abc".strip(), "Abc");
+        assertEqual(" Abc ".strip(), "Abc");
+        assertEqual("\t \nAbc\n \t ".strip(), "Abc");
+
+        List<String> ws = ["", " ", "\t", "\n", "\r"];
+        String s = "<--->";
+        int i = 0;
+        while (i < ws.size()) {
+            int j = 0;
+            while (j < ws.size()) {
+                int k = 0;
+                assertEqual(s, (ws[i] + s + ws[j]).strip());
+                j = j + 1;
+            }
+            assertEqual("", ws[i].strip());
+            i = i + 1;
+        }
+    }
+
+    void join() {
+        assertEqual("".join([]), "");
+        assertEqual("++".join([]), "");
+        assertEqual("".join(["a", "bc"]), "abc");
+        assertEqual("++".join(["a", "bc", "d"]), "a++bc++d");
+    }
+
+    void split() {
+        assertEqual("abc".split("b"), ["a", "c"]);
+        assertEqual("aGOcGOGOd".split("GO"), ["a", "c", "", "d"]);
+        assertEqual("abc".split("z"), ["abc"]);
+    }
+
+    void replace() {
+        assertEqual("abc".replace("bc", "z"), "az");
+        assertEqual("aGOdGO".replace("GO", "me"), "amedme");
+    }
+
+    void endsWith() {
+        assertEqual("abc".endsWith(""), true);
+        assertEqual("abc".endsWith("c"), true);
+        assertEqual("abc".endsWith("bc"), true);
+        assertEqual("abc".endsWith("abc"), true);
+        assertEqual("abc".endsWith("abcd"), false);
+        assertEqual("abc".endsWith("ab"), false);
+        assertEqual("abc".endsWith("z"), false);
+    }
+
+    void startsWith() {
+        assertEqual("abc".startsWith(""), true);
+        assertEqual("abc".startsWith("a"), true);
+        assertEqual("abc".startsWith("ab"), true);
+        assertEqual("abc".startsWith("abc"), true);
+        assertEqual("abc".startsWith("abcd"), false);
+        assertEqual("abc".startsWith("bc"), false);
+        assertEqual("abc".startsWith("z"), false);
+    }
+
+    void find() {
+        assertEqual("Abc".find("z"), -1);
+        assertEqual("Abc".find(""), 0);
+        assertEqual("Abc".find("A"), 0);
+        assertEqual("Abc".find("Ab"), 0);
+        assertEqual("Abc".find("Abc"), 0);
+        assertEqual("Abc".find("Abcz"), -1);
+        assertEqual("Abc".find("zAbc"), -1);
+        assertEqual("Abc".find("b"), 1);
+        assertEqual("Abc".find("bc"), 1);
+        assertEqual("Abc".find("c"), 2);
+    }
 }
 
 
