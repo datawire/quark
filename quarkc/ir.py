@@ -102,7 +102,12 @@ class _Name(IR):
         return hash((self.package, self.path))
 
     def __repr__(self):
-        return self.repr(self.package, *self.path)
+        name = ".".join(self.path)
+        if name:
+            name = ":".join((self.package, name))
+        else:
+            name = self.package
+        return self.repr(name)
 
     def __str__(self):
         return ":".join((self.package, ) + (self.path and (".".join(self.path),)))
@@ -183,6 +188,9 @@ class _ScopedName(IR):
 
 
 class ScopedName(_ScopedName):
+    pass
+
+class TransientFullyScopedName(_Name, ScopedName):
     pass
 
 class LocalName(_ScopedName):

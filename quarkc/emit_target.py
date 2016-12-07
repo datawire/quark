@@ -14,7 +14,9 @@
 
 from collections import OrderedDict
 from .match import match, choice, lazy
-from .ir import (Root, Definition, Namespace, NamespaceName, Name, Ref, ScopedName, LocalName)
+from .ir import (Root, Definition, Namespace, NamespaceName, Name,
+                 Ref, ScopedName, LocalName, Declaration, Method,
+                 TransientFullyScopedName, IR)
 from .tree import Query, isa, walk_dfs
 
 class NameQuery(Query):
@@ -35,6 +37,12 @@ class NameQuery(Query):
             str(ref), "\n   Have:\n      ",
             ",\n      ".join(map(str,sorted(self.definition_memory.keys()))))
         return self.definition_memory[ref]
+
+    @match(IR)
+    def definition(self, node):
+        """ Look up definition of any contained node """
+        return self.ancestor(node, (Definition,))
+
 
 class Target(object):
 
@@ -79,33 +87,49 @@ class Target(object):
         """ Return a scoped clone with an opinion on ancestor queries """
         return self.__class__("private", self, root)
 
-
-    @match(choice(Name, NamespaceName), basestring)
+    @match(choice(Name, NamespaceName, TransientFullyScopedName), basestring)
     def define_name(self, name, defname):
         assert defname
         target_name = self.UNKEYWORDS.get(defname, defname)
         assert target_name
         self.names[name] = target_name
 
+    @match(ScopedName, basestring)
+    def define_name(self, name, defname):
+        # XXX: consider moving scoping of names to code.py
+        dfn = self.q.definition(name)
+        fqn = TransientFullyScopedName.join(dfn.name, name.name)
+        print fqn, "-->", defname
+        self.define_name(fqn, defname)
 
-    @match(choice(Namespace,Definition))
+    @match(LocalName, basestring)
+    def define_name(self, name, defname):
+        pass
+
+    @match(choice(Namespace,Definition,Declaration,Method))
     def nameof(self, dfn):
         return self.nameof(dfn.name)
 
-    @match(choice(NamespaceName,Name))
+    @match(choice(NamespaceName,Name,TransientFullyScopedName))
     def nameof(self, name):
         if name not in self.names:
+            assert False, "cannot find name %r in %s" % ( name, sorted(self.names.keys()))
             return "??%s??" % name.path[-1]
         return self.names[name]
 
     @match(ScopedName)
     def nameof(self, name):
-        return name.name
+        # XXX: consider moving scoping of names to code.py
+        dfn = self.q.definition(name)
+        fqn = TransientFullyScopedName.join(dfn.name, name.name)
+        ret = self.nameof(fqn)
+        print fqn, "-->", ret
+        return ret
 
     @match(LocalName)
     def nameof(self, name):
         return name.name
-    
+
     @match(Definition, Ref, basestring)
     def define_import(self, dfn, ref, name):
         if dfn.name not in self.imports:

@@ -15,7 +15,8 @@
 from .match import match, choice
 from .tree import walk_dfs
 from .ir import (IR, Root, Namespace, Definition, Class, TestClass,
-                 Declaration, Check, TestMethod)
+                 Declaration, Check, TestMethod, Method,
+                 PublicDeclaration, LocalDeclaration)
 from .emit_target import Target, Ruby, Go
 from .emit_ir import Snowflake
 
@@ -36,7 +37,7 @@ def rename(node, target):
 def rename(ns, target):
     rename(ns, ns.name.path[-1], target)
 
-@match(choice(Namespace,Definition,Declaration), basestring, Target)
+@match(choice(Namespace,Definition,Declaration,Method), basestring, Target)
 def rename(ns, name, target):
     target.define_name(ns.name, name)
 
@@ -53,6 +54,19 @@ def rename(ns, name, target):
     rename(ns, "{pkg}_test".format(
         pkg = target.nameof(target.q.parent(ns))),
            target)
+
+
+@match(choice(PublicDeclaration,Method), Target)
+def rename(decl, target):
+    rename(decl, target.varname(decl.name), target)
+
+@match(LocalDeclaration, Target)
+def rename(decl, target):
+    rename(decl, target.varname(decl.name), target)
+
+@match(choice(PublicDeclaration,Method), Go)
+def rename(decl, target):
+    rename(decl, target.upcase(decl.name), target)
 
 @match(Check, Go)
 def rename(dfn, target):
