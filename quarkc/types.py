@@ -171,8 +171,11 @@ class Types(object):
     @match(Return)
     def do_resolve(self, retr):
         dtype = self.node(get_definition(retr)).result
-        rtype = self.resolve(retr.expr)
-        self.validate_ass(retr, dtype, rtype, retr.expr)
+        if retr.expr is not None:
+            rtype = self.resolve(retr.expr)
+            self.validate_ass(retr, dtype, rtype, retr.expr)
+        else:
+            rtype = types.Ref("quark.void")
         return rtype
 
     @match(Local)
