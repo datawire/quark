@@ -3,7 +3,7 @@ from .errors import NodeError, InvalidInvocation, InvalidAssignment, UnresolvedT
 from .ast import (
     AST, Expression, Statement, Block, Call, Attr, Function, Method, Type, Import, Class, Assign, Return, ExprStmt,
     TypeParam, If, While, Switch, Case, Declaration, Package, String, Number, Bool, Var, Local, Name, Field, Callable,
-    Definition, List, Map, Entry, Null, Break, Continue, NativeFunction, NativeBlock, Fixed
+    Definition, List, Map, Entry, Null, Break, Continue, NativeFunction, NativeBlock, Fixed, Cast
 )
 from .symbols import Symbols, name, Self, Boxed, Nulled
 from collections import OrderedDict
@@ -245,11 +245,11 @@ class Types(object):
     def do_resolve(self, _):
         return types.Ref("quark.bool")
 
-    @match(choice(List, Map, Null))
+    @match(choice(List, Map, Null, Cast))
     def do_resolve(self, l):
         return self.do_resolve_infer(l.parent, l)
 
-    @match(Declaration, choice(List, Map, Null))
+    @match(Declaration, choice(List, Map, Null, Cast))
     def do_resolve_infer(self, d, _):
         return self.resolve(d.type)
 
@@ -277,7 +277,7 @@ class Types(object):
             return Unresolvable(callable)
         return callable.arguments[idx]
 
-    @match(Assign, choice(List, Map, Null))
+    @match(Assign, choice(List, Map, Null, Cast))
     def do_resolve_infer(self, ass, l):
         return self.resolve(ass.lhs)
 
