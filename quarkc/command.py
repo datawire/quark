@@ -12,6 +12,7 @@ Options:
   -v --verbose          Show more detail.
   --stats               Show timing stats.
 
+  --package-name PKG_NAME  The name name of the package to generate. [default: pkg]
   -o DIR, --output DIR  Target directory for output files. [default: output]
   --force               Ignore any cached intermediate representations.
 
@@ -111,12 +112,14 @@ def candidates(arginfo):
 
 def excepthook(type, value, tb):
     locations = []
+    location_ids = set()
     current = tb
     while current:
         arginfo = inspect.getargvalues(current.tb_frame)
         for obj in candidates(arginfo):
-            if obj not in locations and hasattr(obj, "location"):
+            if id(obj) not in location_ids and getattr(obj, "location", None):
                 locations.append(obj)
+                location_ids.add(id(obj))
         current = current.tb_next
 
     sys.stderr.write("%s%s: %s\n" % ("".join(format_list(filter_match(tb))), type.__name__, value))
@@ -204,7 +207,7 @@ def main(args):
             ir_fresh and ir_name or "missing input files?")
 
     if pkg is None:
-        c = Compiler(verbose=verbose)
+        c = Compiler(package_name=args["--package-name"], verbose=verbose)
         for fname in input_files:
             cname = "%sp" % fname
             if is_newer(cname, fname) and not args["--force"]:

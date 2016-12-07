@@ -17,11 +17,11 @@ class Compiler(object):
 
     MATCH_TRAITS = COMPILER
 
-    def __init__(self, verbose=0):
+    def __init__(self, package_name="pkg", verbose=0):
         self.errors = Errors()
         self.symbols = Symbols()
         self.types = Types(self.symbols)
-        self.code = Code(self.symbols, self.types)
+        self.code = Code(self.symbols, self.types, package_name)
         self.files = []
 
     @match(basestring, basestring)

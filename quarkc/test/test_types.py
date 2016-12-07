@@ -106,6 +106,10 @@ def typesig(t):
 def typesig(u):
     return (UNKNOWN, typesig(u.type), u.name)
 
+@match(types.Unresolvable)
+def typesig(u):
+    return (UNKNOWN, typesig(u.un))
+
 @match(types.Ref)
 def typesig(r):
     return str(r)
@@ -296,7 +300,7 @@ def test_templated_fields():
                         (DECLARE, 'h', 'f.D<f.X>', 'f.D<f.X>'))
           })
 
-def check_violation(code, signature):
+def check_with_primitives(code, signature):
     prolog = """
         namespace quark {
             primitive void {}
@@ -337,7 +341,7 @@ def check_violation(code, signature):
     check("f", prolog + code, signature)
 
 def test_assignment_violation():
-    check_violation(
+    check_with_primitives(
         """
         int foo() {
             String x = 3;
@@ -355,7 +359,7 @@ def test_assignment_violation():
         })
 
 def test_return_violation():
-    check_violation(
+    check_with_primitives(
         """
         int foo() {
             return "three";
@@ -367,7 +371,7 @@ def test_return_violation():
         })
 
 def test_call_violation():
-    check_violation(
+    check_with_primitives(
         """
         void foo(String s) {
           foo(3);
@@ -383,7 +387,7 @@ def test_call_violation():
     )
 
 def test_bool_violation():
-    check_violation(
+    check_with_primitives(
         """
         void foo() {
            if (foo()) {}
@@ -398,7 +402,7 @@ def test_bool_violation():
     )
 
 def test_conversion():
-    check_violation(
+    check_with_primitives(
         """
         class X {
             String field;
@@ -420,7 +424,7 @@ def test_conversion():
     )
 
 def test_infer_return_list():
-    check_violation(
+    check_with_primitives(
         """
         List<int> foo() {
             return [];
@@ -431,7 +435,7 @@ def test_infer_return_list():
         })
 
 def test_infer_return_map():
-    check_violation(
+    check_with_primitives(
         """
         Map<String,int> foo() {
             return {};
@@ -442,7 +446,7 @@ def test_infer_return_map():
         })
 
 def test_infer_return_null():
-    check_violation(
+    check_with_primitives(
         """
         String foo() {
             return null;
@@ -450,4 +454,15 @@ def test_infer_return_null():
         """,
         {
             'f.foo': ((CALLABLE, 'quark.String'), (RETURN, 'quark.String'))
+        })
+
+def test_double_get():
+    check_with_primitives(
+        """
+        void foo() {
+            "asdf".foo.bar;
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.void'), (UNKNOWN, (UNKNOWN, 'quark.String', 'foo')))
         })

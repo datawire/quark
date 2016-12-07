@@ -109,6 +109,80 @@ class IntegerTest {
         assertEqual(9 / 3, 3);
     }
 
+    void division_too() {
+        assertEqual(-2, -8 / 4);
+        assertEqual(2, -8 / -4);
+        assertEqual(-2, -7 / 4);
+        assertEqual(1, -7 / -4);
+        assertEqual(-2, -6 / 4);
+        assertEqual(1, -6 / -4);
+        assertEqual(-2, -5 / 4);
+        assertEqual(1, -5 / -4);
+        assertEqual(-1, -4 / 4);
+        assertEqual(1, -4 / -4);
+        assertEqual(-1, -3 / 4);
+        assertEqual(0, -3 / -4);
+        assertEqual(-1, -2 / 4);
+        assertEqual(0, -2 / -4);
+        assertEqual(-1, -1 / 4);
+        assertEqual(0, -1 / -4);
+        assertEqual(0, 0 / 4);
+        assertEqual(0, 0 / -4);
+        assertEqual(0, 1 / 4);
+        assertEqual(-1, 1 / -4);
+        assertEqual(0, 2 / 4);
+        assertEqual(-1, 2 / -4);
+        assertEqual(0, 3 / 4);
+        assertEqual(-1, 3 / -4);
+        assertEqual(1, 4 / 4);
+        assertEqual(-1, 4 / -4);
+        assertEqual(1, 5 / 4);
+        assertEqual(-2, 5 / -4);
+        assertEqual(1, 6 / 4);
+        assertEqual(-2, 6 / -4);
+        assertEqual(1, 7 / 4);
+        assertEqual(-2, 7 / -4);
+        assertEqual(2, 8 / 4);
+        assertEqual(-2, 8 / -4);
+    }
+
+    void modulo() {
+        assertEqual(0, -8 % 4);
+        assertEqual(0, -8 % -4);
+        assertEqual(1, -7 % 4);
+        assertEqual(-3, -7 % -4);
+        assertEqual(2, -6 % 4);
+        assertEqual(-2, -6 % -4);
+        assertEqual(3, -5 % 4);
+        assertEqual(-1, -5 % -4);
+        assertEqual(0, -4 % 4);
+        assertEqual(0, -4 % -4);
+        assertEqual(1, -3 % 4);
+        assertEqual(-3, -3 % -4);
+        assertEqual(2, -2 % 4);
+        assertEqual(-2, -2 % -4);
+        assertEqual(3, -1 % 4);
+        assertEqual(-1, -1 % -4);
+        assertEqual(0, 0 % 4);
+        assertEqual(0, 0 % -4);
+        assertEqual(1, 1 % 4);
+        assertEqual(-3, 1 % -4);
+        assertEqual(2, 2 % 4);
+        assertEqual(-2, 2 % -4);
+        assertEqual(3, 3 % 4);
+        assertEqual(-1, 3 % -4);
+        assertEqual(0, 4 % 4);
+        assertEqual(0, 4 % -4);
+        assertEqual(1, 5 % 4);
+        assertEqual(-3, 5 % -4);
+        assertEqual(2, 6 % 4);
+        assertEqual(-2, 6 % -4);
+        assertEqual(3, 7 % 4);
+        assertEqual(-1, 7 % -4);
+        assertEqual(0, 8 % 4);
+        assertEqual(0, 8 % -4);
+    }
+
     void literal_equal() {
         assertEqual(true, 0 == 0);
         assertEqual(false, 0 == 1);

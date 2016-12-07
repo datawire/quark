@@ -337,6 +337,10 @@ class Typespace(object):
     def get(self, template, name):
         return self.get(template.type, name)
 
+    @match(Unresolved, basestring)
+    def get(self, un, name):
+        return Unresolvable(un)
+
     @match(Ref, many(choice(Ref, Type)))
     def call(self, ref, *args):
         return self.call(self.resolve(ref), *args)

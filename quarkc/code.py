@@ -42,10 +42,11 @@ class View(object):
 
 class Code(object):
 
-    @match(Symbols, types.Types)
-    def __init__(self, symbols, types):
+    @match(Symbols, types.Types, basestring)
+    def __init__(self, symbols, types, package_name):
         self.symbols = symbols
         self.prototypes = types
+        self.package_name = package_name
 
         # Generic types are implemented as templates. This means we
         # run code generation for every unique instantiation of a
@@ -244,11 +245,11 @@ class Code(object):
 
     @match(basestring)
     def compile_ref(self, name):
-        return ir.Ref("pkg:pkg", name)
+        return ir.Ref("{}:{}".format(self.package_name, self.package_name), name)
 
     @match(basestring)
     def compile_def(self, name):
-        return ir.Name("pkg:pkg", name)
+        return ir.Name("{}:{}".format(self.package_name, self.package_name), name)
 
     @match(types.Ref("quark.int"))
     def compile(self, ref):
@@ -400,7 +401,8 @@ class Code(object):
         else:
             return compiled
 
-    @match(Expression, choice(ir.AbstractType, ir.AssertEqual, ir.AssertNotEqual))
+    @match(Expression, choice(ir.AbstractType, ir.AssertEqual,
+                              ir.AssertNotEqual, ir.Ref))
     def convert(self, _, compiled):
         return compiled
 
@@ -602,6 +604,10 @@ class Code(object):
     @match(TypeParam, Var)
     def compile_var(self, p, v):
         return self.compile(self.types[p])
+
+    @match(Function, Var)
+    def compile_var(self, f, v):
+        return self.compile_ref(self.types[f])
 
     @match(Assign)
     def compile(self, ass):
