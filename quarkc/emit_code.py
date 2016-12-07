@@ -667,7 +667,7 @@ def code(assrt, target):
 
 @match(AssertEqual, Javascript)
 def code(assrt, target):
-    return tr.Simple("assert.strictEqual(({expected}), ({actual}))".format(
+    return tr.Simple("assert.deepStrictEqual(({expected}), ({actual}))".format(
         expected = expr(assrt.expected, target),
         actual = expr(assrt.actual, target)))
 
