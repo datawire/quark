@@ -1669,8 +1669,54 @@ namespace quark {
         int size();
         void append(T element);
         void extend(List<T> other);
+        void insert(int index, T element);
         T remove(int index);
-        //bool index(T element); // XXX: what does this do??? should it return int? should it be named contains?
+
+        void add(T element) {
+            // Quark 1 compatibility alias
+            self.append(element);
+        }
+
+        /* FIXME: Does not compile because elements of the
+                  list may lack __eq__/__ne__ methods.
+        bool __eq__(List<T> other) {
+            if (self.size() != other.size()) {
+                return false;
+            }
+            int idx = 0;
+            while (idx < self.size()) {
+                if (self[idx] != other[idx]) {
+                    return false;
+                }
+                idx = idx + 1;
+            }
+            return true;
+        }
+        */
+
+        List<T> slice(int start, int stop) {
+            List<T> result = [];
+
+            if (start >= self.size()) {
+                start = self.size();
+            } else {
+                start = start % self.size();
+            }
+
+            if (stop >= self.size()) {
+                stop = self.size();
+            } else {
+                stop = stop % self.size();
+            }
+
+            int idx = start;
+            while (idx < stop) {
+                result.add(self[idx]);
+                idx = idx + 1;
+            }
+
+            return result;
+        }
 
         List<T> __init__() for java import "java.util.List" import "java.util.ArrayList" {
                 return new ArrayList<$T_boxed>();
@@ -1699,6 +1745,10 @@ namespace quark {
 
         void extend(List<T> other) for java import "java.util.List" {
                 $self.addAll($other);
+            }
+
+        void insert(int index, T element) for java import "java.util.List" {
+                $self.add($index, $element);
             }
 
         T remove(int index) for java import "java.util.List" {
@@ -1735,6 +1785,12 @@ namespace quark {
                 *$self = append(*$self, (*$other)...);
             }
 
+        void insert(int index, T element) for go {
+                *$self = append(*$self, $element);
+                copy((*$self)[$index+1:], (*$self)[$index:]);
+                (*$self)[$index] = $element;
+            }
+
         T remove(int index) for go {
             ret := (*$self)[$index];
             copy((*$self)[$index:], (*$self)[$index+1:]);
@@ -1767,6 +1823,10 @@ namespace quark {
                 $self.extend($other)
             }
 
+        void insert(int index, T element) for python {
+                $self.insert($index, $element)
+            }
+
         T remove(int index) for python {
                 ret = $self[$index]
                 $self[$index:] = $self[$index+1:]
@@ -1797,6 +1857,10 @@ namespace quark {
                 $self.push(*$other)
             }
 
+        void insert(int index, T element) for ruby {
+                $self.insert($index, $element)
+            }
+
         T remove(int index) for ruby {
                 $self.delete_at($index)
             }
@@ -1824,6 +1888,10 @@ namespace quark {
 
         void extend(List<T> other) for javascript {
                 $other.forEach(x => $self.push(x));
+            }
+
+        void insert(int index, T element) for javascript {
+                $self.splice($index, 0, $element);
             }
 
         T remove(int index) for javascript {
