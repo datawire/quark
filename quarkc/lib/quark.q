@@ -317,6 +317,9 @@ namespace quark {
         return unsafe(self).asScalar();
     }
 
+    /**
+     * Any is a safe generic abstraction of structured data (think json).
+     */
     primitive Any {
         /*
          * Returns type of the thing contained
@@ -324,8 +327,7 @@ namespace quark {
          * 1 - scalar. To query more precisely see asScalar() below
          * 2 - list
          * 3 - map
-         * XXX - interface ?
-         * -1 - object not representable in quark
+         * -1 - object not representable in quark as data
          */
         int type();
 
