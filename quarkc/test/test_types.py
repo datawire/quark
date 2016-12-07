@@ -166,7 +166,9 @@ def typesig(c, ass):
 
 @match(Compiler, Return)
 def typesig(c, r):
-    return vcheck(c, r, (RETURN, typesig(c, r.expr)))
+    if r.expr is not None:
+        return vcheck(c, r, (RETURN, typesig(c, r.expr)))
+    return vcheck(c, r, (RETURN, typesig(types.Ref("quark.void"))))
 
 @match(Compiler, choice(ExprStmt))
 def typesig(c, stmt):
@@ -454,6 +456,17 @@ def test_infer_return_null():
         """,
         {
             'f.foo': ((CALLABLE, 'quark.String'), (RETURN, 'quark.String'))
+        })
+
+def test_naked_return():
+    check_with_primitives(
+        """
+        void foo() {
+            return;
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.void'), (RETURN, 'quark.void'))
         })
 
 def test_double_get():

@@ -1040,13 +1040,14 @@ class Evaluate(Statement):
 
 class Return(Statement):
 
-    @match(Expression)
+    @match(choice(Expression, None))
     def __init__(self, expr):
         self.expr = expr
 
     @property
     def children(self):
-        yield self.expr
+        if self.expr is not None:
+            yield self.expr
 
     def __repr__(self):
         return self.repr(self.expr)

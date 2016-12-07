@@ -567,7 +567,9 @@ class Code(object):
 
     @match(Return)
     def compile(self, retr):
-        return ir.Return(self.compile(retr.expr))
+        if retr.expr is not None:
+            return ir.Return(self.compile(retr.expr))
+        return ir.Return(None)
 
     @match(Var)
     def compile(self, var):
