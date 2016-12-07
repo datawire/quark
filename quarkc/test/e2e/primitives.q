@@ -407,6 +407,16 @@ class Rainbow {
 }
 
 class AnyTest {
+    void uninit() {
+        Any a;
+        assertEqual(0, a.type());
+        assertEqual(false, a.asBool());
+        assertEqual(0, a.asInt());
+        assertEqual("", a.asString());
+        assertEqual(0, a.asScalar().type());
+        assertEqual(null, a.asList());
+        assertEqual(null, a.asMap());
+    }
     void yes() {
         Any a = unsafe(new Rainbow().yes());
         assertEqual(1, a.type());
