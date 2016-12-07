@@ -1451,8 +1451,13 @@ namespace quark {
         bool startsWith(String other) for ruby { return ($self).start_with?($other) }
         bool endsWith(String other) for ruby { return ($self).end_with?($other) }
         int find(String other) for ruby { return (($self).index($other) or -1) }
-        String replaceAll(String from, String to) for ruby { return ($self).sub(($from), ($to)) }
-        List<String> split(String sep) for ruby { return ::DatawireQuarkCore.split($self, $sep) }
+        String replaceAll(String from, String to) for ruby { return ($self).gsub(($from), ($to)) }
+        List<String> split(String sep) for ruby {
+                return ['', ''] if $self == $sep
+                result = $self.split($sep)
+                result = result + [''] if ($self).end_with? $sep
+                result
+        }
         String join(List<String> parts) for ruby { return ($parts).join($self) }
         String toUpper() for ruby { return ($self).upcase }
         String toLower() for ruby { return ($self).downcase }
