@@ -47,7 +47,6 @@ for javascript {}
     int foo() {
         return 3;
     }
-
 }
 
 imaginary imaginary___init__(int n);
@@ -109,3 +108,28 @@ void testint_null() {
     assertEqual(nuffin, 0);
 }
 
+int theAnswer() {
+    return 42;
+}
+
+int getTheAnswer();
+
+int getTheAnswer() for java {
+    return $theAnswer();
+}
+int getTheAnswer() for go {
+    return $theAnswer()
+}
+int getTheAnswer() for python {
+    return $theAnswer()
+}
+int getTheAnswer() for ruby {
+    return $theAnswer()
+}
+int getTheAnswer() for javascript {
+    return $theAnswer()
+}
+
+void test_invoke_quark_function_from_native() {
+    assertEqual(theAnswer(), getTheAnswer());
+}
