@@ -236,8 +236,8 @@ def code(evaluate, target):
 @match(Return, Target)
 def code(retr, target):
     if retr.expr is not None:
-    return tr.Simple("return {expr}".format(
-        expr=expr(retr.expr, target)))
+        return tr.Simple("return {expr}".format(
+            expr=expr(retr.expr, target)))
     return tr.Simple("return")
 
 ## Break
