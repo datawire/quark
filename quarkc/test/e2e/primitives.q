@@ -339,14 +339,17 @@ class StringTest {
     }
 
     void split() {
-        assertEqual("abc".split("b"), ["a", "c"]);
-        assertEqual("aGOcGOGOd".split("GO"), ["a", "c", "", "d"]);
-        assertEqual("abc".split("z"), ["abc"]);
+        List<String> l = ["a", "c"];
+        assertEqual("abc".split("b"), l);
+        l = ["a", "c", "", "d"];
+        assertEqual("aGOcGOGOd".split("GO"), l);
+        l = ["abc"];
+        assertEqual("abc".split("z"), l);
     }
 
-    void replace() {
-        assertEqual("abc".replace("bc", "z"), "az");
-        assertEqual("aGOdGO".replace("GO", "me"), "amedme");
+    void replaceAll() {
+        assertEqual("abc".replaceAll("bc", "z"), "az");
+        assertEqual("aGOdGO".replaceAll("GO", "me"), "amedme");
     }
 
     void endsWith() {
