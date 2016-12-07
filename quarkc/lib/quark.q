@@ -1385,7 +1385,7 @@ namespace quark {
         bool endsWith(String other) for java { return Boolean.valueOf(($self).endsWith($other)); }
         int find(String other) for java { return ($self).indexOf($other); }
         String replaceAll(String from, String to) for java import "java.util.regex.Pattern" {
-                return ($self).replaceFirst(Pattern.quote($from), ($to));
+                return ($self).replaceAll(Pattern.quote($from), ($to));
             }
         List<String> split(String sep) for java import "java.util.ArrayList"
                                                 import "java.util.Arrays"

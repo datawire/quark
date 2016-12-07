@@ -350,6 +350,8 @@ class StringTest {
     void replaceAll() {
         assertEqual("abc".replaceAll("bc", "z"), "az");
         assertEqual("aGOdGO".replaceAll("GO", "me"), "amedme");
+        // Make sure we're not somehow using regexs:
+        assertEqual("a.csc".replaceAll(".c", "z"), "azsc");
     }
 
     void endsWith() {
