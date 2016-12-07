@@ -1426,6 +1426,18 @@ namespace quark {
 	}
 	return $self[s:e]
             }
+        String strip() for go import "strings" { return strings.TrimSpace($self) }
+        bool startsWith(String other) for go import "strings" { return strings.HasPrefix(($self), ($other)) }
+        bool endsWith(String other) for go import "strings" { return strings.HasSuffix(($self), ($other)) }
+        int find(String other) for go import "strings" { return strings.Index($self, $other) }
+        String replaceAll(String from, String to) for go import "strings" { return strings.Replace($self, $from, $to, -1) }
+        List<String> split(String sep) for go import "strings" {
+            l := strings.Split($self, $sep)
+            return &l
+                    }
+        String join(List<String> parts) for go import "strings" { return strings.Join(*($parts), $self)}
+        String toUpper() for go import "strings"{ return strings.ToUpper($self) }
+        String toLower() for go import "strings" { return strings.ToLower($self) }
 
         String __add__(String other) for python { return $self + $other }
         bool __eq__(String other) for python { return $self == $other }
@@ -1466,7 +1478,6 @@ namespace quark {
         bool __eq__(String other) for javascript { return $self === $other }
         int size() for javascript { return $self.length }
         String substring(int start, int end) for javascript { return $self.substring($start, $end) }
-
         String strip() for javascript { return ($self).trim() }
         bool startsWith(String other) for javascript { return (($self).indexOf($other)===0)}
         bool endsWith(String other) for javascript { return (($self).indexOf(($other), ($self).length - ($other).length) !== -1)}

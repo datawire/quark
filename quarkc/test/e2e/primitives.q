@@ -322,7 +322,6 @@ class StringTest {
         while (i < ws.size()) {
             int j = 0;
             while (j < ws.size()) {
-                int k = 0;
                 assertEqual(s, (ws[i] + s + ws[j]).strip());
                 j = j + 1;
             }
