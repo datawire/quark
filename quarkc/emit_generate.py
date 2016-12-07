@@ -318,7 +318,7 @@ def header(dfn, target):
         tr.Simple("package {name}".format(
             name = target.nameof(dfn)
             )),
-        tr.Simple('import "testing"\nimport "reflect"')
+        tr.Simple("import \"testing\"")
     )) + tuple(imports(dfn, target))
 
 @match(Definition, Python)

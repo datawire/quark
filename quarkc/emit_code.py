@@ -636,10 +636,6 @@ def code_assert(assrt, expected, actual, op, target):
 
 @match(choice(AssertEqual, AssertNotEqual), Expression, Expression, basestring, Go)
 def code_assert(assrt, expected, actual, op, target):
-    if op == "==":
-        op = "reflect.DeepEqual"
-    else:
-        op = "!reflect.DeepEqual"
     return tr.Compound("", tr.Block(
         tr.Comment(repr(assrt)),
         tr.Simple("var expected {type} = {expected}".format(
@@ -648,7 +644,7 @@ def code_assert(assrt, expected, actual, op, target):
         tr.Simple("var actual {type} = {actual}".format(
             type = "interface{}",
             actual = expr(assrt.actual, target))),
-        tr.Compound("if (!({op}(expected, actual)))".format(op=op), tr.Block(
+        tr.Compound("if (!(expected {op} actual))".format(op=op), tr.Block(
             tr.Simple("t__.Error(\"assert(\", expected, \"{op}\", actual, \")\")".format(op=op))))))
 
 @match(AssertEqual, Python)
@@ -671,7 +667,7 @@ def code(assrt, target):
 
 @match(AssertEqual, Javascript)
 def code(assrt, target):
-    return tr.Simple("assert.deepStrictEqual(({expected}), ({actual}))".format(
+    return tr.Simple("assert.strictEqual(({expected}), ({actual}))".format(
         expected = expr(assrt.expected, target),
         actual = expr(assrt.actual, target)))
 
@@ -702,7 +698,7 @@ def code(assrt, target):
 
 @match(AssertNotEqual, Javascript)
 def code(assrt, target):
-    return tr.Simple("assert.notDeepStrictEqual(({expected}), ({actual}))".format(
+    return tr.Simple("assert.notStrictEqual(({expected}), ({actual}))".format(
         expected = expr(assrt.expected, target),
         actual = expr(assrt.actual, target)))
 
