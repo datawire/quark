@@ -154,17 +154,16 @@ def code(fun, target):
 @match(Check, Go)
 def code(fun, target):
     return tr.Compound(
-        "func TestQ_{name}(t__ *testing.T)".format(
-            name=target.upcase("_".join(fun.name.path[1:]))),
+        "func {name}(t__ *testing.T)".format(
+            name=target.nameof(fun)),
         code(fun.body, target)
     )
 
 @match(TestMethod, Go)
 def code(fun, target):
     return tr.Compound(
-        "func TestQ_{klass}_{name}(t__ *testing.T)".format(
-            klass=target.nameof(target.q.parent(fun)),
-            name=target.upcase(fun.name)),
+        "func {name}(t__ *testing.T)".format(
+            name=target.nameof(fun)),
         code(fun.body, target)
     )
 
@@ -259,27 +258,27 @@ def code(brk, target):
 @match(Local, choice(Python, Ruby))
 def code(local, target):
     return tr.Simple("{name}{initializer}".format(
-        name=target.varname(local.name),
+        name=target.nameof(local.name),
         initializer=opt_expr(" = ", local.expr or Null(local.type), target)))
 
 @match(Local, Java)
 def code(local, target):
     return tr.Simple("{type} {name}{initializer}".format(
-        name=target.varname(local.name),
+        name=target.nameof(local.name),
         type=expr(local.type, target),
         initializer=opt_expr(" = ", local.expr, target)))
 
 @match(Local, Go)
 def code(local, target):
     return tr.Simple("var {name} {type}{initializer}".format(
-        name=target.varname(local.name),
+        name=target.nameof(local.name),
         type=expr(local.type, target),
         initializer=opt_expr(" = ", local.expr, target)))
 
 @match(Local, Javascript)
 def code(local, target):
     return tr.Simple("let {name}{initializer}".format(
-        name=target.varname(local.name),
+        name=target.nameof(local.name),
         initializer=opt_expr(" = ", local.expr, target)))
 
 ## Assign
@@ -287,7 +286,7 @@ def code(local, target):
 @match(Assign, Target)
 def code(ass, target):
     return tr.Simple("{name} = {value}".format(
-        name=target.varname(ass.lhs.name),
+        name=target.nameof(ass.lhs.name),
         value=expr(ass.rhs, target)))
 
 ## Set
@@ -296,21 +295,21 @@ def code(ass, target):
 def code(fset, target):
     return tr.Simple("{target}.{field} = {value}".format(
         target=expr(fset.expr, target),
-        field=target.upcase(fset.name),
+        field=target.nameof(fset.name),
         value=expr(fset.value, target)))
 
 @match(Set, choice(Python, Java, Javascript))
 def code(fset, target):
     return tr.Simple("{target}.{field} = {value}".format(
         target=expr(fset.expr, target),
-        field=fset.name,
+        field=target.nameof(fset.name),
         value=expr(fset.value, target)))
 
 @match(Set, Ruby)
 def code(fset, target):
     return tr.Simple("{target}.{field} = {value}".format(
         target=expr(fset.expr, target),
-        field=fset.name,
+        field=target.nameof(fset.name),
         value=expr(fset.value, target)))
 
 ## Interface
@@ -365,7 +364,7 @@ def code(iface, target):
 def code(fun, target):
     return document(fun, target, tr.Compound(
         "def {name}({params})".format(
-            name=fun.name,
+            name=target.nameof(fun.name),
             params=", ".join(expr(p, target) for p in fun.params)
         ),
         tr.Block(
@@ -377,7 +376,7 @@ def code(fun, target):
     return document(fun, target, tr.Simple(
         "public {type} {name}({params})".format(
             type=expr(fun.type, target),
-            name=fun.name,
+            name=target.nameof(fun.name),
             params=", ".join(expr(p, target) for p in fun.params)
         )))
 
@@ -385,7 +384,7 @@ def code(fun, target):
 def code(fun, target):
     return document(fun, target, tr.Compound(
         "def {name}({params})".format(
-            name=fun.name,
+            name=target.nameof(fun.name),
             params=", ".join(expr(p, target) for p in fun.params)),
         tr.Block()))
 
@@ -394,7 +393,7 @@ def code(fun, target):
     return document(fun, target, tr.Simple(
         "{name}({params}) {type}".format(
             type=expr(fun.type, target),
-            name=target.upcase(fun.name),
+            name=target.nameof(fun.name),
             params=", ".join(expr(p, target) for p in fun.params)
     )))
 
@@ -403,7 +402,7 @@ def code(fun, target):
     return document(fun, target, tr.Compound(
         "{parent}.prototype.{name} = function({params})".format(
             parent = target.nameof(target.q.parent(fun)),
-            name=fun.name,
+            name=target.nameof(fun.name),
             params=", ".join(expr(p, target) for p in fun.params)),
         tr.Block(
             tr.Simple("throw Error('abstract')")
@@ -497,19 +496,19 @@ def code(clazz, target):
 def code(field, target):
     return tr.Simple("public {type} {name}".format(
         type=expr(field.type, target),
-        name=field.name,
+        name=target.nameof(field.name),
     ))
 
 @match(Field, Ruby)
 def code(field, target):
     return tr.Simple("attr_accessor :{name}".format(
-        name=field.name,
+        name=target.nameof(field.name),
     ))
 
 @match(Field, Go)
 def code(field, target):
     return tr.Simple("{name} {type}".format(
-        name=target.upcase(field.name),
+        name=target.nameof(field.name),
         type=expr(field.type, target),
     ))
 
@@ -519,7 +518,7 @@ def code(field, target):
 def code(method, target):
     return document(method, target, tr.Compound(
         "def {name}({params})".format(
-            name=method.name,
+            name=target.nameof(method.name),
             params=", ".join(["self"] + [expr(p, target) for p in method.params])),
         code(method.body, target)
     ))
@@ -529,7 +528,7 @@ def code(method, target):
     return document(method, target, tr.Compound(
         "public {type} {name}({params})".format(
             type=expr(method.type, target),
-            name=method.name,
+            name=target.nameof(method.name),
             params=", ".join(expr(p, target) for p in method.params)),
         code(method.body, target)
     ))
@@ -538,7 +537,7 @@ def code(method, target):
 def code(method, target):
     return document(method, target, tr.Compound(
         "def {name}({params})".format(
-            name=method.name,
+            name=target.nameof(method.name),
             params=", ".join(expr(p, target) for p in method.params)),
         code(method.body, target)
     ))
@@ -549,7 +548,7 @@ def code(method, target):
         "func (this *{clazz}) {name}({params}) {type}".format(
             clazz=target.nameof(target.q.parent(method)),
             type=expr(method.type, target),
-            name=target.upcase(method.name),
+            name=target.nameof(method.name),
             params=", ".join(expr(p, target) for p in method.params)),
         code(method.body, target)
     ))
@@ -559,7 +558,7 @@ def code(method, target):
     return document(method, target, tr.Compound(
         "{parent}.prototype.{name} = function({params})".format(
             parent = target.nameof(target.q.parent(method)),
-            name=method.name,
+            name=target.nameof(method.name),
             params=", ".join(expr(p, target) for p in method.params)),
         code(method.body, target)
     ))
@@ -571,7 +570,7 @@ def code(method, target):
 def code(constructor, target):
     return tr.Compound(
         "def __init__({params})".format(
-            name=constructor.name,
+            name=target.nameof(constructor.name),
             params=", ".join(["self"] + [expr(p, target) for p in constructor.params])),
         code(constructor.body, target)
     )
@@ -580,7 +579,7 @@ def code(constructor, target):
 def code(constructor, target):
     return document(constructor, target, tr.Compound(
         "public {name}({params})".format(
-            name=constructor.name,
+            name=target.nameof(constructor.name),
             params=", ".join(expr(p, target) for p in constructor.params)),
         code(constructor.body, target)
     ))

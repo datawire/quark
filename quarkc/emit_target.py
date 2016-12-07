@@ -98,6 +98,14 @@ class Target(object):
             return "??%s??" % name.path[-1]
         return self.names[name]
 
+    @match(ScopedName)
+    def nameof(self, name):
+        return name.name
+
+    @match(LocalName)
+    def nameof(self, name):
+        return name.name
+    
     @match(Definition, Ref, basestring)
     def define_import(self, dfn, ref, name):
         if dfn.name not in self.imports:
