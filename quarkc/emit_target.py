@@ -15,7 +15,7 @@
 from collections import OrderedDict
 from .match import match, choice, lazy
 from .ir import (Root, Definition, Namespace, NamespaceName, Name,
-                 Ref, ScopedName, LocalName, Declaration, Method,
+                 Ref, LocalName, Declaration, Method,
                  TransientFullyScopedName, IR)
 from .tree import Query, isa, walk_dfs
 
