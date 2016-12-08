@@ -314,11 +314,15 @@ def check_with_primitives(code, signature):
     prolog = """
         namespace quark {
             primitive void {}
+            primitive Any {}
             primitive bool {
                 bool __eq__(bool b);
             }
             primitive int {
                 int __add__(int n);
+            }
+            primitive float {
+                float __add__(float f);
             }
             primitive String {
                 String substring(int start, int len);
@@ -329,12 +333,16 @@ def check_with_primitives(code, signature):
     """
     prolog_sig = {
         'quark.void.void': (CALLABLE, 'quark.void'),
+        'quark.Any.Any': (CALLABLE, 'quark.Any'),
         'quark.bool.bool': (CALLABLE, 'quark.bool'),
         'quark.bool.__eq__': ((CALLABLE, 'quark.bool', 'quark.bool'),
                               (DECLARE, 'b', 'quark.bool')),
         'quark.int.int': (CALLABLE, 'quark.int'),
         'quark.int.__add__': ((CALLABLE, 'quark.int', 'quark.int'),
                               (DECLARE, 'n', 'quark.int')),
+        'quark.float.float': (CALLABLE, 'quark.float'),
+        'quark.float.__add__': ((CALLABLE, 'quark.float', 'quark.float'),
+                              (DECLARE, 'f', 'quark.float')),
         'quark.String.String': (CALLABLE, 'quark.String'),
         'quark.String.substring': ((CALLABLE, 'quark.String', 'quark.int', 'quark.int'),
                                    (DECLARE, 'start', 'quark.int'),
@@ -455,17 +463,6 @@ def test_infer_return_map():
             'f.foo': ((CALLABLE, 'quark.Map<quark.String, quark.int>'), (RETURN, 'quark.Map<quark.String, quark.int>'))
         })
 
-def test_infer_return_null():
-    check_with_primitives(
-        """
-        String foo() {
-            return null;
-        }
-        """,
-        {
-            'f.foo': ((CALLABLE, 'quark.String'), (RETURN, 'quark.String'))
-        })
-
 def test_naked_return():
     check_with_primitives(
         """
@@ -500,4 +497,18 @@ def test_uninferable():
             'f.foo': ((CALLABLE, 'quark.void'),
                       (VIOLATION, (UNINFERABLE, '[]'), UNKNOWN),
                       (VIOLATION, (UNINFERABLE, '{}'), UNKNOWN))
+        })
+
+def test_literals():
+    check_with_primitives(
+        """
+        void foo() {
+            "asdf";
+            3;
+            3.14;
+            null;
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.void'), 'quark.String', 'quark.int', 'quark.float', 'quark.Any')
         })

@@ -478,19 +478,15 @@ class Typespace(object):
                 return False
         return True
 
-    @match(lazy("Template"), lazy("Object"))
+    @match(lazy("Template"), Type)
     def compatible(self, a, b):
         return False
 
-    @match(lazy("Object"), lazy("Template"))
+    @match(lazy("Object"), Type)
     def compatible(self, a, b):
         return False
 
-    @match(lazy("Object"), lazy("Callable"))
-    def compatible(self, a, b):
-        return False
-
-    @match(lazy("Callable"), lazy("Object"))
+    @match(lazy("Callable"), Type)
     def compatible(self, a, b):
         return False
 

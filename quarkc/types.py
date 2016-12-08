@@ -245,11 +245,15 @@ class Types(object):
     def do_resolve(self, _):
         return types.Ref("quark.bool")
 
-    @match(choice(List, Map, Null))
+    @match(Null)
+    def do_resolve(self, _):
+        return types.Ref("quark.Any")
+
+    @match(choice(List, Map))
     def do_resolve(self, l):
         return self.do_resolve_infer(l.parent, l)
 
-    @match(Declaration, choice(List, Map, Null))
+    @match(Declaration, choice(List, Map))
     def do_resolve_infer(self, d, _):
         return self.resolve(d.type)
 
@@ -267,7 +271,7 @@ class Types(object):
         else:
             assert False
 
-    @match(Call, choice(List, Map, Null))
+    @match(Call, choice(List, Map))
     def do_resolve_infer(self, c, l):
         expr = self.resolve(c.expr)
         callable = self.node(expr)
@@ -277,16 +281,16 @@ class Types(object):
             return Unresolvable(callable)
         return callable.arguments[idx]
 
-    @match(Assign, choice(List, Map, Null))
+    @match(Assign, choice(List, Map))
     def do_resolve_infer(self, ass, l):
         return self.resolve(ass.lhs)
 
-    @match(Return, choice(List, Map, Null))
+    @match(Return, choice(List, Map))
     def do_resolve_infer(self, retr, l):
         node = self.node(self.resolve(get_definition(retr)))
         return node.result
 
-    @match(AST, choice(List, Map, Null))
+    @match(AST, choice(List, Map))
     def do_resolve_infer(self, ctx, l):
         self.add_violation(errors.Uninferable(l))
         return Unresolvable(None)
