@@ -512,3 +512,17 @@ def test_literals():
         {
             'f.foo': ((CALLABLE, 'quark.void'), 'quark.String', 'quark.int', 'quark.float', 'quark.Any')
         })
+
+def test_no_new():
+    # treating a this situation as this kind of type error is a bit
+    # weird, but better than the compiler blowing up
+    check_with_primitives(
+        """
+        void foo() {
+            List<int> 3;
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.void'),
+                      (UNKNOWN, (UNKNOWN, (UNKNOWN, (UNKNOWN, 'quark.List', '__lt__')))))
+        })

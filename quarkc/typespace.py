@@ -321,21 +321,21 @@ class Typespace(object):
     def get(self, ref, name):
         """Calculate the result type of accessing a field.
         """
-        return self.get(self.resolve(ref), name)
+        return self.get(ref, self.resolve(ref), name)
 
-    @match(lazy("Object"), basestring)
-    def get(self, object, name):
+    @match(Ref, lazy("Object"), basestring)
+    def get(self, ref, object, name):
         """Calculate the result type of accessing a field.
         """
         field = object.byname.get(name, None)
         if field:
             return self.resolve(field.type)
         else:
-            return UnresolvedField(self.unresolve(object), name)
+            return UnresolvedField(ref, name)
 
-    @match(lazy("Template"), basestring)
-    def get(self, template, name):
-        return self.get(template.type, name)
+    @match(Ref, lazy("Template"), basestring)
+    def get(self, ref, template, name):
+        return self.get(ref, template.type, name)
 
     @match(Unresolved, basestring)
     def get(self, un, name):

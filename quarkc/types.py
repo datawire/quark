@@ -337,7 +337,7 @@ class Types(object):
     @match(choice(NativeFunction, Method, Function))
     def do_resolve(self, meth):
         if meth.type:
-            return self.types.get(self.types[name(meth.parent)], meth.name.text)
+            return self.types.get(types.Ref(name(meth.parent)), meth.name.text)
         else:
             return self.types[name(meth)]
 
