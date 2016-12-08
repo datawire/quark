@@ -926,19 +926,25 @@ class Type(AST):
 
 class TypeParam(AST):
 
-    def __init__(self, name):
+    def __init__(self, name, bound):
         self.name = name
+        self.bound = bound
 
     @property
     def children(self):
         yield self.name
+        if self.bound:
+            yield self.bound
 
     @coder
     def code(self, coder):
-        return self.name.code(coder)
+        if self.bound:
+            return self.name.code(coder) + " extends " + self.bound.code(coder)
+        else:
+            return self.name.code(coder)
 
     def copy(self):
-        return TypeParam(copy(self.name))
+        return TypeParam(copy(self.name), copy(self.bound))
 
 class Block(AST):
 

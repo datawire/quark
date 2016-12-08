@@ -9,7 +9,7 @@ from quarkc.ast import (
 )
 from quarkc.parse import traversal
 from quarkc.symbols import Self, Boxed, Nulled
-from quarkc.errors import InvalidInvocation, InvalidAssignment
+from quarkc.errors import InvalidInvocation, InvalidAssignment, Uninferable
 from quarkc import typespace as types
 
 class Base(object):
@@ -37,6 +37,7 @@ TEMPLATE = Constant("TEMPLATE")
 UNKNOWN = Constant("UNKNOWN")
 ASSIGN = Constant("ASSIGN")
 VIOLATION = Constant("VIOLATION")
+UNINFERABLE = Constant("UNINFERABLE")
 
 def denest(t):
     if isinstance(t, tuple) and len(t) == 1:
@@ -79,6 +80,10 @@ def vsig(v):
 def vsig(v):
     return typesig(v.target), typesig(v.value)
 
+@match(Uninferable)
+def vsig(v):
+    return (UNINFERABLE, str(v.node))
+
 @match(Compiler)
 def typesigs(c):
     c.reported = set()
@@ -108,7 +113,10 @@ def typesig(u):
 
 @match(types.Unresolvable)
 def typesig(u):
-    return (UNKNOWN, typesig(u.un))
+    if u.un:
+        return (UNKNOWN, typesig(u.un))
+    else:
+        return UNKNOWN
 
 @match(types.Ref)
 def typesig(r):
@@ -306,11 +314,15 @@ def check_with_primitives(code, signature):
     prolog = """
         namespace quark {
             primitive void {}
+            primitive Any {}
             primitive bool {
                 bool __eq__(bool b);
             }
             primitive int {
                 int __add__(int n);
+            }
+            primitive float {
+                float __add__(float f);
             }
             primitive String {
                 String substring(int start, int len);
@@ -321,12 +333,16 @@ def check_with_primitives(code, signature):
     """
     prolog_sig = {
         'quark.void.void': (CALLABLE, 'quark.void'),
+        'quark.Any.Any': (CALLABLE, 'quark.Any'),
         'quark.bool.bool': (CALLABLE, 'quark.bool'),
         'quark.bool.__eq__': ((CALLABLE, 'quark.bool', 'quark.bool'),
                               (DECLARE, 'b', 'quark.bool')),
         'quark.int.int': (CALLABLE, 'quark.int'),
         'quark.int.__add__': ((CALLABLE, 'quark.int', 'quark.int'),
                               (DECLARE, 'n', 'quark.int')),
+        'quark.float.float': (CALLABLE, 'quark.float'),
+        'quark.float.__add__': ((CALLABLE, 'quark.float', 'quark.float'),
+                              (DECLARE, 'f', 'quark.float')),
         'quark.String.String': (CALLABLE, 'quark.String'),
         'quark.String.substring': ((CALLABLE, 'quark.String', 'quark.int', 'quark.int'),
                                    (DECLARE, 'start', 'quark.int'),
@@ -447,17 +463,6 @@ def test_infer_return_map():
             'f.foo': ((CALLABLE, 'quark.Map<quark.String, quark.int>'), (RETURN, 'quark.Map<quark.String, quark.int>'))
         })
 
-def test_infer_return_null():
-    check_with_primitives(
-        """
-        String foo() {
-            return null;
-        }
-        """,
-        {
-            'f.foo': ((CALLABLE, 'quark.String'), (RETURN, 'quark.String'))
-        })
-
 def test_naked_return():
     check_with_primitives(
         """
@@ -478,4 +483,72 @@ def test_double_get():
         """,
         {
             'f.foo': ((CALLABLE, 'quark.void'), (UNKNOWN, (UNKNOWN, 'quark.String', 'foo')))
+        })
+
+def test_uninferable():
+    check_with_primitives(
+        """
+        void foo() {
+            [];
+            {};
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.void'),
+                      (VIOLATION, (UNINFERABLE, '[]'), UNKNOWN),
+                      (VIOLATION, (UNINFERABLE, '{}'), UNKNOWN))
+        })
+
+def test_literals():
+    check_with_primitives(
+        """
+        void foo() {
+            "asdf";
+            3;
+            3.14;
+            null;
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.void'), 'quark.String', 'quark.int', 'quark.float', 'quark.Any')
+        })
+
+def test_no_new():
+    # treating a this situation as this kind of type error is a bit
+    # weird, but better than the compiler blowing up
+    check_with_primitives(
+        """
+        void foo() {
+            List<int> 3;
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.void'),
+                      (UNKNOWN, (UNKNOWN, (UNKNOWN, (UNKNOWN, 'quark.List', '__lt__')))))
+        })
+
+def test_bound():
+    check_with_primitives(
+        """
+        interface Stringable {
+            String stringify();
+        }
+
+        class Box<T extends Stringable> {
+            T contents;
+
+            void doit() {
+                Stringable s = contents;
+                String str = contents.stringify();
+            }
+        }
+        """,
+        {
+            'f.Stringable.stringify': (CALLABLE, 'quark.String'),
+            'f.Box.Box': (TEMPLATE, 'f.Box.T', (CALLABLE, 'f.Box<f.Box.T>')),
+            'f.Box.contents': (DECLARE, 'contents', 'f.Box.T'),
+            'f.Box.doit': ((CALLABLE, 'quark.void'),
+                           (DECLARE, 's', 'f.Stringable', 'f.Box.T'),
+                           (DECLARE, 'str', 'quark.String', 'quark.String')),
+            'f.Box.doit.self': 'f.Box'
         })

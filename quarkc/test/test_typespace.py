@@ -168,7 +168,7 @@ def test_nested_templates():
     space["Map"] = Template(Param('K'), Param('V'), Object(Field('key', Ref('K')), Field('value', Ref('V'))))
     space["Box"] = Template(Param('T'), Object(Field('contents', Ref('Map', Ref('String'), Ref('T')))))
 
-    contents =  space.get(space.resolve(Ref("Box", Ref("int"))), "contents")
+    contents =  space.get(Ref("Box", Ref("int")), "contents")
     map = Ref("Map", Ref("String"), Ref("int"))
     assert space.assignable(contents, map)
     assert space.assignable(map, contents)

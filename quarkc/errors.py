@@ -120,4 +120,9 @@ class UnresolvedCall(NodeError):
     def __init__(self, node, type):
         self.init(node, "not callable: {type}", type=type)
 
+class Uninferable(NodeError):
+    @match(AST)
+    def __init__(self, node):
+        self.init(node, "unable to infer type of {node}")
+
 import types

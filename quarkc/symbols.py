@@ -1,6 +1,6 @@
 from .ast import (
     AST, Package, Callable, Class, Declaration, TypeParam, Import, Method, Type, Var, String, Number, Bool, If,
-    While, Name, Function, Interface, NativeFunction, NativeBlock, Primitive
+    While, Name, Function, Interface, NativeFunction, NativeBlock, Primitive, Null
 )
 from .ast import coder
 from .match import match, many, choice
@@ -80,7 +80,7 @@ def depackage(pkgs):
     return pkgs[0]
 
 def usages():
-    return choice(Type, Var, String, Number, Bool, If, While)
+    return choice(Type, Var, String, Number, Bool, If, While, Null)
 
 class Symbols(object):
 
@@ -200,6 +200,10 @@ class Symbols(object):
     @match(choice(If, While, Bool))
     def do_resolve(self, n):
         self.qualify(n, "bool")
+
+    @match(Null)
+    def do_resolve(self, n):
+        self.qualify(n, "Any")
 
     @match(Type)
     def qualify(self, type):

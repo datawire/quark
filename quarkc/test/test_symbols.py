@@ -409,6 +409,14 @@ def test_missing_bool4():
     }
     """, missing=["bool"])
 
+def test_missing_null():
+    check("missing_nul", """
+    primitive void {}
+    void foo() {
+        null;
+    }
+    """, missing=["Any"])
+
 def test_nesting():
     check("nesting", """
     primitive int {}

@@ -236,7 +236,7 @@ class UnresolvedCall(Unresolved):
 
 class Unresolvable(Unresolved):
 
-    @match(Unresolved)
+    @match(choice(Unresolved, None))
     def __init__(self, un):
         self.un = un
 
@@ -321,21 +321,28 @@ class Typespace(object):
     def get(self, ref, name):
         """Calculate the result type of accessing a field.
         """
-        return self.get(self.resolve(ref), name)
+        return self.get(ref, self.resolve(ref), name)
 
-    @match(lazy("Object"), basestring)
-    def get(self, object, name):
+    @match(Ref, lazy("Object"), basestring)
+    def get(self, ref, object, name):
         """Calculate the result type of accessing a field.
         """
         field = object.byname.get(name, None)
         if field:
             return self.resolve(field.type)
         else:
-            return UnresolvedField(self.unresolve(object), name)
+            return UnresolvedField(ref, name)
 
-    @match(lazy("Template"), basestring)
-    def get(self, template, name):
-        return self.get(template.type, name)
+    @match(Ref, lazy("Template"), basestring)
+    def get(self, ref, template, name):
+        return self.get(ref, template.type, name)
+
+    @match(Ref, lazy("Param"), basestring)
+    def get(self, ref, param, name):
+        if param.bound:
+            return self.get(ref, self.resolve(param.bound), name)
+        else:
+            return UnresolvedField(ref, name)
 
     @match(Unresolved, basestring)
     def get(self, un, name):
@@ -478,19 +485,15 @@ class Typespace(object):
                 return False
         return True
 
-    @match(lazy("Template"), lazy("Object"))
+    @match(lazy("Template"), Type)
     def compatible(self, a, b):
         return False
 
-    @match(lazy("Object"), lazy("Template"))
+    @match(lazy("Object"), Type)
     def compatible(self, a, b):
         return False
 
-    @match(lazy("Object"), lazy("Callable"))
-    def compatible(self, a, b):
-        return False
-
-    @match(lazy("Callable"), lazy("Object"))
+    @match(lazy("Callable"), Type)
     def compatible(self, a, b):
         return False
 
@@ -505,6 +508,10 @@ class Typespace(object):
     @match(lazy("Object"), lazy("Object"))
     def compatible(self, a, b):
         return True
+
+    @match(lazy("Object"), lazy("Param"))
+    def compatible(self, a, b):
+        return self.compatible(a, self.resolve(b.bound))
 
     @match(lazy("Callable"), lazy("Callable"))
     def compatible(self, a, b):

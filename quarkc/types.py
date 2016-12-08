@@ -76,7 +76,8 @@ class Types(object):
         clstype = types.Object(*[self.field(d, cls.parameters) for d in self.fields(cls)
                                  if not (isinstance(d, Callable) and isinstance(d.body, NativeBlock))])
         if cls.parameters:
-            clstype = types.Template(*[types.Param(name(p)) for p in cls.parameters] + [clstype])
+            clstype = types.Template(*[types.Param(name(p), self.ref(p.bound)) if p.bound else types.Param(name(p))
+                                       for p in cls.parameters] + [clstype])
         self.types[name(cls)] = clstype
 
     def fields(self, cls):
@@ -245,11 +246,15 @@ class Types(object):
     def do_resolve(self, _):
         return types.Ref("quark.bool")
 
-    @match(choice(List, Map, Null, Cast))
+    @match(Null)
+    def do_resolve(self, _):
+        return types.Ref("quark.Any")
+
+    @match(choice(List, Map, Cast))
     def do_resolve(self, l):
         return self.do_resolve_infer(l.parent, l)
 
-    @match(Declaration, choice(List, Map, Null, Cast))
+    @match(Declaration, choice(List, Map, Cast))
     def do_resolve_infer(self, d, _):
         return self.resolve(d.type)
 
@@ -267,7 +272,7 @@ class Types(object):
         else:
             assert False
 
-    @match(Call, choice(List, Map, Null))
+    @match(Call, choice(List, Map))
     def do_resolve_infer(self, c, l):
         expr = self.resolve(c.expr)
         callable = self.node(expr)
@@ -277,14 +282,19 @@ class Types(object):
             return Unresolvable(callable)
         return callable.arguments[idx]
 
-    @match(Assign, choice(List, Map, Null, Cast))
+    @match(Assign, choice(List, Map, Cast))
     def do_resolve_infer(self, ass, l):
         return self.resolve(ass.lhs)
 
-    @match(Return, choice(List, Map, Null))
+    @match(Return, choice(List, Map))
     def do_resolve_infer(self, retr, l):
         node = self.node(self.resolve(get_definition(retr)))
         return node.result
+
+    @match(AST, choice(List, Map))
+    def do_resolve_infer(self, ctx, l):
+        self.add_violation(errors.Uninferable(l))
+        return Unresolvable(None)
 
     @match(Var)
     def do_resolve(self, v):
@@ -328,7 +338,7 @@ class Types(object):
     @match(choice(NativeFunction, Method, Function))
     def do_resolve(self, meth):
         if meth.type:
-            return self.types.get(self.types[name(meth.parent)], meth.name.text)
+            return self.types.get(types.Ref(name(meth.parent)), meth.name.text)
         else:
             return self.types[name(meth)]
 
