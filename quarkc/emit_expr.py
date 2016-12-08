@@ -317,7 +317,7 @@ def funcall(name, target):
 def expr(send, target):
     return "{object}.{method}({args})".format(
         object=expr(send.expr, target),
-        method=send.name,
+        method=target.nameof(send.name),
         args=", ".join([expr(a, target) for a in send.args])
     )
 
@@ -325,7 +325,7 @@ def expr(send, target):
 def expr(send, target):
     return "{object}.{method}({args})".format(
         object=expr(send.expr, target),
-        method=target.upcase(send.name),
+        method=target.nameof(send.name),
         args=", ".join([expr(a, target) for a in send.args])
     )
 
@@ -417,16 +417,16 @@ def expr(or_, target):
 def expr(fget, target):
     return "{target}.{field}".format(
         target=expr(fget.expr, target),
-        field=target.upcase(fget.name))
+        field=target.nameof(fget.name))
 
 @match(Get, choice(Python, Java, Javascript))
 def expr(fget, target):
     return "{target}.{field}".format(
         target=expr(fget.expr, target),
-        field=fget.name)
+        field=target.nameof(fget.name))
 
 @match(Get, Ruby)
 def expr(fget, target):
     return "{target}.{field}".format(
         target=expr(fget.expr, target),
-        field=fget.name)
+        field=target.nameof(fget.name))

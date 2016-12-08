@@ -58,7 +58,7 @@ def rename(ns, name, target):
 
 @match(choice(PublicDeclaration,Method), Target)
 def rename(decl, target):
-    rename(decl, target.varname(decl.name), target)
+    rename(decl, decl.name.path[-1], target)
 
 @match(LocalDeclaration, Target)
 def rename(decl, target):
@@ -66,7 +66,7 @@ def rename(decl, target):
 
 @match(choice(PublicDeclaration,Method), Go)
 def rename(decl, target):
-    rename(decl, target.upcase(decl.name), target)
+    rename(decl, target.upcase(decl.name.path[-1]), target)
 
 @match(Check, Go)
 def rename(dfn, target):
@@ -78,7 +78,7 @@ def rename(dfn, target):
 def rename(dfn, target):
     rename(dfn, "TestQ_{klass}_{name}".format(
         klass = target.nameof(target.q.parent(dfn)),
-        name = target.upcase(dfn.name.name)),
+        name = target.upcase(dfn.name.path[-1])),
            target)
 
 @match(Class, Ruby)

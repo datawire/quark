@@ -94,14 +94,6 @@ class Target(object):
         assert target_name
         self.names[name] = target_name
 
-    @match(ScopedName, basestring)
-    def define_name(self, name, defname):
-        # XXX: consider moving scoping of names to code.py
-        dfn = self.q.definition(name)
-        fqn = TransientFullyScopedName.join(dfn.name, name.name)
-        print fqn, "-->", defname
-        self.define_name(fqn, defname)
-
     @match(LocalName, basestring)
     def define_name(self, name, defname):
         pass
@@ -113,18 +105,10 @@ class Target(object):
     @match(choice(NamespaceName,Name,TransientFullyScopedName))
     def nameof(self, name):
         if name not in self.names:
-            assert False, "cannot find name %r in %s" % ( name, sorted(self.names.keys()))
+            import pprint
+            assert False, "cannot find name %r in %s" % ( name, pprint.pformat(sorted(self.names.keys())))
             return "??%s??" % name.path[-1]
         return self.names[name]
-
-    @match(ScopedName)
-    def nameof(self, name):
-        # XXX: consider moving scoping of names to code.py
-        dfn = self.q.definition(name)
-        fqn = TransientFullyScopedName.join(dfn.name, name.name)
-        ret = self.nameof(fqn)
-        print fqn, "-->", ret
-        return ret
 
     @match(LocalName)
     def nameof(self, name):
@@ -160,14 +144,7 @@ class Target(object):
     def upcase(self, s):
         return s[:1].capitalize() + s[1:]
 
-    @match(ScopedName)
-    def upcase(self, s):
-        n = s.name
-        if n[:1] == "_":
-            n = "underscore" + n
-        return self.upcase(n)
-
-    @match(choice(ScopedName,LocalName))
+    @match(LocalName)
     def varname(self, s):
         return self.UNKEYWORDS.get(s.name, s.name)
 

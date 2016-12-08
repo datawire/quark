@@ -94,7 +94,7 @@ def code(fun, target):
 def code(fun, target):
     return tr.Compound(
         "def test_{name}(self)".format(
-            name=fun.name),
+            name=target.nameof(fun.name)),
         code(fun.body, target)
     )
 
@@ -120,7 +120,7 @@ def code(fun, target):
 def code(fun, target):
     return tr.Compound(
         "@Test\npublic void test_{name}()".format(
-            name=fun.name),
+            name=target.nameof(fun.name)),
         code(fun.body, target)
     )
 
@@ -137,7 +137,7 @@ def code(fun, target):
 def code(fun, target):
     return tr.Compound(
         "def test_{name}".format(
-            name=fun.name),
+            name=target.nameof(fun.name)),
         code(fun.body, target)
     )
 
@@ -183,7 +183,7 @@ def code(fun, target):
 def code(fun, target):
     return tr.Compound(
         "it('{name}', function()".format(
-            name=fun.name),
+            name=target.nameof(fun.name)),
         tr.Block(
             *[code(s, target) for s in fun.body.statements],
             extra_close = ")"

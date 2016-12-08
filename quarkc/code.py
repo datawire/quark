@@ -146,7 +146,8 @@ class Code(object):
 
     @match(Field)
     def compile(self, field):
-        return ir.Field(field.name.text, self.compile(self.types[field]))
+        fqn = self.compile_scoped(self.types[field.parent], field.name.text)
+        return ir.Field(fqn, self.compile(self.types[field]))
 
     @match(Method)
     def compile(self, meth):
@@ -163,12 +164,14 @@ class Code(object):
                 extra = [ir.Param("self", self.compile(self.types[meth.parent]))]
         elif meth.type:
             klass = ir.Method
-            nam = meth.name.text
+            nam = self.compile_scoped(self.types[meth.parent], meth.name.text)
             ret = self.types[meth.type]
             extra = []
         else:
             klass = ir.Constructor
-            nam = self.mangle(meth.name.text, *self.types[meth.parent].params)
+            nam = self.compile_scoped(
+                self.types[meth.parent],
+                self.mangle(meth.name.text, *self.types[meth.parent].params))
             ret = self.types.node(meth).result
             extra = []
 
@@ -192,7 +195,8 @@ class Code(object):
     def compile_interface(self, meth):
         assert meth.type
         assert not meth.body
-        return ir.Message(meth.name.text, self.compile(self.types.node(meth).result), *self.compile(meth.params))
+        fqn = self.compile_scoped(self.types[meth.parent], meth.name.text)
+        return ir.Message(fqn, self.compile(self.types.node(meth).result), *self.compile(meth.params))
 
     @match(types.Ref)
     def compile_ref(self, ref):
@@ -429,7 +433,8 @@ class Code(object):
 
     @match(types.Ref, Class, Method, ir.Expression, [many(ir.Expression)])
     def compile_call_method(self, ref, objdfn, methdfn, expr, args):
-        return ir.Send(expr, methdfn.name.text, tuple(args))
+        fqn = self.compile_scoped(self.types[objdfn], methdfn.name.text)
+        return ir.Send(expr, fqn, tuple(args))
 
     @match(types.Ref, Primitive, Method, ir.Expression, [many(ir.Expression)])
     def compile_call_method(self, ref, objdfn, methdfn, expr, args):
@@ -489,8 +494,15 @@ class Code(object):
 
     @match(Attr)
     def compile(self, attr):
-        return self.convert(attr, ir.Get(self.compile(attr.expr), attr.attr.text))
+        fqn = self.compile_scoped(self.types[attr.expr], attr.attr.text)
+        return self.convert(attr, ir.Get(self.compile(attr.expr), fqn))
 
+
+    @match(types.Ref, basestring)
+    def compile_scoped(self, t, name):
+        objname = self.compile_def(self.mangle(t))
+        return ir.TransientFullyScopedName.join(objname, name)
+    
     @match(Number)
     def compile(self, n):
         if n.is_float():
@@ -581,7 +593,8 @@ class Code(object):
 
     @match(Field, Var)
     def compile_var(self, p, v):
-        return ir.Get(ir.This(), v.name.text)
+        fqn = self.compile_scoped(self.types[p.parent], v.name.text)
+        return ir.Get(ir.This(), fqn)
 
     @match(Self, Var)
     def compile_var(self, s, v):
@@ -621,7 +634,8 @@ class Code(object):
 
     @match(Field, Var, Expression)
     def compile_assign(self, field, var, expr):
-        return ir.Set(ir.This(), var.name.text, self.compile(expr))
+        fqn = self.compile_scoped(self.types[field.parent], var.name.text)
+        return ir.Set(ir.This(), fqn, self.compile(expr))
 
     @match(choice(Param, Declaration), Var, Expression)
     def compile_assign(self, decl, var, expr):
@@ -629,7 +643,8 @@ class Code(object):
 
     @match(Attr, Expression)
     def compile_assign(self, attr, expr):
-        return ir.Set(self.compile(attr.expr), attr.attr.text, self.compile(expr))
+        fqn = self.compile_scoped(self.types[attr.expr], attr.attr.text)
+        return ir.Set(self.compile(attr.expr), fqn, self.compile(expr))
 
     @match(ExprStmt)
     def compile(self, exprs):

@@ -188,7 +188,10 @@ class _ScopedName(IR):
 
 
 class ScopedName(_ScopedName):
-    pass
+    @match(basestring)
+    def __init__(self, name):
+        self.name = name
+        assert False, "obsolete %s" % name
 
 class TransientFullyScopedName(_Name, ScopedName):
     pass
