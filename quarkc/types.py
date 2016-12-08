@@ -76,7 +76,8 @@ class Types(object):
         clstype = types.Object(*[self.field(d, cls.parameters) for d in self.fields(cls)
                                  if not (isinstance(d, Callable) and isinstance(d.body, NativeBlock))])
         if cls.parameters:
-            clstype = types.Template(*[types.Param(name(p)) for p in cls.parameters] + [clstype])
+            clstype = types.Template(*[types.Param(name(p), self.ref(p.bound)) if p.bound else types.Param(name(p))
+                                       for p in cls.parameters] + [clstype])
         self.types[name(cls)] = clstype
 
     def fields(self, cls):

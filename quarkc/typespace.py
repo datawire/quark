@@ -337,6 +337,13 @@ class Typespace(object):
     def get(self, ref, template, name):
         return self.get(ref, template.type, name)
 
+    @match(Ref, lazy("Param"), basestring)
+    def get(self, ref, param, name):
+        if param.bound:
+            return self.get(ref, self.resolve(param.bound), name)
+        else:
+            return UnresolvedField(ref, name)
+
     @match(Unresolved, basestring)
     def get(self, un, name):
         return Unresolvable(un)
@@ -501,6 +508,10 @@ class Typespace(object):
     @match(lazy("Object"), lazy("Object"))
     def compatible(self, a, b):
         return True
+
+    @match(lazy("Object"), lazy("Param"))
+    def compatible(self, a, b):
+        return self.compatible(a, self.resolve(b.bound))
 
     @match(lazy("Callable"), lazy("Callable"))
     def compatible(self, a, b):

@@ -526,3 +526,29 @@ def test_no_new():
             'f.foo': ((CALLABLE, 'quark.void'),
                       (UNKNOWN, (UNKNOWN, (UNKNOWN, (UNKNOWN, 'quark.List', '__lt__')))))
         })
+
+def test_bound():
+    check_with_primitives(
+        """
+        interface Stringable {
+            String stringify();
+        }
+
+        class Box<T extends Stringable> {
+            T contents;
+
+            void doit() {
+                Stringable s = contents;
+                String str = contents.stringify();
+            }
+        }
+        """,
+        {
+            'f.Stringable.stringify': (CALLABLE, 'quark.String'),
+            'f.Box.Box': (TEMPLATE, 'f.Box.T', (CALLABLE, 'f.Box<f.Box.T>')),
+            'f.Box.contents': (DECLARE, 'contents', 'f.Box.T'),
+            'f.Box.doit': ((CALLABLE, 'quark.void'),
+                           (DECLARE, 's', 'f.Stringable', 'f.Box.T'),
+                           (DECLARE, 'str', 'quark.String', 'quark.String')),
+            'f.Box.doit.self': 'f.Box'
+        })

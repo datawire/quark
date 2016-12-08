@@ -230,9 +230,13 @@ class Parser:
     def visit_type_params(self, node, (l, first, rest, r)):
         return [first] + [n[-1] for n in rest]
 
-    @g.rule('type_param = name ""')
-    def visit_type_param(self, node, (name, _)):
-        return TypeParam(name)
+    @g.rule('type_param = name (EXTENDS type)?')
+    def visit_type_param(self, node, (name, opt)):
+        if opt:
+            bound = opt[-1][-1]
+        else:
+            bound = None
+        return TypeParam(name, bound)
 
     @g.rule('class_definition = annotation* (field / constructor / method)')
     def visit_class_definition(self, node, (annotations, (dfn,))):
