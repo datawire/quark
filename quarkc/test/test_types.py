@@ -9,7 +9,7 @@ from quarkc.ast import (
 )
 from quarkc.parse import traversal
 from quarkc.symbols import Self, Boxed, Nulled
-from quarkc.errors import InvalidInvocation, InvalidAssignment
+from quarkc.errors import InvalidInvocation, InvalidAssignment, Uninferable
 from quarkc import typespace as types
 
 class Base(object):
@@ -37,6 +37,7 @@ TEMPLATE = Constant("TEMPLATE")
 UNKNOWN = Constant("UNKNOWN")
 ASSIGN = Constant("ASSIGN")
 VIOLATION = Constant("VIOLATION")
+UNINFERABLE = Constant("UNINFERABLE")
 
 def denest(t):
     if isinstance(t, tuple) and len(t) == 1:
@@ -79,6 +80,10 @@ def vsig(v):
 def vsig(v):
     return typesig(v.target), typesig(v.value)
 
+@match(Uninferable)
+def vsig(v):
+    return (UNINFERABLE, str(v.node))
+
 @match(Compiler)
 def typesigs(c):
     c.reported = set()
@@ -108,7 +113,10 @@ def typesig(u):
 
 @match(types.Unresolvable)
 def typesig(u):
-    return (UNKNOWN, typesig(u.un))
+    if u.un:
+        return (UNKNOWN, typesig(u.un))
+    else:
+        return UNKNOWN
 
 @match(types.Ref)
 def typesig(r):
@@ -478,4 +486,18 @@ def test_double_get():
         """,
         {
             'f.foo': ((CALLABLE, 'quark.void'), (UNKNOWN, (UNKNOWN, 'quark.String', 'foo')))
+        })
+
+def test_uninferable():
+    check_with_primitives(
+        """
+        void foo() {
+            [];
+            {};
+        }
+        """,
+        {
+            'f.foo': ((CALLABLE, 'quark.void'),
+                      (VIOLATION, (UNINFERABLE, '[]'), UNKNOWN),
+                      (VIOLATION, (UNINFERABLE, '{}'), UNKNOWN))
         })

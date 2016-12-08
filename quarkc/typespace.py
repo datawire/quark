@@ -236,7 +236,7 @@ class UnresolvedCall(Unresolved):
 
 class Unresolvable(Unresolved):
 
-    @match(Unresolved)
+    @match(choice(Unresolved, None))
     def __init__(self, un):
         self.un = un
 

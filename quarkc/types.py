@@ -286,6 +286,11 @@ class Types(object):
         node = self.node(self.resolve(get_definition(retr)))
         return node.result
 
+    @match(AST, choice(List, Map, Null))
+    def do_resolve_infer(self, ctx, l):
+        self.add_violation(errors.Uninferable(l))
+        return Unresolvable(None)
+
     @match(Var)
     def do_resolve(self, v):
         return self.resolve(self.symbols[v])
