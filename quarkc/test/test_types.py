@@ -542,6 +542,21 @@ def test_bound():
                 String str = contents.stringify();
             }
         }
+
+        class MyStringable extends Stringable {
+            String name;
+
+            String stringify() {
+                return name;
+            }
+        }
+
+        void foo() {
+            Box<MyStringable> box = new Box<MyStringable>();
+            box.contents = new MyStringable();
+            box.contents.name = "foo";
+            box.contents.name;
+        }
         """,
         {
             'f.Stringable.stringify': (CALLABLE, 'quark.String'),
@@ -550,5 +565,34 @@ def test_bound():
             'f.Box.doit': ((CALLABLE, 'quark.void'),
                            (DECLARE, 's', 'f.Stringable', 'f.Box.T'),
                            (DECLARE, 'str', 'quark.String', 'quark.String')),
-            'f.Box.doit.self': 'f.Box'
+            'f.Box.doit.self': 'f.Box',
+            'f.MyStringable.MyStringable': (CALLABLE, 'f.MyStringable'),
+            'f.MyStringable.name': (DECLARE, 'name', 'quark.String'),
+            'f.MyStringable.stringify': ((CALLABLE, 'quark.String'),
+                                         (RETURN, 'quark.String')),
+            'f.MyStringable.stringify.self': 'f.MyStringable',
+            'f.foo': ((CALLABLE, 'quark.void'),
+                      (DECLARE, 'box', 'f.Box<f.MyStringable>', 'f.Box<f.MyStringable>'),
+                      (ASSIGN, 'f.MyStringable', 'f.MyStringable'),
+                      (ASSIGN, 'quark.String', 'quark.String'),
+                      'quark.String')
         })
+
+def test_nobound_to_void():
+    check_with_primitives(
+        """
+        class Box<T> {
+            T contents;
+            void foo() {
+                void foo = contents;
+            }
+        }
+        """,
+        {
+            'f.Box.Box': (TEMPLATE, 'f.Box.T', (CALLABLE, 'f.Box<f.Box.T>')),
+            'f.Box.contents': (DECLARE, 'contents', 'f.Box.T'),
+            'f.Box.foo': ((CALLABLE, 'quark.void'),
+                          (DECLARE, 'foo', 'quark.void', 'f.Box.T')),
+            'f.Box.foo.self': 'f.Box'
+        }
+    )

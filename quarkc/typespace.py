@@ -511,7 +511,7 @@ class Typespace(object):
 
     @match(lazy("Object"), lazy("Param"))
     def compatible(self, a, b):
-        return self.compatible(a, self.resolve(b.bound))
+        return True
 
     @match(lazy("Callable"), lazy("Callable"))
     def compatible(self, a, b):
