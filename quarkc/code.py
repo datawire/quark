@@ -2,7 +2,7 @@ from .match import match, choice, many, ntuple
 from .ast import (
     Interface, Class, Function, AST, Package, Primitive, Method, Field, If, Block, Type, Param, While, Switch, Case,
     Local, Call, Attr, Expression, Var, Number, String, Return, Declaration, Assign, ExprStmt, Bool, List, Map, Null,
-    Break, Continue, NativeFunction, NativeBlock, Fixed, TypeParam
+    Break, Continue, NativeFunction, NativeBlock, Fixed, TypeParam, Cast
 )
 from .symbols import Symbols, name, Self, Boxed, Nulled
 from .exceptions import CompileError
@@ -634,6 +634,10 @@ class Code(object):
     @match(ExprStmt)
     def compile(self, exprs):
         return self.to_stmt(self.compile(exprs.expr))
+
+    @match(Cast)
+    def compile(self, cast):
+        return ir.Cast(self.compile(self.types[cast]), self.compile(cast.expr))
 
     @match(ir.Statement)
     def to_stmt(self, stmt):
