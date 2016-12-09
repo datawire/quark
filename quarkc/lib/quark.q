@@ -324,7 +324,7 @@ namespace quark {
          * 1 - scalar. To query more precisely see asScalar() below
          * 2 - list
          * 3 - map
-         * XXX - interface ?
+         * 4 - object
          * -1 - object not representable in quark
          */
         int type();
@@ -385,10 +385,7 @@ namespace quark {
          */
         Map<Scalar,Any> asMap();          // returns Map<Scalar,Any> iff type() returned 6. This may return a copy.
 
-        /*
-         * XXX: TBD
-         */
-        // mumble_mumble asInterface(); // returns mumble_mumble iff type() returned 7
+        Object asObject();
 
 
 
@@ -408,6 +405,8 @@ namespace quark {
                     return 2;
                 } else if (a instanceof Map) {
                     return 3;
+                } else if (a instanceof $Object) {
+                    return 4;
                 }
                 return -1;
             }
@@ -451,10 +450,23 @@ namespace quark {
                 }
             }
 
+        Object asObject() for java {
+                Object a = $self;
+                if (a instanceof $Object) {
+                    return ($Object) a;
+                } else {
+                    return null;
+                }
+            }
 
 
-        int type() for go {
+        int type() for go import "fmt" import "encoding/json" {
                 a := $self;
+                b, err := json.MarshalIndent(a, "", "  ")
+                fmt.Print(string(b))
+                if err != nil {
+                    fmt.Println("error:", err);
+                }
                 switch i := a.(type) {
                     case nil: return 0
                     case bool: return 1
@@ -470,6 +482,7 @@ namespace quark {
                     map[interface{}]interface{}, map[interface{}]int, map[interface{}]string : {
                         return 3
                     }
+                    case $Object: return 4
                     default: {
                         _ = i
                         // XXX: use reflection here to detect weirder map types
@@ -633,6 +646,16 @@ namespace quark {
                 return nil;
             }
 
+        Object asObject() for go {
+            a := $self;
+            switch i := a.(type) {
+                case $Object: {
+                    return i;
+                }
+            }
+            return nil;
+        }
+
 
         int type() for python import "six" {
             a = $self
@@ -651,6 +674,8 @@ namespace quark {
                 return 1
             elif isinstance(a, float):
                 return 1
+            elif isinstance(a, $Object):
+                return 4
             else:
                 return -1
             }
@@ -688,6 +713,13 @@ namespace quark {
                 return None
             }
 
+        Object asObject() for python {
+            if isinstance($self, $Object):
+                return $self
+            else:
+                return None
+        }
+
 
         int type() for ruby {
             a = $self
@@ -705,6 +737,8 @@ namespace quark {
               return 2
             elsif a.is_a?(Hash)
               return 3
+            elsif a.respond_to?(:__eq__)
+              return 4
             else
               return -1
             end
@@ -745,6 +779,15 @@ namespace quark {
             end
             }
 
+        Object asObject() for ruby {
+            a = $self
+                if a.respond_to?(:__eq__)
+                return a
+            else
+                return nil
+            end
+        }
+
 
         int type() for javascript {
                 let a = $self;
@@ -756,6 +799,8 @@ namespace quark {
                         return 2;
                     } else if (a instanceof Map) {
                         return 3;
+                    } else if ("__eq__" in a) { // XXX: need a better way to test this
+                        return 4;
                     } else {
                         return -1;
                     }
@@ -813,6 +858,36 @@ namespace quark {
                     return null;
                 }
             }
+
+        Object asObject() for javascript {
+            if (typeof(a) === "object" && "__eq__" in a) { // XXX: better test, consolidate test
+                return a;
+            } else {
+                return null;
+            }
+        }
+
+        bool __eq__(Any other) {
+            print(self);
+            print(self.type());
+            if (self.type() != other.type()) {
+                return false;
+            } else {
+                switch (self.type()) {
+                case 0:
+                    return true;
+                case 1:
+                    return self.asScalar() == other.asScalar();
+                case 2:
+                    return self.asList() == other.asList();
+                // XXX: missing cases
+                case 4:
+                    return self.asObject() == other.asObject();
+                }
+                // XXX: should panic
+                return false;
+            }
+        }
 
     }
 
@@ -913,6 +988,25 @@ namespace quark {
                 }
                 return -1;
             }
+
+        bool __eq__(Scalar other) {
+            if (self.type() != other.type()) {
+                return false;
+            } else {
+                switch (self.type()) {
+                case 0:
+                    return true;
+                case 1:
+                    return self.asBool() == other.asBool();
+                case 2:
+                    return self.asInt() == other.asInt();
+                case 3:
+                    return self.asString() == other.asString();
+                    // XXX: missing cases
+                }
+                return true;
+            }
+        }
 
         bool asBool() for java  import "java.util.List" import "java.util.Map" {
                 Object a = $self;
@@ -1102,6 +1196,8 @@ namespace quark {
                 return 2
             elif isinstance(a, float):
                 return 2
+            elif isinstance(a, $Object):
+                return 4
             else:
                 return -1
             }
@@ -1678,21 +1774,20 @@ namespace quark {
         }
 
         /* FIXME: Does not compile because elements of the
-                  list may lack __eq__/__ne__ methods.
+           list may lack __eq__/__ne__ methods.*/
         bool __eq__(List<T> other) {
             if (self.size() != other.size()) {
                 return false;
             }
             int idx = 0;
             while (idx < self.size()) {
-                if (self[idx] != other[idx]) {
+                if (!(unsafe(self[idx]) == unsafe(other[idx]))) {
                     return false;
                 }
                 idx = idx + 1;
             }
             return true;
         }
-        */
 
         List<T> slice(int start, int stop) {
             List<T> result = [];
@@ -1897,6 +1992,12 @@ namespace quark {
         T remove(int index) for javascript {
                 return $self.splice($index, 1)[0]
             }
+    }
+
+    interface Object {
+
+        bool __eq__(Object o);
+
     }
 
     void assertEqual(void a, void b);

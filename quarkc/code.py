@@ -607,7 +607,7 @@ class Code(object):
     def compile_var(self, p, v):
         return self.compile(self.types[p])
 
-    @match(Function, Var)
+    @match(choice(Function, Interface), Var)
     def compile_var(self, f, v):
         return self.compile_ref(self.types[f])
 

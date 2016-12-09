@@ -167,7 +167,7 @@ class Java(Target):
 
                       null        true            false 
 
-                      Functions   Tests           assertEquals""".split())
+                      Functions   Tests           assertEquals    Object""".split())
 
 
 class Python(Target):
