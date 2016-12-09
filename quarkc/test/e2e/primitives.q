@@ -544,7 +544,7 @@ class AnyTest {
     }
     void something() {
         Any a = unsafe(new Rainbow().something());
-        assertEqual(-1, a.type()); // XXX: this should change once Any knows about interfaces
+        assertEqual(4, a.type());
         assertEqual(false, a.asBool());
         assertEqual(0, a.asInt());
         assertEqual("", a.asString());
