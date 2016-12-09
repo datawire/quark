@@ -389,24 +389,24 @@ def expr(cast, target):
 
 ## And
 
-@match(And, choice(Go, Javascript, Java))
+@match(And, choice(Go, Javascript, Java, Ruby))
 def expr(and_, target):
     return " && ".join("({expr})".format(
         expr=expr(exp, target)) for exp in and_.exprs)
 
-@match(And, choice(Python, Ruby))
+@match(And, Python)
 def expr(and_, target):
     return " and ".join("({expr})".format(
         expr=expr(exp, target)) for exp in and_.exprs)
 
 ## Or
 
-@match(Or, choice(Go, Javascript, Java))
+@match(Or, choice(Go, Javascript, Java, Ruby))
 def expr(or_, target):
     return " || ".join("({expr})".format(
         expr=expr(exp, target)) for exp in or_.exprs)
 
-@match(Or, choice(Python, Ruby))
+@match(Or, Python)
 def expr(or_, target):
     return " or ".join("({expr})".format(
         expr=expr(exp, target)) for exp in or_.exprs)

@@ -33,6 +33,12 @@ class SideEffect {
     }
 }
 
+bool precedence_nonsense() {
+    // Causes `void value expression (SyntaxError)` in Ruby
+    // if you use `and` instead of `&&` due to precendence.
+    return true && true;
+}
+
 class BooleanTest {
     void short_circuit_and_FTT() {
         SideEffect side = new SideEffect();
@@ -75,6 +81,9 @@ class BooleanTest {
         assertEqual(2, side.log.size());
         assertEqual("should-happen", side.log[0]);
         assertEqual("should-happen-too", side.log[1]);
+    }
+    void test_precedence_nonsense() {
+        assertEqual(true, precedence_nonsense());
     }
 }
 
