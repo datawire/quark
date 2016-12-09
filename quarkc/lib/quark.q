@@ -855,6 +855,7 @@ namespace quark {
             }
 
         Object asObject() for javascript {
+            let a = $self;
             if (typeof(a) === "object" && "__eq__" in a) { // XXX: better test, consolidate test
                 return a;
             } else {
