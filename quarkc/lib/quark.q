@@ -674,10 +674,8 @@ namespace quark {
                 return 1
             elif isinstance(a, float):
                 return 1
-            elif isinstance(a, $Object):
-                return 4
             else:
-                return -1
+                return 4
             }
 
         Scalar asScalar() for python import "six" {
@@ -714,10 +712,7 @@ namespace quark {
             }
 
         Object asObject() for python {
-            if isinstance($self, $Object):
-                return $self
-            else:
-                return None
+            return $self
         }
 
 
@@ -1781,6 +1776,7 @@ namespace quark {
             }
             int idx = 0;
             while (idx < self.size()) {
+                print("comparing elements\n");
                 if (!(unsafe(self[idx]) == unsafe(other[idx]))) {
                     return false;
                 }
