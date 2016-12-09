@@ -1,11 +1,14 @@
-interface Foo {}
+class Obj extends Object {
+    bool __eq__(Object other) {
+        return same(self, other);
+    }
+}
 
 void test_any_type() {
     Any a;
     List<Any> aListAny;
     List<Any> noListAny;
-
-    Foo noFoo;
+    Map<Scalar,Any> noMapAny;
 
     bool aBool = true;
     bool noBool;
@@ -17,15 +20,19 @@ void test_any_type() {
     //float noFloat;
     List<int> aListInt = [42];
     List<String> aListString = ["yay"];
+    Obj object = new Obj();
+    Object noObject;
 
-    a = unsafe(noFoo);
+    a = unsafe(noObject);
     assertEqual(0, a.type());
+    assertEqual(null, a);
     assertEqual(noBool, a.asBool());
     assertEqual(noInt, a.asInt());
     assertEqual(noString, a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(null, a.asMap());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(noObject, a.asObject());
 
     a = unsafe(aBool);
     assertEqual(1, a.type());
@@ -34,7 +41,8 @@ void test_any_type() {
     assertEqual("true", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(null, a.asMap());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(noObject, a.asObject());
 
     a = unsafe(noBool);
     assertEqual(1, a.type());
@@ -43,7 +51,8 @@ void test_any_type() {
     assertEqual("false", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(null, a.asMap());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(noObject, a.asObject());
 
     a = unsafe(aInt);
     assertEqual(1, a.type());
@@ -52,7 +61,8 @@ void test_any_type() {
     assertEqual("42", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(null, a.asMap());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(noObject, a.asObject());
 
     a = unsafe(noInt);
     assertEqual(1, a.type());
@@ -61,7 +71,8 @@ void test_any_type() {
     assertEqual("0", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(null, a.asMap());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(noObject, a.asObject());
 
     a = unsafe(aString);
     assertEqual(1, a.type());
@@ -70,7 +81,8 @@ void test_any_type() {
     assertEqual(aString, a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(null, a.asMap());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(noObject, a.asObject());
 
     a = unsafe(noString);
     assertEqual(1, a.type());
@@ -79,7 +91,8 @@ void test_any_type() {
     assertEqual(noString, a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(null, a.asMap());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(noObject, a.asObject());
 
     //a = unsafe(aFloat)
     //assertEqual(1, a.type());
@@ -88,7 +101,8 @@ void test_any_type() {
     //assertEqual(noString, a.asString());
     //assertEqual(aFloat, a.asFloat()); // XXX need float for this test
     //assertEqual(noListAny, a.asList());
-    assertEqual(null, a.asMap());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(noObject, a.asObject());
 
     a = unsafe(aListInt);
     assertEqual(2, a.type());
@@ -99,7 +113,8 @@ void test_any_type() {
     aListAny = a.asList();
     assertEqual(1, aListAny.size());
     assertEqual(aListInt[0], aListAny[0].asInt());
-    assertEqual(null, a.asMap());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(noObject, a.asObject());
 
     a = unsafe(aListString);
     assertEqual(2, a.type());
@@ -110,5 +125,15 @@ void test_any_type() {
     aListAny = a.asList();
     assertEqual(1, aListAny.size());
     assertEqual(aListString[0], aListAny[0].asString());
-    assertEqual(null, a.asMap());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(noObject, a.asObject());
+
+    a = unsafe(object);
+    assertEqual(4, a.type());
+    assertEqual(noBool, a.asBool());
+    assertEqual(noInt, a.asInt());
+    assertEqual(noString, a.asString());
+    assertEqual(noListAny, a.asList());
+    assertEqual(noMapAny, a.asMap());
+    assertEqual(object, a.asObject());
 }

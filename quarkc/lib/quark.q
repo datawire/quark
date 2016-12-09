@@ -460,13 +460,8 @@ namespace quark {
             }
 
 
-        int type() for go import "fmt" import "encoding/json" {
+        int type() for go {
                 a := $self;
-                b, err := json.MarshalIndent(a, "", "  ")
-                fmt.Print(string(b))
-                if err != nil {
-                    fmt.Println("error:", err);
-                }
                 switch i := a.(type) {
                     case nil: return 0
                     case bool: return 1
@@ -711,8 +706,13 @@ namespace quark {
                 return None
             }
 
-        Object asObject() for python {
-            return $self
+        Object asObject() for python import "six" {
+            if $self is None:
+                return None
+            elif isinstance($self, (list, tuple, dict, six.text_type, float) + six.integer_types):
+                return None
+            else:
+                return $self
         }
 
 
@@ -776,7 +776,7 @@ namespace quark {
 
         Object asObject() for ruby {
             a = $self
-                if a.respond_to?(:__eq__)
+            if a.respond_to?(:__eq__)
                 return a
             else
                 return nil
@@ -855,8 +855,8 @@ namespace quark {
             }
 
         Object asObject() for javascript {
-            let a = $self;
-            if (typeof(a) === "object" && "__eq__" in a) { // XXX: better test, consolidate test
+            let a = $self
+            if (a !== null && typeof(a) === "object" && "__eq__" in a) { // XXX: better test, consolidate test
                 return a;
             } else {
                 return null;
@@ -864,8 +864,6 @@ namespace quark {
         }
 
         bool __eq__(Any other) {
-            print(self);
-            print(self.type());
             if (self.type() != other.type()) {
                 return false;
             } else {
@@ -1777,7 +1775,6 @@ namespace quark {
             }
             int idx = 0;
             while (idx < self.size()) {
-                print("comparing elements\n");
                 if (!(unsafe(self[idx]) == unsafe(other[idx]))) {
                     return false;
                 }
@@ -1995,6 +1992,30 @@ namespace quark {
 
         bool __eq__(Object o);
 
+    }
+
+    bool same(void a, void b);
+
+    bool same(void a, void b) for java {
+        return a == b;
+    }
+
+    bool same(void a, void b) for go {
+        return &a == &b;
+    }
+
+    bool same(void a, void b) for ruby {
+        x = Object.instance_method(:object_id).bind(a).call
+        y = Object.instance_method(:object_id).bind(b).call
+        return x == y
+    }
+
+    bool same(void a, void b) for python {
+        return a is b
+    }
+
+    bool same(void a, void b) for javascript {
+        return Object.is(a, b)
     }
 
     void assertEqual(void a, void b);
