@@ -397,8 +397,11 @@ Any weirdo() for javascript { return new Buffer("wtf"); }
 Any weirdo() for ruby { return Object.new }
 Any weirdo() for python { return (None for i in []) }
 
-interface EmptyItf {}
-class Something extends EmptyItf {}
+class Something extends Object {
+    bool __eq__(Object other) {
+        return same(self, other);
+    }
+}
 class Rainbow {
     bool yes() { return true; }
     bool no() { return false; }
@@ -410,8 +413,8 @@ class Rainbow {
     List<int> oneListInt() { List<int> ret = [11]; return ret; }
     Map<int,int> emptyMapIntInt() { Map<int,int> ret = new Map<int,int>(); return ret; }
     Map<int,int> oneMapIntInt() { Map<int,int> ret = {11:22}; return ret; }
-    EmptyItf zilch() { EmptyItf ret = null; return ret; }
-    EmptyItf something() { EmptyItf ret = new Something(); return ret; }
+    Any zilch() { return null; }
+    Object something() { Object ret = new Something(); return ret; }
     Any polkadots() { return weirdo(); }
 }
 
