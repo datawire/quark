@@ -271,7 +271,7 @@ def code(local, target):
 
 @match(Local, Go)
 def code(local, target):
-    return tr.Simple("var {name} {type}{initializer}".format(
+    return tr.Simple("var {name} {type}{initializer}; _ = {name}".format(
         name=target.varname(local.name),
         type=expr(local.type, target),
         initializer=opt_expr(" = ", local.expr, target)))
