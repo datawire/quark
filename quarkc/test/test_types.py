@@ -5,11 +5,11 @@ from quarkc.compiler import Compiler
 from quarkc.match import match, choice, many
 from quarkc.ast import (
     AST, Package, Declaration, Local, Param, Class, Function, PrimitiveLiteral, If, While, Block, Assign, ExprStmt,
-    Return, Call, Attr, Var, TypeParam, List, Map, Null
+    Return, Call, Attr, Var, TypeParam, List, Map, Null, Primitive, Interface
 )
 from quarkc.parse import traversal
 from quarkc.symbols import Self, Boxed, Nulled
-from quarkc.errors import InvalidInvocation, InvalidAssignment, Uninferable
+from quarkc.errors import InvalidInvocation, InvalidAssignment, Uninferable, MissingMethod, InvalidImplementation
 from quarkc import typespace as types
 
 class Base(object):
@@ -33,11 +33,15 @@ RETURN = Constant("RETURN")
 IF = Constant("IF")
 WHILE = Constant("WHILE")
 CALLABLE = Constant("CALLABLE")
+CLASS = Constant("CLASS")
+INTERFACE = Constant("INTERFACE")
 TEMPLATE = Constant("TEMPLATE")
 UNKNOWN = Constant("UNKNOWN")
 ASSIGN = Constant("ASSIGN")
 VIOLATION = Constant("VIOLATION")
 UNINFERABLE = Constant("UNINFERABLE")
+MISSING = Constant("MISSING")
+INVALID = Constant("INVALID")
 
 def denest(t):
     if isinstance(t, tuple) and len(t) == 1:
@@ -79,6 +83,14 @@ def vsig(v):
 @match(InvalidAssignment)
 def vsig(v):
     return typesig(v.target), typesig(v.value)
+
+@match(MissingMethod)
+def vsig(v):
+    return (MISSING, v.method)
+
+@match(InvalidImplementation)
+def vsig(v):
+    return (INVALID, typesig(v.interface), typesig(v.impl))
 
 @match(Uninferable)
 def vsig(v):
@@ -126,9 +138,17 @@ def typesig(r):
 def typesig(c, pkgs):
     return None
 
-@match(Compiler, choice(Class, TypeParam))
+@match(Compiler, choice(Primitive, TypeParam))
 def typesig(c, cls):
     return None
+
+@match(Compiler, Class)
+def typesig(c, cls):
+    return vcheck(c, cls, (CLASS,  typesig(c.types[cls])))
+
+@match(Compiler, Interface)
+def typesig(c, cls):
+    return vcheck(c, cls, (INTERFACE,  typesig(c.types[cls])))
 
 @match(Compiler, Function)
 def typesig(c, fun):
@@ -237,7 +257,13 @@ def test_check():
         }
     }
     """,
-    {'quark.int.__add__': ((CALLABLE, 'quark.int', 'quark.int'),
+    {
+
+     'quark.bool': (INTERFACE, 'quark.bool'),
+     'quark.float': (INTERFACE, 'quark.float'),
+     'quark.int': (INTERFACE, 'quark.int'),
+     'quark.void': (INTERFACE, 'quark.void'),
+     'quark.int.__add__': ((CALLABLE, 'quark.int', 'quark.int'),
                            (DECLARE, 'i', 'quark.int')),
      'quark.int.__sub__': ((CALLABLE, 'quark.int', 'quark.int'),
                            (DECLARE, 'i', 'quark.int')),
@@ -248,6 +274,7 @@ def test_check():
                   (DECLARE, 'b', 'quark.int'),
                   (DECLARE, 'c', 'quark.void', 'quark.void'),
                   'quark.void'),
+     'asdf.Foo': (CLASS, 'asdf.Foo'),
      'asdf.floaty': ((CALLABLE, 'quark.float', 'quark.float'),
                      (DECLARE, 'a', 'quark.float'),
                      (DECLARE, 'b', 'quark.float', 'quark.float'),
@@ -272,6 +299,7 @@ def test_unknown_field():
           }
           """,
           {
+              'f.C': (CLASS, 'f.C'),
               'f.C.C': (CALLABLE, 'f.C'),
               'f.foo': ((CALLABLE, 'f.C'),
                         (UNKNOWN, 'f.C', 'foo'))
@@ -298,6 +326,9 @@ def test_templated_fields():
           }
           """,
           {
+              'f.X': (CLASS, 'f.X'),
+              'f.C': (CLASS, 'f.C'),
+              'f.D': (CLASS, 'f.D'),
               'f.X.X': (CALLABLE, 'f.X'),
               'f.C.C': (TEMPLATE, 'f.C.T', (CALLABLE, 'f.C<f.C.T>')),
               'f.D.D': (TEMPLATE, 'f.D.T', (CALLABLE, 'f.D<f.D.T>')),
@@ -433,6 +464,8 @@ def test_conversion():
         }
         """,
         {
+            'f.X': (CLASS, 'f.X'),
+            'f.Y': (CLASS, 'f.Y'),
             'f.X.X': (CALLABLE, 'f.X'),
             'f.X.field': (DECLARE, 'field', 'quark.String'),
             'f.Y.Y': (CALLABLE, 'f.Y'),
@@ -559,6 +592,9 @@ def test_bound():
         }
         """,
         {
+            'f.MyStringable': (CLASS, 'f.MyStringable'),
+            'f.Box': (CLASS, 'f.Box'),
+            'f.Stringable': (INTERFACE, 'f.Stringable'),
             'f.Stringable.stringify': (CALLABLE, 'quark.String'),
             'f.Box.Box': (TEMPLATE, 'f.Box.T', (CALLABLE, 'f.Box<f.Box.T>')),
             'f.Box.contents': (DECLARE, 'contents', 'f.Box.T'),
@@ -589,10 +625,27 @@ def test_nobound_to_void():
         }
         """,
         {
+            'f.Box': (CLASS, 'f.Box'),
             'f.Box.Box': (TEMPLATE, 'f.Box.T', (CALLABLE, 'f.Box<f.Box.T>')),
             'f.Box.contents': (DECLARE, 'contents', 'f.Box.T'),
             'f.Box.foo': ((CALLABLE, 'quark.void'),
                           (DECLARE, 'foo', 'quark.void', 'f.Box.T')),
             'f.Box.foo.self': 'f.Box'
+        }
+    )
+
+
+def test_implements_interface():
+    check_with_primitives(
+        """
+        interface Face {
+            String face();
+        }
+        class Foo extends Face {}
+        """,
+        {
+            'f.Face': (INTERFACE, 'f.Face'),
+            'f.Foo': (VIOLATION, ((MISSING, 'face'), (INVALID, 'f.Face', 'f.Foo')), (CLASS, 'f.Foo')),
+            'f.Face.face': (CALLABLE, 'quark.String'), 'f.Foo.Foo': (CALLABLE, 'f.Foo')
         }
     )

@@ -1,4 +1,4 @@
-from .match import match, choice, many
+from .match import match, choice, many, opt
 from .errors import NodeError, InvalidInvocation, InvalidAssignment, UnresolvedType
 from .ast import (
     AST, Expression, Statement, Block, Call, Attr, Function, Method, Type, Import, Class, Assign, Return, ExprStmt,
@@ -192,11 +192,16 @@ class Types(object):
 
     @match(AST, types.Ref, types.Ref, AST)
     def validate_ass(self, node, left, right, expr):
+        if not self.assignable(left, right, expr):
+            self.add_violation(InvalidAssignment(node, left, right))
+
+    @match(types.Ref, types.Ref, opt(AST))
+    def assignable(self, left, right, expr=None):
         args = (left, right)
         if args not in self._assignable:
-            self._assignable[args] = self.types.assignable(*args) or self.compatible(expr, *args)
-        if not self._assignable[args]:
-            self.add_violation(InvalidAssignment(node, left, right))
+            self._assignable[args] = self.types.assignable(*args) or \
+                                     expr is not None and self.compatible(expr, *args)
+        return self._assignable[args]
 
     @match(AST, types.Ref, types.Ref)
     def compatible(self, expr, left, right):
@@ -331,9 +336,19 @@ class Types(object):
                                             *[self.resolve(p) for p in params]))
 
     @match(Type, AST)
-    def do_resolve(self, type, _):
+    def do_resolve(self, type, parent):
         params = type.parameters or ()
-        return self.types.resolve(types.Ref(self.symbols.qualify(type), *[self.resolve(p) for p in params]))
+        result = self.types.resolve(types.Ref(self.symbols.qualify(type), *[self.resolve(p) for p in params]))
+        if isinstance(parent, Class):
+            interface = self.types.unresolve(result)
+            impl = self.resolve(parent)
+            cls = self.node(impl)
+            if not self.assignable(interface, impl):
+                for field in result.fields:
+                    if field.name not in cls.byname:
+                        self.add_violation(errors.MissingMethod(parent, field.name))
+                self.add_violation(errors.InvalidImplementation(parent, impl, interface))
+        return result
 
     @match(choice(NativeFunction, Method, Function))
     def do_resolve(self, meth):

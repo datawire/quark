@@ -23,7 +23,7 @@ class Error(object):
         return not self.__eq__(other)
 
     def __eq__(self, other):
-        if isinstance(other, self):
+        if isinstance(other, self.__class__):
             return self.info == other.info
         else:
             return False
@@ -101,6 +101,18 @@ class InvalidInvocation(NodeError):
     @match(AST, ref(), int, int)
     def __init__(self, node, type, expected, actual):
         self.init(node, "{type} expected {expected} args, got {actual}", type=type, expected=expected, actual=actual)
+
+class MissingMethod(NodeError):
+
+    @match(AST, basestring)
+    def __init__(self, node, method):
+        self.init(node, "{node.name} missing {method}", method=method)
+
+class InvalidImplementation(NodeError):
+
+    @match(AST, ref(), ref())
+    def __init__(self, node, impl, interface):
+        self.init(node, "{impl} is not a valid implementation of {interface}", impl=impl, interface=interface)
 
 class UnresolvedType(NodeError):
 
