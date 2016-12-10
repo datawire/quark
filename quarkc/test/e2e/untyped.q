@@ -31,7 +31,7 @@ void test_any_type() {
     assertEqual(noString, a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX: cannot compare maps in go
     assertEqual(noObject, a.asObject());
 
     a = unsafe(aBool);
@@ -41,7 +41,7 @@ void test_any_type() {
     assertEqual("true", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX: cannot compare maps in go
     assertEqual(noObject, a.asObject());
 
     a = unsafe(noBool);
@@ -51,7 +51,7 @@ void test_any_type() {
     assertEqual("false", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX: cannot compare maps in go
     assertEqual(noObject, a.asObject());
 
     a = unsafe(aInt);
@@ -61,7 +61,7 @@ void test_any_type() {
     assertEqual("42", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX: cannot compare maps in go
     assertEqual(noObject, a.asObject());
 
     a = unsafe(noInt);
@@ -71,7 +71,7 @@ void test_any_type() {
     assertEqual("0", a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX: cannot compare maps in go
     assertEqual(noObject, a.asObject());
 
     a = unsafe(aString);
@@ -81,7 +81,7 @@ void test_any_type() {
     assertEqual(aString, a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX cannot compare maps in go
     assertEqual(noObject, a.asObject());
 
     a = unsafe(noString);
@@ -91,7 +91,7 @@ void test_any_type() {
     assertEqual(noString, a.asString());
     //assertEqual(noFloat, a.asFloat()); // XXX need float for this test
     assertEqual(noListAny, a.asList());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX cannot compare maps in go
     assertEqual(noObject, a.asObject());
 
     //a = unsafe(aFloat)
@@ -101,7 +101,7 @@ void test_any_type() {
     //assertEqual(noString, a.asString());
     //assertEqual(aFloat, a.asFloat()); // XXX need float for this test
     //assertEqual(noListAny, a.asList());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX cannot compare maps in go
     assertEqual(noObject, a.asObject());
 
     a = unsafe(aListInt);
@@ -113,7 +113,7 @@ void test_any_type() {
     aListAny = a.asList();
     assertEqual(1, aListAny.size());
     assertEqual(aListInt[0], aListAny[0].asInt());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX cannot compare maps in go
     assertEqual(noObject, a.asObject());
 
     a = unsafe(aListString);
@@ -125,7 +125,7 @@ void test_any_type() {
     aListAny = a.asList();
     assertEqual(1, aListAny.size());
     assertEqual(aListString[0], aListAny[0].asString());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX cannot compare maps in go
     assertEqual(noObject, a.asObject());
 
     a = unsafe(object);
@@ -134,6 +134,6 @@ void test_any_type() {
     assertEqual(noInt, a.asInt());
     assertEqual(noString, a.asString());
     assertEqual(noListAny, a.asList());
-    assertEqual(noMapAny, a.asMap());
+    assertEqual(null, a.asMap()); // XXX cannot compare maps in go
     assertEqual(object, a.asObject());
 }
