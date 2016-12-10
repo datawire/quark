@@ -6,7 +6,7 @@ class Foo extends Object {
         return unsafe(self);
     }
 
-    // XXX: this fails on python because __eq__ has meaning there
+    // XXX: note this collides with __eq__ on python, which happens to work for us
     bool __eq__(Object other) {
         Foo ofoo = ?other;
         return self.blah == ofoo.blah;
@@ -34,15 +34,16 @@ void test_identity() {
     int x = null.asInt();
     assertEqual(0, x);
 
-    List<Foo> l1 = [foo];
+    List<Object> l1 = [foo];
     List<int> l2 = [1];
     assertEqual(true, l1 == l1);
+    print(unsafe(l1).asList());
     assertEqual(true, unsafe(l1) == unsafe(l1));
     assertEqual(true, l2 == l2);
     assertEqual(true, unsafe(l2) == unsafe(l2));
     assertEqual(false, unsafe(l1) == unsafe(l2));
-    List<Foo> l3 = [foodup];
-    List<Foo> l4 = [bar];
+    List<Object> l3 = [foodup];
+    List<Object> l4 = [bar];
     assertEqual(true, l1 == l3);
     assertEqual(false, l1 == l4);
     assertEqual(false, l3 == l4);

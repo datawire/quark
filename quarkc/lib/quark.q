@@ -469,7 +469,8 @@ namespace quark {
                     case string: return 1
                     case float32, float64: return 1
                     case []bool, []int, []string, []float32, []float64, []interface{},
-                    *[]bool, *[]int, *[]string, *[]float32, *[]float64, *[]interface{}: {
+                    *[]bool, *[]int, *[]string, *[]float32, *[]float64, *[]interface{},
+                    []$Object, *[]$Object: {
                         return 2
                     }
                     case map[int]int, map[int]string, map[int]interface{},
@@ -573,6 +574,20 @@ namespace quark {
                     }
                     case []interface{}: return &i
                     case *[]interface{}: return i
+                    case []$Object: {
+                            ret := make([]interface{},len(i),len(i))
+                            for k,v := range(i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
+                    case *[]$Object: {
+                            ret := make([]interface{},len(*i),len(*i))
+                            for k,v := range(*i) {
+                                    ret[k] = v
+                                }
+                            return &ret
+                    }
                     default: return nil
                     }
             }
