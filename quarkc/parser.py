@@ -287,12 +287,12 @@ class Parser:
 
     def flatten(self, stuff, result):
         for s in stuff:
-            if isinstance(s, (Fixed, Var)):
-                result.append(s)
-            else:
+            if isinstance(s, (tuple, list)):
                 self.flatten(s, result)
+            else:
+                result.append(s)
 
-    @g.rule('stuff = fixed / dvar / braces')
+    @g.rule('stuff = fixed / dvar / dexpr / braces')
     def visit_stuff(self, node, (stuff,)):
         return stuff
 
@@ -303,6 +303,10 @@ class Parser:
     @g.rule('dvar = "$" name_re')
     def visit_dvar(self, node, (_, name)):
         return Var(Name(name))
+
+    @g.rule('dexpr = "$(" expr _ ")"')
+    def visit_dexpr(self, node, (lp, expr, ws, rp)):
+        return expr
 
     @g.rule('braces = "{" stuff* "}"')
     def visit_braces(self, node, (l, stuff, r)):

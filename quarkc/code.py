@@ -117,6 +117,9 @@ class Code(object):
         for c in block.children:
             if isinstance(c, Var):
                 mappings.append((c.name.text, self.compile(c)))
+            elif isinstance(c, Expression):
+                c._tmp = "tmp%s" % len(mappings)
+                mappings.append((c._tmp, self.compile(c)))
         return [ir.TemplateContext(*mappings),
                 ir.TemplateText(block.target, tuple(ir.NativeImport(self.unquote(m), a) for m, a in block.imports),
                                 "".join(self.compile_native(c) for c in block.children))]
@@ -128,6 +131,10 @@ class Code(object):
     @match(Var)
     def compile_native(self, var):
         return "{%s}" % var.name.text
+
+    @match(Expression)
+    def compile_native(self, expr):
+        return "{%s}" % expr._tmp
 
     @match(Class)
     def compile(self, cls):
