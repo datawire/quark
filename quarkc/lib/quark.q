@@ -747,10 +747,8 @@ namespace quark {
               return 2
             elsif a.is_a?(Hash)
               return 3
-            elsif a.respond_to?(:__eq__)
-              return 4
             else
-              return -1
+              return 4
             end
             }
 
@@ -809,10 +807,8 @@ namespace quark {
                         return 2;
                     } else if (a instanceof Map) {
                         return 3;
-                    } else if ("__eq__" in a) { // XXX: need a better way to test this
-                        return 4;
                     } else {
-                        return -1;
+                        return 4;
                     }
                 } else if (t === "string") {
                     return 1;
@@ -821,7 +817,7 @@ namespace quark {
                 } else if (t === "boolean") {
                     return 1;
                 } else {
-                    return -1;
+                    return 4;
                 }
             }
 
@@ -1205,8 +1201,6 @@ namespace quark {
                 return 2
             elif isinstance(a, float):
                 return 2
-            elif isinstance(a, $Object):
-                return 4
             else:
                 return -1
             }
