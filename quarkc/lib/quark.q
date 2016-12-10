@@ -451,9 +451,8 @@ namespace quark {
             }
 
         Object asObject() for java {
-                Object a = $self;
-                if (a instanceof $Object) {
-                    return ($Object) a;
+                if ($self instanceof $Object) {
+                    return ($Object) $self;
                 } else {
                     return null;
                 }
@@ -722,12 +721,10 @@ namespace quark {
             }
 
         Object asObject() for python import "six" {
-            if $self is None:
-                return None
-            elif isinstance($self, (list, tuple, dict, six.text_type, float) + six.integer_types):
-                return None
-            else:
+            if $(self.type()) == 4:
                 return $self
+            else:
+                return None
         }
 
 
@@ -788,9 +785,8 @@ namespace quark {
             }
 
         Object asObject() for ruby {
-            a = $self
-            if a.respond_to?(:__eq__)
-                return a
+            if $(self.type()) == 4
+                return $self
             else
                 return nil
             end
@@ -866,9 +862,8 @@ namespace quark {
             }
 
         Object asObject() for javascript {
-            let a = $self
-            if (a !== null && typeof(a) === "object" && "__eq__" in a) { // XXX: better test, consolidate test
-                return a;
+            if ($(self.type()) === 4) {
+                return $self
             } else {
                 return null;
             }
