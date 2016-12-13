@@ -29,7 +29,7 @@ void testpow() {
 }
 
 primitive imaginary
-for java {int}
+for java {long}
 for go {int}
 for python {int}
 for ruby {Integer}

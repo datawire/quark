@@ -66,9 +66,13 @@ def expr(intt, target):
 def expr(intt, target):
     return ""
 
-@match(Int, choice(Java, Go))
+@match(Int, Java)
 def expr(intt, target):
     # XXX: int or long ?
+    return "long"
+
+@match(Int, Go)
+def expr(intt, target):
     return "int"
 
 ## Any
@@ -137,7 +141,7 @@ def expr(mapt, type, target):
 
 @match(Map, Int, Java)
 def expr(mapt, type, target):
-    return "Integer"
+    return "Long"
 
 @match(Map, Go)
 def expr(mapt, target):
@@ -162,7 +166,7 @@ def expr(listt, type, target):
 
 @match(List, Int, Java)
 def expr(listt, type, target):
-    return "Integer"
+    return "Long"
 
 @match(List, Go)
 def expr(listt, target):
@@ -195,7 +199,15 @@ def expr(boxed, type, target):
 
 @match(Boxed, Int, Java)
 def expr(boxed, type, target):
-    return "Integer"
+    return "Long"
+
+@match(Boxed, Bool, Java)
+def expr(boxed, type, target):
+    return "Boolean"
+
+@match(Boxed, Float, Java)
+def expr(boxed, type, target):
+    return "Double"
 
 @match(Boxed, Go)
 def expr(boxed, target):
@@ -266,6 +278,10 @@ def expr(var, target):
 def expr(lit, target):
     # XXX: probably good enough
     return str(lit.value)
+
+@match(IntLit, Java)
+def expr(lit, target):
+    return "%sL" % lit.value
 
 ## StringLit
 

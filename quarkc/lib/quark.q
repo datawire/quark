@@ -395,7 +395,7 @@ namespace quark {
                     return 0;
                 } else if (a instanceof Boolean) {
                     return 1;
-                } else if (a instanceof Integer) {
+                } else if (a instanceof Long) {
                     return 1;
                 } else if (a instanceof String) {
                     return 1;
@@ -416,7 +416,7 @@ namespace quark {
                 Object a = $self;
                 if (a instanceof Boolean) {
                     return a;
-                } else if (a instanceof Integer) {
+                } else if (a instanceof Long) {
                     return a;
                 } else if (a instanceof String) {
                     return a;
@@ -977,7 +977,7 @@ namespace quark {
                     return 0;
                 } else if (a instanceof Boolean) {
                     return 1;
-                } else if (a instanceof Integer) {
+                } else if (a instanceof Long) {
                     return 2;
                 } else if (a instanceof Float) {
                     return 2;
@@ -1014,8 +1014,8 @@ namespace quark {
                     return false;
                 } else if (a instanceof Boolean) {
                     return (Boolean)a;
-                } else if (a instanceof Integer) {
-                    return ((Integer)a) != 0;
+                } else if (a instanceof Long) {
+                    return ((Long)a) != 0;
                 } else if (a instanceof String) {
                     return !((String)a).isEmpty();
                 } else if (a instanceof Float) {
@@ -1076,8 +1076,8 @@ namespace quark {
                     return "";
                 } else if (a instanceof Boolean) {
                     return (Boolean)a ? "true" : "false";
-                } else if (a instanceof Integer) {
-                    return ((Integer)a).toString();
+                } else if (a instanceof Long) {
+                    return ((Long)a).toString();
                 } else if (a instanceof String) {
                     return (String)a;
                 } else if (a instanceof Float) {
@@ -1465,7 +1465,7 @@ namespace quark {
         int size() for java { return $self.length(); }
         String substring(int start, int end) for java {
                 int l = $self.length();
-                return $self.substring($start, $end < l ? $end : l);
+                return $self.substring((int)$start, ((int)$end) < l ? ((int)$end) : l);
             }
 
 
@@ -1816,11 +1816,11 @@ namespace quark {
             }
 
         void __set__(int index, T value) for java import "java.util.List" {
-                $self.set($index,$value);
+                $self.set((int)$index,$value);
             }
 
         T __get__(int index) for java import "java.util.List" {
-                $T_boxed el = $self.get($index);
+                $T_boxed el = $self.get((int)$index);
                 if ( el == null ) {
                     return $T_nulled;
                 } else {
@@ -1841,11 +1841,11 @@ namespace quark {
             }
 
         void insert(int index, T element) for java import "java.util.List" {
-                $self.add($index, $element);
+                $self.add((int)$index, $element);
             }
 
         T remove(int index) for java import "java.util.List" {
-                $T_boxed el = $self.remove($index);
+                $T_boxed el = $self.remove((int)$index);
                 if ( el != null ) {
                     return el;
                 }
