@@ -139,6 +139,10 @@ namespace quark {
         bool __gt__(int other);
         bool __lt__(int other);
 
+        String toString() {
+            return unsafe(self).asString();
+        }
+
         Any to_quark_Any();
         Scalar to_quark_Scalar();
 
@@ -870,21 +874,24 @@ namespace quark {
         }
 
         bool __eq__(Any other) {
-            if (self.type() != other.type()) {
+            int stype = self.type();
+            int otype = other.type();
+            if (stype != otype) {
                 return false;
             } else {
-                switch (self.type()) {
+                switch (stype) {
                 case 0:
                     return true;
                 case 1:
                     return self.asScalar() == other.asScalar();
                 case 2:
                     return self.asList() == other.asList();
-                // XXX: missing cases
+                case 3:
+                    return self.asMap() == other.asMap();
                 case 4:
                     return self.asObject() == other.asObject();
                 }
-                // XXX: should panic
+                panic("unrecognized type of Any: " + stype.toString());
                 return false;
             }
         }
@@ -990,7 +997,9 @@ namespace quark {
             }
 
         bool __eq__(Scalar other) {
-            if (self.type() != other.type()) {
+            int stype = self.type();
+            int otype = other.type();
+            if (stype != otype) {
                 return false;
             } else {
                 switch (self.type()) {
@@ -999,12 +1008,16 @@ namespace quark {
                 case 1:
                     return self.asBool() == other.asBool();
                 case 2:
+                    // XXX: this is going to compare floats as ints,
+                    // we probably want to dispatch to a native number
+                    // comparison here that will do something better
+                    // than this on each target.
                     return self.asInt() == other.asInt();
                 case 3:
                     return self.asString() == other.asString();
-                    // XXX: missing cases
                 }
-                return true;
+                panic("unrecognized type of Scalar: " + stype.toString());
+                return false;
             }
         }
 
@@ -1793,8 +1806,6 @@ namespace quark {
             self.append(element);
         }
 
-        /* FIXME: Does not compile because elements of the
-           list may lack __eq__/__ne__ methods.*/
         bool __eq__(List<T> other) {
             if (self.size() != other.size()) {
                 return false;
@@ -2020,27 +2031,27 @@ namespace quark {
 
     }
 
-    bool same(void a, void b);
+    bool same(Object a, Object b);
 
-    bool same(void a, void b) for java {
+    bool same(Object a, Object b) for java {
         return a == b;
     }
 
-    bool same(void a, void b) for go {
+    bool same(Object a, Object b) for go {
         return &a == &b;
     }
 
-    bool same(void a, void b) for ruby {
+    bool same(Object a, Object b) for ruby {
         x = Object.instance_method(:object_id).bind(a).call
         y = Object.instance_method(:object_id).bind(b).call
         return x == y
     }
 
-    bool same(void a, void b) for python {
+    bool same(Object a, Object b) for python {
         return a is b
     }
 
-    bool same(void a, void b) for javascript {
+    bool same(Object a, Object b) for javascript {
         return Object.is(a, b)
     }
 
