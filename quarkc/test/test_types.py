@@ -521,15 +521,22 @@ def test_double_get():
 def test_uninferable():
     check_with_primitives(
         """
+        void noop(void x) {}
         void foo() {
             [];
             {};
+            noop([]);
+            noop({});
         }
         """,
         {
+            'f.noop': ((CALLABLE, 'quark.void', 'quark.void'),
+                       (DECLARE, 'x', 'quark.void')),
             'f.foo': ((CALLABLE, 'quark.void'),
                       (VIOLATION, (UNINFERABLE, '[]'), UNKNOWN),
-                      (VIOLATION, (UNINFERABLE, '{}'), UNKNOWN))
+                      (VIOLATION, (UNINFERABLE, '{}'), UNKNOWN),
+                      (VIOLATION, (UNINFERABLE, '[]'), 'quark.void'),
+                      (VIOLATION, (UNINFERABLE, '{}'), 'quark.void'))
         })
 
 def test_literals():

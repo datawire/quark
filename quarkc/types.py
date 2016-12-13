@@ -257,7 +257,11 @@ class Types(object):
 
     @match(choice(List, Map, Cast))
     def do_resolve(self, l):
-        return self.do_resolve_infer(l.parent, l)
+        result = self.do_resolve_infer(l.parent, l)
+        if self.types.unresolve(result) == types.Ref("quark.void"):
+            self.add_violation(errors.Uninferable(l))
+            return Unresolvable(None)
+        return result
 
     @match(Declaration, choice(List, Map, Cast))
     def do_resolve_infer(self, d, _):
