@@ -88,7 +88,7 @@ class Scalar(Value):
     @match(lazy("Scalar"))
     def equals_value(self, other):
         # XXX: do floats need snowflake comparison?
-        return self.pyval == other.pyval
+        return self.atom.equals(other.atom)
 
     @match(basestring)
     def store(self, var):
@@ -223,6 +223,10 @@ class Any(Value):
 def any(a):
     return a
 
+@match(Scalar)
+def any(s):
+    return Any(s.atom)
+
 @match(Value)
 def any(a):
     return Any(a)
@@ -238,7 +242,7 @@ def scalar(a):
 class DataSet(object):
 
     SCALARS = ("bool", "int", "float", "String")
-    HASHABLE = SCALARS
+    HASHABLE = SCALARS + ("Scalar",)
 
     def __init__(self):
         self.data = OrderedDict()
@@ -263,6 +267,11 @@ class DataSet(object):
 
     @match(int, many(basestring))
     def values(self, n, *types):
+        """
+        Produce n values of the optionally specified types. If no
+        types are specifed then produce values of any type in the
+        dataset.
+        """
         if not types: types = self.types
 
 
@@ -278,6 +287,13 @@ class DataSet(object):
 
     @match(int, many(basestring))
     def lists(self, n, *types):
+        """
+        Builds lists from size zero up to size n using the data in the
+        dataset. The element type of the list can be restricted using
+        the optional types argument. If no types are specified, the
+        types argument will be defaulted to any available types in the
+        dataset.
+        """
         if not types: types = self.types
         result = []
         for t in types:
@@ -287,6 +303,14 @@ class DataSet(object):
 
     @match(int, opt((many(basestring),)), opt((many(basestring),)))
     def maps(self, n, key_types=(), value_types=()):
+        """
+        Builds maps from size zero up to size n using the data in the
+        dataset. The key_types and value_types arguments may be used
+        to restrict the set of key_types and value_types produced. If
+        not present key_types will default to all available (and
+        permitted) types in the dataset, and the value_types will
+        default to all available types in the dataset.
+        """
         if not key_types:
             key_types = (t for t in self.types if t in self.HASHABLE)
         if not value_types:
@@ -298,20 +322,14 @@ class DataSet(object):
                     result.append(Map(kt, vt, *zip(self.values(i, kt), self.values(i, vt))))
         return result
 
-    @match(int, many(basestring))
-    def anys(self, n, *types):
-        result = []
-        for v in self.values(n, *types):
-            result.append(Any(v))
-        return result
-
 DATA = DataSet()
 
 DATA.add(Atom(True), Atom(False))
 DATA.add(Atom(i) for i in range(-3, 4) + range(2**31 - 3, 2**31 + 4) + range(2**32 - 3, 2**32 + 4))
 DATA.add(Atom(f) for f in (0.0, -0.0, 3.14))
 DATA.add(Atom(s) for s in ("", "Hello World!", "pi", "pie", " ", "\n", "asdf\n"))
-DATA.add(*DATA.anys(DATA.count))
+DATA.add(*(scalar(v) for v in DATA.values(DATA.count)))
+DATA.add(*(any(v) for v in DATA.values(DATA.count)))
 
 N = 3
 
