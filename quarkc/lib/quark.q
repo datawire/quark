@@ -1544,6 +1544,28 @@ namespace quark {
                 return $V_nulled;
             }
 
+        bool __eq__(Map<K,V> other) {
+            // XXX: this needs the self, but shouldn't
+            if (self.size() != other.size()) {
+                return false;
+            }
+
+            List<K> keys = self.keys();
+            int idx = 0;
+            while (idx < keys.size()) {
+                K key = keys[idx];
+                if (!other.contains(key)) {
+                    return false;
+                }
+                if (!(unsafe(self[key]) == unsafe(other[key]))) {
+                    return false;
+                }
+                idx = idx + 1;
+            }
+
+            return true;
+        }
+
         List<K> keys() for java import "java.util.Map" import "java.util.ArrayList" {
                 return new ArrayList<$K_boxed>($self.keySet());
             }
