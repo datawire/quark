@@ -189,7 +189,7 @@ class Python(Target):
 
     UNKEYWORDS = dict((k, k+"_") for k in """
          self map list None True False
-         tests print
+         tests print assert
     """.split())
 
 

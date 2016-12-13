@@ -2054,4 +2054,32 @@ namespace quark {
 
     void print(void o) for javascript { console.log($o) }
 
+    void panic(String message);
+
+    void panic(String message) for java {
+        throw new RuntimeException($message);
+    }
+
+    void panic(String message) for go {
+        panic($message);
+    }
+
+    void panic(String message) for ruby {
+        raise $message
+    }
+
+    void panic(String message) for python {
+        raise Exception($message)
+    }
+
+    void panic(String message) for javascript {
+        throw $message;
+    }
+
+    void assert(bool value, String message) {
+        if (!value) {
+            panic(message);
+        }
+    }
+
 }
