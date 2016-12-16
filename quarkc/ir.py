@@ -520,7 +520,7 @@ class Param(LocalDeclaration):
 class Template(Definition):
     """ A templated definition. The definition is supposed to use TypeParam in places where
     """
-    @match(choice(lazy("Interface"),lazy("Class"),lazy("Function")))
+    @match(choice(lazy("Interface"),lazy("Class"),lazy("Function"),lazy("Instantiation")))
     def __init__(self, dfn):
         self.dfn = dfn
 
