@@ -517,6 +517,61 @@ class Param(LocalDeclaration):
         self.name = name
         self.type = Any()
 
+class Template(Definition):
+    @match(Definition)
+    def __init__(self, dfn):
+        self.dfn = dfn
+
+    @property
+    def children(self):
+        yield dfn
+
+    def __repr__(self):
+        return self.repr(self.dfn)
+
+class TypeParam(AbstractType):
+    @match(basestring)
+    def __init__(self, name):
+        self.name = name
+
+    @property
+    def children(self):
+        if False: yield
+
+    def __repr__(self):
+        return self.repr(self.name)
+
+class TypeBinding(IR):
+    @match(basestring, AbstractType)
+    def __init__(self, name, type):
+        self.name = name
+        self.type = type
+
+    @property
+    def children(self):
+        yield self.type
+
+    def __repr__(self):
+        return self.repr(self.name, self.type)
+
+class Instantiation(Definition):
+
+    @match(Name, Ref, many(TypeBinding, min=1))
+    def __init__(self, name, template, *bindings):
+        self.name = name
+        self.template = template
+        self.bindings = bindings
+
+    @property
+    def children(self):
+        yield self.name
+        yield self.template
+        for b in self.bindings:
+            yield b
+
+    def __repr__(self):
+        return self.repr(self.name, self.template, *self.bindings)
+
 class Function(Definition):
 
     @match(Name, AbstractType, many(Param), choice(Block, lazy("NativeBlock")))
