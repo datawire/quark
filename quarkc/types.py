@@ -28,7 +28,9 @@ class Types(object):
         self.types = Typespace()
         self.resolved = OrderedDict()
         self.violations = OrderedDict()
-        self.refset = None
+        self.reified = {}
+        self.partial = {}
+        self._instantiations = {}
         self._assignable = {}
         self.conversions = {}
 
@@ -149,7 +151,23 @@ class Types(object):
             result = self.types.unresolve(self.do_resolve(node))
             self.resolved[node] = result
             self.validate_bool(node.parent, node, result)
+
+            if isinstance(result, Ref) and result.params:
+                self.update_reified(result)
+
             return result
+
+    def update_reified(self, ref):
+        partial = False
+        for p in self.params(ref):
+            if p not in self.partial:
+                self.partial[p] = OrderedDict()
+            self.partial[p][ref] = None
+            partial = True
+        if not partial and ref not in self.reified:
+            self.reified[ref] = None
+            return True
+        return False
 
     # XXX: should validation be a separate phase?
     @match(choice(If, While), Expression, types.Ref)
@@ -413,49 +431,44 @@ class Types(object):
     def node(self, nd):
         return self.node(self[nd])
 
+    @match(types.Ref)
+    def params(self, ref):
+        if ref.params:
+            for pref in ref.params:
+                for p in self.params(pref):
+                    yield p
+        else:
+            tnode = self.types.resolve(types.Ref(ref.name))
+            if isinstance(tnode, types.Param):
+                yield ref.name
+
+    def reify(self):
+        todo = list(self.reified)
+        while todo:
+            ref = todo.pop()
+            tnode = self.types.resolve(types.Ref(ref.name))
+            bindings = dict((p.name, v) for p, v in zip(tnode.params, ref.params))
+            for p in tnode.params:
+                for pref in self.partial[p.name]:
+                    bound = pref.bind(bindings)
+                    if self.update_reified(bound):
+                        todo.append(bound)
+        self._instantiations = {}
+        for ref in self.reified:
+            if ref.name not in self._instantiations:
+                self._instantiations[ref.name] = OrderedDict()
+            self._instantiations[ref.name][ref] = None
+
     @match(AST)
     def instantiations(self, nd):
-        return self.instantiations(self[nd])
+        ref = self[nd]
+        tnode = self.node(ref)
 
-    @match(types.Ref)
-    def instantiations(self, ref):
-        return self.instantiations(ref, self.node(ref))
-
-    @match(types.Ref, types.Template)
-    def instantiations(self, ref, t):
-        if self.refset is None:
-            self.refset = set([r for r in self.types.resolved if r.params])
-            while True:
-                prev = len(self.refset)
-                bindingses = []
-                for r in self.refset:
-                    tp = self.types[r.name]
-                    bindings = {}
-                    for p, v in zip(tp.params, r.params):
-                        bindings[p.name] = v
-                    bindingses.append(bindings)
-                additions = []
-                for r in self.refset:
-                    for b in bindingses:
-                        bound = r.bind(b)
-                        if bound != r:
-                            additions.append(bound)
-                self.refset.update(additions)
-                if len(self.refset) == prev:
-                    break
-
-        refs = [r for r in self.refset if r.name == ref.name and r.params]
-        for ref in refs:
-            bindings = {}
-            assert len(ref.params) == len(t.params)
-            concrete = True
-            for r, p in zip(ref.params, t.params):
-                bindings[p.name] = r
-                if isinstance(self.node(r), types.Param):
-                    concrete = False
-            if concrete:
-                yield ref, bindings
-
-    @match(types.Ref, types.Type)
-    def instantiations(self, ref, _):
-        yield ref, {}
+        if ref.name in self._instantiations:
+            for iref in self._instantiations[ref.name]:
+                bindings = {}
+                for param, value in zip(tnode.params, iref.params):
+                    bindings[param.name] = value
+                yield iref, bindings
+        else:
+            yield ref, {}

@@ -10,6 +10,7 @@ from .exceptions import CompileError
 import tree
 
 import ir, types, typespace
+import stats
 
 class View(object):
 
@@ -76,13 +77,15 @@ class Code(object):
 
     @match()
     def compile(self):
+        self.prototypes.reify()
         definitions = []
         for sym, nd in self.symbols.definitions.items():
             if not self.is_top(nd): continue
 
             for ref, bindings in self.prototypes.instantiations(nd.parent if isinstance(nd, Method) else nd):
                 self.types = View(self.prototypes, bindings)
-                definitions.append(self.compile(nd))
+                with stats.charge("compile:%s.%s" % (nd.__class__.__module__, nd.__class__.__name__)):
+                    definitions.append(self.compile(nd))
         # XXX
         return ir.Package(*definitions)
 
