@@ -518,13 +518,15 @@ class Param(LocalDeclaration):
         self.type = Any()
 
 class Template(Definition):
-    @match(Definition)
+    """ A templated definition. The definition is supposed to use TypeParam in places where
+    """
+    @match(choice(Interface,Class,Function))
     def __init__(self, dfn):
         self.dfn = dfn
 
     @property
     def children(self):
-        yield dfn
+        yield self.dfn
 
     def __repr__(self):
         return self.repr(self.dfn)
