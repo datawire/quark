@@ -518,7 +518,11 @@ class Param(LocalDeclaration):
         self.type = Any()
 
 class Template(Definition):
-    """ A templated definition. The definition is supposed to use TypeParam in places where
+    """A templated definition. The definition is supposed to use TypeParam
+    in places where the Instantiation will provide TypeBindings of
+    actual types. The template name is the name of the contained
+    definition
+
     """
     @match(choice(lazy("Interface"),lazy("Class"),lazy("Function"),lazy("Instantiation")))
     def __init__(self, dfn):
@@ -532,6 +536,8 @@ class Template(Definition):
         return self.repr(self.dfn)
 
 class TypeParam(AbstractType):
+    """ A named placeholder for a type in a Template definition
+    """
     @match(basestring)
     def __init__(self, name):
         self.name = name
@@ -544,6 +550,10 @@ class TypeParam(AbstractType):
         return self.repr(self.name)
 
 class TypeBinding(IR):
+    """A named type to be substituted for the same-named TypeParam in the
+    Templated definition referenced by the Instantiation
+
+    """
     @match(basestring, AbstractType)
     def __init__(self, name, type):
         self.name = name
@@ -557,6 +567,12 @@ class TypeBinding(IR):
         return self.repr(self.name, self.type)
 
 class Instantiation(Definition):
+
+    """Instantiation of a Template definition. the instantiation has to
+    be uniquely named. The template is looked up by the name of the definition
+    in the template.
+
+    """
 
     @match(Name, Ref, many(TypeBinding, min=1))
     def __init__(self, name, template, *bindings):
