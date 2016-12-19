@@ -93,6 +93,14 @@ namespace quark {
         bool __or__(bool b);
         bool __and__(bool b);
 
+        String toString() {
+            if (self) {
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
         Any to_quark_Any();
         Scalar to_quark_Scalar();
 
@@ -391,7 +399,28 @@ namespace quark {
 
         Object asObject();
 
+        String inspect();
 
+
+        String inspect() for go import "fmt" {
+            return fmt.Sprintf("%+v", $self)
+        }
+
+        String inspect() for java {
+            return $self.toString();
+        }
+
+        String inspect() for python {
+            return str($self)
+        }
+
+        String inspect() for ruby {
+            return $self.inspect()
+        }
+
+        String inspect() for javascript {
+            return $self.toString();
+        }
 
         int type() for java  import "java.util.List" import "java.util.Map" {
                 Object a = $self;
@@ -463,31 +492,26 @@ namespace quark {
             }
 
 
-        int type() for go {
-                a := $self;
-                switch i := a.(type) {
-                    case nil: return 0
-                    case bool: return 1
-                    case int: return 1
-                    case string: return 1
-                    case float32, float64: return 1
-                    case []bool, []int, []string, []float32, []float64, []interface{},
-                    *[]bool, *[]int, *[]string, *[]float32, *[]float64, *[]interface{},
-                    []$Object, *[]$Object: {
-                        return 2
+        int type() for go import "reflect" {
+                if ($self == nil) {
+                    return 0
+                }
+                a := reflect.Indirect(reflect.ValueOf($self));
+                switch k := a.Kind(); k {
+                    case reflect.Bool: return 1
+                    case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64: return 1
+                    case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64: return 1
+                    case reflect.Float32, reflect.Float64: return 1
+                    case reflect.String: return 1
+                    case reflect.Slice, reflect.Array: return 2
+                    case reflect.Map: return 3
+                    case reflect.Interface, reflect.Struct: {
+                        return 4
                     }
-                    case map[int]int, map[int]string, map[int]interface{},
-                    map[string]int, map[string]string, map[string]interface{},
-                    map[interface{}]interface{}, map[interface{}]int, map[interface{}]string : {
-                        return 3
-                    }
-                    case $Object: return 4
                     default: {
-                        _ = i
-                        // XXX: use reflection here to detect weirder map types
                         return -1
                     }
-                    }
+                }
             }
 
         Scalar asScalar() for go {
@@ -595,68 +619,18 @@ namespace quark {
                     }
             }
 
-        Map<Scalar,Any> asMap() for go {
-                a := $self
-                switch i := a.(type) {
-                    case map[int]int: {
-                            ret := make(map[interface{}]interface{})
-                            for k,v := range(i) {
-                                    ret[k] = v
-                                }
-                            return ret
+        Map<Scalar,Any> asMap() for go import "reflect" {
+                if ($(self.type()) == 3) {
+                    m := reflect.ValueOf($self)
+                    keys := m.MapKeys()
+                    ret := make(map[interface{}]interface{})
+                    for _, k := range(keys) {
+                        ret[k.Interface()] = m.MapIndex(k).Interface();
                     }
-                    case map[int]string: {
-                            ret := make(map[interface{}]interface{})
-                            for k,v := range(i) {
-                                    ret[k] = v
-                                }
-                            return ret
-                    }
-                    case map[interface{}]int: {
-                            ret := make(map[interface{}]interface{})
-                            for k,v := range(i) {
-                                    ret[k] = v
-                                }
-                            return ret
-                    }
-                    case map[interface{}]string: {
-                            ret := make(map[interface{}]interface{})
-                            for k,v := range(i) {
-                                    ret[k] = v
-                                }
-                            return ret
-                    }
-                    case map[int]interface{}: {
-                        ret := make(map[interface{}]interface{})
-                        for k,v := range(i) {
-                                ret[k] = v
-                            }
-                        return ret
-                    }
-                    case map[string]int: {
-                        ret := make(map[interface{}]interface{})
-                        for k,v := range(i) {
-                                ret[k] = v
-                            }
-                        return ret
-                    }
-                    case map[string]string: {
-                        ret := make(map[interface{}]interface{})
-                        for k,v := range(i) {
-                                ret[k] = v
-                            }
-                        return ret
-                    }
-                    case map[string]interface{}: {
-                        ret := make(map[interface{}]interface{})
-                        for k,v := range(i) {
-                                ret[k] = v
-                            }
-                        return ret
-                    }
-                    case map[interface{}]interface{}: return i;
-                    }
-                return nil;
+                    return ret
+                } else {
+                    return nil;
+                }
             }
 
         Object asObject() for go {
