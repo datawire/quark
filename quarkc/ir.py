@@ -529,6 +529,10 @@ class Template(Definition):
         self.dfn = dfn
 
     @property
+    def name(self):
+        return self.dfn.name
+
+    @property
     def children(self):
         yield self.dfn
 
@@ -579,6 +583,7 @@ class Instantiation(Definition):
         self.name = name
         self.template = template
         self.bindings = bindings
+        assert self.__class__ is not Instantiation
 
     @property
     def children(self):
@@ -589,6 +594,15 @@ class Instantiation(Definition):
 
     def __repr__(self):
         return self.repr(self.name, self.template, *self.bindings)
+
+class FunctionInstantiation(Instantiation):
+    pass
+class NativeFunctionInstantiation(FunctionInstantiation):
+    pass
+class ClassInstantiation(Instantiation):
+    pass
+class InterfaceInstantiation(Instantiation):
+    pass
 
 class Function(Definition):
 

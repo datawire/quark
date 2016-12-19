@@ -13,8 +13,9 @@
 # limitations under the License.
 
 from collections import OrderedDict
+from contextlib import contextmanager
 from .match import match, choice, lazy
-from .ir import (Root, Definition, Namespace, NamespaceName, Name, Ref, ScopedName, LocalName)
+from .ir import (Root, Definition, Namespace, NamespaceName, Name, Ref, ScopedName, LocalName, Instantiation, TypeParam)
 from .tree import Query, isa, walk_dfs
 
 class NameQuery(Query):
@@ -49,7 +50,7 @@ class Target(object):
     - It contains all the mutable state needed by the emit
       phase.
 
-    Mutable state is currently limited to three areas:
+    Mutable state is currently limited to four areas:
 
     - Symbol name translation. Each ir.Name should be assigned a target name
 
@@ -58,6 +59,8 @@ class Target(object):
 
     - ir tree queries. Target privides access to a NameQuery instance
       initialized with the ir.Root of the current emit() invocation
+
+    - template instantiations type paramer bindings
     """
 
     @match()
@@ -66,12 +69,14 @@ class Target(object):
         self.names = dict()
         self.imports = dict()
         self.q = None
+        self.bindings = dict()
 
     @match("private", lazy("Target"), Root)
     def __init__(self, _, parent, root):
         self.parent = parent
         self.names = parent.names
         self.imports = parent.imports
+        self.bindings = parent.bindings
         self.q = NameQuery(root)
 
     @match(Root)
@@ -139,6 +144,32 @@ class Target(object):
     def varname(self, s):
         return self.UNKEYWORDS.get(s.name, s.name)
 
+
+    @match(Instantiation)
+    @contextmanager
+    def bind(self, inst):
+        bindings = self.bindings
+        name = self.names[inst.template]
+        self.bindings = dict()
+        self.names[inst.template] = self.names[inst.name]
+        used = set()
+        for b in inst.bindings:
+            if isinstance(b.type, TypeParam):
+                # XXX: Error reporting of unknown type params
+                self.bindings[b.name] = bindings[b.type.name]
+                used.add(b.type.name)
+            else:
+                self.bindings[b.name] = b.type
+
+        unused = set(bindings.keys()) - used
+        assert not unused, (
+            "Inner template instantiation did not use all outer type params. Have %s, used %s, unused %s" % (
+                set(bindings.keys()), used, unused))
+
+        yield
+
+        self.bindings = bindings
+        self.names[inst.template] = name
 
 class Java(Target):
     """

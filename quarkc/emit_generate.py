@@ -16,7 +16,7 @@ from collections import OrderedDict
 from .match import match, many, choice
 from .ir import (Root, Package, Namespace, Definition,
                  Check, Function, Ref, ExternalPackage, TestClass,
-                 NativeImport)
+                 NativeImport, Template, Instantiation, FunctionInstantiation)
 from .tree import walk_dfs, isa, split
 from . import tr
 from .emit_target import Target, Go, Ruby, Java, Python, Javascript
@@ -95,7 +95,7 @@ def generate(parent, ns, target):
 
 @match(Namespace, Python)
 def ffi_namespace(ns, target):
-    _, dfns, nss, _ = split(ns.children, isa(Check,TestClass), isa(Definition), isa(Namespace))
+    _, dfns, nss, _ = split(ns.children, isa(Check,TestClass,Template), isa(Definition), isa(Namespace))
     for nns in nss:
         ns_name = target.nameof(nns)
         yield tr.Simple("from .{module} import __quark_namespace__ as {name}".format(
@@ -144,7 +144,7 @@ def generate(parent, ns, target):
 
 @match(Namespace, Ruby)
 def ffi_namespace(ns, target):
-    _, dfns, _ = split(ns.children, isa(Check,TestClass), isa(Definition,Namespace))
+    _, dfns, _ = split(ns.children, isa(Check,TestClass,Template), isa(Definition,Namespace))
     for dfn in dfns:
         yield tr.Simple("require_relative \"{module}\"".format(
             module = "/".join(module_path(ns, dfn, target))))
@@ -187,7 +187,7 @@ def generate(parent, ns, target):
 
 @match(Namespace, Javascript)
 def ffi_namespace(ns, target):
-    _, dfns, nss, _ = split(ns.children, isa(Check,TestClass), isa(Definition), isa(Namespace))
+    _, dfns, nss, _ = split(ns.children, isa(Check,TestClass,Template), isa(Definition), isa(Namespace))
     for dfn in dfns:
         yield tr.Simple("exports.{name} = require(\"{module}\").impl".format(
             name = target.nameof(dfn),
@@ -204,6 +204,10 @@ def require_path(dfn, ref_dfn, target):
         return (".",) + ref_module_path
     else:
         return ref_module_path
+
+@match(Template, Target)
+def generate(dfn, target):
+    if False: yield
 
 @match(Definition, choice(Go, Python, Java, Javascript))
 def generate(dfn, target):
@@ -245,7 +249,7 @@ def generate(dfn, target):
     """ supress checks, they are transformed in a batch in their namespace """
     if False: yield
 
-@match(Function, Java)
+@match(choice(Function, FunctionInstantiation), Java)
 def generate(dfn, target):
     """ supress functions they are tranformed in a batch in their namespace """
     if False: yield
@@ -440,7 +444,7 @@ def define_imports(dfn, target, imports):
 
     """
     dfn_module_path = module_path(dfn, target)
-    for ref in filter(isa(Ref), walk_dfs(dfn)):
+    for ref in used_refs(dfn, target):
         ref_dfn = target.q.definition(ref)
         ref_dfn_target_name = target.nameof(ref_dfn)
         ref_module_path = module_path(ref_dfn, target)
@@ -463,7 +467,7 @@ def define_imports(dfn, target, imports):
     statements and remember actual names that refs should resolve to
 
     """
-    for ref in filter(isa(Ref), walk_dfs(dfn)):
+    for ref in used_refs(dfn, target):
         ref_dfn = target.q.definition(ref)
         ref_dfn_target_name = target.nameof(ref_dfn)
         if dfn.name.package != ref.package or isinstance(dfn, (TestClass, Check)):
@@ -494,7 +498,7 @@ def define_imports(dfn, target, imports):
 
     """
     dfn_module_path = module_path(dfn, target)
-    for ref in filter(isa(Ref), walk_dfs(dfn)):
+    for ref in used_refs(dfn, target):
         ref_dfn = target.q.definition(ref)
         ref_module_path = module_path(ref_dfn, target)
         if dfn_module_path[:-1] == ref_module_path[:-1]:
@@ -522,7 +526,7 @@ def define_imports(dfn, target, imports):
     statements and remember actual names that refs should resolve to
 
     """
-    for ref in filter(isa(Ref), walk_dfs(dfn)):
+    for ref in used_refs(dfn, target):
         ref_dfn = target.q.definition(ref)
         if dfn.name.package != ref.package or isinstance(dfn, (TestClass, Check)):
             # import from FFI namespace
@@ -547,13 +551,21 @@ def define_imports(dfn, target, imports):
         imports[imp.module] = dict(require = "require",
                                    module = imp.module)
 
+@match(Definition, Target)
+def used_refs(dfn, target):
+    return filter(isa(Ref), walk_dfs(dfn))
+
+@match(Instantiation, Target)
+def used_refs(inst, target):
+    return used_refs(target.q.definition(inst.template), target)
+
 @match(Definition, Ruby)
 def module_ffi_name(dfn, target):
     module_path = module_ffi_path(dfn, target)
     target_name = target.nameof(dfn)
     return "::".join(module_path + (target_name,))
 
-@match(Function, Ruby)
+@match(choice(Function,FunctionInstantiation), Ruby)
 def module_ffi_name(dfn, target):
     module_path = module_ffi_path(dfn, target)
     target_name = target.nameof(dfn)
@@ -565,7 +577,7 @@ def define_imports(dfn, target, imports):
     statements and remember actual names that refs should resolve to
 
     """
-    for ref in filter(isa(Ref), walk_dfs(dfn)):
+    for ref in used_refs(dfn, target):
         ref_dfn = target.q.definition(ref)
         ref_dfn_target_name = target.nameof(ref_dfn)
         if dfn.name.package != ref.package or isinstance(dfn, (TestClass, Check)):
