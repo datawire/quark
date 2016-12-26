@@ -74,7 +74,7 @@ def frontend_files():
 def parser_files():
     dir = os.path.dirname(__file__)
     files = code_files()
-    parser = ["match.py", "ast.py", "parse.py", "parser.py", "exceptions.py"]
+    parser = ["match.py", "ast.py", "parse.py", "old_parser.py", "exceptions.py"]
     assert set(files).issuperset(set(parser)), "Have %s want %s" % (files, parser)
     return [os.path.join(dir, f) for f in parser]
 

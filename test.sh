@@ -14,7 +14,7 @@ node --version
 ruby --version
 mvn --version
 
-if flake8 quarkc; then
+if flake8 quarkc --exclude '*/generated/*'; then
     echo flake8 passed
 else
     exit 1

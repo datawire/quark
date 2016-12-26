@@ -2,7 +2,7 @@ from .match import match, choice, many, opt
 from .ast import (
     AST, File, Package, Callable, Class, Declaration, TypeParam, Import, NativeBlock
 )
-from .parser import Parser
+from .old_parser import Parser
 from .exceptions import ParseError
 from parsimonious import ParseError as GParseError
 

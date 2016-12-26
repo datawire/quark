@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import os, sys
+
+HOME = os.environ["HOME"]
+BASE = os.path.dirname(__file__)
+
+URL="http://www.antlr.org/download/antlr-4.6-complete.jar"
+ANTLR = os.path.join(BASE, "antlr-4.6-complete.jar")
+
+if os.path.exists(ANTLR):
+    setup = []
+else:
+    setup = ["curl -o {antlr} {url}".format(antlr=ANTLR, url=URL)]
+
+OUT = "generated"
+PARSER = "QuarkParser.g4"
+LEXER = "QuarkLexer.g4"
+
+cmds = " && ".join(setup + """
+rm -rf {base}/{out}
+cd {base}
+java -jar {antlr} -o {out} {lexer} {parser}
+touch {base}/{out}/__init__.py
+""".strip().split("\n"))
+
+os.system(cmds.format(base=BASE, antlr=ANTLR, out=OUT, lexer=LEXER, parser=PARSER))
