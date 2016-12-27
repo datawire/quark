@@ -57,7 +57,7 @@ def check(name, content, expected=None, duplicates=(), missing=()):
 TOP = [File, Package, Class, Function]
 CHILDREN = {File: (Package, Function, Class, Interface),
             Package: (Package, Function, Class, Interface),
-            Interface: (TypeParam, Field, Method),
+            Interface: (TypeParam, Method),
             Class: (TypeParam, Field, Method),
             Function: (Param, Local),
             Method: (Param, Local)}
@@ -131,7 +131,7 @@ class SymbolTree(object):
     @match(File, basestring)
     def assemble(self, t, name):
         definitions = "\n".join(self.get(*CHILDREN[t]))
-        return "quark 1.0;\n\npackage {name} 1.2.3;\n\n{definitions}".format(name=name, definitions=definitions)
+        return "{definitions}".format(name=name, definitions=definitions)
 
     def nodes(self):
         yield self
@@ -141,8 +141,10 @@ class SymbolTree(object):
                     yield n
 
     def symbols(self, filename, name):
-        if self.type in (File, Package):
+        if self.type == Package:
             path = (name,)
+        elif self.type == File:
+            path = (filename,)
         else:
             path = (filename, name)
             yield filename, (Package, filename)
@@ -196,7 +198,6 @@ def symtree(type, namer, depth):
 
 def test_implicit_foobar():
     check("asdf", """
-    quark 1.0;
     void foo() {}
     void bar() {}
     """,
@@ -208,7 +209,6 @@ def test_implicit_foobar():
 
 def test_implicit_foofoo():
     check("asdf", """
-    quark 1.0;
     void foo() {}
     void foo() {}
     """,
@@ -218,8 +218,6 @@ def test_implicit_foofoo():
 
 def test_explicit_foobar():
     check("asdf", """
-    quark 1.0;
-
     namespace ns {
         void foo() {}
         void bar() {}
@@ -234,8 +232,6 @@ def test_explicit_foobar():
 
 def test_explicit_foofoo():
     check("asdf", """
-    quark 1.0;
-
     namespace ns {
         void foo() {}
         void foo() {}
@@ -448,17 +444,17 @@ def test_nesting():
 
 def test_import():
     check("import", """
-    package quark {
+    namespace quark {
         primitive void {}
     }
 
-    package a {
+    namespace a {
         void foo() {}
     }
 
     import a;
 
-    package b {
+    namespace b {
         void bar() {
             foo();
         }
@@ -467,7 +463,7 @@ def test_import():
 
 def test_self():
     check("f", """
-    package quark {
+    namespace quark {
         primitive void {}
         primitive int {}
     }
@@ -495,7 +491,7 @@ def test_self():
 
 def test_selfdup():
     check("f", """
-    package quark {
+    namespace quark {
         primitive void {}
         primitive int {}
     }
