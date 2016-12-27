@@ -1,5 +1,4 @@
-quark *;
-package primitives {
+namespace primitives {
     function doit() {
         int i = 1;
         i = ((1).__neg__)();

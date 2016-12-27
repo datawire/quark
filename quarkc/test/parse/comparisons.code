@@ -1,5 +1,4 @@
-quark *;
-package comparisons {
+namespace comparisons {
     void test() {
         (a < b);
         (a > b);

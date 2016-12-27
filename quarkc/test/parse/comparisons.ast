@@ -1,16 +1,10 @@
-File(CompilerVersionSpec(),
-
+File(
  Package(Name(comparisons),
 
   Function(Type(Name(void)), Name(test), Block(
-    ExprStmt(ArithmeticOperator(Attr(Var(Name(a)), Name(__lt__)),
-      Var(Name(b)))),
-    ExprStmt(ArithmeticOperator(Attr(Var(Name(a)), Name(__gt__)),
-      Var(Name(b)))),
-    ExprStmt(ArithmeticOperator(Attr(Var(Name(a)), Name(__le__)),
-      Var(Name(b)))),
-    ExprStmt(ArithmeticOperator(Attr(Var(Name(a)), Name(__ge__)),
-      Var(Name(b)))),
-    ExprStmt(ArithmeticOperator(Attr(Var(Name(a)), Name(__eq__)),
-      Var(Name(b)))))))
+    ExprStmt(Operator(Attr(Var(Name(a)), Name(__lt__)), Var(Name(b)))),
+    ExprStmt(Operator(Attr(Var(Name(a)), Name(__gt__)), Var(Name(b)))),
+    ExprStmt(Operator(Attr(Var(Name(a)), Name(__le__)), Var(Name(b)))),
+    ExprStmt(Operator(Attr(Var(Name(a)), Name(__ge__)), Var(Name(b)))),
+    ExprStmt(Operator(Attr(Var(Name(a)), Name(__eq__)), Var(Name(b)))))))
 )

@@ -1,5 +1,4 @@
-File(CompilerVersionSpec(),
-
+File(
  Package(Name(foo),
 
   Class(Annotation(Name(doc), String("Essential information about a pet.")),
@@ -24,13 +23,13 @@ File(CompilerVersionSpec(),
    Method(static=False, Annotation(Name(doc),
      String("Get an optionally limited set of pets based on a list of tags.")),
     Annotation(Name(query)), Type(Name(List), Type(Name(Pet))), Name(findPets),
-    Param(Type(Name(List), Type(Name(String))), Name(tags), Null(null)),
-    Param(Type(Name(int)), Name(limit), Null(null))),
+    Param(Type(Name(List), Type(Name(String))), Name(tags)),
+    Param(Type(Name(int)), Name(limit))),
 
    Method(static=False, Annotation(Name(doc), String("Create a new pet.")),
     Annotation(Name(operation)), Type(Name(Pet)), Name(createPet),
     Param(Type(Name(String)), Name(name)),
-    Param(Type(Name(String)), Name(tag), Null(null))),
+    Param(Type(Name(String)), Name(tag))),
 
    Method(static=False, Annotation(Name(doc),
      String("Delete a pet based on its id.")), Annotation(Name(operation)),

@@ -1,5 +1,4 @@
-quark *;
-package null {
+namespace null_ {
     void test() {
         null;
         null;

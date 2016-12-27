@@ -1,5 +1,4 @@
-File(CompilerVersionSpec(),
-
+File(
  Package(Name(test1),
 
   Class(Name(Test),
@@ -37,7 +36,7 @@ File(CompilerVersionSpec(),
     Local(
      Declaration(Type(Name(Box), Type(Name(int))), Name(box),
       Call(Type(Name(Box), Type(Name(int)))))),
-    If(ArithmeticOperator(Attr(ArithmeticOperator(Attr(Var(Name(a)),
-         Name(__lt__)), Var(Name(b))), Name(__gt__)), Var(Name(c))), Block(
+    If(Operator(Attr(Operator(Attr(Var(Name(a)), Name(__lt__)), Var(Name(b))),
+       Name(__gt__)), Var(Name(c))), Block(
       ExprStmt(Call(Var(Name(doFoo)))))))))
 )

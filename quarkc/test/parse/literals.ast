@@ -1,5 +1,4 @@
-File(CompilerVersionSpec(),
-
+File(
  Package(Name(literals),
 
   Function(Type(Name(void)), Name(literals), Block(
@@ -20,8 +19,5 @@ File(CompilerVersionSpec(),
        Number(2)), Entry(String("three"), Number(3)))),
     ExprStmt(Map(Entry(String("one"), Number(1)), Entry(Number(2),
        String("two")), Entry(Number(3), String("three")))),
-    ExprStmt(Number(3.14149265359)),
-    ExprStmt(List(Number(0), Number(1), Number(0), Call(Attr(Number(1),
-        Name(__neg__))), Number(44805))),
-    ExprStmt(String("multiline\n    string\nwith \"inline\" quotes")))))
+    ExprStmt(Number(3.14149265359)))))
 )

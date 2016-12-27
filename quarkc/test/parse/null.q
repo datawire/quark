@@ -1,4 +1,3 @@
-quark *;
 void test() {
     null;
     (null);

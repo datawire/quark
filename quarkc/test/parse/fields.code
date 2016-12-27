@@ -1,5 +1,4 @@
-quark *;
-package fields {
+namespace fields {
     class A {
         int x;
     }
@@ -9,8 +8,8 @@ package fields {
     }
     class C {
         int x;
-        void method() {}
         float y;
+        void method() {}
     }
     class D {
         int x = (foo)();

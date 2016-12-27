@@ -1,2 +1,1 @@
-quark *;
-package Foo {}
+namespace Foo {}

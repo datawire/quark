@@ -1,5 +1,4 @@
-File(CompilerVersionSpec(),
-
+File(
  Package(Name(assignments),
 
   Function(Type(Name(void)), Name(assignments), Block(

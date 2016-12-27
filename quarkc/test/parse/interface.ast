@@ -1,6 +1,5 @@
-File(CompilerVersionSpec(),
-
- Package(Name(interface),
+File(
+ Package(Name(interface_),
 
   Interface(Name(Foo),
 

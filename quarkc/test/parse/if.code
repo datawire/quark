@@ -1,5 +1,4 @@
-quark *;
-package if {
+namespace if_ {
     void test() {
         if (x) {
             (y)();

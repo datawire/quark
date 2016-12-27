@@ -1,4 +1,3 @@
-quark *;
 void literals() {
     3;
     "three";
@@ -21,7 +20,7 @@ void literals() {
       2: "two",
       3: "three"};
     3.14149265359;
-    [0b0, 0b1, +0b0, -0b1, 0b1010_1111_0000_0101];
+    /*    [0b0, 0b1, +0b0, -0b1, 0b1010_1111_0000_0101];
     """multiline
-    string\nwith "inline" quotes""";
+    string\nwith "inline" quotes""";*/
 }

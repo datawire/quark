@@ -1,6 +1,5 @@
-File(CompilerVersionSpec(),
-
- Package(Name(null),
+File(
+ Package(Name(null_),
 
   Function(Type(Name(void)), Name(test), Block(
     ExprStmt(Null(null)),

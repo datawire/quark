@@ -1,5 +1,4 @@
-quark *;
-package assignments {
+namespace assignments {
     void assignments() {
         a = x;
         (a).b = x;

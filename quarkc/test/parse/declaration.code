@@ -1,5 +1,4 @@
-quark *;
-package declaration {
+namespace declaration {
     void f() {
         int x = (blah)();
     }

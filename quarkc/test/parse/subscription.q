@@ -1,4 +1,3 @@
-quark *;
 void test() {
     x[0] = 0;
     x[0];

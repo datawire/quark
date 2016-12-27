@@ -1,4 +1,3 @@
-quark *;
 class A {
     int x;
 }

@@ -1,4 +1,3 @@
-quark *;
 void assignments() {
     a = x;
     a.b = x;

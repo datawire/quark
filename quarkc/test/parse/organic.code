@@ -1,10 +1,9 @@
-quark *;
-package foo {
+namespace foo {
     void f(int a, int b, int c, int d) {
-        ((((((x * a) * b) * c) + b) + (c * d)) <= t);
+        (((((x * a) * b) * c) + (b + (c * d))) <= t);
     }
     void asdf(float x, float y) {
-        (((((x * a) * b) * ((c + b) + c)) * d) <= t);
+        (((((x * a) * b) * (c + (b + c))) * d) <= t);
     }
     void fdsa(float x) {}
     int pie() {
@@ -33,6 +32,6 @@ package foo {
         }
     }
 }
-package organic {
+namespace organic {
     class Blah {}
 }

@@ -1,4 +1,3 @@
-quark *;
 namespace test1 {
     class Test {
         String name;

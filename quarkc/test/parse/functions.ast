@@ -1,13 +1,12 @@
-File(CompilerVersionSpec(),
-
+File(
  Package(Name(functions),
 
   Function(Type(Name(int)), Name(factorial),
    Param(Type(Name(int)), Name(n)),
    Block(
-    If(ArithmeticOperator(Attr(Var(Name(n)), Name(__eq__)), Number(0)), Block(
+    If(Operator(Attr(Var(Name(n)), Name(__eq__)), Number(0)), Block(
       Return(Number(1))), Block(
-      Return(ArithmeticOperator(Attr(Var(Name(n)), Name(__mul__)),
-        Call(Var(Name(factorial)), ArithmeticOperator(Attr(Var(Name(n)),
-           Name(__sub__)), Number(1))))))))))
+      Return(Operator(Attr(Var(Name(n)), Name(__mul__)),
+        Call(Var(Name(factorial)), Operator(Attr(Var(Name(n)), Name(__sub__)),
+          Number(1))))))))))
 )

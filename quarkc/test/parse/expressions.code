@@ -1,5 +1,4 @@
-quark *;
-package expressions {
+namespace expressions {
     void expressions() {
         a;
         (a).b;

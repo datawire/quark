@@ -1,5 +1,4 @@
-File(CompilerVersionSpec(),
-
+File(
  Package(Name(fields),
 
   Class(Name(A),
@@ -11,9 +10,9 @@ File(CompilerVersionSpec(),
 
   Class(Name(C),
    Field(static=False, Type(Name(int)), Name(x)),
+   Field(static=False, Type(Name(float)), Name(y)),
 
-   Method(static=False, Type(Name(void)), Name(method), Block()),
-   Field(static=False, Type(Name(float)), Name(y))),
+   Method(static=False, Type(Name(void)), Name(method), Block())),
 
   Class(Name(D),
    Field(static=False, Type(Name(int)), Name(x), Call(Var(Name(foo))))),

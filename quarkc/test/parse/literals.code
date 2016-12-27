@@ -1,5 +1,4 @@
-quark *;
-package literals {
+namespace literals {
     void literals() {
         3;
         "three";
@@ -16,9 +15,5 @@ package literals {
         {"one": 1, "two": 2, "three": 3};
         {"one": 1, 2: "two", 3: "three"};
         3.14149265359;
-        [0, 1, 0, ((1).__neg__)(), 44805];
-        """multiline
-    string
-with \"inline\" quotes""";
     }
 }

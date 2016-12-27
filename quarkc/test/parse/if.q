@@ -1,4 +1,3 @@
-quark *;
 void test() {
     if (x) { y(); }
     if(x){y();}
