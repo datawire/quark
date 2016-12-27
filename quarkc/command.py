@@ -62,8 +62,9 @@ def write_ir(fname, pkg):
 
 def code_files():
     dir = os.path.dirname(__file__)
-    files = os.listdir(dir)
-    return fnmatch.filter(files, "[a-z_]*.py")
+    pdir = os.path.join(dir, "parser")
+    files = os.listdir(dir) + [os.path.join("parser", f) for f in os.listdir(pdir)]
+    return [f for f in files if fnmatch.fnmatch(f, "[a-z_]*.py") or fnmatch.fnmatch(f, "[a-z_]*.g4")]
 
 def frontend_files():
     dir = os.path.dirname(__file__)
@@ -74,7 +75,8 @@ def frontend_files():
 def parser_files():
     dir = os.path.dirname(__file__)
     files = code_files()
-    parser = ["match.py", "ast.py", "parse.py", "old_parser.py", "exceptions.py"]
+    parser = ["match.py", "ast.py", "parse.py", "exceptions.py", "parser/adapter.py", "parser/builder.py",
+              "parser/QuarkParser.g4", "parser/QuarkLexer.g4"]
     assert set(files).issuperset(set(parser)), "Have %s want %s" % (files, parser)
     return [os.path.join(dir, f) for f in parser]
 

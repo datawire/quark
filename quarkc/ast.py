@@ -324,7 +324,7 @@ class Package(Definition):
     @coder
     def code(self, coder):
         with coder.indentation():
-            return Definition.code(self, coder) + "package %s {%s}" % \
+            return Definition.code(self, coder) + "namespace %s {%s}" % \
                 (self.name.code(coder), coder.code(self.definitions, "\n",
                                                    head="\n", tail="\n"))
 

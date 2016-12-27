@@ -1,6 +1,0 @@
-File(CompilerVersionSpec(),
- Use(url=http://example.org/foo/bar/example.q),
- Use(url=http://example.org/example.q),
- Use(url=directory/file.q),
- Use(url=file.q)
-)

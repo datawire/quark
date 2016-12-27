@@ -2,9 +2,8 @@ from .match import match, choice, many, opt
 from .ast import (
     AST, File, Package, Callable, Class, Declaration, TypeParam, Import, NativeBlock
 )
-from .old_parser import Parser
+from .parser import adapter
 from .exceptions import ParseError
-from parsimonious import ParseError as GParseError
 
 import stats
 
@@ -118,13 +117,10 @@ def wire(file, parent, child):
 @match(basestring, basestring)
 def parse(name, text):
     # XXX: need to handle version here
-    p = Parser()
-    p._filename = name
-    try:
-        with stats.charge("parsimonious"):
-            f = p.parse(text)
-        with stats.charge("wire"):
-            return wire(f)
-    except GParseError, e:
-        location = '%s:%s:%s: ' % (name, e.line(), e.column())
-        raise ParseError("%s%s" % (location, e))
+    with stats.charge("antlr"):
+        try:
+            f = adapter.parse(name, text)
+        except ValueError, e:
+            raise ParseError("%s\n  %s" % (name, str(e).replace("\n", "\n  ")))
+    with stats.charge("wire"):
+        return wire(f)

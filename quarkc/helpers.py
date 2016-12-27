@@ -18,6 +18,7 @@ from .ast import (
     Callable, Local, If, Block, Assign, While, Return, ExprStmt, Statement, Expression, Call, Super
 )
 from .match import match
+from .parser.generated.QuarkLexer import QuarkLexer
 
 DEFAULT = object()
 
@@ -83,6 +84,8 @@ def is_super(call):
     return isinstance(call.expr, Super)
 
 def sanitize(name):
+    if ("'%s'" % name) in QuarkLexer.literalNames:
+        name = name + "_"
     return name.replace('-', '_').replace('.', '_')
 
 def filebase(name):
