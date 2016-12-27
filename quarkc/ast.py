@@ -512,11 +512,15 @@ class Return(Statement):
 
     @property
     def children(self):
-        yield self.expr
+        if self.expr:
+            yield self.expr
 
     @coder
     def code(self, coder):
-        return "return %s;" % (self.expr.code(coder))
+        if self.expr:
+            return "return %s;" % (self.expr.code(coder))
+        else:
+            return "return;"
 
     def copy(self):
         return Return(copy(self.expr))
@@ -990,6 +994,8 @@ class NativeBlock(AST):
                 result.append(c.code(coder))
             elif isinstance(c, Var):
                 result.append("$%s" % c.code(coder))
+            elif isinstance(c, Expression):
+                result.append("$(%s)" % c.code(coder))
             else:
                 assert False
         return "".join(result)
