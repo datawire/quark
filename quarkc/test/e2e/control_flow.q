@@ -1,5 +1,3 @@
-quark *;
-
 void naked_return(List<String> log) {
     if (1 == 1) {
         return;

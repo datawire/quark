@@ -1,5 +1,3 @@
-quark *;
-
 bool intListsEqual(List<int> one, List<int> two) {
     if (one.size() != two.size()) {
         return false;
