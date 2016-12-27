@@ -9,30 +9,38 @@ qfile: definitions+=definition* EOF ;
 
 definition:
     namespace
+  | qimport
   | function
   | primitive
   | qinterface
   | qclass
    ;
 
-namespace: NAMESPACE name LBRACE definitions+=definition* RBRACE ;
+annotations: items+=annotation* ;
 
-function: qtype? name LPAREN (parameters+=parameter (COMMA parameters+=parameter)*)? RPAREN
+annotation: ANNOTATION ( LPAREN STRING RPAREN )? ;
+
+namespace: annotations NAMESPACE name LBRACE definitions+=definition* RBRACE ;
+
+qimport: IMPORT path ( AS alias=name )? SEMI ;
+
+function: annotations qtype? name LPAREN (parameters+=parameter (COMMA parameters+=parameter)*)? RPAREN
           ( native_body | body | SEMI ) ;
 parameter: qtype name ;
 
-primitive: PRIMITIVE name tparams? mappings+=native_body* LBRACE definitions+=function* RBRACE ;
-qinterface: INTERFACE name tparams? LBRACE definitions+=function* RBRACE ;
+primitive: annotations PRIMITIVE name tparams? mappings+=native_body* LBRACE definitions+=function* RBRACE ;
+qinterface: annotations INTERFACE name tparams? LBRACE definitions+=function* RBRACE ;
 qclass:
+    annotations
     CLASS name tparams? ( EXTENDS bases+=qtype (COMMA bases+=qtype)? )?
     LBRACE (fields+=field | methods+=function )* RBRACE ;
 
 tparams: LT params+=tparam (COMMA params+=tparam)* GT ;
 tparam: name (EXTENDS bound=qtype)? ;
 
-field: qtype name ( EQ expr )? SEMI ;
+field: annotations qtype name ( EQ expr )? SEMI ;
 
-native_body: FOR_LANG LANG ( IMPORT imports+=ISTRING )* NATIVE_START fragments+=native_fragment* NATIVE_RBRACE ;
+native_body: FOR_LANG LANG ( NATIVE_IMPORT imports+=ISTRING )* NATIVE_START fragments+=native_fragment* NATIVE_RBRACE ;
 native_fragment:
     NATIVE_CODE                                   # native_code
   | QVAR                                          # native_var
@@ -58,7 +66,7 @@ local: qtype name ( EQ expr )? ;
 assign: lhs EQ expr ;
 lhs:
     name                     # setvar
-  | expr LBRACK expr RBRACK  # setindex
+  | expr LBRACK exprs RBRACK # setindex
   | expr DOT name            # setattr
    ;
 evaluate: expr ;
@@ -73,15 +81,18 @@ qswitch: SWITCH LPAREN expr RPAREN LBRACE qcase+ RBRACE ;
 qcase: CASE exprs COLON statement+ ;
 
 expr:
-    NUMBER                                                   # number
+    TRUE                                                     # true
+  | FALSE                                                    # false
+  | NUMBER                                                   # number
   | STRING                                                   # string
+  | NULL                                                     # null
   | LBRACK exprs RBRACK                                      # list
   | LBRACE (entries+=entry (COMMA entries+=entry)*)? RBRACE  # map
   | name                                                     # var
   | LPAREN expr RPAREN                                       # paren
   | expr DOT name                                            # attr
   | expr LPAREN exprs RPAREN                                 # call
-  | expr LBRACK index=expr RBRACK                            # index
+  | expr LBRACK exprs RBRACK                                 # index
   | op=( BANG | MINUS | QMARK ) expr                         # unary
   | <assoc=right> NEW qtype LPAREN exprs RPAREN              # new
   | expr op=( MUL | DIV | MOD ) expr                         # multiplication
@@ -94,6 +105,7 @@ expr:
 
 entry: key=expr COLON value=expr ;
 exprs: (expressions+=expr (COMMA expressions+=expr)*)? ;
-qtype: name ( LT params+=qtype (COMMA params+=qtype)* GT )? ;
+qtype: path ( LT params+=qtype (COMMA params+=qtype)* GT )? ;
 
+path: names+=name ( DOT names+=name )* ;
 name: ID ;

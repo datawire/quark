@@ -36,4 +36,8 @@ def parse(name, text):
     builder = ASTBuilder()
     ParseTreeWalker().walk(builder, tree)
 
-    return File(name, tree.ast)
+    file = File(name, tree.ast)
+    file.line = 0
+    file.column = 0
+    file._marked = True
+    return file

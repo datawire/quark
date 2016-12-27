@@ -22,12 +22,39 @@ class QuarkParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by QuarkParser#annotations.
+    def enterAnnotations(self, ctx):
+        pass
+
+    # Exit a parse tree produced by QuarkParser#annotations.
+    def exitAnnotations(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by QuarkParser#annotation.
+    def enterAnnotation(self, ctx):
+        pass
+
+    # Exit a parse tree produced by QuarkParser#annotation.
+    def exitAnnotation(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by QuarkParser#namespace.
     def enterNamespace(self, ctx):
         pass
 
     # Exit a parse tree produced by QuarkParser#namespace.
     def exitNamespace(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by QuarkParser#qimport.
+    def enterQimport(self, ctx):
+        pass
+
+    # Exit a parse tree produced by QuarkParser#qimport.
+    def exitQimport(self, ctx):
         pass
 
 
@@ -346,6 +373,15 @@ class QuarkParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by QuarkParser#false.
+    def enterFalse(self, ctx):
+        pass
+
+    # Exit a parse tree produced by QuarkParser#false.
+    def exitFalse(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by QuarkParser#index.
     def enterIndex(self, ctx):
         pass
@@ -406,6 +442,24 @@ class QuarkParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by QuarkParser#paren.
     def exitParen(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by QuarkParser#null.
+    def enterNull(self, ctx):
+        pass
+
+    # Exit a parse tree produced by QuarkParser#null.
+    def exitNull(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by QuarkParser#true.
+    def enterTrue(self, ctx):
+        pass
+
+    # Exit a parse tree produced by QuarkParser#true.
+    def exitTrue(self, ctx):
         pass
 
 
@@ -478,6 +532,15 @@ class QuarkParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by QuarkParser#qtype.
     def exitQtype(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by QuarkParser#path.
+    def enterPath(self, ctx):
+        pass
+
+    # Exit a parse tree produced by QuarkParser#path.
+    def exitPath(self, ctx):
         pass
 
 

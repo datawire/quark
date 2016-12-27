@@ -1,8 +1,9 @@
 from quarkc.ast import (
-    Assign, Attr, Block, Break, Call, Case, Cast, Class, Continue, Declaration,
-    Entry, ExprStmt, Field, Fixed, Function, If, Interface, List, Local, Map,
-    Method, Name, NativeBlock, NativeFunction, Number, Operator, Package,
-    Param, Primitive, Return, String, Switch, Type, TypeParam, Var, While
+    AST, Annotation, Assign, Attr, Block, Bool, Break, Call, Case, Cast, Class,
+    Constructor, Continue, Declaration, Entry, ExprStmt, Field, Fixed,
+    Function, If, Import, Interface, List, Local, Map, Method, Name,
+    NativeBlock, NativeFunction, Null, Number, Operator, Package, Param,
+    Primitive, Return, String, Switch, Type, TypeParam, Var, While
 )
 from antlr4 import TerminalNode
 
@@ -51,7 +52,14 @@ class ASTBuilder(QuarkParserListener):
 
     def exitEveryRule(self, ctx):
         if not hasattr(ctx, "ast"):
-            raise Exception("not processed: %s(%s)" % (ctx.__class__.__name__, ", ".join(str(c) for c in self.children)))
+            raise Exception("not processed: %s(%s)" % (ctx.__class__.__name__,
+                                                       ", ".join(repr(c) for c in ctx.children or ())))
+        if isinstance(ctx.ast, AST):
+            ctx.ast.line = ctx.start.line
+            ctx.ast.column = ctx.start.column
+            ctx.ast._marked = True
+        if hasattr(ctx, "annotations"):
+            ctx.ast.annotations = ctx.annotations().ast
 
     def lift(self, ctx):
         nonterminals = [c for c in ctx.children if not isinstance(c, TerminalNode)]
@@ -70,8 +78,22 @@ class ASTBuilder(QuarkParserListener):
     def exitNamespace(self, ctx):
         ctx.ast = Package(ctx.name().ast, [d.ast for d in ctx.definitions])
 
+    def exitAnnotations(self, ctx):
+        ctx.ast = [i.ast for i in ctx.items]
+
+    def exitAnnotation(self, ctx):
+        if ctx.STRING():
+            args = [String(ctx.STRING().getText())]
+        else:
+            args = []
+        ctx.ast = Annotation(Name(ctx.ANNOTATION().getText()[1:]), args)
+
+    def exitQimport(self, ctx):
+        ctx.ast = Import(ctx.path().ast, ctx.alias.ast if ctx.alias else None)
+
     # Function
     def exitFunction(self, ctx):
+        name = ctx.name().ast
         parent = ctx.parentCtx
         if isinstance(parent, (QuarkParser.PrimitiveContext, QuarkParser.QclassContext,
                                QuarkParser.QinterfaceContext)):
@@ -85,8 +107,12 @@ class ASTBuilder(QuarkParserListener):
             body = ctx.native_body().ast
         else:
             body = ctx.body().ast if ctx.body() else None
-        ctx.ast = cons(ctx.qtype().ast if ctx.qtype() else None, ctx.name().ast,
-                       tuple(p.ast for p in ctx.parameters), body)
+
+        params = tuple(p.ast for p in ctx.parameters)
+        if ctx.qtype():
+            ctx.ast = cons(ctx.qtype().ast, name, params, body)
+        else:
+            ctx.ast = Constructor(name, params, body)
 
     def exitParameter(self, ctx):
         ctx.ast = Param(ctx.qtype().ast, ctx.name().ast, None)
@@ -96,7 +122,10 @@ class ASTBuilder(QuarkParserListener):
 
     def exitQtype(self, ctx):
         params = [p.ast for p in ctx.params] or None
-        ctx.ast = Type(ctx.name().ast, params)
+        ctx.ast = Type(ctx.path().ast, params)
+
+    def exitPath(self, ctx):
+        ctx.ast = [n.ast for n in ctx.names]
 
     def exitBody(self, ctx):
         ctx.ast = Block([s.ast for s in ctx.statements])
@@ -135,11 +164,11 @@ class ASTBuilder(QuarkParserListener):
     def exitField(self, ctx):
         ctx.ast = Field(ctx.qtype().ast, ctx.name().ast, ctx.expr().ast if ctx.expr() else None)
 
-
     ## NATIVE ##
 
     def exitNative_body(self, ctx):
-        ctx.ast = NativeBlock(ctx.LANG(), [(i.text, None) for i in ctx.imports], flatten(f.ast for f in ctx.fragments))
+        ctx.ast = NativeBlock(ctx.LANG().getText(), [(i.text, None) for i in ctx.imports],
+                              flatten(f.ast for f in ctx.fragments))
 
     def exitNative_code(self, ctx):
         ctx.ast = ctx.getText()
@@ -168,7 +197,8 @@ class ASTBuilder(QuarkParserListener):
         ctx.ast = lambda rhs, expr=ctx.expr().ast, attr=ctx.name().ast: Assign(Attr(expr, attr), rhs)
 
     def exitSetindex(self, ctx):
-        ctx.ast = lambda rhs, expr=ctx.expr(0).ast, index=ctx.expr(1).ast: Call(expr, [index, rhs])
+        ctx.ast = lambda rhs, expr=ctx.expr().ast, exprs=ctx.exprs().ast: ExprStmt(Call(Attr(expr, Name("__set__")),
+                                                                                        exprs + [rhs]))
 
     def exitEvaluate(self, ctx):
         ctx.ast = ExprStmt(ctx.expr().ast)
@@ -198,9 +228,13 @@ class ASTBuilder(QuarkParserListener):
 
     ## EXPRESSIONS ##
 
+    exitTrue = exitFalse = leaf(Bool)
+
     exitNumber = leaf(Number)
 
     exitString = leaf(String)
+
+    exitNull = leaf(Null)
 
     def exitList(self, ctx):
         ctx.ast = List(ctx.exprs().ast)
@@ -224,7 +258,7 @@ class ASTBuilder(QuarkParserListener):
         ctx.ast = Attr(ctx.expr().ast, ctx.name().ast)
 
     def exitIndex(self, ctx):
-        ctx.ast = Call(Attr(ctx.expr(0).ast, Name("__get__")), [ctx.index.ast])
+        ctx.ast = Call(Attr(ctx.expr().ast, Name("__get__")), ctx.exprs().ast)
 
     def exitNew(self, ctx):
         ctx.ast = Call(ctx.qtype().ast, ctx.exprs().ast)
@@ -238,7 +272,7 @@ class ASTBuilder(QuarkParserListener):
 
     def binop(self, ctx):
         op = ctx.op.text
-        ctx.ast = Operator(Attr(ctx.expr(0).ast, Name(ALIASES[op])), ctx.expr(1).ast, op)
+        ctx.ast = Operator(Attr(ctx.expr(0).ast, Name(ALIASES[op])), [ctx.expr(1).ast], op)
 
     exitLogical_and = exitLogical_or = exitEquality = exitComparison = exitMultiplication = exitAddition = binop
 

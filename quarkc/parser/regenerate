@@ -6,7 +6,8 @@ HOME = os.environ["HOME"]
 BASE = os.path.dirname(__file__)
 
 URL="http://www.antlr.org/download/antlr-4.6-complete.jar"
-ANTLR = os.path.join(BASE, "antlr-4.6-complete.jar")
+JAR="antlr-4.6-complete.jar"
+ANTLR = os.path.join(BASE, JAR)
 
 if os.path.exists(ANTLR):
     setup = []
@@ -20,8 +21,8 @@ LEXER = "QuarkLexer.g4"
 cmds = " && ".join(setup + """
 rm -rf {base}/{out}
 cd {base}
-java -jar {antlr} -o {out} {lexer} {parser}
-touch {base}/{out}/__init__.py
+java -jar {jar} -o {out} {lexer} {parser}
+touch {out}/__init__.py
 """.strip().split("\n"))
 
-os.system(cmds.format(base=BASE, antlr=ANTLR, out=OUT, lexer=LEXER, parser=PARSER))
+os.system(cmds.format(base=BASE, jar=JAR, out=OUT, lexer=LEXER, parser=PARSER))

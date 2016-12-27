@@ -15,6 +15,9 @@ CLASS: 'class' ;
 
 EXTENDS: 'extends' ;
 
+IMPORT: 'import' ;
+AS: 'as' ;
+
 NEW: 'new' ;
 IF: 'if' ;
 ELSE: 'else' ;
@@ -24,6 +27,9 @@ SWITCH: 'switch' ;
 CASE: 'case' ;
 BREAK: 'break' ;
 CONTINUE: 'continue' ;
+NULL: 'null' ;
+TRUE: 'true' ;
+FALSE: 'false' ;
 
 LBRACE: '{' -> pushMode(DEFAULT_MODE);
 RBRACE: '}' -> popMode;
@@ -57,17 +63,17 @@ OR: '||' ;
 STRING: '"' ( '\\"' | ~('\n'|'\r') )*? '"' ;
 NUMBER: [0-9]+ ('.' [0-9]+)? ;
 
-//FOR_LANG: 'for' -> mode(NATIVE) ;
 FOR_LANG: 'for' -> mode(NATIVE_HEADER) ;
 
 ID: [_a-zA-Z] [_a-zA-Z0-9]* ;
+ANNOTATION: '@' ID ;
 
 ERROR: . ;
 
 mode NATIVE_HEADER ;
 
 NATIVE_WS: WS -> skip ;
-IMPORT: 'import' ;
+NATIVE_IMPORT: IMPORT ;
 LANG: ID ;
 ISTRING: STRING ;
 NATIVE_START: '{' -> mode(DEFAULT_MODE), pushMode(NATIVE);
@@ -83,5 +89,3 @@ NATIVE_LBRACE: '{' -> pushMode(NATIVE) ;
 NATIVE_RBRACE: '}' -> popMode ;
 
 NATIVE_ERROR: . ;
-
-//BRACES: '{' ( BRACES | ~[{}] )* '}' -> mode(DEFAULT_MODE) ;
