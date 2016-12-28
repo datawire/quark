@@ -517,6 +517,93 @@ class Param(LocalDeclaration):
         self.name = name
         self.type = Any()
 
+class Template(Definition):
+    """A templated definition. The definition is supposed to use TypeParam
+    in places where the Instantiation will provide TypeBindings of
+    actual types. The template name is the name of the contained
+    definition
+
+    """
+    @match(choice(lazy("Interface"),lazy("Class"),lazy("Function"),lazy("Instantiation")))
+    def __init__(self, dfn):
+        self.dfn = dfn
+
+    @property
+    def name(self):
+        return self.dfn.name
+
+    @property
+    def children(self):
+        yield self.dfn
+
+    def __repr__(self):
+        return self.repr(self.dfn)
+
+class TypeParam(AbstractType):
+    """ A named placeholder for a type in a Template definition
+    """
+    @match(basestring)
+    def __init__(self, name):
+        self.name = name
+
+    @property
+    def children(self):
+        if False: yield
+
+    def __repr__(self):
+        return self.repr(self.name)
+
+class TypeBinding(IR):
+    """A named type to be substituted for the same-named TypeParam in the
+    Templated definition referenced by the Instantiation
+
+    """
+    @match(basestring, AbstractType)
+    def __init__(self, name, type):
+        self.name = name
+        self.type = type
+
+    @property
+    def children(self):
+        yield self.type
+
+    def __repr__(self):
+        return self.repr(self.name, self.type)
+
+class Instantiation(Definition):
+
+    """Instantiation of a Template definition. the instantiation has to
+    be uniquely named. The template is looked up by the name of the definition
+    in the template.
+
+    """
+
+    @match(Name, Ref, many(TypeBinding, min=1))
+    def __init__(self, name, template, *bindings):
+        self.name = name
+        self.template = template
+        self.bindings = bindings
+        assert self.__class__ is not Instantiation
+
+    @property
+    def children(self):
+        yield self.name
+        yield self.template
+        for b in self.bindings:
+            yield b
+
+    def __repr__(self):
+        return self.repr(self.name, self.template, *self.bindings)
+
+class FunctionInstantiation(Instantiation):
+    pass
+class NativeFunctionInstantiation(FunctionInstantiation):
+    pass
+class ClassInstantiation(Instantiation):
+    pass
+class InterfaceInstantiation(Instantiation):
+    pass
+
 class Function(Definition):
 
     @match(Name, AbstractType, many(Param), choice(Block, lazy("NativeBlock")))

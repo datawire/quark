@@ -9,3 +9,6 @@ def fibonacci_ir():
 
 def minimal_ir():
     return load_sample("minimal_q.ir")
+
+def template_ir():
+    return load_sample("template.ir")

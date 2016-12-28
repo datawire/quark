@@ -14,7 +14,7 @@
 
 from .match import match, choice
 from .ir import (
-    Type, ClassType, Name, Ref, AbstractType,
+    Type, ClassType, Name, Ref, AbstractType, TypeParam,
     Param, Var, This, Call, Invoke, Send, Construct, Get,
     Void, Null,
     Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit,
@@ -23,6 +23,10 @@ from .ir import (
 
 from .emit_target import Target, Python, Java, Go, Ruby, Javascript
 
+@match(TypeParam, Target)
+def expr(tparam, target):
+    # XXX: Error reporting of unknown type params
+    return expr(target.bindings[tparam.name], target)
 
 @match(Type, choice(Java, Ruby, Python, Javascript))
 def expr(type, target):

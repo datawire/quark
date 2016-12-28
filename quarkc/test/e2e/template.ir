@@ -1,0 +1,14 @@
+Package(
+    Template(
+        Function(Name("q:q.Map_set"),
+                 Void(),
+                 Param("key", TypeParam("K")),
+                 Param("value", TypeParam("V")),
+                 Block())),
+    Template(
+        FunctionInstantiation(Name("q:q.Map_String_set"), Ref("q:q.Map_set"),
+                      TypeBinding("K", String()),
+                      TypeBinding("V", TypeParam("X")))),
+    FunctionInstantiation(Name("q:q.Map_String_int_set"), Ref("q:q.Map_String_set"),
+                      TypeBinding("X", Int())),
+    )

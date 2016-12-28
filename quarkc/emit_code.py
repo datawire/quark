@@ -19,7 +19,7 @@ from .ir import (IR, Function, Interface, Class, Check, If,
                  AssertEqual, AssertNotEqual, Expression,
                  Null, Break, Continue,
                  TestClass, TestMethod,
-                 NativeBlock)
+                 NativeBlock, Instantiation, Template)
 from . import tr
 from .tree import multiline
 from .emit_target import Target, Python, Ruby, Java, Go, Javascript
@@ -35,6 +35,21 @@ def opt_expr(glue, nd, target, default=""):
 @match(basestring, None, Target, opt(basestring))
 def opt_expr(glue, nd, target, default=""):
     return default
+
+## Templates
+
+@match(Instantiation, Target)
+def code(inst, target):
+    dfn = target.q.definition(inst.template)
+    tmpl = target.q.parent(dfn)
+    assert isinstance(tmpl, Template), "Instantiation references a non-template definition %s" % (
+        inst.template )
+    with target.bind(inst):
+        return code(dfn, target)
+
+@match(Template, Target)
+def code(tmpl, target):
+    assert False, "Templates should never be generate()d"
 
 ## native block
 
