@@ -94,9 +94,14 @@ class Compiler(object):
                     self.types.define(v)
 
         # resolve types
+        visited = set()
         with stats.charge("resolve-types"):
              for k, v in self.symbols.definitions.items():
                  for node in traversal(v):
+                     if node in visited:
+                         break
+                     else:
+                         visited.add(node)
                      if self.types.has_type(node):
                          self.types.resolve(node)
 

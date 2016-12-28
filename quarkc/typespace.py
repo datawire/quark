@@ -261,15 +261,18 @@ class Typespace(object):
     def __setitem__(self, name, type):
         assert name not in self.types
         self.types[name] = type
+        type._ref = Ref(name)
 
     @match(basestring, lazy("Template"))
     def __setitem__(self, name, template):
         assert name not in self.types
         self.types[name] = template
+        template._ref = Ref(name)
         for p in template.params:
             if isinstance(p, Param):
                 assert p.name not in self.types
                 self.types[p.name] = p
+                p._ref = Ref(p.name)
 
     @match(Ref)
     def unresolve(self, ref):
@@ -277,12 +280,8 @@ class Typespace(object):
 
     @match(Type)
     def unresolve(self, type):
-        for k, v in self.types.items():
-            if v == type:
-                return Ref(k)
-        for k, v in self.resolved.items():
-            if v == type:
-                return k
+        if hasattr(type, "_ref"):
+            return type._ref
         return type
 
     @match(Ref)
@@ -305,6 +304,7 @@ class Typespace(object):
                 bindings[p.name] = v
             type = type.bind(bindings)
         self.resolved[ref] = type
+        type._ref = ref
         return type
 
     @match(Type)
