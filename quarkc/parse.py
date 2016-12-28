@@ -1,8 +1,14 @@
+import sys
 from .match import match, choice, many, opt
 from .ast import (
     AST, File, Package, Callable, Class, Declaration, TypeParam, Import, NativeBlock
 )
-from .parser import adapter
+try:
+    from .parser import adapter
+    print "SUCCESS", sys.path
+except ImportError, e:
+    print "FAILED", sys.path
+    raise
 from .exceptions import ParseError
 
 import stats
