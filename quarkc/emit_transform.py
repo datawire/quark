@@ -16,7 +16,7 @@ from itertools import chain
 from .match import match, many, choice
 from .tree import isa, split
 from .ir import (IR, Root, Package, Namespace, NamespaceName,
-                 Name, Definition, ExternalFunction,
+                 Name, Definition, Template, ExternalFunction,
                  Check, Function, NativeFunction, Check, Void,
                  TestMethod, TestClass, FunctionInstantiation)
 
@@ -52,6 +52,10 @@ def filter_definitions(dfns, target):
 @match(Definition, Target)
 def include_definition(dfn, target):
     return True
+
+@match(Template, Target)
+def include_definition(template, target):
+    return include_definition(template.dfn, target)
 
 @match(NativeFunction, Target)
 def include_definition(fun, target):

@@ -82,12 +82,48 @@ class Code(object):
         for sym, nd in self.symbols.definitions.items():
             if not self.is_top(nd): continue
 
-            for ref, bindings in self.prototypes.instantiations(nd.parent if isinstance(nd, Method) else nd):
-                self.types = View(self.prototypes, bindings)
-                with stats.charge("compile:%s.%s" % (nd.__class__.__module__, nd.__class__.__name__)):
-                    definitions.append(self.compile(nd))
+            with stats.charge("compile:%s.%s" % (nd.__class__.__module__, nd.__class__.__name__)):
+                self.types = self.prototypes
+                tnode = self.types.node(types.Ref(sym))
+                dfn = self.compile(nd)
+                if isinstance(tnode, typespace.Template):
+                    definitions.append(ir.Template(dfn))
+                else:
+                    definitions.append(dfn)
+
+                for ref, bindings in self.prototypes.instantiations(nd.parent if isinstance(nd, Method) else nd):
+                    if bindings:
+                        definitions.append(self.compile_instantiation(sym, nd, ref, bindings))
+
         # XXX
         return ir.Package(*definitions)
+
+    def compile_instantiation(self, sym, nd, ref, bindings):
+        cons = self.itype(nd)
+        if isinstance(nd, NativeFunction) or (isinstance(nd, Method) and isinstance(nd.body, NativeBlock)):
+            sym = sym.split("::")[1]
+        if isinstance(nd, Method) and isinstance(nd.body, NativeBlock) or isinstance(nd.parent, Primitive):
+            dfn = self.mangle(name(nd.parent), *ref.params) + "_" + nd.name.text
+        else:
+            dfn = self.mangle(sym, *ref.params)
+        return cons(self.compile_def(dfn), self.compile_ref(types.Ref(name(nd.parent) + "_" + nd.name.text)),
+                    *(ir.TypeBinding(k, self.compile(v)) for k, v in bindings.items()))
+
+    @match(Interface)
+    def itype(self, nd):
+        return ir.InterfaceInstantiation
+
+    @match(Class)
+    def itype(self, nd):
+        return ir.ClassInstantiation
+
+    @match(Function)
+    def itype(self, nd):
+        return ir.FunctionInstantiation
+
+    @match(NativeFunction)
+    def itype(self, nd):
+        return ir.NativeFunctionInstantiation
 
     @match(choice(Function, NativeFunction))
     def compile(self, fun):
@@ -311,6 +347,9 @@ class Code(object):
             result = ir.Primitive(*args)
             self.types = old
             return result
+        elif isinstance(dfn, TypeParam):
+            assert len(params) == 0
+            return ir.TypeParam(nam)
         else:
             return ir.ClassType(self.compile_ref(self.mangle(nam, *params)))
 
