@@ -18,7 +18,7 @@ install:
 - pip install --no-index --find-links=~/.quark/wheel-cache .
 
 env:
- - TEST_SUITE=basic
+ - TEST_SUITE=default
  - TEST_SUITE=data1
  - TEST_SUITE=data2
  - TEST_SUITE=data3
