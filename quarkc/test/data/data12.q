@@ -1,144 +1,109 @@
 
-void test_Any_111() {
-    bool value_tmp = true;
-    Any value = unsafe(value_tmp);
-    bool copy_tmp = true;
-    Any copy = unsafe(copy_tmp);
-    bool other_tmp_tmp0_tmp = false;
-    Any other_tmp_tmp0 = unsafe(other_tmp_tmp0_tmp);
-    List<Any> other_tmp = [other_tmp_tmp0];
-    Any other = unsafe(other_tmp);
-    assert(value == copy, "equals Any: unsafe(true)");
-    assert(!(value == other), "different Any: unsafe(true) unsafe([unsafe(false)])");
-    assertEqual(true, true);
-}
-        
-void test_Any_112() {
-    bool value_tmp = true;
-    Any value = unsafe(value_tmp);
-    bool copy_tmp = true;
-    Any copy = unsafe(copy_tmp);
-    int other_tmp_tmp0_tmp = 2147483646;
-    Any other_tmp_tmp0 = unsafe(other_tmp_tmp0_tmp);
-    float other_tmp_tmp1_tmp = 3.14;
-    Any other_tmp_tmp1 = unsafe(other_tmp_tmp1_tmp);
-    List<Any> other_tmp = [other_tmp_tmp0, other_tmp_tmp1];
-    Any other = unsafe(other_tmp);
-    assert(value == copy, "equals Any: unsafe(true)");
-    assert(!(value == other), "different Any: unsafe(true) unsafe([unsafe(2147483646), unsafe(3.14)])");
-    assertEqual(true, true);
-}
-        
-void test_Any_113() {
-    int value_tmp = 4294967296;
-    Any value = unsafe(value_tmp);
-    int copy_tmp = 4294967296;
-    Any copy = unsafe(copy_tmp);
+void test_Map_Scalar_Map_Scalar_Scalar___1101() {
+    Scalar value_ktmp0 = unsafe("\n").asScalar();
+    Scalar value_vtmp0_ktmp0 = unsafe("Hello World!").asScalar();
+    Scalar value_vtmp0_vtmp0 = unsafe(true).asScalar();
+    Map<Scalar,Scalar> value_vtmp0 = {value_vtmp0_ktmp0: value_vtmp0_vtmp0};
+    Scalar value_ktmp1 = unsafe(true).asScalar();
+    Scalar value_vtmp1_ktmp0 = unsafe(-1).asScalar();
+    Scalar value_vtmp1_vtmp0 = unsafe("pi").asScalar();
+    Scalar value_vtmp1_ktmp1 = unsafe(3.14).asScalar();
+    Scalar value_vtmp1_vtmp1 = unsafe(false).asScalar();
+    Map<Scalar,Scalar> value_vtmp1 = {value_vtmp1_ktmp0: value_vtmp1_vtmp0, value_vtmp1_ktmp1: value_vtmp1_vtmp1};
+    Map<Scalar,Map<Scalar,Scalar>> value = {value_ktmp0: value_vtmp0, value_ktmp1: value_vtmp1};
+    Scalar copy_ktmp0 = unsafe("\n").asScalar();
+    Scalar copy_vtmp0_ktmp0 = unsafe("Hello World!").asScalar();
+    Scalar copy_vtmp0_vtmp0 = unsafe(true).asScalar();
+    Map<Scalar,Scalar> copy_vtmp0 = {copy_vtmp0_ktmp0: copy_vtmp0_vtmp0};
+    Scalar copy_ktmp1 = unsafe(true).asScalar();
+    Scalar copy_vtmp1_ktmp0 = unsafe(-1).asScalar();
+    Scalar copy_vtmp1_vtmp0 = unsafe("pi").asScalar();
+    Scalar copy_vtmp1_ktmp1 = unsafe(3.14).asScalar();
+    Scalar copy_vtmp1_vtmp1 = unsafe(false).asScalar();
+    Map<Scalar,Scalar> copy_vtmp1 = {copy_vtmp1_ktmp0: copy_vtmp1_vtmp0, copy_vtmp1_ktmp1: copy_vtmp1_vtmp1};
+    Map<Scalar,Map<Scalar,Scalar>> copy = {copy_ktmp0: copy_vtmp0, copy_ktmp1: copy_vtmp1};
     
-    Map<bool,bool> other_tmp = {};
-    Any other = unsafe(other_tmp);
-    assert(value == copy, "equals Any: unsafe(4294967296)");
-    assert(!(value == other), "different Any: unsafe(4294967296) unsafe({})");
+    Map<Scalar,Map<Scalar,Scalar>> other = {};
+    assert(value == copy, "equals Map<Scalar,Map<Scalar,Scalar>>: {<__main__.Scalar object at 0x7f1c327036d0>: {<__main__.Scalar object at 0x7f1c327032d0>: <__main__.Scalar object at 0x7f1c32703310>}, <__main__.Scalar object at 0x7f1c32703710>: {<__main__.Scalar object at 0x7f1c32703350>: <__main__.Scalar object at 0x7f1c327033d0>, <__main__.Scalar object at 0x7f1c32703390>: <__main__.Scalar object at 0x7f1c32703410>}}");
+    assert(!(value == other), "different Map<Scalar,Map<Scalar,Scalar>>: {<__main__.Scalar object at 0x7f1c327036d0>: {<__main__.Scalar object at 0x7f1c327032d0>: <__main__.Scalar object at 0x7f1c32703310>}, <__main__.Scalar object at 0x7f1c32703710>: {<__main__.Scalar object at 0x7f1c32703350>: <__main__.Scalar object at 0x7f1c327033d0>, <__main__.Scalar object at 0x7f1c32703390>: <__main__.Scalar object at 0x7f1c32703410>}} {}");
     assertEqual(true, true);
 }
         
-void test_Any_114() {
-    float value_tmp = 3.14;
-    Any value = unsafe(value_tmp);
-    float copy_tmp = 3.14;
-    Any copy = unsafe(copy_tmp);
-    bool other_tmp_ktmp0 = true;
-    bool other_tmp_vtmp0 = false;
-    Map<bool,bool> other_tmp = {other_tmp_ktmp0: other_tmp_vtmp0};
-    Any other = unsafe(other_tmp);
-    assert(value == copy, "equals Any: unsafe(3.14)");
-    assert(!(value == other), "different Any: unsafe(3.14) unsafe({true: false})");
-    assertEqual(true, true);
-}
-        
-void test_Any_115() {
-    String value_tmp = "pie";
-    Any value = unsafe(value_tmp);
-    String copy_tmp = "pie";
-    Any copy = unsafe(copy_tmp);
-    bool other_tmp_ktmp0 = true;
-    bool other_tmp_vtmp0 = true;
-    bool other_tmp_ktmp1 = false;
-    bool other_tmp_vtmp1 = false;
-    Map<bool,bool> other_tmp = {other_tmp_ktmp0: other_tmp_vtmp0, other_tmp_ktmp1: other_tmp_vtmp1};
-    Any other = unsafe(other_tmp);
-    assert(value == copy, "equals Any: unsafe(\"pie\")");
-    assert(!(value == other), "different Any: unsafe(\"pie\") unsafe({true: true, false: false})");
-    assertEqual(true, true);
-}
-        
-void test_Any_116() {
-    int value_tmp = -1;
-    Any value = unsafe(value_tmp);
-    int copy_tmp = -1;
-    Any copy = unsafe(copy_tmp);
+void test_Map_Scalar_Map_Scalar_Any___1102() {
     
-    Map<bool,int> other_tmp = {};
-    Any other = unsafe(other_tmp);
-    assert(value == copy, "equals Any: unsafe(-1)");
-    assert(!(value == other), "different Any: unsafe(-1) unsafe({})");
-    assertEqual(true, true);
-}
-        
-void test_Any_117() {
-    bool value_tmp = false;
-    Any value = unsafe(value_tmp);
-    bool copy_tmp = false;
-    Any copy = unsafe(copy_tmp);
-    bool other_tmp_ktmp0 = true;
-    int other_tmp_vtmp0 = 0;
-    Map<bool,int> other_tmp = {other_tmp_ktmp0: other_tmp_vtmp0};
-    Any other = unsafe(other_tmp);
-    assert(value == copy, "equals Any: unsafe(false)");
-    assert(!(value == other), "different Any: unsafe(false) unsafe({true: 0})");
-    assertEqual(true, true);
-}
-        
-void test_Any_118() {
-    int value_tmp = 4294967297;
-    Any value = unsafe(value_tmp);
-    int copy_tmp = 4294967297;
-    Any copy = unsafe(copy_tmp);
-    bool other_tmp_ktmp0 = false;
-    int other_tmp_vtmp0 = 1;
-    bool other_tmp_ktmp1 = true;
-    int other_tmp_vtmp1 = 2;
-    Map<bool,int> other_tmp = {other_tmp_ktmp0: other_tmp_vtmp0, other_tmp_ktmp1: other_tmp_vtmp1};
-    Any other = unsafe(other_tmp);
-    assert(value == copy, "equals Any: unsafe(4294967297)");
-    assert(!(value == other), "different Any: unsafe(4294967297) unsafe({false: 1, true: 2})");
-    assertEqual(true, true);
-}
-        
-void test_Any_119() {
-    float value_tmp = 0.0;
-    Any value = unsafe(value_tmp);
-    float copy_tmp = 0.0;
-    Any copy = unsafe(copy_tmp);
+    Map<Scalar,Map<Scalar,Any>> value = {};
     
-    Map<bool,float> other_tmp = {};
-    Any other = unsafe(other_tmp);
-    assert(value == copy, "equals Any: unsafe(0.0)");
-    assert(!(value == other), "different Any: unsafe(0.0) unsafe({})");
+    Map<Scalar,Map<Scalar,Any>> copy = {};
+    Scalar other_ktmp0 = unsafe(3).asScalar();
+    
+    Map<Scalar,Any> other_vtmp0 = {};
+    Map<Scalar,Map<Scalar,Any>> other = {other_ktmp0: other_vtmp0};
+    assert(value == copy, "equals Map<Scalar,Map<Scalar,Any>>: {}");
+    assert(!(value == other), "different Map<Scalar,Map<Scalar,Any>>: {} {<__main__.Scalar object at 0x7f1c32703750>: {}}");
     assertEqual(true, true);
 }
         
-void test_Any_120() {
-    String value_tmp = " ";
-    Any value = unsafe(value_tmp);
-    String copy_tmp = " ";
-    Any copy = unsafe(copy_tmp);
-    bool other_tmp_ktmp0 = false;
-    float other_tmp_vtmp0 = 0.0;
-    Map<bool,float> other_tmp = {other_tmp_ktmp0: other_tmp_vtmp0};
-    Any other = unsafe(other_tmp);
-    assert(value == copy, "equals Any: unsafe(\" \")");
-    assert(!(value == other), "different Any: unsafe(\" \") unsafe({false: 0.0})");
+void test_Map_Scalar_Map_Scalar_Any___1103() {
+    Scalar value_ktmp0 = unsafe(3).asScalar();
+    
+    Map<Scalar,Any> value_vtmp0 = {};
+    Map<Scalar,Map<Scalar,Any>> value = {value_ktmp0: value_vtmp0};
+    Scalar copy_ktmp0 = unsafe(3).asScalar();
+    
+    Map<Scalar,Any> copy_vtmp0 = {};
+    Map<Scalar,Map<Scalar,Any>> copy = {copy_ktmp0: copy_vtmp0};
+    Scalar other_ktmp0 = unsafe(0.0).asScalar();
+    Scalar other_vtmp0_ktmp0 = unsafe(0).asScalar();
+    bool other_vtmp0_vtmp0_tmp = true;
+    Any other_vtmp0_vtmp0 = unsafe(other_vtmp0_vtmp0_tmp);
+    Map<Scalar,Any> other_vtmp0 = {other_vtmp0_ktmp0: other_vtmp0_vtmp0};
+    Scalar other_ktmp1 = unsafe("asdf\n").asScalar();
+    Scalar other_vtmp1_ktmp0 = unsafe(0.0).asScalar();
+    int other_vtmp1_vtmp0_tmp = 2147483649;
+    Any other_vtmp1_vtmp0 = unsafe(other_vtmp1_vtmp0_tmp);
+    Scalar other_vtmp1_ktmp1 = unsafe("pie").asScalar();
+    float other_vtmp1_vtmp1_tmp = 3.14;
+    Any other_vtmp1_vtmp1 = unsafe(other_vtmp1_vtmp1_tmp);
+    Map<Scalar,Any> other_vtmp1 = {other_vtmp1_ktmp0: other_vtmp1_vtmp0, other_vtmp1_ktmp1: other_vtmp1_vtmp1};
+    Map<Scalar,Map<Scalar,Any>> other = {other_ktmp0: other_vtmp0, other_ktmp1: other_vtmp1};
+    assert(value == copy, "equals Map<Scalar,Map<Scalar,Any>>: {<__main__.Scalar object at 0x7f1c32703750>: {}}");
+    assert(!(value == other), "different Map<Scalar,Map<Scalar,Any>>: {<__main__.Scalar object at 0x7f1c32703750>: {}} {<__main__.Scalar object at 0x7f1c32703790>: {<__main__.Scalar object at 0x7f1c32703450>: unsafe(true)}, <__main__.Scalar object at 0x7f1c327037d0>: {<__main__.Scalar object at 0x7f1c32703490>: unsafe(2147483649), <__main__.Scalar object at 0x7f1c327034d0>: unsafe(3.14)}}");
+    assertEqual(true, true);
+}
+        
+void test_Map_Scalar_Map_Scalar_Any___1104() {
+    Scalar value_ktmp0 = unsafe(0.0).asScalar();
+    Scalar value_vtmp0_ktmp0 = unsafe(0).asScalar();
+    bool value_vtmp0_vtmp0_tmp = true;
+    Any value_vtmp0_vtmp0 = unsafe(value_vtmp0_vtmp0_tmp);
+    Map<Scalar,Any> value_vtmp0 = {value_vtmp0_ktmp0: value_vtmp0_vtmp0};
+    Scalar value_ktmp1 = unsafe("asdf\n").asScalar();
+    Scalar value_vtmp1_ktmp0 = unsafe(0.0).asScalar();
+    int value_vtmp1_vtmp0_tmp = 2147483649;
+    Any value_vtmp1_vtmp0 = unsafe(value_vtmp1_vtmp0_tmp);
+    Scalar value_vtmp1_ktmp1 = unsafe("pie").asScalar();
+    float value_vtmp1_vtmp1_tmp = 3.14;
+    Any value_vtmp1_vtmp1 = unsafe(value_vtmp1_vtmp1_tmp);
+    Map<Scalar,Any> value_vtmp1 = {value_vtmp1_ktmp0: value_vtmp1_vtmp0, value_vtmp1_ktmp1: value_vtmp1_vtmp1};
+    Map<Scalar,Map<Scalar,Any>> value = {value_ktmp0: value_vtmp0, value_ktmp1: value_vtmp1};
+    Scalar copy_ktmp0 = unsafe(0.0).asScalar();
+    Scalar copy_vtmp0_ktmp0 = unsafe(0).asScalar();
+    bool copy_vtmp0_vtmp0_tmp = true;
+    Any copy_vtmp0_vtmp0 = unsafe(copy_vtmp0_vtmp0_tmp);
+    Map<Scalar,Any> copy_vtmp0 = {copy_vtmp0_ktmp0: copy_vtmp0_vtmp0};
+    Scalar copy_ktmp1 = unsafe("asdf\n").asScalar();
+    Scalar copy_vtmp1_ktmp0 = unsafe(0.0).asScalar();
+    int copy_vtmp1_vtmp0_tmp = 2147483649;
+    Any copy_vtmp1_vtmp0 = unsafe(copy_vtmp1_vtmp0_tmp);
+    Scalar copy_vtmp1_ktmp1 = unsafe("pie").asScalar();
+    float copy_vtmp1_vtmp1_tmp = 3.14;
+    Any copy_vtmp1_vtmp1 = unsafe(copy_vtmp1_vtmp1_tmp);
+    Map<Scalar,Any> copy_vtmp1 = {copy_vtmp1_ktmp0: copy_vtmp1_vtmp0, copy_vtmp1_ktmp1: copy_vtmp1_vtmp1};
+    Map<Scalar,Map<Scalar,Any>> copy = {copy_ktmp0: copy_vtmp0, copy_ktmp1: copy_vtmp1};
+    
+    Map<Scalar,Map<Scalar,Any>> other = {};
+    assert(value == copy, "equals Map<Scalar,Map<Scalar,Any>>: {<__main__.Scalar object at 0x7f1c32703790>: {<__main__.Scalar object at 0x7f1c32703450>: unsafe(true)}, <__main__.Scalar object at 0x7f1c327037d0>: {<__main__.Scalar object at 0x7f1c32703490>: unsafe(2147483649), <__main__.Scalar object at 0x7f1c327034d0>: unsafe(3.14)}}");
+    assert(!(value == other), "different Map<Scalar,Map<Scalar,Any>>: {<__main__.Scalar object at 0x7f1c32703790>: {<__main__.Scalar object at 0x7f1c32703450>: unsafe(true)}, <__main__.Scalar object at 0x7f1c327037d0>: {<__main__.Scalar object at 0x7f1c32703490>: unsafe(2147483649), <__main__.Scalar object at 0x7f1c327034d0>: unsafe(3.14)}} {}");
     assertEqual(true, true);
 }
         

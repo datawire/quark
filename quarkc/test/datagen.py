@@ -375,7 +375,7 @@ void test_{mangled}_{count}() {{
 
 import os
 
-limit = 10
+limit = 100
 count = 1
 while TESTS:
     batch = TESTS[:limit]
