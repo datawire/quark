@@ -165,7 +165,7 @@ class Map(Value):
             ktmp = "%s_ktmp%s" % (var, len(tmps))
             vtmp = "%s_vtmp%s" % (var, len(tmps))
             tmps.append((ktmp, vtmp))
-            pres.append(v.store(ktmp))
+            pres.append(k.store(ktmp))
             pres.append(v.store(vtmp))
         return "{pre}\n    {self.type} {var} = {{{tmps}}};".format(self=self,
                                                                    tmps=", ".join(("%s: %s" % e for e in tmps)),
@@ -335,19 +335,19 @@ N = 3
 
 # first order
 LISTS = DATA.lists(N)
-MAPS=[]#MAPS = DATA.maps(N)
+MAPS = DATA.maps(N)
 DATA.add(*(Any(v) for v in LISTS + MAPS))
 
 DATA.add(*LISTS)
-#DATA.add(*MAPS)
+DATA.add(*MAPS)
 
 # second order
 NESTED_LISTS = DATA.lists(N)
-#NESTED_MAPS = DATA.maps(N)
+NESTED_MAPS = DATA.maps(N)
 DATA.add(*NESTED_LISTS)
-#DATA.add(*NESTED_MAPS)
+DATA.add(*NESTED_MAPS)
 
-count = 1
+TESTS = []
 
 for values in DATA.data.values():
     for value in values:
@@ -357,13 +357,12 @@ for values in DATA.data.values():
                 continue
             else:
                 break
-        print """
+        count = len(TESTS) + 1
+        TESTS.append("""
 void test_{mangled}_{count}() {{
     {value_decl}
     {copy_decl}
     {other_decl}
-//    assert(same(value, value), "same {value.type}: {value.quoted}");
-//    assert(!same(value, copy), "different {value.type}: {value.quoted}");
     assert(value == copy, "equals {value.type}: {value.quoted}");
     assert(!(value == other), "different {value.type}: {value.quoted} {other.quoted}");
     assertEqual(true, true);
@@ -372,5 +371,16 @@ void test_{mangled}_{count}() {{
                    count=count, value=value, other=other,
                    value_decl=value.store("value"),
                    copy_decl=value.store("copy"),
-                   other_decl=other.store("other"))
-        count += 1
+                   other_decl=other.store("other")))
+
+import os
+
+limit = 10
+count = 1
+while TESTS:
+    batch = TESTS[:limit]
+    TESTS = TESTS[limit:]
+
+    with open(os.path.join(os.path.dirname(__file__), "data", "data%s.q" % count), "write") as f:
+        f.write("".join(batch))
+    count += 1
