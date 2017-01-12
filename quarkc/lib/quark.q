@@ -982,17 +982,35 @@ namespace quark {
                 case 1:
                     return self.asBool() == other.asBool();
                 case 2:
-                    // XXX: this is going to compare floats as ints,
-                    // we probably want to dispatch to a native number
-                    // comparison here that will do something better
-                    // than this on each target.
-                    return self.asInt() == other.asInt();
+                    return self._numberEquals(other);
                 case 3:
                     return self.asString() == other.asString();
                 }
                 panic("unrecognized type of Scalar: " + stype.toString());
                 return false;
             }
+        }
+
+        bool _numberEquals(Scalar other);
+
+        bool _numberEquals(Scalar other) for go {
+            return $self == $other;
+        }
+
+        bool _numberEquals(Scalar other) for java {
+            return $self.equals($other);
+        }
+
+        bool _numberEquals(Scalar other) for python {
+            return $self == $other
+        }
+
+        bool _numberEquals(Scalar other) for ruby {
+            return $self == $other
+        }
+
+        bool _numberEquals(Scalar other) for javascript {
+            return $self === $other;
         }
 
         bool asBool() for java  import "java.util.List" import "java.util.Map" {
