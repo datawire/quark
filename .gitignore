@@ -75,3 +75,8 @@ venv
 
 # Quark output
 output/
+
+# Editor nonsense
+.vscode
+.idea
+tags
