@@ -19,7 +19,7 @@ class MatchError(Exception):
 
 EPSILON = object()
 
-class State:
+class State(object):
 
     sequence = 0
 

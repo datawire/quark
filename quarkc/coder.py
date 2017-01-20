@@ -14,7 +14,7 @@
 
 from contextlib import contextmanager
 
-class Coder:
+class Coder(object):
 
     def __init__(self):
         self.level = 0
