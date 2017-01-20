@@ -145,18 +145,13 @@ class State(object):
 
     def apply(self, *args, **kwargs):
         states = {self: ()}
-        remaining = list(args)
         for value in flatten(args):
             next = {}
             for state, distance in states.items():
-                count = 0
-                for proj in projections(value, state.match_value):
-                    transitions = state[proj]
-                    if transitions:
-                        for s in transitions:
-                            if s not in next:
-                                next[s] = distance + (count,)
-                    count += 1
+                for count, proj in enumerate(projections(value, state.match_value)):
+                    for s in state[proj]:
+                        if s not in next:
+                            next[s] = distance + (count,)
             states = next
         nearest = {}
         minimum = None
@@ -178,7 +173,7 @@ class State(object):
             raise MatchError("arguments ({}) do not match:\n\n{}".format(ppargs(args), dfns))
         assert len(nearest) == 1, nearest
         state = nearest.popitem()[1]
-        assert state.action, (state, remaining)
+        assert state.action, (state, args)
         return state.action(*args, **kwargs)
 
 def deduplicate(items):
@@ -242,9 +237,18 @@ class End(Marker):
 
 END = End()
 
-def flatten(values):
+flattenable_cache = {}
+hashable_cache = {}
+mro_cache = {}
+
+def flatten(values, _flattenable_cache=flattenable_cache):
     for value in values:
-        if isinstance(value, (list, tuple)):
+        try:
+            is_flattenable = _flattenable_cache[type(value)]
+        except KeyError:
+            is_flattenable = isinstance(value, (list, tuple))
+            _flattenable_cache[type(value)] = is_flattenable
+        if is_flattenable:
             yield Begin(value.__class__)
             for v in flatten(value):
                 yield v
@@ -252,9 +256,17 @@ def flatten(values):
         else:
             yield value
 
-def projections(value, match_value=True):
-    if match_value and isinstance(value, collections.Hashable):
-        yield value
+def projections(value, match_value=True,
+                _hashable_cache=hashable_cache, _mro_cache=mro_cache):
+    pytype = type(value)
+    if match_value:
+        try:
+            is_hashable = _hashable_cache[pytype]
+        except KeyError:
+            is_hashable = isinstance(value, collections.Hashable)
+            _hashable_cache[pytype] = is_hashable
+        if is_hashable:
+            yield value
     traits = getattr(value, "MATCH_TRAITS", None)
     if traits is not None:
         if isinstance(traits, tuple):
@@ -262,13 +274,18 @@ def projections(value, match_value=True):
                 yield t
         else:
             yield traits
-    if not isinstance(value, Marker):
-        if isinstance(value, super):
-            for cls in value.__self_class__.__mro__[1:]:
-                yield cls
+    try:
+        mro = _mro_cache[pytype]
+    except KeyError:
+        if isinstance(value, Marker):
+            mro = []
+        elif isinstance(value, super):
+            mro = value.__self_class__.__mro__[1:]
         else:
-            for cls in value.__class__.__mro__:
-                yield cls
+            mro = value.__class__.__mro__
+        _mro_cache[pytype] = mro
+    for cls in mro:
+        yield cls
 
 class Fragment(object):
 
